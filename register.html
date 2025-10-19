@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartTani - Daftar</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="logo">
+                    <i class="fas fa-seedling"></i>
+                    <h1>SmartTani</h1>
+                </div>
+                <p>Buat akun baru</p>
+            </div>
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="Masukkan email Anda" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon password-container">
+                        <i class="fas fa-lock"></i>
+                        <input type="text" id="password" placeholder="Buat password yang kuat" required class="password-input">
+                        <button type="button" class="toggle-password">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar">
+                            <div class="strength-fill" id="strength-fill"></div>
+                        </div>
+                        <span id="strength-text">Kekuatan password</span>
+                    </div>
+                </div>
+            <div class="form-group">
+                <label for="confirm-password">Konfirmasi Password</label>
+                <div class="input-with-icon password-container">
+                    <i class="fas fa-lock"></i>
+                    <input type="text" id="confirm-password" placeholder="Ulangi password Anda" required class="password-input">
+                    <button type="button" class="toggle-password">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <span id="password-match" class="validation-message"></span>
+            </div>
+                <div class="form-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="agree-terms" required>
+                        <span class="checkmark"></span>
+                        Saya setuju dengan <a href="#" id="terms-link">Syarat & Ketentuan</a>
+                    </label>
+                </div>
+                <button type="submit" class="btn-primary btn-full" style="display: flex; align-items: center; justify-content: center;">
+                    Daftar <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                </button>
+                <div class="auth-footer">
+                    <p>Sudah punya akun? <a href="login.html">Masuk di sini</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Terms and Conditions Modal -->
+    <div id="terms-modal" class="modal">
+        <div class="modal-content" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
+            <div class="modal-header">
+                <h3>Syarat & Ketentuan SmartTani</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="terms-content">
+                    <h4>1. Penerimaan Syarat dan Ketentuan</h4>
+                    <p>Dengan mendaftar dan menggunakan layanan SmartTani, Anda menyetujui semua syarat dan ketentuan yang tercantum di bawah ini.</p>
+                    
+                    <h4>2. Akun Pengguna</h4>
+                    <p>Anda bertanggung jawab penuh atas kerahasiaan informasi akun dan password Anda. Segala aktivitas yang terjadi under akun Anda menjadi tanggung jawab Anda.</p>
+                    
+                    <h4>3. Data dan Privasi</h4>
+                    <p>Kami menghargai privasi Anda. Data pribadi yang dikumpulkan akan digunakan sesuai dengan Kebijakan Privasi kami.</p>
+                    
+                    <h4>4. Penggunaan Layanan</h4>
+                    <p>Layanan SmartTani disediakan untuk membantu pengelolaan pertanian. Anda tidak diperbolehkan menggunakan layanan untuk tujuan ilegal.</p>
+                    
+                    <h4>5. Hak Kekayaan Intelektual</h4>
+                    <p>Seluruh konten dan fitur dalam SmartTani dilindungi oleh hak cipta dan hak kekayaan intelektual lainnya.</p>
+                    
+                    <h4>6. Pembatasan Tanggung Jawab</h4>
+                    <p>SmartTani tidak bertanggung jawab atas kerugian yang timbul akibat penggunaan layanan ini.</p>
+                    
+                    <h4>7. Perubahan Syarat dan Ketentuan</h4>
+                    <p>Kami berhak mengubah syarat dan ketentuan ini kapan saja. Perubahan akan diberitahukan melalui aplikasi.</p>
+                    
+                    <h4>8. Hukum yang Berlaku</h4>
+                    <p>Syarat dan ketentuan ini tunduk pada hukum Republik Indonesia.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" id="agree-terms-btn">Saya Setuju</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

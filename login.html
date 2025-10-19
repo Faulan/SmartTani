@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartTani - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="logo">
+                    <i class="fas fa-seedling"></i>
+                    <h1>SmartTani</h1>
+                </div>
+                <p>Masuk ke akun Anda</p>
+            </div>
+
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="Masukkan email Anda" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon password-container">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Masukkan password Anda" required>
+                        <button type="button" class="toggle-password">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="remember-me">
+                        <span class="checkmark"></span>
+                        Ingat saya
+                    </label>
+                    <a href="#forgot-password" class="forgot-password" id="forgot-password-link">Lupa password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary btn-full btn-center">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Masuk
+                </button>
+
+                <div class="divider">
+                    <span>atau</span>
+                </div>
+
+                <button type="button" class="btn-google btn-full" id="google-login-btn">
+                    <i class="fab fa-google"></i>
+                    Masuk dengan Google
+                </button>
+
+                <div class="auth-footer">
+                    <p>Belum punya akun? <a href="register.html">Daftar di sini</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgot-password-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Reset Password</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Konten akan diisi oleh JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <!-- Tombol akan diisi oleh JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

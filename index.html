@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartTani - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>SmartTani</h1>
+            </div>
+            <nav class="nav">
+                <a href="index.html" class="active"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="tambah.html"><i class="fas fa-plus"></i> Tambah Tanaman</a>
+                <a href="edukasi.html"><i class="fas fa-book"></i> Panduan</a>
+                <div class="user-menu">
+                    <img src="https://ui-avatars.com/api/?name=Petani&background=4CAF50&color=fff" alt="User" class="user-avatar">
+                    <span id="user-name">Petani</span>
+                    <div class="dropdown">
+                        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <h2>Selamat Datang, <span id="welcome-name">Petani</span>!</h2>
+                <p>Kelola tanaman Anda dengan mudah dan efisien</p>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-tanaman">0</h3>
+                        <p>Tanaman Aktif</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="perlu-siram">0</h3>
+                        <p>Perlu Disiram</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="perlu-pupuk">0</h3>
+                        <p>Perlu Dipupuk</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-basket"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="hampir-panen">0</h3>
+                        <p>Hampir Panen</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Plants Section -->
+            <section class="plants-section">
+                <div class="section-header">
+                    <h2>Tanaman Anda</h2>
+                    <a href="tambah.html" class="btn-primary">
+                        <i class="fas fa-plus"></i> Tambah Tanaman
+                    </a>
+                </div>
+
+                <div class="plants-grid" id="plants-grid">
+                    <!-- Tanaman akan ditampilkan di sini oleh JavaScript -->
+                </div>
+            </section>
+
+            <!-- Calendar Section -->
+            <section class="calendar-section">
+                <div class="section-header">
+                    <h2>Kalender Kegiatan</h2>
+                </div>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                        <h3 id="current-month">Bulan Tahun</h3>
+                        <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar" id="calendar">
+                        <!-- Kalender akan di-generate oleh JavaScript -->
+                    </div>
+                    <div class="calendar-legend">
+                        <div class="legend-item">
+                            <span class="legend-color siram"></span>
+                            <span>Penyiraman</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color pupuk"></span>
+                            <span>Pemupukan</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color panen"></span>
+                            <span>Panen</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 SmartTani - Asisten Petani Digital. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
