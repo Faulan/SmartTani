@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat - SmartTani</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>SmartTani</h1>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav">
+                <a href="dashboard.html">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="plants.html">
+                    <i class="fas fa-leaf"></i> Tanaman Saya
+                </a>
+                <a href="history.html" class="active">
+                    <i class="fas fa-history"></i> Riwayat
+                </a>
+                <a href="education.html">
+                    <i class="fas fa-book"></i> Panduan
+                </a>
+                <a href="favorites.html">
+                    <i class="fas fa-star"></i> Favorit
+                </a>
+                
+                <div class="user-menu">
+                    <img src="https://ui-avatars.com/api/?name=User+Demo&background=4CAF50&color=fff" alt="User" class="user-avatar">
+                    <span>User Demo</span>
+                    <div class="dropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profil</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Riwayat Tanaman</h1>
+                <p>Lihat semua tanaman yang pernah Anda tanam</p>
+            </div>
+
+            <!-- History Tabs -->
+            <div class="category-filters" style="margin-bottom: 30px;">
+                <button class="category-filter active" data-status="all">Semua</button>
+                <button class="category-filter" data-status="completed">Berhasil</button>
+                <button class="category-filter" data-status="failed">Gagal</button>
+                <button class="category-filter" data-status="ongoing">Sedang Berjalan</button>
+            </div>
+
+            <!-- History List -->
+            <div class="plants-grid">
+                <!-- Completed Plant -->
+                <div class="plant-card">
+                    <div class="plant-image" style="background: linear-gradient(45deg, #4CAF50, #8BC34A);">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="plant-header" style="background: #4CAF50;">
+                        <div class="plant-name">Tomat Cherry</div>
+                        <div class="plant-type">Berhasil</div>
+                    </div>
+                    <div class="plant-body">
+                        <div class="plant-details">
+                            <div class="plant-detail">
+                                <span>Periode:</span>
+                                <span>15 Jan - 20 Mar 2024</span>
+                            </div>
+                            <div class="plant-detail">
+                                <span>Hasil Panen:</span>
+                                <span>2.5 kg</span>
+                            </div>
+                            <div class="plant-detail">
+                                <span>Lokasi:</span>
+                                <span>Kebun Belakang</span>
+                            </div>
+                        </div>
+                        <div class="plant-status">
+                            <div class="status-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Status:</span>
+                                <span class="status-badge completed">Berhasil</span>
+                            </div>
+                        </div>
+                        <div class="plant-actions">
+                            <button class="btn-secondary">
+                                <i class="fas fa-chart-bar"></i> Statistik
+                            </button>
+                            <button class="btn-primary">
+                                <i class="fas fa-redo"></i> Tanam Lagi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Failed Plant -->
+                <div class="plant-card">
+                    <div class="plant-image" style="background: linear-gradient(45deg, #F44336, #FF9800);">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="plant-header" style="background: #F44336;">
+                        <div class="plant-name">Cabai Rawit</div>
+                        <div class="plant-type">Gagal</div>
+                    </div>
+                    <div class="plant-body">
+                        <div class="plant-details">
+                            <div class="plant-detail">
+                                <span>Periode:</span>
+                                <span>10 Jan - 15 Feb 2024</span>
+                            </div>
+                            <div class="plant-detail">
+                                <span>Penyebab:</span>
+                                <span>Serangan Hama</span>
+                            </div>
+                            <div class="plant-detail">
+                                <span>Lokasi:</span>
+                                <span>Pot Depan</span>
+                            </div>
+                        </div>
+                        <div class="plant-status">
+                            <div class="status-item">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Status:</span>
+                                <span class="status-badge warning">Gagal</span>
+                            </div>
+                        </div>
+                        <div class="plant-actions">
+                            <button class="btn-secondary">
+                                <i class="fas fa-book"></i> Pelajari
+                            </button>
+                            <button class="btn-primary">
+                                <i class="fas fa-redo"></i> Coba Lagi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ongoing Plant -->
+                <div class="plant-card">
+                    <div class="plant-image" style="background: linear-gradient(45deg, #2196F3, #03A9F4);">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="plant-header" style="background: #2196F3;">
+                        <div class="plant-name">Bayam</div>
+                        <div class="plant-type">Berjalan</div>
+                    </div>
+                    <div class="plant-body">
+                        <div class="plant-details">
+                            <div class="plant-detail">
+                                <span>Mulai:</span>
+                                <span>5 Jan 2024</span>
+                            </div>
+                            <div class="plant-detail">
+                                <span>Estimasi:</span>
+                                <span>25 Hari Lagi</span>
+                            </div>
+                            <div class="plant-detail">
+                                <span>Progress:</span>
+                                <span>60%</span>
+                            </div>
+                        </div>
+                        <div class="plant-status">
+                            <div class="status-item">
+                                <i class="fas fa-tint"></i>
+                                <span>Siram:</span>
+                                <span class="status-badge pending">Besok</span>
+                            </div>
+                        </div>
+                        <div class="plant-actions">
+                            <button class="btn-secondary">
+                                <i class="fas fa-eye"></i> Pantau
+                            </button>
+                            <button class="btn-primary">
+                                <i class="fas fa-tint"></i> Siram
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div class="section-header" style="margin-top: 50px;">
+                <h2>Statistik Tanaman</h2>
+            </div>
+
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #E8F5E8; color: #4CAF50;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>12</h3>
+                        <p>Tanaman Berhasil</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #FFEBEE; color: #F44336;">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>3</h3>
+                        <p>Tanaman Gagal</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #E3F2FD; color: #2196F3;">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>5</h3>
+                        <p>Sedang Berjalan</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #FFF3E0; color: #FF9800;">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>80%</h3>
+                        <p>Rate Keberhasilan</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>@2025 SmartTani-Siti Maefaulan.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

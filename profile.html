@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - SmartTani</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>SmartTani</h1>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav">
+                <a href="dashboard.html">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="plants.html">
+                    <i class="fas fa-leaf"></i> Tanaman Saya
+                </a>
+                <a href="history.html">
+                    <i class="fas fa-history"></i> Riwayat
+                </a>
+                <a href="education.html">
+                    <i class="fas fa-book"></i> Panduan
+                </a>
+                <a href="favorites.html">
+                    <i class="fas fa-star"></i> Favorit
+                </a>
+                
+                <div class="user-menu">
+                    <img src="https://ui-avatars.com/api/?name=User+Demo&background=4CAF50&color=fff" alt="User" class="user-avatar">
+                    <span>User Demo</span>
+                    <div class="dropdown">
+                        <a href="profile.html" class="active"><i class="fas fa-user"></i> Profil</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Profil Saya</h1>
+                <p>Kelola informasi akun dan preferensi Anda</p>
+            </div>
+
+            <div class="profile-container" style="display: grid; grid-template-columns: 300px 1fr; gap: 30px;">
+                <!-- Sidebar Profil -->
+                <div class="profile-sidebar">
+                    <div class="profile-card" style="background: var(--card-bg); border-radius: 10px; padding: 25px; text-align: center; box-shadow: var(--shadow);">
+                        <div class="profile-avatar" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(45deg, var(--primary-color), var(--accent-color)); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3 style="margin-bottom: 5px; color: var(--text-color);" id="profileName">User Demo</h3>
+                        <p style="color: var(--text-light); margin-bottom: 20px; font-size: 14px;">Petani Aktif</p>
+                        
+                        <div class="profile-stats" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
+                            <div class="stat-item">
+                                <div style="font-size: 18px; font-weight: 600; color: var(--primary-color);">8</div>
+                                <div style="font-size: 12px; color: var(--text-light);">Tanaman</div>
+                            </div>
+                            <div class="stat-item">
+                                <div style="font-size: 18px; font-weight: 600; color: var(--primary-color);">12</div>
+                                <div style="font-size: 12px; color: var(--text-light);">Panen</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-secondary" style="width: 100%;" onclick="openEditProfileModal()">
+                            <i class="fas fa-edit"></i> Edit Profil
+                        </button>
+                    </div>
+
+                    <!-- Menu Profil -->
+                    <div class="profile-menu" style="background: var(--card-bg); border-radius: 10px; margin-top: 20px; overflow: hidden; box-shadow: var(--shadow);">
+                        <a href="#info" class="profile-menu-item active" data-tab="info">
+                            <i class="fas fa-user-circle"></i> Informasi Pribadi
+                        </a>
+                        <a href="#security" class="profile-menu-item" data-tab="security">
+                            <i class="fas fa-shield-alt"></i> Keamanan
+                        </a>
+                        <a href="#preferences" class="profile-menu-item" data-tab="preferences">
+                            <i class="fas fa-cog"></i> Preferensi
+                        </a>
+                        <a href="#notifications" class="profile-menu-item" data-tab="notifications">
+                            <i class="fas fa-bell"></i> Notifikasi
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Konten Profil -->
+                <div class="profile-content">
+                    <!-- Tab Informasi Pribadi -->
+                    <div class="profile-tab active" id="info-tab">
+                        <div class="section-header">
+                            <h2>Informasi Pribadi</h2>
+                        </div>
+                        
+                        <div class="info-card" style="background: var(--card-bg); border-radius: 10px; padding: 25px; box-shadow: var(--shadow);">
+                            <div class="info-grid" style="display: grid; gap: 20px;">
+                                <div class="info-item">
+                                    <label style="display: block; color: var(--text-light); margin-bottom: 5px; font-size: 14px;">Nama Lengkap</label>
+                                    <div style="font-weight: 500; color: var(--text-color);" id="displayName">User Demo</div>
+                                </div>
+                                
+                                <div class="info-item">
+                                    <label style="display: block; color: var(--text-light); margin-bottom: 5px; font-size: 14px;">Email</label>
+                                    <div style="font-weight: 500; color: var(--text-color);" id="displayEmail">user.demo@example.com</div>
+                                </div>
+                                
+                                <div class="info-item">
+                                    <label style="display: block; color: var(--text-light); margin-bottom: 5px; font-size: 14px;">Nomor Telepon</label>
+                                    <div style="font-weight: 500; color: var(--text-color);" id="displayPhone">+62 812-3456-7890</div>
+                                </div>
+                                
+                                <div class="info-item">
+                                    <label style="display: block; color: var(--text-light); margin-bottom: 5px; font-size: 14px;">Alamat</label>
+                                    <div style="font-weight: 500; color: var(--text-color);" id="displayAddress">Jl. Kebun Raya No. 123, Jakarta Selatan</div>
+                                </div>
+                                
+                                <div class="info-item">
+                                    <label style="display: block; color: var(--text-light); margin-bottom: 5px; font-size: 14px;">Bergabung Sejak</label>
+                                    <div style="font-weight: 500; color: var(--text-color);">15 Januari 2024</div>
+                                </div>
+                                
+                                <div class="info-item">
+                                    <label style="display: block; color: var(--text-light); margin-bottom: 5px; font-size: 14px;">Status</label>
+                                    <div style="font-weight: 500; color: var(--primary-color);">Aktif</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Statistik Tanaman -->
+                        <div class="section-header" style="margin-top: 40px;">
+                            <h2>Statistik Tanaman</h2>
+                        </div>
+                        
+                        <div class="stats-section">
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #E8F5E8; color: #4CAF50;">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>8</h3>
+                                    <p>Total Tanaman</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #E3F2FD; color: #2196F3;">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>5</h3>
+                                    <p>Sedang Aktif</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #FFF3E0; color: #FF9800;">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>12</h3>
+                                    <p>Panen Sukses</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #FFEBEE; color: #F44336;">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>2</h3>
+                                    <p>Gagal Panen</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Keamanan -->
+                    <div class="profile-tab" id="security-tab">
+                        <div class="section-header">
+                            <h2>Keamanan Akun</h2>
+                        </div>
+                        
+                        <div class="security-card" style="background: var(--card-bg); border-radius: 10px; padding: 25px; box-shadow: var(--shadow);">
+                            <div class="security-item" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--border-color);">
+                                <div>
+                                    <h4 style="margin-bottom: 5px; color: var(--text-color);">Password</h4>
+                                    <p style="color: var(--text-light); font-size: 14px;">Terakhir diubah 1 bulan yang lalu</p>
+                                </div>
+                                <button class="btn-secondary" onclick="openChangePasswordModal()">
+                                    Ubah Password
+                                </button>
+                            </div>
+                            
+                            <div class="security-item" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--border-color);">
+                                <div>
+                                    <h4 style="margin-bottom: 5px; color: var(--text-color);">Verifikasi 2 Faktor</h4>
+                                    <p style="color: var(--text-light); font-size: 14px;">Aktifkan untuk keamanan ekstra</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="twoFactorToggle" onchange="toggleTwoFactor(this.checked)">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="security-item" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0;">
+                                <div>
+                                    <h4 style="margin-bottom: 5px; color: var(--text-color);">Sesi Aktif</h4>
+                                    <p style="color: var(--text-light); font-size: 14px;">1 perangkat aktif</p>
+                                </div>
+                                <button class="btn-secondary" onclick="manageSessions()">
+                                    Kelola Sesi
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Preferensi -->
+                    <div class="profile-tab" id="preferences-tab">
+                        <div class="section-header">
+                            <h2>Preferensi Aplikasi</h2>
+                        </div>
+                        
+                        <div class="preferences-card" style="background: var(--card-bg); border-radius: 10px; padding: 25px; box-shadow: var(--shadow);">
+                            <!-- Tema Aplikasi -->
+                            <div class="preference-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border-color);">
+                                <div>
+                                    <h4 style="margin-bottom: 5px; color: var(--text-color);">Tema Aplikasi</h4>
+                                    <p style="color: var(--text-light); font-size: 14px;">Pilih tampilan yang nyaman untuk mata</p>
+                                </div>
+                                <select class="full-width" id="themeSelect" style="max-width: 200px;">
+                                    <option value="light">Terang</option>
+                                    <option value="dark">Gelap</option>
+                                    <option value="auto">Sesuai Perangkat</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Zona Waktu -->
+                            <div class="preference-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border-color);">
+                                <div>
+                                    <h4 style="margin-bottom: 5px; color: var(--text-color);">Zona Waktu</h4>
+                                    <p style="color: var(--text-light); font-size: 14px;" id="timezoneDisplay">WIB (UTC+7)</p>
+                                </div>
+                                <button class="btn-secondary" onclick="openTimezoneModal()">
+                                    Ubah
+                                </button>
+                            </div>
+                            
+                            <!-- Notifikasi Suara -->
+                            <div class="preference-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border-color);">
+                                <div>
+                                    <h4 style="margin-bottom: 5px; color: var(--text-color);">Notifikasi Suara</h4>
+                                    <p style="color: var(--text-light); font-size: 14px;">Putar suara saat notifikasi muncul</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="soundNotification">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <!-- Tampilan Dashboard -->
+                            <div class="preference-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
+                                <div>
+                                    <h4 style="margin-bottom: 5px; color: var(--text-color);">Tampilan Dashboard</h4>
+                                    <p style="color: var(--text-light); font-size: 14px;">Pilih layout dashboard</p>
+                                </div>
+                                <select class="full-width" id="dashboardLayout" style="max-width: 200px;">
+                                    <option value="grid">Grid</option>
+                                    <option value="list">List</option>
+                                    <option value="compact">Compact</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Preview Tema -->
+                        <div class="section-header" style="margin-top: 40px;">
+                            <h2>Preview Tema</h2>
+                        </div>
+
+                        <div class="preferences-card" style="background: var(--card-bg); border-radius: 10px; padding: 25px; box-shadow: var(--shadow);">
+                            <div class="theme-preview" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px;">
+                                <div class="theme-option active" data-theme="light" onclick="selectTheme('light')" style="cursor: pointer; padding: 15px; border: 2px solid var(--primary-color); border-radius: 8px; text-align: center; background: rgba(76, 175, 80, 0.1);">
+                                    <div style="width: 100%; height: 60px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 4px; margin-bottom: 8px;"></div>
+                                    <span style="font-size: 14px; color: var(--text-color); font-weight: 600;">Terang</span>
+                                </div>
+                                <div class="theme-option" data-theme="dark" onclick="selectTheme('dark')" style="cursor: pointer; padding: 15px; border: 2px solid var(--border-color); border-radius: 8px; text-align: center;">
+                                    <div style="width: 100%; height: 60px; background: #1a1a1a; border: 1px solid #333; border-radius: 4px; margin-bottom: 8px;"></div>
+                                    <span style="font-size: 14px; color: var(--text-color);">Gelap</span>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <button class="btn-secondary" onclick="resetPreferences()">
+                                    <i class="fas fa-undo"></i> Reset ke Default
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Notifikasi -->
+                    <div class="profile-tab" id="notifications-tab">
+                        <div class="section-header">
+                            <h2>Pengaturan Notifikasi</h2>
+                        </div>
+                        
+                        <div class="notifications-card" style="background: var(--card-bg); border-radius: 10px; padding: 25px; box-shadow: var(--shadow);">
+                            <div class="notification-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border-color);">
+                                <div>
+                                    <h4 style="margin-bottom: 5px; color: var(--text-color);">Notifikasi Penyiraman</h4>
+                                    <p style="color: var(--text-light); font-size: 14px;">Ingatkan saat waktu penyiraman tiba</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="notifWatering" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="notification-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border-color);">
+                                <div>
+                                    <h4 style="margin-bottom: 5px; color: var(--text-color);">Notifikasi Pemupukan</h4>
+                                    <p style="color: var(--text-light); font-size: 14px;">Ingatkan saat waktu pemupukan tiba</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="notifFertilizing" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="notification-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border-color);">
+                                <div>
+                                    <h4 style="margin-bottom: 5px; color: var(--text-color);">Notifikasi Panen</h4>
+                                    <p style="color: var(--text-light); font-size: 14px;">Ingatkan saat mendekati waktu panen</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="notifHarvest" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="notification-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--border-color);">
+                                <div>
+                                    <h4 style="margin-bottom: 5px; color: var(--text-color);">Notifikasi Cuaca</h4>
+                                    <p style="color: var(--text-light); font-size: 14px;">Peringatan cuaca ekstrem</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="notifWeather" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="notification-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
+                                <div>
+                                    <h4 style="margin-bottom: 5px; color: var(--text-color);">Notifikasi Email</h4>
+                                    <p style="color: var(--text-light); font-size: 14px;">Kirim notifikasi ke email</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="notifEmail">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Pengaturan Waktu Notifikasi -->
+                        <div class="section-header" style="margin-top: 40px;">
+                            <h2>Waktu Notifikasi</h2>
+                        </div>
+
+                        <div class="preferences-card" style="background: var(--card-bg); border-radius: 10px; padding: 25px; box-shadow: var(--shadow);">
+                            <div class="form-group">
+                                <label for="notificationTime">Waktu Default Notifikasi</label>
+                                <input type="time" id="notificationTime" class="full-width" value="08:00">
+                                <span class="form-help">Notifikasi harian akan dikirim pada waktu ini</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="notificationDays">Hari Notifikasi</label>
+                                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+                                    <label class="checkbox-container" style="display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox" checked> Senin
+                                    </label>
+                                    <label class="checkbox-container" style="display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox" checked> Selasa
+                                    </label>
+                                    <label class="checkbox-container" style="display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox" checked> Rabu
+                                    </label>
+                                    <label class="checkbox-container" style="display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox" checked> Kamis
+                                    </label>
+                                    <label class="checkbox-container" style="display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox" checked> Jumat
+                                    </label>
+                                    <label class="checkbox-container" style="display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Sabtu
+                                    </label>
+                                    <label class="checkbox-container" style="display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Minggu
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button class="btn-primary" onclick="saveNotificationSettings()">
+                                <i class="fas fa-save"></i> Simpan Pengaturan Notifikasi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>@2025 SmartTani-Siti Maefaulan.</p>
+        </div>
+    </footer>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Profil</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editProfileForm" class="plant-form">
+                    <div class="form-group">
+                        <label for="editName">Nama Lengkap</label>
+                        <input type="text" id="editName" class="full-width" value="User Demo" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editEmail">Email</label>
+                        <input type="email" id="editEmail" class="full-width" value="user.demo@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editPhone">Nomor Telepon</label>
+                        <input type="tel" id="editPhone" class="full-width" value="+6281234567890" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editAddress">Alamat</label>
+                        <textarea id="editAddress" class="full-width" rows="3">Jl. Kebun Raya No. 123, Jakarta Selatan</textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="document.getElementById('editProfileModal').style.display='none'">Batal</button>
+                        <button type="submit" class="btn-primary">Simpan Perubahan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="changePasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ubah Password</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm" class="plant-form">
+                    <div class="form-group">
+                        <label for="currentPassword">Password Saat Ini</label>
+                        <div class="input-with-icon password-container">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="currentPassword" class="full-width" placeholder="Masukkan password saat ini" required>
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newPassword">Password Baru</label>
+                        <div class="input-with-icon password-container">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="newPassword" class="full-width" placeholder="Masukkan password baru" required>
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmNewPassword">Konfirmasi Password Baru</label>
+                        <div class="input-with-icon password-container">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirmNewPassword" class="full-width" placeholder="Konfirmasi password baru" required>
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="password-requirements">
+                        <h4>Password harus mengandung:</h4>
+                        <ul>
+                            <li data-requirement="length">Minimal 8 karakter</li>
+                            <li data-requirement="lowercase">Huruf kecil (a-z)</li>
+                            <li data-requirement="uppercase">Huruf besar (A-Z)</li>
+                            <li data-requirement="number">Angka (0-9)</li>
+                            <li data-requirement="special">Karakter khusus</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="document.getElementById('changePasswordModal').style.display='none'">Batal</button>
+                        <button type="submit" class="btn-primary">Ubah Password</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timezone Modal -->
+    <div id="timezoneModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Pilih Zona Waktu</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="timezoneSelect">Pilih Zona Waktu</label>
+                    <select id="timezoneSelect" class="full-width">
+                        <option value="WIB">WIB (UTC+7) - Jakarta, Bandung</option>
+                        <option value="WITA">WITA (UTC+8) - Bali, Makassar</option>
+                        <option value="WIT">WIT (UTC+9) - Papua, Maluku</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('timezoneModal').style.display='none'">Batal</button>
+                    <button type="button" class="btn-primary" onclick="saveTimezone()">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sessions Modal -->
+    <div id="sessionsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Kelola Sesi Aktif</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="session-list">
+                    <div class="session-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px;">
+                        <div>
+                            <div style="font-weight: 600; color: var(--text-color);">Chrome - Windows</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Aktif sekarang • Jakarta, Indonesia</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Login: 15 Jan 2024 08:30</div>
+                        </div>
+                        <div style="color: var(--success); font-size: 12px; font-weight: 600;">Aktif</div>
+                    </div>
+                    
+                    <div class="session-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px;">
+                        <div>
+                            <div style="font-weight: 600; color: var(--text-color);">Safari - iPhone</div>
+                            <div style="font-size: 12px; color: var(--text-light);">14 Jan 2024 • Bandung, Indonesia</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Login: 14 Jan 2024 14:20</div>
+                        </div>
+                        <button class="btn-secondary" style="padding: 5px 10px; font-size: 12px;">Logout</button>
+                    </div>
+                </div>
+                
+                <div class="form-actions" style="margin-top: 20px;">
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('sessionsModal').style.display='none'">Tutup</button>
+                    <button type="button" class="btn-primary" onclick="logoutAllSessions()">Logout Semua Sesi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <style>
+        /* Additional Styles for Profile Page */
+        .profile-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        
+        .profile-menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-menu-item:hover,
+        .profile-menu-item.active {
+            background: var(--primary-light);
+            color: var(--primary-color);
+        }
+        
+        .profile-menu-item i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .profile-tab {
+            display: none;
+        }
+        
+        .profile-tab.active {
+            display: block;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .theme-option.active {
+            border-color: var(--primary-color) !important;
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+    <script>
+        // Profile Management Functions
+        let userProfile = {
+            name: "User Demo",
+            email: "user.demo@example.com",
+            phone: "+62 812-3456-7890",
+            address: "Jl. Kebun Raya No. 123, Jakarta Selatan"
+        };
+
+        // Load saved data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserProfile();
+            loadPreferences();
+            loadNotificationSettings();
+            setupEventListeners();
+        });
+
+        // Setup event listeners
+        function setupEventListeners() {
+            setupProfileTabs();
+            setupThemeSelector();
+            setupDashboardLayout();
+            setupNotificationToggles();
+        }
+
+        // Profile Tab Functionality
+        function setupProfileTabs() {
+            const profileMenuItems = document.querySelectorAll('.profile-menu-item');
+            profileMenuItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all items
+                    document.querySelectorAll('.profile-menu-item').forEach(i => i.classList.remove('active'));
+                    document.querySelectorAll('.profile-tab').forEach(tab => tab.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Show corresponding tab
+                    const tabId = this.dataset.tab + '-tab';
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        }
+
+        // Load user profile data
+        function loadUserProfile() {
+            const savedProfile = JSON.parse(localStorage.getItem('userProfile')) || userProfile;
+            
+            // Update display elements
+            document.getElementById('profileName').textContent = savedProfile.name;
+            document.getElementById('displayName').textContent = savedProfile.name;
+            document.getElementById('displayEmail').textContent = savedProfile.email;
+            document.getElementById('displayPhone').textContent = savedProfile.phone;
+            document.getElementById('displayAddress').textContent = savedProfile.address;
+            
+            // Update form fields
+            document.getElementById('editName').value = savedProfile.name;
+            document.getElementById('editEmail').value = savedProfile.email;
+            document.getElementById('editPhone').value = savedProfile.phone;
+            document.getElementById('editAddress').value = savedProfile.address;
+        }
+
+        // Theme Management
+        function setupThemeSelector() {
+            const themeSelect = document.getElementById('themeSelect');
+            if (themeSelect) {
+                themeSelect.addEventListener('change', function() {
+                    changeTheme(this.value);
+                });
+            }
+        }
+
+        function changeTheme(theme) {
+            const root = document.documentElement;
+            const savedPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
+            
+            savedPreferences.theme = theme;
+            localStorage.setItem('userPreferences', JSON.stringify(savedPreferences));
+            
+            if (theme === 'dark') {
+                root.style.setProperty('--bg-color', '#1a1a1a');
+                root.style.setProperty('--card-bg', '#2d2d2d');
+                root.style.setProperty('--text-color', '#ffffff');
+                root.style.setProperty('--text-light', '#b0b0b0');
+                root.style.setProperty('--border-color', '#404040');
+            } else {
+                // Reset to light theme (default)
+                root.style.setProperty('--bg-color', '#f9f9f9');
+                root.style.setProperty('--card-bg', '#fff');
+                root.style.setProperty('--text-color', '#333');
+                root.style.setProperty('--text-light', '#666');
+                root.style.setProperty('--border-color', '#e0e0e0');
+            }
+            
+            // Update theme preview
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.theme-option[data-theme="${theme}"]`)?.classList.add('active');
+            
+            showNotification(`Tema berhasil diubah ke ${theme === 'light' ? 'Terang' : 'Gelap'}`, 'success');
+        }
+
+        function selectTheme(theme) {
+            document.getElementById('themeSelect').value = theme;
+            changeTheme(theme);
+        }
+
+        // Dashboard Layout
+        function setupDashboardLayout() {
+            const layoutSelect = document.getElementById('dashboardLayout');
+            if (layoutSelect) {
+                layoutSelect.addEventListener('change', function() {
+                    const savedPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
+                    savedPreferences.dashboardLayout = this.value;
+                    localStorage.setItem('userPreferences', JSON.stringify(savedPreferences));
+                    showNotification(`Layout dashboard diubah ke ${this.value}`, 'success');
+                });
+            }
+        }
+
+        // Timezone Management
+        function openTimezoneModal() {
+            const savedTimezone = localStorage.getItem('userTimezone') || 'WIB';
+            document.getElementById('timezoneSelect').value = savedTimezone;
+            document.getElementById('timezoneModal').style.display = 'block';
+        }
+
+        function saveTimezone() {
+            const timezone = document.getElementById('timezoneSelect').value;
+            localStorage.setItem('userTimezone', timezone);
+            
+            let displayText = '';
+            switch(timezone) {
+                case 'WIB':
+                    displayText = 'WIB (UTC+7) - Jakarta, Bandung';
+                    break;
+                case 'WITA':
+                    displayText = 'WITA (UTC+8) - Bali, Makassar';
+                    break;
+                case 'WIT':
+                    displayText = 'WIT (UTC+9) - Papua, Maluku';
+                    break;
+            }
+            
+            document.getElementById('timezoneDisplay').textContent = displayText;
+            document.getElementById('timezoneModal').style.display = 'none';
+            showNotification(`Zona waktu berhasil diubah ke ${timezone}`, 'success');
+        }
+
+        // Notification Settings
+        function setupNotificationToggles() {
+            // Sound notification
+            const soundNotification = document.getElementById('soundNotification');
+            if (soundNotification) {
+                soundNotification.addEventListener('change', function() {
+                    const savedPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
+                    savedPreferences.soundNotification = this.checked;
+                    localStorage.setItem('userPreferences', JSON.stringify(savedPreferences));
+                    showNotification(`Notifikasi suara ${this.checked ? 'diaktifkan' : 'dimatikan'}`, 'success');
+                });
+            }
+
+            // Setup all notification toggles
+            const notificationToggles = ['notifWatering', 'notifFertilizing', 'notifHarvest', 'notifWeather', 'notifEmail'];
+            notificationToggles.forEach(toggleId => {
+                const toggle = document.getElementById(toggleId);
+                if (toggle) {
+                    toggle.addEventListener('change', function() {
+                        saveNotificationSettings();
+                    });
+                }
+            });
+        }
+
+        function saveNotificationSettings() {
+            const settings = {
+                watering: document.getElementById('notifWatering').checked,
+                fertilizing: document.getElementById('notifFertilizing').checked,
+                harvest: document.getElementById('notifHarvest').checked,
+                weather: document.getElementById('notifWeather').checked,
+                email: document.getElementById('notifEmail').checked,
+                time: document.getElementById('notificationTime').value
+            };
+            
+            localStorage.setItem('notificationSettings', JSON.stringify(settings));
+            showNotification('Pengaturan notifikasi berhasil disimpan', 'success');
+        }
+
+        function loadNotificationSettings() {
+            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {
+                watering: true,
+                fertilizing: true,
+                harvest: true,
+                weather: true,
+                email: false,
+                time: '08:00'
+            };
+            
+            document.getElementById('notifWatering').checked = settings.watering;
+            document.getElementById('notifFertilizing').checked = settings.fertilizing;
+            document.getElementById('notifHarvest').checked = settings.harvest;
+            document.getElementById('notifWeather').checked = settings.weather;
+            document.getElementById('notifEmail').checked = settings.email;
+            document.getElementById('notificationTime').value = settings.time;
+        }
+
+        // Security Functions
+        function toggleTwoFactor(enabled) {
+            localStorage.setItem('twoFactorEnabled', enabled);
+            showNotification(`Verifikasi 2 faktor ${enabled ? 'diaktifkan' : 'dimatikan'}`, 'success');
+        }
+
+        function manageSessions() {
+            document.getElementById('sessionsModal').style.display = 'block';
+        }
+
+        function logoutAllSessions() {
+            showNotification('Semua sesi berhasil logout', 'success');
+            document.getElementById('sessionsModal').style.display = 'none';
+        }
+
+        // Load all preferences
+        function loadPreferences() {
+            const savedPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
+            const savedTimezone = localStorage.getItem('userTimezone') || 'WIB';
+            const twoFactorEnabled = localStorage.getItem('twoFactorEnabled') === 'true';
+            
+            // Load theme
+            if (savedPreferences.theme) {
+                document.getElementById('themeSelect').value = savedPreferences.theme;
+                document.querySelector(`.theme-option[data-theme="${savedPreferences.theme}"]`)?.classList.add('active');
+                changeTheme(savedPreferences.theme);
+            }
+            
+            // Load timezone
+            updateTimezoneDisplay(savedTimezone);
+            
+            // Load sound notification
+            if (savedPreferences.soundNotification !== undefined) {
+                document.getElementById('soundNotification').checked = savedPreferences.soundNotification;
+            }
+            
+            // Load dashboard layout
+            if (savedPreferences.dashboardLayout) {
+                document.getElementById('dashboardLayout').value = savedPreferences.dashboardLayout;
+            }
+            
+            // Load two-factor
+            document.getElementById('twoFactorToggle').checked = twoFactorEnabled;
+        }
+
+        function updateTimezoneDisplay(timezone) {
+            let displayText = '';
+            switch(timezone) {
+                case 'WIB':
+                    displayText = 'WIB (UTC+7) - Jakarta, Bandung';
+                    break;
+                case 'WITA':
+                    displayText = 'WITA (UTC+8) - Bali, Makassar';
+                    break;
+                case 'WIT':
+                    displayText = 'WIT (UTC+9) - Papua, Maluku';
+                    break;
+            }
+            document.getElementById('timezoneDisplay').textContent = displayText;
+        }
+
+        // Reset preferences to default
+        function resetPreferences() {
+            localStorage.removeItem('userPreferences');
+            localStorage.removeItem('userTimezone');
+            
+            // Reset UI to default values
+            document.getElementById('themeSelect').value = 'light';
+            document.getElementById('soundNotification').checked = false;
+            document.getElementById('dashboardLayout').value = 'grid';
+            updateTimezoneDisplay('WIB');
+            
+            // Reset theme preview
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector('.theme-option[data-theme="light"]').classList.add('active');
+            
+            // Apply default theme
+            changeTheme('light');
+            
+            showNotification('Preferensi berhasil direset ke default', 'success');
+        }
+
+        // Modal functions
+        function openEditProfileModal() {
+            document.getElementById('editProfileModal').style.display = 'block';
+        }
+
+        function openChangePasswordModal() {
+            document.getElementById('changePasswordModal').style.display = 'block';
+        }
+
+        // Form submissions
+        document.getElementById('editProfileForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Update user profile
+            userProfile.name = document.getElementById('editName').value;
+            userProfile.email = document.getElementById('editEmail').value;
+            userProfile.phone = document.getElementById('editPhone').value;
+            userProfile.address = document.getElementById('editAddress').value;
+            
+            // Save to localStorage
+            localStorage.setItem('userProfile', JSON.stringify(userProfile));
+            
+            // Update display
+            loadUserProfile();
+            
+            showNotification('Profil berhasil diperbarui!', 'success');
+            document.getElementById('editProfileModal').style.display = 'none';
+        });
+
+        document.getElementById('changePasswordForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmNewPassword').value;
+            
+            if (newPassword !== confirmPassword) {
+                showNotification('Password tidak cocok!', 'error');
+                return;
+            }
+            
+            // Simpan password (dalam real application, ini akan di-hash)
+            localStorage.setItem('userPassword', newPassword);
+            
+            showNotification('Password berhasil diubah!', 'success');
+            document.getElementById('changePasswordModal').style.display = 'none';
+        });
+
+        // Password requirements validation
+        const newPasswordInput = document.getElementById('newPassword');
+        if (newPasswordInput) {
+            newPasswordInput.addEventListener('input', function() {
+                const password = this.value;
+                const requirements = {
+                    length: password.length >= 8,
+                    lowercase: /[a-z]/.test(password),
+                    uppercase: /[A-Z]/.test(password),
+                    number: /[0-9]/.test(password),
+                    special: /[^A-Za-z0-9]/.test(password)
+                };
+
+                Object.keys(requirements).forEach(key => {
+                    const element = document.querySelector(`[data-requirement="${key}"]`);
+                    if (element) {
+                        if (requirements[key]) {
+                            element.classList.add('valid');
+                        } else {
+                            element.classList.remove('valid');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Setup password toggle
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.parentElement.querySelector('input');
+                const icon = this.querySelector('i');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.className = 'fas fa-eye-slash';
+                } else {
+                    input.type = 'password';
+                    icon.className = 'fas fa-eye';
+                }
+            });
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+
+        // Close modals with close button
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.closest('.modal').style.display = 'none';
+            });
+        });
+
+        // Notification function (from script.js)
+        function showNotification(message, type = 'info') {
+            // Remove existing notifications
+            document.querySelectorAll('.notification').forEach(notif => notif.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${getNotificationIcon(type)}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        function getNotificationIcon(type) {
+            const icons = {
+                success: 'check-circle',
+                error: 'exclamation-circle',
+                warning: 'exclamation-triangle',
+                info: 'info-circle'
+            };
+            return icons[type] || 'info-circle';
+        }
+
+        // Logout function
+        function logout() {
+            showNotification('Logout berhasil', 'success');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

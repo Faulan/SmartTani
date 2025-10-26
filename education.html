@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan - SmartTani</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>SmartTani</h1>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav">
+                <a href="dashboard.html">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="plants.html">
+                    <i class="fas fa-leaf"></i> Tanaman Saya
+                </a>
+                <a href="history.html">
+                    <i class="fas fa-history"></i> Riwayat
+                </a>
+                <a href="education.html" class="active">
+                    <i class="fas fa-book"></i> Panduan
+                </a>
+                <a href="favorites.html">
+                    <i class="fas fa-star"></i> Favorit
+                </a>
+                
+                <div class="user-menu">
+                    <img src="https://ui-avatars.com/api/?name=User+Demo&background=4CAF50&color=fff" alt="User" class="user-avatar">
+                    <span>User Demo</span>
+                    <div class="dropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profil</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Panduan Menanam</h1>
+                <p>Pelajari cara menanam yang baik dan benar untuk hasil optimal</p>
+            </div>
+
+            <!-- Education Categories -->
+            <div class="education-categories">
+                <div class="category-tabs">
+                    <button class="tab-btn active" data-tab="sayuran">Sayuran</button>
+                    <button class="tab-btn" data-tab="buah">Buah-buahan</button>
+                    <button class="tab-btn" data-tab="herbal">Tanaman Herbal</button>
+                    <button class="tab-btn" data-tab="umum">Panduan Umum</button>
+                </div>
+
+                <!-- Sayuran Tab -->
+                <div class="tab-content active" id="sayuran">
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-carrot"></i>
+                        </div>
+                        <div class="guide-content">
+                            <h3>Cara Menanam Tomat</h3>
+                            <p>Tomat adalah tanaman yang mudah ditanam dan cocok untuk pemula. Berikut langkah-langkahnya:</p>
+                            <ul>
+                                <li>Siapkan bibit tomat berkualitas</li>
+                                <li>Tanam di media tanam yang gembur dan subur</li>
+                                <li>Berikan penyinaran matahari minimal 6 jam sehari</li>
+                                <li>Siram secara teratur setiap 2-3 hari</li>
+                                <li>Berikan pupuk organik setiap 2 minggu</li>
+                                <li>Pasang ajir untuk menopang tanaman</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-pepper-hot"></i>
+                        </div>
+                        <div class="guide-content">
+                            <h3>Panduan Menanam Cabai</h3>
+                            <p>Cabai membutuhkan perawatan khusus untuk hasil yang optimal:</p>
+                            <ul>
+                                <li>Pilih bibit cabai unggul</li>
+                                <li>Gunakan tanah dengan pH 6-7</li>
+                                <li>Jaga kelembaban tanah tetap konsisten</li>
+                                <li>Berikan pupuk NPK secara berkala</li>
+                                <li>Kendalikan hama dengan pestisida organik</li>
+                                <li>Panen saat buah berwarna merah 80%</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buah-buahan Tab -->
+                <div class="tab-content" id="buah">
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                        <div class="guide-content">
+                            <h3>Menanam Stroberi dalam Pot</h3>
+                            <p>Stroberi cocok ditanam dalam pot dengan perawatan yang tepat:</p>
+                            <ul>
+                                <li>Gunakan pot dengan diameter minimal 25cm</li>
+                                <li>Media tanam campuran tanah, kompos, dan sekam</li>
+                                <li>Letakkan di tempat dengan sinar matahari penuh</li>
+                                <li>Siram setiap hari pagi dan sore</li>
+                                <li>Berikan pupuk khusus buah setiap 3 minggu</li>
+                                <li>Panen saat buah berwarna merah merata</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tanaman Herbal Tab -->
+                <div class="tab-content" id="herbal">
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="guide-content">
+                            <h3>Budidaya Jahe</h3>
+                            <p>Jahe merupakan tanaman herbal yang banyak manfaatnya:</p>
+                            <ul>
+                                <li>Pilih rimpang jahe yang segar dan berkecambah</li>
+                                <li>Tanam di tanah gembur dengan drainase baik</li>
+                                <li>Berikan naungan 50% untuk tanaman muda</li>
+                                <li>Siram secukupnya, jangan sampai tergenang</li>
+                                <li>Berikan pupuk kandang setiap bulan</li>
+                                <li>Panen setelah 8-10 bulan</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panduan Umum Tab -->
+                <div class="tab-content" id="umum">
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <div class="guide-content">
+                            <h3>Tips Pemula Berkebun</h3>
+                            <p>Untuk Anda yang baru memulai berkebun:</p>
+                            <ul>
+                                <li>Mulai dengan tanaman yang mudah seperti kangkung atau bayam</li>
+                                <li>Pilih lokasi dengan sinar matahari cukup</li>
+                                <li>Gunakan media tanam yang berkualitas</li>
+                                <li>Pelajari kebutuhan air setiap tanaman</li>
+                                <li>Jangan takut gagal, belajar dari kesalahan</li>
+                                <li>Bergabung dengan komunitas untuk bertukar pengalaman</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <div class="guide-content">
+                            <h3>Mengendalikan Hama Organik</h3>
+                            <p>Cara alami mengendalikan hama tanaman:</p>
+                            <ul>
+                                <li>Gunakan larutan bawang putih untuk mengusir serangga</li>
+                                <li>Tanam bunga marigold sebagai tanaman pengusir hama</li>
+                                <li>Gunakan sabun cuci piring encer untuk kutu daun</li>
+                                <li>Buat perangkap lalat buah dengan cuka apel</li>
+                                <li>Gunakan nematoda untuk mengendalikan ulat tanah</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>@2025 SmartTani-Siti Maefaulan.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = this.dataset.tab;
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

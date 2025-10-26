@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SmartTani</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>SmartTani</h1>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav">
+                <a href="dashboard.html" class="active">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="plants.html">
+                    <i class="fas fa-leaf"></i> Tanaman Saya
+                </a>
+                <a href="history.html">
+                    <i class="fas fa-history"></i> Riwayat
+                </a>
+                <a href="education.html">
+                    <i class="fas fa-book"></i> Panduan
+                </a>
+                <a href="favorites.html">
+                    <i class="fas fa-star"></i> Favorit
+                </a>
+                
+                <div class="user-menu">
+                    <img src="https://ui-avatars.com/api/?name=User+Demo&background=4CAF50&color=fff" alt="User" class="user-avatar">
+                    <span>User Demo</span>
+                    <div class="dropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profil</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Dashboard</h1>
+                <p>Kelola dan pantau tanaman Anda dengan mudah</p>
+            </div>
+
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <h2>Selamat Datang, User Demo! 👋</h2>
+                <p>Mari pantau perkembangan tanaman Anda hari ini</p>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>5</h3>
+                        <p>Tanaman Aktif</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>2</h3>
+                        <p>Perlu Disiram</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>75%</h3>
+                        <p>Progress Rata-rata</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>3</h3>
+                        <p>Panen Bulan Ini</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search and Categories -->
+            <div class="search-section">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Cari tanaman...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i> Cari
+                    </button>
+                </div>
+                
+                <div class="category-filters">
+                    <button class="category-filter active" data-category="all">Semua</button>
+                    <button class="category-filter" data-category="Sayuran">Sayuran</button>
+                    <button class="category-filter" data-category="Buah">Buah</button>
+                    <button class="category-filter" data-category="Cabai">Cabai</button>
+                    <button class="category-filter" data-category="Herbal">Herbal</button>
+                </div>
+            </div>
+
+            <!-- Active Plants Section -->
+            <div class="section-header">
+                <h2>Tanaman yang Sedang Berjalan</h2>
+                <button class="btn-primary" onclick="openPlantingModal()">
+                    <i class="fas fa-plus"></i> Tanam Baru
+                </button>
+            </div>
+
+            <div class="plants-grid" id="activePlantsGrid">
+                <!-- Plants will be populated by JavaScript -->
+            </div>
+
+            <!-- Calendar Section -->
+            <div class="section-header">
+                <h2>Kalender Tanam</h2>
+            </div>
+            
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <h3>Januari 2024</h3>
+                    <div>
+                        <button><i class="fas fa-chevron-left"></i></button>
+                        <button><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="calendar">
+                    <!-- Calendar will be populated by JavaScript -->
+                </div>
+                <div class="calendar-legend">
+                    <div class="legend-item">
+                        <div class="legend-color siram"></div>
+                        <span>Penyiraman</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color pupuk"></div>
+                        <span>Pemupukan</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color panen"></div>
+                        <span>Panen</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>@2025 SmartTani-Siti Maefaulan.</p>
+        </div>
+    </footer>
+
+    <!-- Planting Modal -->
+    <div id="plantingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Mulai Menanam</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="plantForm" class="plant-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="plantName">Nama Tanaman</label>
+                            <input type="text" id="plantName" name="plantName" class="full-width" placeholder="Contoh: Tomat Cherry" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="plantType">Jenis Tanaman</label>
+                            <select id="plantType" name="plantType" class="full-width" required>
+                                <option value="">Pilih Jenis</option>
+                                <option value="Sayuran">Sayuran</option>
+                                <option value="Buah">Buah</option>
+                                <option value="Cabai">Cabai</option>
+                                <option value="Herbal">Herbal</option>
+                                <option value="Bunga">Bunga</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="plantAddress">Lokasi Tanam</label>
+                        <input type="text" id="plantAddress" name="plantAddress" class="full-width" placeholder="Contoh: Kebun belakang rumah" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startDate">Tanggal Mulai</label>
+                            <input type="date" id="startDate" name="startDate" class="full-width" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="waterSchedule">Jadwal Siram (hari)</label>
+                            <select id="waterSchedule" name="waterSchedule" class="full-width" required>
+                                <option value="1">Setiap Hari</option>
+                                <option value="2">2 Hari Sekali</option>
+                                <option value="3">3 Hari Sekali</option>
+                                <option value="7">Mingguan</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantity">Jumlah Tanaman</label>
+                        <input type="number" id="quantity" name="quantity" class="full-width" placeholder="Contoh: 5" min="1" required>
+                        <span class="form-help">Masukkan jumlah bibit yang ditanam</span>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="document.getElementById('plantingModal').style.display='none'">Batal</button>
+                        <button type="submit" class="btn-primary">Mulai Menanam</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Watering Modal -->
+    <div id="wateringModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Konfirmasi Penyiraman</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Silakan unggah bukti foto penyiraman tanaman.</p>
+                <form id="wateringForm" class="plant-form">
+                    <div class="form-group">
+                        <label for="wateringProof">Bukti Foto</label>
+                        <input type="file" id="wateringProof" class="full-width" accept="image/*" required>
+                        <span class="form-help">Foto harus menunjukkan proses penyiraman tanaman</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="wateringNotes">Catatan (Opsional)</label>
+                        <textarea id="wateringNotes" class="full-width" placeholder="Tambahkan catatan tentang kondisi tanaman..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="document.getElementById('wateringModal').style.display='none'">Batal</button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-tint"></i> Konfirmasi Penyiraman
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

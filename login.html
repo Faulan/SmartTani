@@ -3,10 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartTani - Login</title>
+    <title>Login - SmartTani</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Improved Checkbox Styles */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+        
+        .checkbox-container input[type="checkbox"] {
+            display: none;
+        }
+        
+        .checkmark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            background: white;
+            position: relative;
+        }
+        
+        .checkbox-container input:checked + .checkmark {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .checkbox-container input:checked + .checkmark::after {
+            content: '✓';
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .checkbox-container:hover .checkmark {
+            border-color: var(--primary-dark);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+        
+        /* Form Options Styling */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(76, 175, 80, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+        
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        /* Saved Accounts Styles */
+        .saved-accounts-section {
+            margin-bottom: 20px;
+        }
+
+        .saved-accounts-section .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .saved-accounts-section .section-header h4 {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .clear-all-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 12px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .clear-all-btn:hover {
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .saved-accounts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .saved-account-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .saved-account-item:hover {
+            border-color: var(--primary-color);
+            background: rgba(76, 175, 80, 0.05);
+        }
+
+        .saved-account-item.demo-account {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1));
+            border-color: var(--primary-color);
+        }
+
+        .saved-account-item img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+
+        .saved-account-info {
+            flex: 1;
+        }
+
+        .saved-account-name {
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        .saved-account-phone {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .account-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .account-actions {
+            position: relative;
+        }
+
+        .more-options-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .more-options-btn:hover {
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text-color);
+        }
+
+        .options-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            min-width: 120px;
+            z-index: 10;
+            display: none;
+        }
+
+        .options-dropdown.show {
+            display: block;
+        }
+
+        .option-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .option-item:hover {
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .option-item.delete {
+            color: var(--danger);
+        }
+
+        .option-item.delete:hover {
+            background: rgba(244, 67, 54, 0.1);
+        }
+    </style>
 </head>
 <body class="auth-body">
     <div class="auth-container">
@@ -18,76 +245,612 @@
                 </div>
                 <p>Masuk ke akun Anda</p>
             </div>
-
-            <form id="login-form" class="auth-form">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" id="email" placeholder="Masukkan email Anda" required>
+            
+            <form class="auth-form" id="loginForm">
+                <!-- Saved Accounts Section -->
+                <div class="saved-accounts-section" id="savedAccountsSection">
+                    <div class="section-header">
+                        <h4>Akun Tersimpan</h4>
+                        <button class="clear-all-btn" onclick="clearAllAccounts()">Hapus Semua</button>
+                    </div>
+                    <div class="saved-accounts-list" id="savedAccountsList">
+                        <!-- Saved accounts will be populated by JavaScript -->
+                    </div>
+                    <div class="divider">
+                        <span>Atau</span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="loginPhone">Nomor Telepon</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" id="loginPhone" placeholder="Masukkan nomor telepon" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
                     <div class="input-with-icon password-container">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="password" placeholder="Masukkan password Anda" required>
+                        <input type="password" id="loginPassword" placeholder="Masukkan password" required>
                         <button type="button" class="toggle-password">
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
                 </div>
-
+                
+                <!-- Improved Checkbox Section -->
                 <div class="form-options">
-                    <label class="checkbox-container">
-                        <input type="checkbox" id="remember-me">
+                    <label class="checkbox-container remember-me">
+                        <input type="checkbox" id="rememberMe">
                         <span class="checkmark"></span>
-                        Ingat saya
+                        <span class="remember-text">Ingat Saya</span>
                     </label>
-                    <a href="#forgot-password" class="forgot-password" id="forgot-password-link">Lupa password?</a>
+                    <a href="#" class="forgot-password" onclick="openForgotPasswordModal()">Lupa Password?</a>
                 </div>
-
-                <button type="submit" class="btn-primary btn-full btn-center">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Masuk
+                
+                <button type="submit" class="btn-primary btn-full">
+                    <i class="fas fa-sign-in-alt"></i> Masuk
                 </button>
-
-                <div class="divider">
-                    <span>atau</span>
-                </div>
-
-                <button type="button" class="btn-google btn-full" id="google-login-btn">
-                    <i class="fab fa-google"></i>
-                    Masuk dengan Google
-                </button>
-
+                
                 <div class="auth-footer">
-                    <p>Belum punya akun? <a href="register.html">Daftar di sini</a></p>
+                    <p>Belum punya akun? <a href="register.html">Daftar Sekarang</a></p>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Forgot Password Modal -->
-    <div id="forgot-password-modal" class="modal">
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Lupa Password</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Masukkan nomor telepon Anda untuk mereset password.</p>
+                <form id="forgotPasswordForm">
+                    <div class="form-group">
+                        <label for="forgotPhone">Nomor Telepon</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="forgotPhone" class="full-width" placeholder="Masukkan nomor telepon terdaftar" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Kirim Kode Reset</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Password Modal -->
+    <div id="resetPasswordModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Reset Password</h3>
                 <button class="close-modal">&times;</button>
             </div>
             <div class="modal-body">
-                <!-- Konten akan diisi oleh JavaScript -->
-            </div>
-            <div class="modal-footer">
-                <!-- Tombol akan diisi oleh JavaScript -->
+                <div class="reset-steps">
+                    <div class="step active">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Verifikasi</div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step active">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Reset</div>
+                    </div>
+                </div>
+                
+                <p>Kode verifikasi telah dikirim ke WhatsApp Anda. Silakan buat password baru.</p>
+                
+                <form id="resetPasswordForm" class="reset-form">
+                    <div class="form-group">
+                        <label for="verificationCodeReset">Kode Verifikasi</label>
+                        <input type="text" id="verificationCodeReset" class="full-width" placeholder="Masukkan 6 digit kode" maxlength="6" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newPassword">Password Baru</label>
+                        <input type="password" id="newPassword" class="full-width" placeholder="Masukkan password baru" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmNewPassword">Konfirmasi Password Baru</label>
+                        <input type="password" id="confirmNewPassword" class="full-width" placeholder="Konfirmasi password baru" required>
+                    </div>
+                    
+                    <div class="password-requirements">
+                        <h4>Password harus mengandung:</h4>
+                        <ul>
+                            <li data-requirement="length">Minimal 8 karakter</li>
+                            <li data-requirement="lowercase">Huruf kecil (a-z)</li>
+                            <li data-requirement="uppercase">Huruf besar (A-Z)</li>
+                            <li data-requirement="number">Angka (0-9)</li>
+                            <li data-requirement="special">Karakter khusus</li>
+                        </ul>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary btn-full">Reset Password</button>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- Notification Container -->
-    <div id="notification-container"></div>
+    <script>
+        // Demo account data
+        const demoAccount = {
+            id: 'demo',
+            name: 'Akun Demo',
+            phone: '081234567890',
+            password: 'demopassword',
+            email: 'demo@smarttani.com',
+            avatar: 'https://ui-avatars.com/api/?name=Akun+Demo&background=4CAF50&color=fff',
+            isDemo: true
+        };
 
-    <script src="script.js"></script>
+        // Improved Checkbox Functionality
+        function setupLoginCheckbox() {
+            const rememberMeCheckbox = document.getElementById('rememberMe');
+            const checkmark = document.querySelector('.checkmark');
+            
+            if (rememberMeCheckbox && checkmark) {
+                // Load saved state from localStorage
+                const savedState = localStorage.getItem('rememberMe');
+                if (savedState === 'true') {
+                    rememberMeCheckbox.checked = true;
+                }
+                
+                // Add click event to checkmark
+                checkmark.addEventListener('click', function() {
+                    rememberMeCheckbox.checked = !rememberMeCheckbox.checked;
+                });
+            }
+        }
+        
+        // Forgot Password Modal
+        function openForgotPasswordModal() {
+            event.preventDefault();
+            document.getElementById('forgotPasswordModal').style.display = 'block';
+        }
+        
+        function closeForgotPasswordModal() {
+            document.getElementById('forgotPasswordModal').style.display = 'none';
+        }
+        
+        // Modal event listeners
+        function setupModals() {
+            // Close modals
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                });
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal')) {
+                    e.target.style.display = 'none';
+                }
+            });
+        }
+        
+        // Form submission handler
+        function setupLoginForm() {
+            const loginForm = document.getElementById('loginForm');
+            if (!loginForm) return;
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const phone = document.getElementById('loginPhone').value;
+                const password = document.getElementById('loginPassword').value;
+                const rememberMe = document.getElementById('rememberMe').checked;
+                
+                // Validasi
+                if (!phone || !password) {
+                    showNotification('Harap isi semua field', 'error');
+                    return;
+                }
+                
+                // Cek apakah pengguna terdaftar (termasuk demo account)
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                let user = registeredUsers.find(u => u.phone === phone);
+                
+                // Jika tidak ditemukan di registered users, cek di demo account
+                if (!user && phone === demoAccount.phone) {
+                    user = demoAccount;
+                }
+                
+                if (!user) {
+                    showNotification('Maaf, nomor telepon yang Anda masukkan belum terdaftar', 'error');
+                    return;
+                }
+                
+                // Verifikasi password
+                if (user.password !== password) {
+                    showNotification('Maaf, password yang Anda masukkan salah', 'error');
+                    return;
+                }
+                
+                // Login berhasil
+                const currentUser = {
+                    id: user.id,
+                    name: user.name,
+                    phone: user.phone,
+                    email: user.email,
+                    avatar: user.avatar,
+                    isDemo: user.isDemo || false
+                };
+                
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Simpan ke akun tersimpan jika remember me dicentang dan bukan demo account
+                if (rememberMe && !user.isDemo) {
+                    const savedAccounts = JSON.parse(localStorage.getItem('savedAccounts')) || [];
+                    if (!savedAccounts.find(acc => acc.phone === user.phone)) {
+                        savedAccounts.push({
+                            name: user.name,
+                            phone: user.phone,
+                            avatar: user.avatar,
+                            isDemo: user.isDemo || false
+                        });
+                        localStorage.setItem('savedAccounts', JSON.stringify(savedAccounts));
+                        showNotification('Akun berhasil disimpan!', 'success');
+                    }
+                }
+                
+                showNotification('Login berhasil!', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+            });
+        }
+        
+        // Forgot password form handler
+        function setupForgotPasswordForm() {
+            const forgotForm = document.getElementById('forgotPasswordForm');
+            if (!forgotForm) return;
+            
+            forgotForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const phone = document.getElementById('forgotPhone').value;
+                
+                if (!phone) {
+                    showNotification('Harap masukkan nomor telepon', 'error');
+                    return;
+                }
+                
+                // Cek apakah nomor terdaftar (tidak termasuk demo account)
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                const user = registeredUsers.find(u => u.phone === phone);
+                
+                if (!user) {
+                    showNotification('Nomor telepon tidak terdaftar', 'error');
+                    return;
+                }
+                
+                // Generate dan simpan kode verifikasi
+                const verificationCode = Math.floor(100000 + Math.random() * 900000);
+                sessionStorage.setItem('resetVerificationCode', verificationCode);
+                sessionStorage.setItem('resetPhone', phone);
+                
+                // Simulasi kirim kode reset ke WhatsApp
+                showNotification(`Kode reset (${verificationCode}) telah dikirim ke WhatsApp Anda`, 'success');
+                document.getElementById('forgotPasswordModal').style.display = 'none';
+                document.getElementById('resetPasswordModal').style.display = 'block';
+            });
+        }
+        
+        // Reset password form handler
+        function setupResetPasswordForm() {
+            const resetForm = document.getElementById('resetPasswordForm');
+            if (!resetForm) return;
+            
+            resetForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const verificationCode = document.getElementById('verificationCodeReset').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmNewPassword').value;
+                
+                const storedCode = sessionStorage.getItem('resetVerificationCode');
+                const storedPhone = sessionStorage.getItem('resetPhone');
+                
+                if (verificationCode !== storedCode) {
+                    showNotification('Kode verifikasi salah', 'error');
+                    return;
+                }
+                
+                if (newPassword !== confirmPassword) {
+                    showNotification('Password tidak cocok', 'error');
+                    return;
+                }
+                
+                // Update password di localStorage
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                const userIndex = registeredUsers.findIndex(u => u.phone === storedPhone);
+                
+                if (userIndex > -1) {
+                    registeredUsers[userIndex].password = newPassword;
+                    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+                }
+                
+                showNotification('Password berhasil direset!', 'success');
+                
+                setTimeout(() => {
+                    document.getElementById('resetPasswordModal').style.display = 'none';
+                    window.location.href = 'login.html';
+                }, 2000);
+            });
+        }
+
+        // Password toggle functionality
+        function setupPasswordToggle() {
+            document.querySelectorAll('.toggle-password').forEach(button => {
+                button.addEventListener('click', function() {
+                    const input = this.parentElement.querySelector('input');
+                    const icon = this.querySelector('i');
+                    
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        icon.className = 'fas fa-eye-slash';
+                    } else {
+                        input.type = 'password';
+                        icon.className = 'fas fa-eye';
+                    }
+                });
+            });
+        }
+
+        // Password requirements validation
+        function setupPasswordRequirements() {
+            const passwordInput = document.getElementById('newPassword');
+            if (!passwordInput) return;
+
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                const requirements = {
+                    length: password.length >= 8,
+                    lowercase: /[a-z]/.test(password),
+                    uppercase: /[A-Z]/.test(password),
+                    number: /[0-9]/.test(password),
+                    special: /[^A-Za-z0-9]/.test(password)
+                };
+
+                Object.keys(requirements).forEach(key => {
+                    const element = document.querySelector(`[data-requirement="${key}"]`);
+                    if (element) {
+                        if (requirements[key]) {
+                            element.classList.add('valid');
+                        } else {
+                            element.classList.remove('valid');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Load saved accounts including demo account
+        function loadSavedAccounts() {
+            const savedAccountsSection = document.getElementById('savedAccountsSection');
+            const savedAccountsList = document.getElementById('savedAccountsList');
+            let savedAccounts = JSON.parse(localStorage.getItem('savedAccounts')) || [];
+            
+            // Tambahkan demo account jika belum ada
+            const hasDemoAccount = savedAccounts.some(acc => acc.isDemo);
+            if (!hasDemoAccount) {
+                savedAccounts.unshift({
+                    name: demoAccount.name,
+                    phone: demoAccount.phone,
+                    avatar: demoAccount.avatar,
+                    isDemo: true
+                });
+                localStorage.setItem('savedAccounts', JSON.stringify(savedAccounts));
+            }
+            
+            savedAccountsList.innerHTML = '';
+            
+            savedAccounts.forEach((account, index) => {
+                const accountItem = document.createElement('div');
+                accountItem.className = `saved-account-item ${account.isDemo ? 'demo-account' : ''}`;
+                accountItem.innerHTML = `
+                    <img src="${account.avatar}" alt="${account.name}">
+                    <div class="saved-account-info">
+                        <div class="saved-account-name">
+                            ${account.name}
+                            ${account.isDemo ? '<span class="account-badge">DEMO</span>' : ''}
+                        </div>
+                        <div class="saved-account-phone">${account.phone}</div>
+                    </div>
+                    <div class="account-actions">
+                        <button class="more-options-btn" onclick="toggleOptionsDropdown(${index})">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <div class="options-dropdown" id="options-${index}">
+                            <div class="option-item delete" onclick="deleteAccount(${index})">
+                                <i class="fas fa-trash"></i>
+                                <span>Hapus</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Untuk semua akun tersimpan, langsung login tanpa validasi
+                accountItem.addEventListener('click', function(e) {
+                    // Cegah event bubbling jika mengklik options dropdown
+                    if (!e.target.closest('.account-actions')) {
+                        loginWithSavedAccount(account);
+                    }
+                });
+                
+                savedAccountsList.appendChild(accountItem);
+            });
+        }
+
+        // Login dengan akun tersimpan
+        function loginWithSavedAccount(account) {
+            if (account.isDemo) {
+                // Login dengan akun demo
+                const currentUser = {
+                    id: demoAccount.id,
+                    name: demoAccount.name,
+                    phone: demoAccount.phone,
+                    email: demoAccount.email,
+                    avatar: demoAccount.avatar,
+                    isDemo: true
+                };
+                
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showNotification('Login dengan akun demo berhasil!', 'success');
+            } else {
+                // Login dengan akun biasa
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                const user = registeredUsers.find(u => u.phone === account.phone);
+                
+                if (user) {
+                    const currentUser = {
+                        id: user.id,
+                        name: user.name,
+                        phone: user.phone,
+                        email: user.email,
+                        avatar: user.avatar,
+                        isDemo: false
+                    };
+                    
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    showNotification(`Login dengan ${user.name} berhasil!`, 'success');
+                } else {
+                    showNotification('Akun tidak ditemukan', 'error');
+                    return;
+                }
+            }
+            
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
+        }
+
+        // Toggle options dropdown
+        function toggleOptionsDropdown(index) {
+            event.stopPropagation();
+            const dropdown = document.getElementById(`options-${index}`);
+            const allDropdowns = document.querySelectorAll('.options-dropdown');
+            
+            // Tutup semua dropdown lainnya
+            allDropdowns.forEach(d => {
+                if (d !== dropdown) {
+                    d.classList.remove('show');
+                }
+            });
+            
+            // Toggle dropdown yang diklik
+            dropdown.classList.toggle('show');
+        }
+
+        // Hapus akun dari saved accounts
+        function deleteAccount(index) {
+            event.stopPropagation();
+            const savedAccounts = JSON.parse(localStorage.getItem('savedAccounts')) || [];
+            const account = savedAccounts[index];
+            
+            if (account.isDemo) {
+                showNotification('Akun demo tidak dapat dihapus', 'warning');
+                return;
+            }
+            
+            if (confirm(`Apakah Anda yakin ingin menghapus akun ${account.name}?`)) {
+                savedAccounts.splice(index, 1);
+                localStorage.setItem('savedAccounts', JSON.stringify(savedAccounts));
+                loadSavedAccounts();
+                showNotification('Akun berhasil dihapus', 'success');
+            }
+        }
+
+        // Hapus semua akun (kecuali demo)
+        function clearAllAccounts() {
+            event.stopPropagation();
+            const savedAccounts = JSON.parse(localStorage.getItem('savedAccounts')) || [];
+            const nonDemoAccounts = savedAccounts.filter(acc => !acc.isDemo);
+            
+            if (nonDemoAccounts.length === 0) {
+                showNotification('Tidak ada akun yang bisa dihapus', 'info');
+                return;
+            }
+            
+            if (confirm(`Apakah Anda yakin ingin menghapus semua ${nonDemoAccounts.length} akun tersimpan?`)) {
+                // Simpan hanya demo account
+                const demoAccounts = savedAccounts.filter(acc => acc.isDemo);
+                localStorage.setItem('savedAccounts', JSON.stringify(demoAccounts));
+                loadSavedAccounts();
+                showNotification('Semua akun berhasil dihapus', 'success');
+            }
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.options-dropdown').forEach(dropdown => {
+                dropdown.classList.remove('show');
+            });
+        });
+
+        // Notification function
+        function showNotification(message, type = 'info') {
+            // Remove existing notifications
+            document.querySelectorAll('.notification').forEach(notif => notif.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const icons = {
+                success: 'check-circle',
+                error: 'exclamation-circle',
+                warning: 'exclamation-triangle',
+                info: 'info-circle'
+            };
+            
+            notification.innerHTML = `
+                <i class="fas fa-${icons[type] || 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setupLoginCheckbox();
+            setupModals();
+            setupLoginForm();
+            setupForgotPasswordForm();
+            setupResetPasswordForm();
+            setupPasswordToggle();
+            setupPasswordRequirements();
+            loadSavedAccounts();
+
+            // Check if user is already logged in
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                window.location.href = 'dashboard.html';
+            }
+        });
+        
+        // Export functions untuk digunakan di HTML
+        window.openForgotPasswordModal = openForgotPasswordModal;
+        window.showNotification = showNotification;
+        window.toggleOptionsDropdown = toggleOptionsDropdown;
+        window.deleteAccount = deleteAccount;
+        window.clearAllAccounts = clearAllAccounts;
+        window.loginWithSavedAccount = loginWithSavedAccount;
+    </script>
 </body>
 </html>
