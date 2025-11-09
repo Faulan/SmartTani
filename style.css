@@ -2208,7 +2208,7 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
     z-index: 1000;
     transform: translateX(400px);
     opacity: 0;
-    transition: all 0.3s ease;
+    transition: all 0.5s ease;
     border-left: 4px solid var(--primary-color);
 }
 

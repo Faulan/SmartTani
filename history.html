@@ -7,6 +7,544 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --primary-dark: #388E3C;
+            --primary-light: #C8E6C9;
+            --text-color: #333;
+            --text-light: #666;
+            --border-color: #ddd;
+            --success: #4CAF50;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --info: #2196F3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f5f5;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styling */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .nav a.active {
+            color: var(--primary-color);
+        }
+
+        .nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 0;
+            min-width: 150px;
+            z-index: 1000;
+        }
+
+        .user-menu:hover .dropdown {
+            display: block;
+        }
+
+        .dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown a:hover {
+            background: var(--primary-light);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 30px 0;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .page-header p {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-light);
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+
+        .stat-info h3 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .stat-info p {
+            margin: 5px 0 0 0;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .category-filter {
+            padding: 10px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            background: white;
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-filter:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .category-filter.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        /* History Grid */
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .history-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .history-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .history-card.completed {
+            border-left: 4px solid var(--success);
+        }
+
+        .history-card.failed {
+            border-left: 4px solid var(--danger);
+        }
+
+        .history-card.ongoing {
+            border-left: 4px solid var(--info);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .plant-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        .plant-type {
+            background: var(--primary-light);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .history-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .history-detail {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .history-detail i {
+            width: 16px;
+            color: var(--primary-color);
+        }
+
+        .history-progress {
+            margin: 20px 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .history-status {
+            background: var(--primary-light);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .status-label {
+            color: var(--text-light);
+        }
+
+        .status-value {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .status-value.completed {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .status-value.failed {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .status-value.ongoing {
+            color: var(--info);
+            font-weight: 600;
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-primary, .btn-secondary {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            grid-column: 1 / -1;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            margin: 0 0 10px 0;
+            color: var(--text-color);
+            font-size: 20px;
+        }
+
+        .empty-state p {
+            margin: 0 0 25px 0;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            border-top: 1px solid var(--border-color);
+            padding: 20px 0;
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 50px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                gap: 15px;
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .history-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-filters {
+                flex-direction: column;
+            }
+
+            .history-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .filter-section {
+                padding: 15px;
+            }
+            
+            .history-card {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -22,7 +560,7 @@
             </button>
             
             <nav class="nav">
-                <a href="dashboard.html">
+                <a href="index.html">
                     <i class="fas fa-home"></i> Dashboard
                 </a>
                 <a href="plants.html">
@@ -31,16 +569,10 @@
                 <a href="history.html" class="active">
                     <i class="fas fa-history"></i> Riwayat
                 </a>
-                <a href="education.html">
-                    <i class="fas fa-book"></i> Panduan
-                </a>
-                <a href="favorites.html">
-                    <i class="fas fa-star"></i> Favorit
-                </a>
                 
                 <div class="user-menu">
-                    <img src="https://ui-avatars.com/api/?name=User+Demo&background=4CAF50&color=fff" alt="User" class="user-avatar">
-                    <span>User Demo</span>
+                    <img src="https://ui-avatars.com/api/?name=User&background=4CAF50&color=fff" alt="User" class="user-avatar">
+                    <span id="userName">User</span>
                     <div class="dropdown">
                         <a href="profile.html"><i class="fas fa-user"></i> Profil</a>
                         <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -56,188 +588,70 @@
             <!-- Page Header -->
             <div class="page-header">
                 <h1>Riwayat Tanaman</h1>
-                <p>Lihat semua tanaman yang pernah Anda tanam</p>
+                <p>Pantau perkembangan dan hasil tanaman yang pernah Anda tanam</p>
             </div>
 
-            <!-- History Tabs -->
-            <div class="category-filters" style="margin-bottom: 30px;">
-                <button class="category-filter active" data-status="all">Semua</button>
-                <button class="category-filter" data-status="completed">Berhasil</button>
-                <button class="category-filter" data-status="failed">Gagal</button>
-                <button class="category-filter" data-status="ongoing">Sedang Berjalan</button>
-            </div>
-
-            <!-- History List -->
-            <div class="plants-grid">
-                <!-- Completed Plant -->
-                <div class="plant-card">
-                    <div class="plant-image" style="background: linear-gradient(45deg, #4CAF50, #8BC34A);">
-                        <i class="fas fa-seedling"></i>
-                    </div>
-                    <div class="plant-header" style="background: #4CAF50;">
-                        <div class="plant-name">Tomat Cherry</div>
-                        <div class="plant-type">Berhasil</div>
-                    </div>
-                    <div class="plant-body">
-                        <div class="plant-details">
-                            <div class="plant-detail">
-                                <span>Periode:</span>
-                                <span>15 Jan - 20 Mar 2024</span>
-                            </div>
-                            <div class="plant-detail">
-                                <span>Hasil Panen:</span>
-                                <span>2.5 kg</span>
-                            </div>
-                            <div class="plant-detail">
-                                <span>Lokasi:</span>
-                                <span>Kebun Belakang</span>
-                            </div>
-                        </div>
-                        <div class="plant-status">
-                            <div class="status-item">
-                                <i class="fas fa-chart-line"></i>
-                                <span>Status:</span>
-                                <span class="status-badge completed">Berhasil</span>
-                            </div>
-                        </div>
-                        <div class="plant-actions">
-                            <button class="btn-secondary">
-                                <i class="fas fa-chart-bar"></i> Statistik
-                            </button>
-                            <button class="btn-primary">
-                                <i class="fas fa-redo"></i> Tanam Lagi
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Failed Plant -->
-                <div class="plant-card">
-                    <div class="plant-image" style="background: linear-gradient(45deg, #F44336, #FF9800);">
-                        <i class="fas fa-seedling"></i>
-                    </div>
-                    <div class="plant-header" style="background: #F44336;">
-                        <div class="plant-name">Cabai Rawit</div>
-                        <div class="plant-type">Gagal</div>
-                    </div>
-                    <div class="plant-body">
-                        <div class="plant-details">
-                            <div class="plant-detail">
-                                <span>Periode:</span>
-                                <span>10 Jan - 15 Feb 2024</span>
-                            </div>
-                            <div class="plant-detail">
-                                <span>Penyebab:</span>
-                                <span>Serangan Hama</span>
-                            </div>
-                            <div class="plant-detail">
-                                <span>Lokasi:</span>
-                                <span>Pot Depan</span>
-                            </div>
-                        </div>
-                        <div class="plant-status">
-                            <div class="status-item">
-                                <i class="fas fa-exclamation-triangle"></i>
-                                <span>Status:</span>
-                                <span class="status-badge warning">Gagal</span>
-                            </div>
-                        </div>
-                        <div class="plant-actions">
-                            <button class="btn-secondary">
-                                <i class="fas fa-book"></i> Pelajari
-                            </button>
-                            <button class="btn-primary">
-                                <i class="fas fa-redo"></i> Coba Lagi
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Ongoing Plant -->
-                <div class="plant-card">
-                    <div class="plant-image" style="background: linear-gradient(45deg, #2196F3, #03A9F4);">
-                        <i class="fas fa-seedling"></i>
-                    </div>
-                    <div class="plant-header" style="background: #2196F3;">
-                        <div class="plant-name">Bayam</div>
-                        <div class="plant-type">Berjalan</div>
-                    </div>
-                    <div class="plant-body">
-                        <div class="plant-details">
-                            <div class="plant-detail">
-                                <span>Mulai:</span>
-                                <span>5 Jan 2024</span>
-                            </div>
-                            <div class="plant-detail">
-                                <span>Estimasi:</span>
-                                <span>25 Hari Lagi</span>
-                            </div>
-                            <div class="plant-detail">
-                                <span>Progress:</span>
-                                <span>60%</span>
-                            </div>
-                        </div>
-                        <div class="plant-status">
-                            <div class="status-item">
-                                <i class="fas fa-tint"></i>
-                                <span>Siram:</span>
-                                <span class="status-badge pending">Besok</span>
-                            </div>
-                        </div>
-                        <div class="plant-actions">
-                            <button class="btn-secondary">
-                                <i class="fas fa-eye"></i> Pantau
-                            </button>
-                            <button class="btn-primary">
-                                <i class="fas fa-tint"></i> Siram
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Statistics Section -->
-            <div class="section-header" style="margin-top: 50px;">
-                <h2>Statistik Tanaman</h2>
-            </div>
-
+            <!-- Stats Overview -->
             <div class="stats-section">
                 <div class="stat-card">
-                    <div class="stat-icon" style="background: #E8F5E8; color: #4CAF50;">
+                    <div class="stat-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalPlants">0</h3>
+                        <p>Total Tanaman</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>12</h3>
-                        <p>Tanaman Berhasil</p>
+                        <h3 id="completedPlants">0</h3>
+                        <p>Berhasil Panen</p>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon" style="background: #FFEBEE; color: #F44336;">
-                        <i class="fas fa-times-circle"></i>
+                    <div class="stat-icon">
+                        <i class="fas fa-tint"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>3</h3>
-                        <p>Tanaman Gagal</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #E3F2FD; color: #2196F3;">
-                        <i class="fas fa-seedling"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>5</h3>
+                        <h3 id="activePlants">0</h3>
                         <p>Sedang Berjalan</p>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon" style="background: #FFF3E0; color: #FF9800;">
+                    <div class="stat-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>80%</h3>
+                        <h3 id="successRate">0%</h3>
                         <p>Rate Keberhasilan</p>
                     </div>
                 </div>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="category-filters">
+                    <button class="category-filter active" data-status="all">
+                        <i class="fas fa-layer-group"></i> Semua
+                    </button>
+                    <button class="category-filter" data-status="completed">
+                        <i class="fas fa-check-circle"></i> Berhasil
+                    </button>
+                    <button class="category-filter" data-status="active">
+                        <i class="fas fa-tint"></i> Berjalan
+                    </button>
+                    <button class="category-filter" data-status="failed">
+                        <i class="fas fa-times-circle"></i> Gagal
+                    </button>
+                </div>
+            </div>
+
+            <!-- History Grid -->
+            <div class="history-grid" id="historyGrid">
+                <!-- History items will be populated by JavaScript -->
             </div>
         </div>
     </main>
@@ -245,10 +659,395 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>@2025 SmartTani-Siti Maefaulan.</p>
+            <p>@2025 SmartTani - Mesin Pengingat Masa Tanam dan Panen</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Data tanaman dari localStorage (spesifik user)
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        let plants = [];
+        let currentFilter = 'all';
+
+        // Initialize history page
+        function initHistoryPage() {
+            // Check if user is logged in
+            if (!currentUser) {
+                alert('Silakan login terlebih dahulu');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Load user-specific plants data
+            loadUserPlants();
+            updateUserInfo();
+            updateHistoryPage();
+            setupEventListeners();
+        }
+
+        // Load plants data for current user
+        function loadUserPlants() {
+            const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
+            plants = allPlants.filter(plant => plant.userId === currentUser.id);
+            
+            // If no plants found for user, show empty state
+            if (plants.length === 0) {
+                console.log('No plants found for user:', currentUser.id);
+            }
+        }
+
+        // Update user info in header
+        function updateUserInfo() {
+            const userNameElement = document.getElementById('userName');
+            const userAvatar = document.querySelector('.user-avatar');
+            
+            if (currentUser) {
+                userNameElement.textContent = currentUser.name || currentUser.email || 'User';
+                
+                // Update avatar with user's first letter
+                const firstName = currentUser.name ? currentUser.name.split(' ')[0] : 'U';
+                userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name || 'User')}&background=4CAF50&color=fff`;
+            }
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+                document.querySelector('.nav').classList.toggle('active');
+            });
+
+            // Filter buttons
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterHistory(this.dataset.status);
+                });
+            });
+        }
+
+        // Filter history
+        function filterHistory(status) {
+            currentFilter = status;
+            
+            // Update active filter button
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderHistory();
+        }
+
+        // Update history page
+        function updateHistoryPage() {
+            updateStats();
+            renderHistory();
+        }
+
+        // Update statistics
+        function updateStats() {
+            const totalPlants = plants.length;
+            const completedPlants = plants.filter(plant => plant.progress >= 100).length;
+            const activePlants = plants.filter(plant => plant.progress < 100).length;
+            const successRate = totalPlants > 0 ? Math.round((completedPlants / totalPlants) * 100) : 0;
+
+            document.getElementById('totalPlants').textContent = totalPlants;
+            document.getElementById('completedPlants').textContent = completedPlants;
+            document.getElementById('activePlants').textContent = activePlants;
+            document.getElementById('successRate').textContent = successRate + '%';
+        }
+
+        // Render history based on filter
+        function renderHistory() {
+            const grid = document.getElementById('historyGrid');
+            let filteredPlants = plants;
+
+            // Apply filter
+            switch(currentFilter) {
+                case 'completed':
+                    filteredPlants = plants.filter(plant => plant.progress >= 100);
+                    break;
+                case 'active':
+                    filteredPlants = plants.filter(plant => plant.progress < 100);
+                    break;
+                case 'failed':
+                    filteredPlants = plants.filter(plant => plant.status === 'failed');
+                    break;
+                default:
+                    filteredPlants = plants;
+            }
+
+            // Sort by creation date (newest first)
+            filteredPlants.sort((a, b) => new Date(b.createdAt || b.startDate) - new Date(a.createdAt || a.startDate));
+
+            if (filteredPlants.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-seedling"></i>
+                        <h3>Tidak ada riwayat tanaman</h3>
+                        <p>${currentFilter !== 'all' ? 'Tidak ada tanaman dengan status ini' : 'Mulai dengan menanam tanaman pertama Anda'}</p>
+                        ${currentFilter === 'all' ? 
+                            '<a href="plants.html" class="btn-primary" style="display: inline-flex; text-decoration: none;"><i class="fas fa-plus"></i> Tanam Baru</a>' : 
+                            '<button class="btn-primary" onclick="clearFilter()"><i class="fas fa-times"></i> Hapus Filter</button>'
+                        }
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filteredPlants.map(plant => {
+                const isCompleted = plant.progress >= 100;
+                const isFailed = plant.status === 'failed';
+                const isActive = plant.progress < 100 && !isFailed;
+                
+                let cardClass = '';
+                let statusText = '';
+                let statusClass = '';
+                let harvestDate = '';
+
+                if (isCompleted) {
+                    cardClass = 'completed';
+                    statusText = 'Berhasil Panen';
+                    statusClass = 'completed';
+                    // Calculate harvest date based on start date and growth period
+                    const startDate = new Date(plant.startDate);
+                    const harvest = new Date(startDate);
+                    const growthPeriod = plant.growthPeriod || 90; // Default 90 days
+                    harvest.setDate(startDate.getDate() + growthPeriod);
+                    harvestDate = formatDate(harvest);
+                } else if (isFailed) {
+                    cardClass = 'failed';
+                    statusText = 'Gagal';
+                    statusClass = 'failed';
+                } else {
+                    cardClass = 'ongoing';
+                    statusText = 'Sedang Berjalan';
+                    statusClass = 'ongoing';
+                }
+
+                // Calculate days since planting
+                const startDate = new Date(plant.startDate);
+                const today = new Date();
+                const daysSince = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+                const growthPeriod = plant.growthPeriod || 90;
+                const daysToHarvest = isActive ? Math.max(0, growthPeriod - daysSince) : 0;
+
+                return `
+                    <div class="history-card ${cardClass}">
+                        <div class="history-header">
+                            <h3 class="plant-name">${plant.name}</h3>
+                            <span class="plant-type">${plant.type}</span>
+                        </div>
+                        
+                        <div class="history-details">
+                            <div class="history-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${plant.location}</span>
+                            </div>
+                            <div class="history-detail">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Mulai: ${formatDate(plant.startDate)}</span>
+                            </div>
+                            ${isCompleted ? `
+                            <div class="history-detail">
+                                <i class="fas fa-seedling"></i>
+                                <span>Panen: ${harvestDate}</span>
+                            </div>
+                            ` : ''}
+                            <div class="history-detail">
+                                <i class="fas fa-tint"></i>
+                                <span>Siram: ${getWaterScheduleText(plant.waterSchedule)}</span>
+                            </div>
+                            <div class="history-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>Waktu: ${plant.waterTime}</span>
+                            </div>
+                            <div class="history-detail">
+                                <i class="fas fa-hashtag"></i>
+                                <span>Jumlah: ${plant.quantity} tanaman</span>
+                            </div>
+                        </div>
+
+                        ${isActive ? `
+                        <div class="history-progress">
+                            <div class="progress-info">
+                                <span>Progress Tumbuh</span>
+                                <span>${plant.progress}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${plant.progress}%"></div>
+                            </div>
+                        </div>
+                        ` : ''}
+
+                        <div class="history-status">
+                            <div class="status-item">
+                                <span class="status-label">Status:</span>
+                                <span class="status-value ${statusClass}">${statusText}</span>
+                            </div>
+                            ${isActive ? `
+                            <div class="status-item" style="margin-top: 8px;">
+                                <span class="status-label">Estimasi Panen:</span>
+                                <span class="status-value">${daysToHarvest} hari lagi</span>
+                            </div>
+                            ` : ''}
+                            ${isCompleted ? `
+                            <div class="status-item" style="margin-top: 8px;">
+                                <span class="status-label">Hasil:</span>
+                                <span class="status-value">${calculateHarvest(plant.quantity)} kg</span>
+                            </div>
+                            ` : ''}
+                        </div>
+
+                        <div class="history-actions">
+                            ${isActive ? `
+                            <button class="btn-primary" onclick="continuePlanting('${plant.id}')">
+                                <i class="fas fa-eye"></i> Pantau
+                            </button>
+                            <button class="btn-secondary" onclick="viewDetails('${plant.id}')">
+                                <i class="fas fa-info-circle"></i> Detail
+                            </button>
+                            ` : ''}
+                            ${isCompleted ? `
+                            <button class="btn-primary" onclick="plantAgain('${plant.id}')">
+                                <i class="fas fa-redo"></i> Tanam Lagi
+                            </button>
+                            <button class="btn-secondary" onclick="viewDetails('${plant.id}')">
+                                <i class="fas fa-chart-bar"></i> Statistik
+                            </button>
+                            ` : ''}
+                            ${isFailed ? `
+                            <button class="btn-primary" onclick="learnFromFailure('${plant.id}')">
+                                <i class="fas fa-book"></i> Pelajari
+                            </button>
+                            <button class="btn-secondary" onclick="tryAgain('${plant.id}')">
+                                <i class="fas fa-redo"></i> Coba Lagi
+                            </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Format date to readable format
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { day: 'numeric', month: 'short', year: 'numeric' };
+            return date.toLocaleDateString('id-ID', options);
+        }
+
+        // Get water schedule text
+        function getWaterScheduleText(schedule) {
+            switch(schedule) {
+                case 1: return 'Setiap Hari';
+                case 2: return '2 Hari Sekali';
+                case 3: return '3 Hari Sekali';
+                case 7: return 'Mingguan';
+                default: return `${schedule} Hari Sekali`;
+            }
+        }
+
+        // Calculate harvest amount based on plant quantity
+        function calculateHarvest(quantity) {
+            // Simple calculation: 0.5kg per plant for demonstration
+            return (quantity * 0.5).toFixed(1);
+        }
+
+        // Action functions
+        function continuePlanting(plantId) {
+            window.location.href = `plants.html?plant=${plantId}`;
+        }
+
+        function viewDetails(plantId) {
+            const plant = plants.find(p => p.id === plantId);
+            if (plant) {
+                const isCompleted = plant.progress >= 100;
+                const isFailed = plant.status === 'failed';
+                
+                let message = `Detail Tanaman ${plant.name}:\n\n`;
+                message += `Jenis: ${plant.type}\n`;
+                message += `Lokasi: ${plant.location}\n`;
+                message += `Tanggal Mulai: ${formatDate(plant.startDate)}\n`;
+                message += `Progress: ${plant.progress}%\n`;
+                message += `Jumlah: ${plant.quantity} tanaman\n`;
+                message += `Jadwal Siram: ${getWaterScheduleText(plant.waterSchedule)}\n`;
+                message += `Waktu Siram: ${plant.waterTime}\n`;
+                
+                if (isCompleted) {
+                    message += `\nStatus: Berhasil Panen\n`;
+                    message += `Perkiraan Hasil: ${calculateHarvest(plant.quantity)} kg\n`;
+                } else if (isFailed) {
+                    message += `\nStatus: Gagal\n`;
+                    message += `Penyebab: Kondisi cuaca tidak mendukung\n`;
+                } else {
+                    message += `\nStatus: Sedang Berjalan\n`;
+                    message += `Terakhir Disiram: ${plant.lastWatered ? formatDate(plant.lastWatered) : 'Belum pernah'}\n`;
+                }
+                
+                alert(message);
+            }
+        }
+
+        function plantAgain(plantId) {
+            const plant = plants.find(p => p.id === plantId);
+            if (plant && confirm(`Tanam kembali ${plant.name}?`)) {
+                // Create a copy of the plant with new ID and reset progress
+                const newPlant = {
+                    ...plant,
+                    id: Date.now().toString(),
+                    progress: 0,
+                    lastWatered: null,
+                    startDate: new Date().toISOString().split('T')[0],
+                    // Calculate new harvest date based on growth period
+                    harvestDate: new Date(Date.now() + (plant.growthPeriod || 90) * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                    nextWatering: new Date().toISOString().split('T')[0],
+                    createdAt: new Date().toISOString(),
+                    userId: currentUser.id
+                };
+                
+                // Save to localStorage
+                const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
+                allPlants.push(newPlant);
+                localStorage.setItem('plants', JSON.stringify(allPlants));
+                
+                // Reload plants and update display
+                loadUserPlants();
+                updateHistoryPage();
+                alert(`Tanaman ${plant.name} berhasil ditanam kembali!`);
+            }
+        }
+
+        function learnFromFailure(plantId) {
+            const plant = plants.find(p => p.id === plantId);
+            if (plant) {
+                alert(`Pelajaran dari ${plant.name}:\n\nTanaman ini gagal karena kondisi cuaca yang tidak mendukung.\n\nSaran untuk percobaan berikutnya:\n• Pilih musim tanam yang tepat\n• Gunakan pupuk organik\n• Perhatikan drainase air\n• Lindungi dari hama sejak dini`);
+            }
+        }
+
+        function tryAgain(plantId) {
+            plantAgain(plantId); // Reuse the plantAgain function
+        }
+
+        function clearFilter() {
+            currentFilter = 'all';
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('[data-status="all"]').classList.add('active');
+            renderHistory();
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin logout?')) {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Initialize page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initHistoryPage);
+    </script>
 </body>
 </html>
