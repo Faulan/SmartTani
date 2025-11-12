@@ -582,8 +582,8 @@
         <div class="container">
             <!-- Page Header -->
             <div class="page-header">
-                <h1>Dashboard</h1>
-                <p>Kelola dan pantau tanaman Anda dengan mudah</p>
+                <h1 id="titleHeader">Jadwal</h1>
+                <p id="messageHeader">Kelola dan pantau jadwal tanaman Anda dengan mudah</p>
             </div>
 
 
@@ -628,7 +628,7 @@
             </div>
 
             <!-- Jadwal Menyiram Section -->
-            <div class="schedule-section">
+            <div class="schedule-section" id="wateringScheduleParent">
                 <div class="section-header">
                     <h2><i class="fas fa-tint"></i> Jadwal Menyiram</h2>
                 </div>
@@ -639,7 +639,7 @@
             </div>
 
             <!-- Jadwal Panen Section -->
-            <div class="schedule-section">
+            <div class="schedule-section" id="harvestScheduleParent">
                 <div class="section-header">
                     <h2><i class="fas fa-seedling"></i> Jadwal Panen</h2>
                 </div>
@@ -664,12 +664,31 @@
         let plants = [];
 
         // Initialize dashboard
-        function initSchedule() {
+        function initSchedule(type) {
             // Check if user is logged in
             if (!currentUser) {
                 alert('Silakan login terlebih dahulu');
                 window.location.href = 'index.html';
                 return;
+            }
+
+            const titleHeader = document.getElementById('titleHeader');
+            const messageHeader = document.getElementById('messageHeader');
+            switch (type) {
+                case "watering":
+                    document.getElementById('harvestScheduleParent').style.display = 'none';
+                    titleHeader.innerHTML = 'Jadwal Menyiram';
+                    messageHeader.innerHTML = 'Kelola dan pantau jadwal penyiraman tanaman Anda';
+                break;
+                case "harvest":
+                    document.getElementById('wateringScheduleParent').style.display = 'none';
+                    titleHeader.innerHTML = 'Jadwal Panen';
+                    messageHeader.innerHTML = 'Kelola dan pantau jadwal panen tanaman Anda';
+                break;
+                default:
+                    titleHeader.innerHTML = 'Semua Jadwal';
+                    messageHeader.innerHTML = 'Kelola dan pantau semua jadwal tanaman Anda';
+                break;
             }
 
             // Update user info in header
@@ -679,7 +698,7 @@
             loadUserPlants();
             
             // Update dashboard with data tanaman
-            updateSchedule();
+            updateSchedule(type);
             
             // Setup event listeners
             setupEventListeners();
@@ -703,10 +722,10 @@
         }
 
         // Update dashboard dengan data tanaman
-        function updateSchedule() {
+        function updateSchedule(type) {
             updateStats();
-            renderWateringSchedule();
-            renderHarvestSchedule();
+                renderWateringSchedule();
+                renderHarvestSchedule();
         }
 
         // Update statistics
@@ -948,7 +967,12 @@
         }
 
         // Initialize dashboard when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initSchedule);
+        document.addEventListener('DOMContentLoaded', function name() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const type = urlParams.get('type'); // watering / harvest / planting
+            console.log("type =>", type)
+            initSchedule(type)
+        });
 
         // Logout function
         function logout() {
