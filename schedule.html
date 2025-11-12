@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SmartTani</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --primary-dark: #388E3C;
+            --primary-light: #C8E6C9;
+            --text-color: #333;
+            --text-light: #666;
+            --border-color: #ddd;
+            --success: #4CAF50;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --info: #2196F3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f5f5;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styling */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .nav a.active {
+            color: var(--primary-color);
+        }
+
+        .nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 0;
+            min-width: 150px;
+            z-index: 1000;
+        }
+
+        .user-menu:hover .dropdown {
+            display: block;
+        }
+
+        .dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown a:hover {
+            background: var(--primary-light);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 30px 0;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .page-header p {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .welcome-section h2 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .welcome-section p {
+            opacity: 0.9;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-light);
+            color: white;
+            font-size: 20px;
+        }
+
+        .stat-info h3 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .stat-info p {
+            margin: 5px 0 0 0;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* Schedule Sections */
+        .schedule-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header h2 i {
+            color: var(--primary-color);
+        }
+
+        .view-all {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: gap 0.3s ease;
+        }
+
+        .view-all:hover {
+            gap: 8px;
+        }
+
+        /* Plants Grid */
+        .plants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .plant-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .plant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .plant-card.urgent {
+            border-left: 4px solid var(--danger);
+        }
+
+        .plant-card.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .plant-card.info {
+            border-left: 4px solid var(--info);
+        }
+
+        .plant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .plant-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        .plant-type {
+            background: var(--primary-light);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .plant-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .plant-detail {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .plant-detail i {
+            width: 16px;
+            color: var(--primary-color);
+        }
+
+        .plant-progress {
+            margin: 15px 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .plant-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-water {
+            flex: 1;
+            padding: 8px 16px;
+            background: var(--info);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-water:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        .btn-details {
+            padding: 8px 16px;
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-details:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--border-color);
+        }
+
+        .empty-state p {
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            border-top: 1px solid var(--border-color);
+            padding: 20px 0;
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 50px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                gap: 15px;
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .plants-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .welcome-section {
+                padding: 20px;
+            }
+            
+            .schedule-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>SmartTani</h1>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav">
+                <a href="dashboard.html">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="plants.html">
+                    <i class="fas fa-leaf"></i> Tanaman Saya
+                </a>
+                <a href="schedule.html"  class="active">
+                    <i class="fas fa-clock"></i> Jadwal
+                </a>
+                <a href="history.html">
+                    <i class="fas fa-history"></i> Riwayat
+                </a>
+                <div class="user-menu">
+                    <img id="userAvatar" src="https://ui-avatars.com/api/?name=User&background=4CAF50&color=fff" alt="User" class="user-avatar">
+                    <span id="userName">User</span>
+                    <div class="dropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profil</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Dashboard</h1>
+                <p>Kelola dan pantau tanaman Anda dengan mudah</p>
+            </div>
+
+
+            <!-- Stats Section -->
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="activePlantsCount">0</h3>
+                        <p>Tanaman Aktif</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="needWateringCount">0</h3>
+                        <p>Perlu Disiram</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="plantingScheduleCount">0</h3>
+                        <p>Jadwal Tanam</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="harvestScheduleCount">0</h3>
+                        <p>Jadwal Panen</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jadwal Menyiram Section -->
+            <div class="schedule-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-tint"></i> Jadwal Menyiram</h2>
+                </div>
+                
+                <div class="plants-grid" id="wateringScheduleGrid">
+                    <!-- Jadwal menyiram akan diisi oleh JavaScript -->
+                </div>
+            </div>
+
+            <!-- Jadwal Panen Section -->
+            <div class="schedule-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-seedling"></i> Jadwal Panen</h2>
+                </div>
+                
+                <div class="plants-grid" id="harvestScheduleGrid">
+                    <!-- Jadwal panen akan diisi oleh JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>@2025 SmartTani - Mesin Pengingat Masa Tanam dan Panen</p>
+        </div>
+    </footer>
+
+    <script>
+        // Cek apakah user sudah login
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        let plants = [];
+
+        // Initialize dashboard
+        function initSchedule() {
+            // Check if user is logged in
+            if (!currentUser) {
+                alert('Silakan login terlebih dahulu');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Update user info in header
+            updateUserInfo();
+            
+            // Load user-specific plants data
+            loadUserPlants();
+            
+            // Update dashboard with data tanaman
+            updateSchedule();
+            
+            // Setup event listeners
+            setupEventListeners();
+        }
+
+        // Load plants data for current user
+        function loadUserPlants() {
+            const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
+            plants = allPlants.filter(plant => plant.userId === currentUser.id);
+        }
+
+        // Update user info in header
+        function updateUserInfo() {
+            const userNameElement = document.getElementById('userName');
+            const userAvatar = document.getElementById('userAvatar');
+            
+            if (currentUser) {
+                userNameElement.textContent = currentUser.name || currentUser.email || 'User';
+                userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name || 'User')}&background=4CAF50&color=fff`;
+            }
+        }
+
+        // Update dashboard dengan data tanaman
+        function updateSchedule() {
+            updateStats();
+            renderWateringSchedule();
+            renderHarvestSchedule();
+        }
+
+        // Update statistics
+        function updateStats() {
+            const today = new Date().toISOString().split('T')[0];
+            const activePlants = plants.filter(plant => plant.status === 'active');
+            const needWatering = plants.filter(plant => plant.nextWatering === today && plant.progress < 100);
+            
+            // Hitung jadwal tanam (tanaman yang baru ditanam dalam 7 hari ke depan)
+            const nextWeek = new Date();
+            nextWeek.setDate(nextWeek.getDate() + 7);
+            const plantingSchedule = plants.filter(plant => {
+                const plantDate = new Date(plant.startDate);
+                return plantDate <= nextWeek && plantDate >= new Date() && plant.progress < 100;
+            });
+            
+            // Hitung jadwal panen (tanaman yang akan panen dalam 14 hari ke depan)
+            const twoWeeks = new Date();
+            twoWeeks.setDate(twoWeeks.getDate() + 14);
+            const harvestSchedule = plants.filter(plant => {
+                const harvestDate = new Date(plant.harvestDate);
+                return harvestDate <= twoWeeks && harvestDate >= new Date() && plant.progress < 100;
+            });
+            
+            document.getElementById('activePlantsCount').textContent = activePlants.length;
+            document.getElementById('needWateringCount').textContent = needWatering.length;
+            document.getElementById('plantingScheduleCount').textContent = plantingSchedule.length;
+            document.getElementById('harvestScheduleCount').textContent = harvestSchedule.length;
+        }
+
+        // Render watering schedule
+        function renderWateringSchedule() {
+            const today = new Date();
+            const nextWeek = new Date();
+            nextWeek.setDate(today.getDate() + 7);
+            
+            const wateringPlants = plants.filter(plant => {
+                const waterDate = new Date(plant.nextWatering);
+                return waterDate <= nextWeek && waterDate >= today && plant.progress < 100;
+            }).slice(0, 3); // Tampilkan maksimal 3 tanaman
+            
+            const grid = document.getElementById('wateringScheduleGrid');
+            
+            if (wateringPlants.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-tint"></i>
+                        <p>Tidak ada jadwal menyiram dalam 7 hari ke depan</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = wateringPlants.map(plant => {
+                const waterDate = new Date(plant.nextWatering);
+                const daysUntil = Math.ceil((waterDate - today) / (1000 * 60 * 60 * 24));
+                let daysText = daysUntil === 0 ? 'Hari ini' : `${daysUntil} hari lagi`;
+                
+                return `
+                    <div class="plant-card info">
+                        <div class="plant-header">
+                            <h3 class="plant-name">${plant.name}</h3>
+                            <span class="plant-type">${plant.type}</span>
+                        </div>
+                        <div class="plant-details">
+                            <div class="plant-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${plant.location}</span>
+                            </div>
+                            <div class="plant-detail">
+                                <i class="fas fa-calendar"></i>
+                                <span>${formatDate(plant.nextWatering)}</span>
+                            </div>
+                            <div class="plant-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>${plant.waterTime} • ${daysText}</span>
+                            </div>
+                        </div>
+                        <div class="plant-progress">
+                            <div class="progress-info">
+                                <span>Progress</span>
+                                <span>${plant.progress}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${plant.progress}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render harvest schedule
+        function renderHarvestSchedule() {
+            const today = new Date();
+            const nextTwoWeeks = new Date();
+            nextTwoWeeks.setDate(today.getDate() + 14);
+            
+            const harvestPlants = plants.filter(plant => {
+                const harvestDate = new Date(plant.harvestDate);
+                return harvestDate <= nextTwoWeeks && harvestDate >= today && plant.progress < 100;
+            }).slice(0, 3); // Tampilkan maksimal 3 tanaman
+            
+            const grid = document.getElementById('harvestScheduleGrid');
+            
+            if (harvestPlants.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-seedling"></i>
+                        <p>Tidak ada jadwal panen dalam 14 hari ke depan</p>
+                        <a href="plants.html" class="btn-primary">
+                            <i class="fas fa-plus"></i> Tambah Tanaman
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = harvestPlants.map(plant => {
+                const harvestDate = new Date(plant.harvestDate);
+                const daysUntil = Math.ceil((harvestDate - today) / (1000 * 60 * 60 * 24));
+                let daysText = daysUntil === 0 ? 'Hari ini' : `${daysUntil} hari lagi`;
+                let cardClass = daysUntil <= 3 ? 'urgent' : 'warning';
+                
+                return `
+                    <div class="plant-card ${cardClass}">
+                        <div class="plant-header">
+                            <h3 class="plant-name">${plant.name}</h3>
+                            <span class="plant-type">${plant.type}</span>
+                        </div>
+                        <div class="plant-details">
+                            <div class="plant-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${plant.location}</span>
+                            </div>
+                            <div class="plant-detail">
+                                <i class="fas fa-calendar"></i>
+                                <span>${formatDate(plant.harvestDate)}</span>
+                            </div>
+                            <div class="plant-detail">
+                                <i class="fas fa-hourglass-half"></i>
+                                <span>${daysText}</span>
+                            </div>
+                        </div>
+                        <div class="plant-progress">
+                            <div class="progress-info">
+                                <span>Progress</span>
+                                <span>${plant.progress}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${plant.progress}%"></div>
+                            </div>
+                        </div>
+                        <div class="plant-actions">
+                            <button class="btn-water" onclick="confirmHarvest('${plant.id}')">
+                                <i class="fas fa-check-circle"></i> Konfirmasi Panen
+                            </button>
+                            <button class="btn-details" onclick="viewPlantDetails('${plant.id}')">
+                                <i class="fas fa-info-circle"></i> Detail
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Format date to readable format
+        function formatDate(dateString) {
+            const options = { day: 'numeric', month: 'short', year: 'numeric' };
+            return new Date(dateString).toLocaleDateString('id-ID', options);
+        }
+
+        // Confirm action (watering/planting)
+        function confirmAction(plantId, actionType) {
+            const plant = plants.find(p => p.id === plantId);
+            if (plant) {
+                if (actionType === 'menyiram') {
+                    plant.lastWatered = new Date().toISOString().split('T')[0];
+                    // Calculate next watering
+                    const nextDate = new Date();
+                    nextDate.setDate(nextDate.getDate() + plant.waterSchedule);
+                    plant.nextWatering = nextDate.toISOString().split('T')[0];
+                    plant.progress = Math.min(plant.progress + 5, 100);
+                } else if (actionType === 'menanam') {
+                    plant.status = 'active';
+                    plant.progress = 10;
+                }
+                
+                // Update localStorage
+                const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
+                const globalPlantIndex = allPlants.findIndex(p => p.id === plantId);
+                if (globalPlantIndex !== -1) {
+                    allPlants[globalPlantIndex] = plant;
+                    localStorage.setItem('plants', JSON.stringify(allPlants));
+                }
+                
+                // Reload plants and update display
+                loadUserPlants();
+                updateSchedule();
+                alert(`Aksi ${actionType} berhasil dikonfirmasi!`);
+            }
+        }
+
+        // Confirm harvest
+        function confirmHarvest(plantId) {
+            if (confirm('Apakah Anda yakin ingin mengonfirmasi panen?')) {
+                const plantIndex = plants.findIndex(p => p.id === plantId);
+                if (plantIndex !== -1) {
+                    plants[plantIndex].status = 'harvested';
+                    plants[plantIndex].progress = 100;
+                    
+                    // Update localStorage
+                    const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
+                    const globalPlantIndex = allPlants.findIndex(p => p.id === plantId);
+                    if (globalPlantIndex !== -1) {
+                        allPlants[globalPlantIndex] = plants[plantIndex];
+                        localStorage.setItem('plants', JSON.stringify(allPlants));
+                    }
+                    
+                    // Reload plants and update display
+                    loadUserPlants();
+                    updateSchedule();
+                    alert('Panen berhasil dikonfirmasi!');
+                }
+            }
+        }
+
+        // View plant details
+        function viewPlantDetails(plantId) {
+            window.location.href = `plants.html?plant=${plantId}`;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+                document.querySelector('.nav').classList.toggle('active');
+            });
+        }
+
+        // Initialize dashboard when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initSchedule);
+
+        // Logout function
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin logout?')) {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>
