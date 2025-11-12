@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - SmartTani</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --primary-dark: #388E3C;
+            --primary-light: #C8E6C9;
+            --text-color: #333;
+            --text-light: #666;
+            --border-color: #ddd;
+            --success: #4CAF50;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --info: #2196F3;
+            --card-bg: white;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f5f5;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styling */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .nav a.active {
+            color: var(--primary-color);
+        }
+
+        .nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 0;
+            min-width: 150px;
+            z-index: 1000;
+        }
+
+        .user-menu:hover .dropdown {
+            display: block;
+        }
+
+        .dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown a:hover {
+            background: var(--primary-light);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 30px 0;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .page-header p {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        /* Profile Layout */
+        .profile-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+
+        .profile-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .profile-menu {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .profile-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .profile-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-menu-item:hover,
+        .profile-menu-item.active {
+            background: var(--primary-light);
+            color: var(--primary-color);
+        }
+
+        .profile-menu-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .profile-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .profile-tab {
+            display: none;
+        }
+
+        .profile-tab.active {
+            display: block;
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header h2 i {
+            color: var(--primary-color);
+        }
+
+        /* Cards */
+        .info-card, .security-card, .preferences-card, .notifications-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .info-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .info-item label {
+            display: block;
+            color: var(--text-light);
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-light);
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+
+        .stat-info h3 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .stat-info p {
+            margin: 5px 0 0 0;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* Security Items */
+        .security-item, .preference-item, .notification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .security-item:last-child, .preference-item:last-child, .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Switch Toggle */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Theme Options */
+        .theme-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .theme-option {
+            cursor: pointer;
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-option.active {
+            border-color: var(--primary-color);
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .theme-preview {
+            width: 100%;
+            height: 60px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .theme-preview.dark {
+            background: #1a1a1a;
+            border-color: #333;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        .input-with-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            color: var(--text-light);
+            z-index: 2;
+        }
+
+        .input-with-icon input,
+        .input-with-icon textarea,
+        .input-with-icon select {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .input-with-icon input:focus,
+        .input-with-icon textarea:focus,
+        .input-with-icon select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+            outline: none;
+        }
+
+        .input-with-icon textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        /* Password Requirements */
+        .password-requirements {
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(76, 175, 80, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .password-requirements h4 {
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        .password-requirements ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .password-requirements li {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .password-requirements li:before {
+            content: '●';
+            font-size: 8px;
+            color: var(--text-light);
+        }
+
+        .password-requirements li.valid {
+            color: var(--success);
+        }
+
+        .password-requirements li.valid:before {
+            content: '✓';
+            color: var(--success);
+        }
+
+        /* Buttons */
+        .btn-primary, .btn-secondary {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: #e9e9e9;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            width: 90%;
+            max-width: 500px;
+            margin: 5% auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            color: var(--text-color);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        /* Session Item */
+        .session-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            border-top: 1px solid var(--border-color);
+            padding: 20px 0;
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 50px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                gap: 15px;
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .security-item, .preference-item, .notification-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .profile-card {
+                padding: 20px;
+            }
+            
+            .info-card, .security-card, .preferences-card, .notifications-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>SmartTani</h1>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav">
+                <a href="index.html">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="plants.html">
+                    <i class="fas fa-leaf"></i> Tanaman Saya
+                </a>
+                <a href="history.html">
+                    <i class="fas fa-history"></i> Riwayat
+                </a>
+                
+                <div class="user-menu">
+                    <img id="headerAvatar" src="https://ui-avatars.com/api/?name=User&background=4CAF50&color=fff" alt="User" class="user-avatar">
+                    <span id="headerName">User</span>
+                    <div class="dropdown">
+                        <a href="profile.html" class="active"><i class="fas fa-user"></i> Profil</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Profil Saya</h1>
+                <p>Kelola informasi akun dan preferensi Anda</p>
+            </div>
+
+            <div class="profile-container">
+                <!-- Sidebar Profil -->
+                <div class="profile-sidebar">
+                    <div class="profile-card">
+                        <div class="profile-avatar" id="profileAvatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3 id="profileName">User</h3>
+                        <p>Petani Aktif</p>
+                        
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <div id="totalPlants">0</div>
+                                <div>Tanaman</div>
+                            </div>
+                            <div class="stat-item">
+                                <div id="totalHarvests">0</div>
+                                <div>Panen</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-secondary" onclick="openEditProfileModal()">
+                            <i class="fas fa-edit"></i> Edit Profil
+                        </button>
+                    </div>
+
+                    <!-- Menu Profil -->
+                    <div class="profile-menu">
+                        <a href="#info" class="profile-menu-item active" data-tab="info">
+                            <i class="fas fa-user-circle"></i> Informasi Pribadi
+                        </a>
+                        <a href="#security" class="profile-menu-item" data-tab="security">
+                            <i class="fas fa-shield-alt"></i> Keamanan
+                        </a>
+                        <a href="#preferences" class="profile-menu-item" data-tab="preferences">
+                            <i class="fas fa-cog"></i> Preferensi
+                        </a>
+                        <a href="#notifications" class="profile-menu-item" data-tab="notifications">
+                            <i class="fas fa-bell"></i> Notifikasi
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Konten Profil -->
+                <div class="profile-content">
+                    <!-- Tab Informasi Pribadi -->
+                    <div class="profile-tab active" id="info-tab">
+                        <div class="section-header">
+                            <h2><i class="fas fa-user-circle"></i> Informasi Pribadi</h2>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>Nama Lengkap</label>
+                                    <div id="displayName">-</div>
+                                </div>
+                                
+                                <div class="info-item">
+                                    <label>Email</label>
+                                    <div id="displayEmail">-</div>
+                                </div>
+                                
+                                <div class="info-item">
+                                    <label>Nomor Telepon</label>
+                                    <div id="displayPhone">-</div>
+                                </div>
+                                
+                                <div class="info-item">
+                                    <label>Alamat</label>
+                                    <div id="displayAddress">-</div>
+                                </div>
+                                
+                                <div class="info-item">
+                                    <label>Bergabung Sejak</label>
+                                    <div id="displayJoinDate">-</div>
+                                </div>
+                                
+                                <div class="info-item">
+                                    <label>Status</label>
+                                    <div style="color: var(--primary-color); font-weight: 500;">Aktif</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Statistik Tanaman -->
+                        <div class="section-header" style="margin-top: 30px;">
+                            <h2><i class="fas fa-chart-bar"></i> Statistik Tanaman</h2>
+                        </div>
+                        
+                        <div class="stats-section">
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #E8F5E8; color: #4CAF50;">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="statsTotalPlants">0</h3>
+                                    <p>Total Tanaman</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #E3F2FD; color: #2196F3;">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="statsActivePlants">0</h3>
+                                    <p>Sedang Aktif</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #FFF3E0; color: #FF9800;">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="statsSuccessHarvest">0</h3>
+                                    <p>Panen Sukses</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon" style="background: #FFEBEE; color: #F44336;">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="statsFailedHarvest">0</h3>
+                                    <p>Gagal Panen</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Keamanan -->
+                    <div class="profile-tab" id="security-tab">
+                        <div class="section-header">
+                            <h2><i class="fas fa-shield-alt"></i> Keamanan Akun</h2>
+                        </div>
+                        
+                        <div class="security-card">
+                            <div class="security-item">
+                                <div>
+                                    <h4>Password</h4>
+                                    <p id="lastPasswordChange">-</p>
+                                </div>
+                                <button class="btn-secondary" onclick="openChangePasswordModal()">
+                                    Ubah Password
+                                </button>
+                            </div>
+                            
+                            <div class="security-item">
+                                <div>
+                                    <h4>Sesi Aktif</h4>
+                                    <p>1 perangkat aktif</p>
+                                </div>
+                                <button class="btn-secondary" onclick="manageSessions()">
+                                    Kelola Sesi
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Preferensi -->
+                    <div class="profile-tab" id="preferences-tab">
+                        <div class="section-header">
+                            <h2><i class="fas fa-cog"></i> Preferensi Aplikasi</h2>
+                        </div>
+                        
+                        <div class="preferences-card">
+                            <!-- Tema Aplikasi -->
+                            <div class="preference-item">
+                                <div>
+                                    <h4>Tema Aplikasi</h4>
+                                    <p>Pilih tampilan yang nyaman untuk mata</p>
+                                </div>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-palette"></i>
+                                    <select id="themeSelect" style="max-width: 200px; padding-left: 45px;">
+                                        <option value="light">Terang</option>
+                                        <option value="dark">Gelap</option>
+                                        <option value="auto">Sesuai Perangkat</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Notifikasi Suara -->
+                            <div class="preference-item">
+                                <div>
+                                    <h4>Notifikasi Suara</h4>
+                                    <p>Putar suara saat notifikasi muncul</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="soundNotification">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Preview Tema -->
+                        <div class="section-header" style="margin-top: 30px;">
+                            <h2><i class="fas fa-eye"></i> Preview Tema</h2>
+                        </div>
+
+                        <div class="preferences-card">
+                            <div class="theme-options">
+                                <div class="theme-option active" data-theme="light" onclick="selectTheme('light')">
+                                    <div class="theme-preview" style="background: #ffffff; border-color: #e0e0e0;"></div>
+                                    <span>Terang</span>
+                                </div>
+                                <div class="theme-option" data-theme="dark" onclick="selectTheme('dark')">
+                                    <div class="theme-preview dark"></div>
+                                    <span>Gelap</span>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <button class="btn-secondary" onclick="resetPreferences()">
+                                    <i class="fas fa-undo"></i> Reset ke Default
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Notifikasi -->
+                    <div class="profile-tab" id="notifications-tab">
+                        <div class="section-header">
+                            <h2><i class="fas fa-bell"></i> Pengaturan Notifikasi</h2>
+                        </div>
+                        
+                        <div class="notifications-card">
+                            <div class="notification-item">
+                                <div>
+                                    <h4>Notifikasi Penyiraman</h4>
+                                    <p>Ingatkan saat waktu penyiraman tiba</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="notifWatering" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="notification-item">
+                                <div>
+                                    <h4>Notifikasi Pemupukan</h4>
+                                    <p>Ingatkan saat waktu pemupukan tiba</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="notifFertilizing" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="notification-item">
+                                <div>
+                                    <h4>Notifikasi Panen</h4>
+                                    <p>Ingatkan saat mendekati waktu panen</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="notifHarvest" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="notification-item">
+                                <div>
+                                    <h4>Notifikasi Email</h4>
+                                    <p>Kirim notifikasi ke email</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="notifEmail">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Pengaturan Waktu Notifikasi -->
+                        <div class="section-header" style="margin-top: 30px;">
+                            <h2><i class="fas fa-clock"></i> Waktu Notifikasi</h2>
+                        </div>
+
+                        <div class="preferences-card">
+                            <div class="form-group">
+                                <label for="notificationTime">Waktu Default Notifikasi</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-clock"></i>
+                                    <input type="time" id="notificationTime" value="08:00">
+                                </div>
+                                <span style="font-size: 12px; color: var(--text-light);">Notifikasi harian akan dikirim pada waktu ini</span>
+                            </div>
+                            
+                            <button class="btn-primary" onclick="saveNotificationSettings()">
+                                <i class="fas fa-save"></i> Simpan Pengaturan Notifikasi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>@2025 SmartTani - Mesin Pengingat Masa Tanam dan Panen</p>
+        </div>
+    </footer>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Profil</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editProfileForm">
+                    <div class="form-group">
+                        <label for="editName">Nama Lengkap</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="editName" placeholder="Masukkan nama lengkap" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editEmail">Email</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="editEmail" placeholder="Masukkan alamat email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editPhone">Nomor Telepon</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="editPhone" placeholder="Masukkan nomor telepon" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editAddress">Alamat</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <textarea id="editAddress" rows="3" placeholder="Masukkan alamat lengkap"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="document.getElementById('editProfileModal').style.display='none'">Batal</button>
+                        <button type="submit" class="btn-primary">Simpan Perubahan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="changePasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ubah Password</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm">
+                    <div class="form-group">
+                        <label for="currentPassword">Password Saat Ini</label>
+                        <div class="input-with-icon password-container">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="currentPassword" placeholder="Masukkan password saat ini" required>
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newPassword">Password Baru</label>
+                        <div class="input-with-icon password-container">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="newPassword" placeholder="Masukkan password baru" required>
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmNewPassword">Konfirmasi Password Baru</label>
+                        <div class="input-with-icon password-container">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirmNewPassword" placeholder="Konfirmasi password baru" required>
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="password-requirements">
+                        <h4>Password harus mengandung:</h4>
+                        <ul>
+                            <li data-requirement="length">Minimal 8 karakter</li>
+                            <li data-requirement="lowercase">Huruf kecil (a-z)</li>
+                            <li data-requirement="uppercase">Huruf besar (A-Z)</li>
+                            <li data-requirement="number">Angka (0-9)</li>
+                            <li data-requirement="special">Karakter khusus</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="document.getElementById('changePasswordModal').style.display='none'">Batal</button>
+                        <button type="submit" class="btn-primary">Ubah Password</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sessions Modal -->
+    <div id="sessionsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Kelola Sesi Aktif</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="session-list">
+                    <div class="session-item">
+                        <div>
+                            <div style="font-weight: 600; color: var(--text-color);">Browser Aktif</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Aktif sekarang</div>
+                            <div style="font-size: 12px; color: var(--text-light);" id="currentSessionTime">-</div>
+                        </div>
+                        <div style="color: var(--success); font-size: 12px; font-weight: 600;">Aktif</div>
+                    </div>
+                </div>
+                
+                <div class="form-actions" style="margin-top: 20px;">
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('sessionsModal').style.display='none'">Tutup</button>
+                    <button type="button" class="btn-primary" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Profile Management Functions
+        let currentUser = null;
+        let userPlants = [];
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCurrentUser();
+            loadUserPlants();
+            loadPreferences();
+            loadNotificationSettings();
+            setupEventListeners();
+        });
+
+        // Load current user data
+        function loadCurrentUser() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (!savedUser) {
+                showNotification('Silakan login terlebih dahulu', 'error');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+                return;
+            }
+
+            currentUser = JSON.parse(savedUser);
+            
+            // Load additional user data from registered users
+            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+            let userData = registeredUsers.find(u => u.id === currentUser.id);
+            
+            // Jika tidak ditemukan di registeredUsers, coba cari dengan email
+            if (!userData) {
+                userData = registeredUsers.find(u => u.email === currentUser.email);
+            }
+            
+            // Jika masih tidak ditemukan, gunakan currentUser sebagai fallback
+            if (!userData) {
+                userData = currentUser;
+            }
+
+            // Update UI with user data
+            updateUserProfile(userData);
+        }
+
+        // Update user profile in UI
+        function updateUserProfile(userData) {
+            // Update header
+            document.getElementById('headerName').textContent = userData.name || 'User';
+            document.getElementById('headerAvatar').src = userData.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name || 'User')}&background=4CAF50&color=fff`;
+            
+            // Update profile sidebar
+            document.getElementById('profileName').textContent = userData.name || 'User';
+            const profileAvatar = document.getElementById('profileAvatar');
+            if (userData.avatar) {
+                profileAvatar.innerHTML = `<img src="${userData.avatar}" alt="${userData.name}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+            } else {
+                profileAvatar.innerHTML = `<i class="fas fa-user"></i>`;
+            }
+            
+            // Update info tab
+            document.getElementById('displayName').textContent = userData.name || '-';
+            document.getElementById('displayEmail').textContent = userData.email || '-';
+            document.getElementById('displayPhone').textContent = userData.phone || '-';
+            document.getElementById('displayAddress').textContent = userData.address || '-';
+            
+            // Format join date
+            const joinDate = userData.createdAt ? new Date(userData.createdAt) : new Date();
+            document.getElementById('displayJoinDate').textContent = joinDate.toLocaleDateString('id-ID', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            // Update edit form
+            document.getElementById('editName').value = userData.name || '';
+            document.getElementById('editEmail').value = userData.email || '';
+            document.getElementById('editPhone').value = userData.phone || '';
+            document.getElementById('editAddress').value = userData.address || '';
+
+            // Update last password change
+            const lastPasswordChange = localStorage.getItem('lastPasswordChange_' + (userData.id || userData.email));
+            document.getElementById('lastPasswordChange').textContent = lastPasswordChange ? 
+                `Terakhir diubah ${lastPasswordChange}` : 'Belum pernah diubah';
+        }
+
+        // Load user plants data
+        function loadUserPlants() {
+            const savedPlants = JSON.parse(localStorage.getItem('userPlants')) || [];
+            // Handle berbagai cara identifikasi user
+            if (currentUser) {
+                userPlants = savedPlants.filter(plant => 
+                    plant.userId === currentUser.id || 
+                    plant.userEmail === currentUser.email ||
+                    !plant.userId // Untuk tanaman yang dibuat sebelum sistem userId
+                );
+            } else {
+                userPlants = [];
+            }
+            
+            updatePlantStatistics();
+        }
+
+        // Update plant statistics
+        function updatePlantStatistics() {
+            const totalPlants = userPlants.length;
+            const activePlants = userPlants.filter(plant => plant.status === 'active' || plant.status === 'Growing').length;
+            const completedPlants = userPlants.filter(plant => plant.status === 'completed' || plant.status === 'Harvested').length;
+            const failedPlants = userPlants.filter(plant => plant.status === 'failed' || plant.status === 'Failed').length;
+
+            // Update sidebar stats
+            document.getElementById('totalPlants').textContent = totalPlants;
+            document.getElementById('totalHarvests').textContent = completedPlants;
+
+            // Update statistics section
+            document.getElementById('statsTotalPlants').textContent = totalPlants;
+            document.getElementById('statsActivePlants').textContent = activePlants;
+            document.getElementById('statsSuccessHarvest').textContent = completedPlants;
+            document.getElementById('statsFailedHarvest').textContent = failedPlants;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            setupProfileTabs();
+            setupThemeSelector();
+            setupNotificationToggles();
+            setupFormSubmissions();
+            setupMobileMenu();
+        }
+
+        // Mobile menu functionality
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('.nav');
+            
+            if (mobileMenuBtn && nav) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                });
+            }
+        }
+
+        // Profile Tab Functionality
+        function setupProfileTabs() {
+            const profileMenuItems = document.querySelectorAll('.profile-menu-item');
+            profileMenuItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all items
+                    document.querySelectorAll('.profile-menu-item').forEach(i => i.classList.remove('active'));
+                    document.querySelectorAll('.profile-tab').forEach(tab => tab.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Show corresponding tab
+                    const tabId = this.dataset.tab + '-tab';
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        }
+
+        // Theme Management
+        function setupThemeSelector() {
+            const themeSelect = document.getElementById('themeSelect');
+            if (themeSelect) {
+                themeSelect.addEventListener('change', function() {
+                    changeTheme(this.value);
+                });
+            }
+        }
+
+        function changeTheme(theme) {
+            const root = document.documentElement;
+            const savedPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
+            
+            savedPreferences.theme = theme;
+            localStorage.setItem('userPreferences', JSON.stringify(savedPreferences));
+            
+            if (theme === 'dark') {
+                root.style.setProperty('--bg-color', '#1a1a1a');
+                root.style.setProperty('--card-bg', '#2d2d2d');
+                root.style.setProperty('--text-color', '#ffffff');
+                root.style.setProperty('--text-light', '#b0b0b0');
+                root.style.setProperty('--border-color', '#404040');
+            } else {
+                // Reset to light theme (default)
+                root.style.setProperty('--bg-color', '#f5f5f5');
+                root.style.setProperty('--card-bg', '#fff');
+                root.style.setProperty('--text-color', '#333');
+                root.style.setProperty('--text-light', '#666');
+                root.style.setProperty('--border-color', '#ddd');
+            }
+            
+            // Update theme preview
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.theme-option[data-theme="${theme}"]`)?.classList.add('active');
+            
+            showNotification(`Tema berhasil diubah ke ${theme === 'light' ? 'Terang' : 'Gelap'}`, 'success');
+        }
+
+        function selectTheme(theme) {
+            document.getElementById('themeSelect').value = theme;
+            changeTheme(theme);
+        }
+
+        // Notification Settings
+        function setupNotificationToggles() {
+            // Sound notification
+            const soundNotification = document.getElementById('soundNotification');
+            if (soundNotification) {
+                soundNotification.addEventListener('change', function() {
+                    const savedPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
+                    savedPreferences.soundNotification = this.checked;
+                    localStorage.setItem('userPreferences', JSON.stringify(savedPreferences));
+                    showNotification(`Notifikasi suara ${this.checked ? 'diaktifkan' : 'dimatikan'}`, 'success');
+                });
+            }
+
+            // Setup all notification toggles
+            const notificationToggles = ['notifWatering', 'notifFertilizing', 'notifHarvest', 'notifEmail'];
+            notificationToggles.forEach(toggleId => {
+                const toggle = document.getElementById(toggleId);
+                if (toggle) {
+                    toggle.addEventListener('change', function() {
+                        saveNotificationSettings();
+                    });
+                }
+            });
+        }
+
+        function saveNotificationSettings() {
+            const settings = {
+                watering: document.getElementById('notifWatering').checked,
+                fertilizing: document.getElementById('notifFertilizing').checked,
+                harvest: document.getElementById('notifHarvest').checked,
+                email: document.getElementById('notifEmail').checked,
+                time: document.getElementById('notificationTime').value
+            };
+            
+            localStorage.setItem('notificationSettings', JSON.stringify(settings));
+            showNotification('Pengaturan notifikasi berhasil disimpan', 'success');
+        }
+
+        function loadNotificationSettings() {
+            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {
+                watering: true,
+                fertilizing: true,
+                harvest: true,
+                email: false,
+                time: '08:00'
+            };
+            
+            document.getElementById('notifWatering').checked = settings.watering;
+            document.getElementById('notifFertilizing').checked = settings.fertilizing;
+            document.getElementById('notifHarvest').checked = settings.harvest;
+            document.getElementById('notifEmail').checked = settings.email;
+            document.getElementById('notificationTime').value = settings.time;
+        }
+
+        // Security Functions
+        function manageSessions() {
+            document.getElementById('currentSessionTime').textContent = `Login: ${new Date().toLocaleString('id-ID')}`;
+            document.getElementById('sessionsModal').style.display = 'block';
+        }
+
+        // Load all preferences
+        function loadPreferences() {
+            const savedPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
+            
+            // Load theme
+            if (savedPreferences.theme) {
+                document.getElementById('themeSelect').value = savedPreferences.theme;
+                document.querySelector(`.theme-option[data-theme="${savedPreferences.theme}"]`)?.classList.add('active');
+                changeTheme(savedPreferences.theme);
+            }
+            
+            // Load sound notification
+            if (savedPreferences.soundNotification !== undefined) {
+                document.getElementById('soundNotification').checked = savedPreferences.soundNotification;
+            }
+        }
+
+        // Reset preferences to default
+        function resetPreferences() {
+            localStorage.removeItem('userPreferences');
+            
+            // Reset UI to default values
+            document.getElementById('themeSelect').value = 'light';
+            document.getElementById('soundNotification').checked = false;
+            
+            // Reset theme preview
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector('.theme-option[data-theme="light"]').classList.add('active');
+            
+            // Apply default theme
+            changeTheme('light');
+            
+            showNotification('Preferensi berhasil direset ke default', 'success');
+        }
+
+        // Modal functions
+        function openEditProfileModal() {
+            document.getElementById('editProfileModal').style.display = 'block';
+        }
+
+        function openChangePasswordModal() {
+            document.getElementById('changePasswordModal').style.display = 'block';
+        }
+
+        // Setup form submissions
+        function setupFormSubmissions() {
+            // Edit Profile Form
+            document.getElementById('editProfileForm')?.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!currentUser) return;
+                
+                const updatedData = {
+                    name: document.getElementById('editName').value,
+                    email: document.getElementById('editEmail').value,
+                    phone: document.getElementById('editPhone').value,
+                    address: document.getElementById('editAddress').value
+                };
+                
+                // Update in registered users
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                let userIndex = registeredUsers.findIndex(u => u.id === currentUser.id);
+                
+                // Jika tidak ditemukan dengan ID, cari dengan email
+                if (userIndex === -1) {
+                    userIndex = registeredUsers.findIndex(u => u.email === currentUser.email);
+                }
+                
+                if (userIndex !== -1) {
+                    registeredUsers[userIndex] = { ...registeredUsers[userIndex], ...updatedData };
+                    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+                }
+                
+                // Update current user
+                currentUser = { ...currentUser, ...updatedData };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Update display
+                updateUserProfile(currentUser);
+                
+                showNotification('Profil berhasil diperbarui!', 'success');
+                document.getElementById('editProfileModal').style.display = 'none';
+            });
+
+            // Change Password Form
+            document.getElementById('changePasswordForm')?.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (!currentUser) return;
+                
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmNewPassword').value;
+                
+                // Verify current password
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                let user = registeredUsers.find(u => u.id === currentUser.id);
+                
+                // Jika tidak ditemukan dengan ID, cari dengan email
+                if (!user) {
+                    user = registeredUsers.find(u => u.email === currentUser.email);
+                }
+                
+                if (!user || user.password !== currentPassword) {
+                    showNotification('Password saat ini salah!', 'error');
+                    return;
+                }
+                
+                if (newPassword !== confirmPassword) {
+                    showNotification('Password baru tidak cocok!', 'error');
+                    return;
+                }
+                
+                // Update password
+                let userIndex = registeredUsers.findIndex(u => u.id === currentUser.id);
+                if (userIndex === -1) {
+                    userIndex = registeredUsers.findIndex(u => u.email === currentUser.email);
+                }
+                
+                if (userIndex !== -1) {
+                    registeredUsers[userIndex].password = newPassword;
+                    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+                    
+                    // Save last password change time dengan identifier yang unik
+                    const userIdentifier = currentUser.id || currentUser.email;
+                    localStorage.setItem('lastPasswordChange_' + userIdentifier, new Date().toLocaleDateString('id-ID'));
+                }
+                
+                showNotification('Password berhasil diubah!', 'success');
+                document.getElementById('changePasswordModal').style.display = 'none';
+                document.getElementById('changePasswordForm').reset();
+                
+                // Update last password change display
+                const userIdentifier = currentUser.id || currentUser.email;
+                const lastChange = localStorage.getItem('lastPasswordChange_' + userIdentifier);
+                document.getElementById('lastPasswordChange').textContent = lastChange ? 
+                    `Terakhir diubah ${lastChange}` : 'Belum pernah diubah';
+            });
+        }
+
+        // Password requirements validation
+        const newPasswordInput = document.getElementById('newPassword');
+        if (newPasswordInput) {
+            newPasswordInput.addEventListener('input', function() {
+                const password = this.value;
+                const requirements = {
+                    length: password.length >= 8,
+                    lowercase: /[a-z]/.test(password),
+                    uppercase: /[A-Z]/.test(password),
+                    number: /[0-9]/.test(password),
+                    special: /[^A-Za-z0-9]/.test(password)
+                };
+
+                Object.keys(requirements).forEach(key => {
+                    const element = document.querySelector(`[data-requirement="${key}"]`);
+                    if (element) {
+                        if (requirements[key]) {
+                            element.classList.add('valid');
+                        } else {
+                            element.classList.remove('valid');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Setup password toggle
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.parentElement.querySelector('input');
+                const icon = this.querySelector('i');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.className = 'fas fa-eye-slash';
+                } else {
+                    input.type = 'password';
+                    icon.className = 'fas fa-eye';
+                }
+            });
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+
+        // Close modals with close button
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.closest('.modal').style.display = 'none';
+            });
+        });
+
+        // Notification function
+        function showNotification(message, type = 'info') {
+            // Remove existing notifications
+            document.querySelectorAll('.notification').forEach(notif => notif.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${getNotificationIcon(type)}"></i>
+                <span>${message}</span>
+            `;
+            
+            // Add styles for notification
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 8px;
+                color: white;
+                font-weight: 500;
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                ${type === 'success' ? 'background: var(--success);' : ''}
+                ${type === 'error' ? 'background: var(--danger);' : ''}
+                ${type === 'warning' ? 'background: var(--warning);' : ''}
+                ${type === 'info' ? 'background: var(--info);' : ''}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        function getNotificationIcon(type) {
+            const icons = {
+                success: 'check-circle',
+                error: 'exclamation-circle',
+                warning: 'exclamation-triangle',
+                info: 'info-circle'
+            };
+            return icons[type] || 'info-circle';
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('currentUser');
+            showNotification('Logout berhasil', 'success');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
