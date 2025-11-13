@@ -1321,6 +1321,29 @@
                         </div>
                     </div>
                     
+                    <div class="form-group">
+                        <label>Pilih Metode Unggah Foto</label>
+                        <div class="camera-options">
+                            <button type="button" class="camera-btn" onclick="openCamera()">
+                                <i class="fas fa-camera"></i> Ambil Foto
+                            </button>
+                            <button type="button" class="camera-btn secondary" onclick="document.getElementById('plantImage').click()">
+                                <i class="fas fa-images"></i> Pilih dari Galeri
+                            </button>
+                        </div>
+                        
+                        <div class="file-upload" onclick="document.getElementById('plantImage').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Klik untuk mengunggah foto</p>
+                            <p style="font-size: 12px; margin-top: 5px;">Format: JPG, PNG (Maks. 5MB)</p>
+                            <input type="file" id="plantImage" class="file-input" accept="image/*" onchange="previewImage(this)">
+                        </div>
+                        <div class="file-preview">
+                            <img id="imagePreview" src="" alt="Preview">
+                            <div class="file-name" id="fileName"></div>
+                        </div>
+                    </div>
+
                     <div class="form-actions">
                         <button type="button" class="btn-secondary" onclick="closePlantingModal()">Batal</button>
                         <button type="submit" class="btn-primary">Mulai Menanam</button>
@@ -1600,7 +1623,6 @@
             });
         }
 
-
         // Initialize plants page
         function initPlantsPage() {
             // Check if user is logged in
@@ -1635,9 +1657,9 @@
         }
 
         // Update plants page with plant data
-        function updatePlantsPage() {
+        async function updatePlantsPage() {
             updateStats();
-            renderPlants();
+            await renderPlants();
         }
 
         // Update statistics
@@ -1662,7 +1684,7 @@
         }
 
         // Render plants based on filter
-        function renderPlants() {
+        async function renderPlants() {
             const grid = document.getElementById('plantsGrid');
             let filteredPlants = plants;
 
@@ -1737,6 +1759,17 @@
                     harvestStatus = `${daysUntilHarvest} hari lagi`;
                 }
 
+                getImageFromIndexedDB(plant.plantImage).then(dataUrl => {
+                    if (dataUrl) {
+                        console.log(dataUrl);
+                        imageHTML += `
+                            <div class="plant-proof-container">
+                                <img src="${dataUrl}" alt="Bukti penyiraman" class="plant-proof">
+                            </div>
+                        `;
+                    }
+                });
+                
                 return `
                     <div class="plant-card ${cardClass}">
                         <div class="plant-header">
@@ -1781,6 +1814,8 @@
                             </div>
                         </div>
                         
+                        ${imageHTML}
+
                         <div class="plant-progress">
                             <div class="progress-info">
                                 <span>Progress Tumbuh</span>
@@ -2060,7 +2095,7 @@
         }
 
         // Form submission handler untuk form tanam baru
-        document.getElementById('plantForm').addEventListener('submit', function(e) {
+        document.getElementById('plantForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const plantName = document.getElementById('plantName').value;
@@ -2098,6 +2133,26 @@
                 return;
             }
 
+            const plantImage = document.getElementById('plantImage');
+            if (!plantImage.files[0]) {
+                alert('Silakan unggah foto tanaman');
+                return;
+            }
+
+            let selectedFile = plantImage.files[0];
+
+            let imageId = null;
+
+            try {
+                // Simpan gambar ke IndexedDB dan dapatkan ID
+                imageId = await saveImageToIndexedDB(selectedFile);
+                console.log("Gambar disimpan di IndexedDB dengan ID:", imageId);
+            } catch (error) {
+                console.error(error);
+                alert("Gagal menyimpan gambar ke database lokal");
+                return;
+            }
+
             const newPlant = {
                 id: Date.now().toString(),
                 name: plantName,
@@ -2112,6 +2167,7 @@
                 lastWatered: null,
                 nextWatering: startDate, // First watering on start date
                 status: 'active',
+                plantImage: imageId,
                 userId: currentUser.id,
                 createdAt: new Date().toISOString()
             };
