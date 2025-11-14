@@ -205,7 +205,7 @@
             align-items: center;
             justify-content: center;
             background: var(--primary-light);
-            color: var(--primary-color);
+            color: white;
             font-size: 20px;
         }
 
@@ -406,6 +406,15 @@
             color: var(--primary-color);
         }
 
+        .plant-image-container{
+            display: flex;
+            justify-content: center;
+        }
+
+        .plant-image-box {
+            width: 120px;
+        }
+
         .plant-progress {
             margin: 20px 0;
         }
@@ -522,6 +531,48 @@
         .btn-details:hover {
             background: var(--primary-color);
             color: white;
+        }
+
+        .btn-edit {
+            flex: 1;
+            padding: 10px 10px;
+            background: var(--warning);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit:hover {
+            background: #ec8e00;
+        }
+
+        .btn-delete {
+            flex: 1;
+            padding: 10px 10px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background: #ff1c0c;
         }
 
         /* Empty State */
@@ -1062,11 +1113,14 @@
             </button>
             
             <nav class="nav">
-                <a href="index.html">
+                <a href="dashboard.html">
                     <i class="fas fa-home"></i> Dashboard
                 </a>
                 <a href="plants.html" class="active">
                     <i class="fas fa-leaf"></i> Tanaman Saya
+                </a>
+                <a href="schedule.html" >
+                    <i class="fas fa-clock"></i> Jadwal
                 </a>
                 <a href="history.html">
                     <i class="fas fa-history"></i> Riwayat
@@ -1276,6 +1330,29 @@
                         </div>
                     </div>
                     
+                    <div class="form-group">
+                        <label>Pilih Metode Unggah Foto</label>
+                        <div class="camera-options">
+                            <button type="button" class="camera-btn" onclick="openCamera()">
+                                <i class="fas fa-camera"></i> Ambil Foto
+                            </button>
+                            <button type="button" class="camera-btn secondary" onclick="document.getElementById('plantImage').click()">
+                                <i class="fas fa-images"></i> Pilih dari Galeri
+                            </button>
+                        </div>
+                        
+                        <div class="file-upload" onclick="document.getElementById('plantImage').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Klik untuk mengunggah foto</p>
+                            <p style="font-size: 12px; margin-top: 5px;">Format: JPG, PNG (Maks. 5MB)</p>
+                            <input type="file" id="plantImage" class="file-input" accept="image/*" onchange="previewImage(this)">
+                        </div>
+                        <div class="file-preview">
+                            <img id="imagePreview" src="" alt="Preview">
+                            <div class="file-name" id="fileName"></div>
+                        </div>
+                    </div>
+
                     <div class="form-actions">
                         <button type="button" class="btn-secondary" onclick="closePlantingModal()">Batal</button>
                         <button type="submit" class="btn-primary">Mulai Menanam</button>
@@ -1321,7 +1398,7 @@
                     <div class="form-group">
                         <label>Pilih Metode Unggah Foto</label>
                         <div class="camera-options">
-                            <button type="button" class="camera-btn" onclick="openCamera()">
+                            <button type="button" class="camera-btn" onclick="openCameraWateringProof()">
                                 <i class="fas fa-camera"></i> Ambil Foto
                             </button>
                             <button type="button" class="camera-btn secondary" onclick="document.getElementById('wateringProof').click()">
@@ -1333,11 +1410,11 @@
                             <i class="fas fa-cloud-upload-alt"></i>
                             <p>Klik untuk mengunggah foto</p>
                             <p style="font-size: 12px; margin-top: 5px;">Format: JPG, PNG (Maks. 5MB)</p>
-                            <input type="file" id="wateringProof" class="file-input" accept="image/*" onchange="previewImage(this)">
+                            <input type="file" id="wateringProof" class="file-input" accept="image/*" onchange="previewImageWateringProof(this)">
                         </div>
                         <div class="file-preview">
-                            <img id="imagePreview" src="" alt="Preview">
-                            <div class="file-name" id="fileName"></div>
+                            <img id="imagePreviewWateringProof" src="" alt="Preview">
+                            <div class="file-name" id="fileNameWateringProof"></div>
                         </div>
                     </div>
                     
@@ -1360,6 +1437,127 @@
         </div>
     </div>
 
+     <!-- Progessing Modal -->
+     <div id="progressingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detail Progress</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="progressingDetail"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editPlantingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Tanaman</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editPlantForm" class="plant-form">
+                    <div class="form-group">
+                        <label for="editPlantName">Nama Tanaman</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-leaf"></i>
+                            <input type="text" id="editPlantName" name="editPlantName" placeholder="Contoh: Padi Ciherang" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editPlantType">Jenis Tanaman</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-seedling"></i>
+                            <select id="editPlantType" name="editPlantType" required onchange="editToggleCustomPlantType()">
+                                <option value="">Pilih Jenis</option>
+                                <option value="Padi">Padi</option>
+                                <option value="Kecambah">Kecambah</option>
+                                <option value="Sayuran">Sayuran</option>
+                                <option value="Buah">Buah</option>
+                                <option value="Herbal">Herbal</option>
+                                <option value="Bunga">Bunga</option>
+                                <option value="custom">Lainnya (isi sendiri)</option>
+                            </select>
+                        </div>
+                        <div id="editCustomPlantType" class="custom-input">
+                            <input type="text" placeholder="Masukkan jenis tanaman">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editPlantLocation">Lokasi Tanam</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" id="editPlantLocation" name="editPlantLocation" placeholder="Contoh: Lahan Utara" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editStartDate">Tanggal Mulai</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                                <input type="date" id="editStartDate" name="editStartDate" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="editHarvestDate">Perkiraan Panen</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-seedling"></i>
+                                <input type="date" id="editHarvestDate" name="editHarvestDate" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editWaterSchedule">Jadwal Siram</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-tint"></i>
+                                <select id="editWaterSchedule" name="editWaterSchedule" required onchange="editToggleCustomWaterSchedule()">
+                                    <option value="">Pilih Jadwal</option>
+                                    <option value="1">Setiap Hari</option>
+                                    <option value="2">2 Hari Sekali</option>
+                                    <option value="3">3 Hari Sekali</option>
+                                    <option value="7">Mingguan</option>
+                                    <option value="custom">Lainnya (isi sendiri)</option>
+                                </select>
+                            </div>
+                            <div id="editCustomWaterSchedule" class="custom-water-schedule">
+                                <input type="number" id="editCustomWaterScheduleInput" placeholder="Masukkan jumlah hari" min="1">
+                                <small style="color: var(--text-light); font-size: 12px; margin-top: 5px; display: block;">
+                                    * Masukkan jumlah hari untuk jadwal penyiraman
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="editWaterTime">Waktu Siram</label>
+                            <div class="time-picker-container">
+                                <input type="text" id="editWaterTime" class="time-input" placeholder="Pilih waktu" readonly onclick="openTimePicker()">
+                                <i class="fas fa-clock" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--text-light);"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editQuantity">Jumlah Tanaman</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-hashtag"></i>
+                            <input type="number" id="editQuantity" name="editQuantity" placeholder="Contoh: 100" min="1" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeEditPlantingModal()">Batal</button>
+                        <button type="submit" class="btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Data tanaman dari localStorage (spesifik user)
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -1369,12 +1567,98 @@
         let selectedHour = 12;
         let selectedMinute = 0;
 
+        // === IndexedDB Setup untuk gambar bukti penyiraman ===
+        const DB_NAME = "SmartTaniDB";
+        const DB_VERSION = 1;
+        let db;
+
+        // Inisialisasi database
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+                request.onupgradeneeded = function(event) {
+                    db = event.target.result;
+                    if (!db.objectStoreNames.contains("images")) {
+                        db.createObjectStore("images", { keyPath: "id", autoIncrement: true });
+                    }
+                };
+
+                request.onsuccess = function(event) {
+                    db = event.target.result;
+                    resolve(db);
+                };
+
+                request.onerror = function(event) {
+                    reject("Database error: " + event.target.errorCode);
+                };
+            });
+        }
+
+        // Simpan gambar ke IndexedDB, return Promise dengan id gambar
+        function saveImageToIndexedDB(file)  {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const data = event.target.result;
+                    const transaction = db.transaction("images", "readwrite");
+                    const store = transaction.objectStore("images");
+                    const request = store.add({ imageData: data, createdAt: new Date().toISOString() });
+
+                    request.onsuccess = function() {
+                        resolve(request.result); // id gambar
+                    };
+                    request.onerror = function() {
+                        reject("Gagal menyimpan gambar ke IndexedDB");
+                    };
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Ambil gambar dari IndexedDB berdasarkan id
+        function getImageFromIndexedDB(imageId) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction("images", "readonly");
+                const store = transaction.objectStore("images");
+                const request = store.get(imageId);
+
+                request.onsuccess = function(event) {
+                    resolve(event.target.result ? event.target.result.imageData : null);
+                };
+                request.onerror = function() {
+                    reject("Gagal mengambil gambar dari IndexedDB");
+                };
+            });
+        }
+
+        function deleteImageFromIndexedDB(imageId) {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open('PlantDB', 1);
+
+                request.onsuccess = function (event) {
+                    const db = event.target.result;
+                    const tx = db.transaction('images', 'readwrite');
+                    const store = tx.objectStore('images');
+
+                    const deleteRequest = store.delete(imageId);
+
+                    deleteRequest.onsuccess = () => resolve(true);
+                    deleteRequest.onerror = () => reject(deleteRequest.error);
+                };
+
+                request.onerror = function () {
+                    reject(request.error);
+                };
+            });
+        }
+
         // Initialize plants page
         function initPlantsPage() {
             // Check if user is logged in
             if (!currentUser) {
                 alert('Silakan login terlebih dahulu');
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
                 return;
             }
 
@@ -1403,7 +1687,7 @@
         }
 
         // Update plants page with plant data
-        function updatePlantsPage() {
+       function updatePlantsPage() {
             updateStats();
             renderPlants();
         }
@@ -1430,7 +1714,7 @@
         }
 
         // Render plants based on filter
-        function renderPlants() {
+        async function renderPlants() {
             const grid = document.getElementById('plantsGrid');
             let filteredPlants = plants;
 
@@ -1481,11 +1765,21 @@
                 return;
             }
             
-            grid.innerHTML = filteredPlants.map(plant => {
+            const imagePromises = filteredPlants.map(async plant => {
+                if (!plant.plantImage) return 'assets/img/default-plant.jpg';
+                const img = await getImageFromIndexedDB(plant.plantImage);
+                return img || 'assets/img/default-plant.jpg';
+            });
+
+            const imageResults = await Promise.all(imagePromises);
+
+            grid.innerHTML = filteredPlants.map((plant, index) => {
                 const today = new Date().toISOString().split('T')[0];
                 const harvestDate = new Date(plant.harvestDate);
                 const daysUntilHarvest = Math.ceil((harvestDate - new Date()) / (1000 * 60 * 60 * 24));
                 
+                const imageSrc = imageResults[index];
+
                 let cardClass = '';
                 let harvestStatus = '';
                 
@@ -1534,6 +1828,12 @@
                             </div>
                         </div>
                         
+                        <div class="plant-image-container">
+                            <div class="plant-image-box">
+                                <img class="plant-image" src="${imageSrc}" alt="${plant.name}">
+                            </div>
+                        </div>
+                        
                         <div class="plant-schedule">
                             <div class="schedule-item">
                                 <span class="schedule-label">Siram Berikutnya:</span>
@@ -1563,7 +1863,7 @@
                             <button class="btn-water" onclick="openWateringModal('${plant.id}')" ${plant.progress >= 100 ? 'disabled' : ''}>
                                 <i class="fas fa-tint"></i> ${plant.progress >= 100 ? 'Selesai' : 'Konfirmasi Siram'}
                             </button>
-                            <button class="btn-details" onclick="viewPlantDetails('${plant.id}')">
+                            <button class="btn-details" onclick="openProgressingModal('${plant.id}')">
                                 <i class="fas fa-chart-line"></i> Progress
                             </button>
                         </div>
@@ -1675,8 +1975,8 @@
             document.getElementById('wateringModal').style.display = 'block';
             // Reset form
             document.getElementById('wateringForm').reset();
-            document.getElementById('imagePreview').style.display = 'none';
-            document.getElementById('fileName').textContent = '';
+            document.getElementById('imagePreviewWateringProof').style.display = 'none';
+            document.getElementById('fileNameWateringProof').textContent = '';
         }
 
         function closeWateringModal() {
@@ -1827,8 +2127,58 @@
             reader.readAsDataURL(file);
         }
 
+        function openCameraWateringProof() {
+            const cameraInput = document.createElement('input');
+            cameraInput.type = 'file';
+            cameraInput.accept = 'image/*';
+            cameraInput.capture = 'camera'; // Langsung ke kamera
+            
+            cameraInput.onchange = function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
+                    previewImageWateringProofFromFile(file);
+                }
+            };
+            
+            cameraInput.click();
+        }
+
+        function previewImageWateringProofFromFile(file) {
+            const preview = document.getElementById('imagePreviewWateringProof');
+            const fileName = document.getElementById('fileNameWateringProof');
+            
+            // Check file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Ukuran file terlalu besar. Maksimal 5MB.');
+                return;
+            }
+            
+            // Check file type
+            if (!file.type.match('image.*')) {
+                alert('Hanya file gambar yang diizinkan.');
+                return;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                fileName.textContent = file.name;
+            }
+            
+            reader.readAsDataURL(file);
+        }
+
+        function previewImageWateringProof(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                previewImageWateringProofFromFile(file);
+            }
+        }
+
         // Form submission handler untuk form tanam baru
-        document.getElementById('plantForm').addEventListener('submit', function(e) {
+        document.getElementById('plantForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const plantName = document.getElementById('plantName').value;
@@ -1866,6 +2216,26 @@
                 return;
             }
 
+            const plantImage = document.getElementById('plantImage');
+            if (!plantImage.files[0]) {
+                alert('Silakan unggah foto tanaman');
+                return;
+            }
+
+            let selectedFile = plantImage.files[0];
+
+            let imageId = null;
+
+            try {
+                // Simpan gambar ke IndexedDB dan dapatkan ID
+                imageId = await saveImageToIndexedDB(selectedFile);
+                console.log("Gambar disimpan di IndexedDB dengan ID:", imageId);
+            } catch (error) {
+                console.error(error);
+                alert("Gagal menyimpan gambar ke database lokal");
+                return;
+            }
+
             const newPlant = {
                 id: Date.now().toString(),
                 name: plantName,
@@ -1880,6 +2250,7 @@
                 lastWatered: null,
                 nextWatering: startDate, // First watering on start date
                 status: 'active',
+                plantImage: imageId,
                 userId: currentUser.id,
                 createdAt: new Date().toISOString()
             };
@@ -1898,7 +2269,7 @@
         });
 
         // Form submission handler untuk form penyiraman
-        document.getElementById('wateringForm').addEventListener('submit', function(e) {
+        document.getElementById('wateringForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const wateringProof = document.getElementById('wateringProof');
@@ -1907,11 +2278,27 @@
                 return;
             }
 
+            let selectedFile = wateringProof.files[0];
+
+
+            let imageId = null;
+
+            try {
+                // Simpan gambar ke IndexedDB dan dapatkan ID
+                imageId = await saveImageToIndexedDB(selectedFile);
+                console.log("Gambar disimpan di IndexedDB dengan ID:", imageId);
+            } catch (error) {
+                console.error(error);
+                alert("Gagal menyimpan gambar ke database lokal");
+                return;
+            }
+
             if (currentEditingPlantId) {
                 const plantIndex = plants.findIndex(p => p.id === currentEditingPlantId);
                 if (plantIndex !== -1) {
                     plants[plantIndex].lastWatered = new Date().toISOString().split('T')[0];
                     plants[plantIndex].progress = Math.min(plants[plantIndex].progress + 10, 100);
+                    plants[plantIndex].waterinProofId = imageId; //
                     
                     // Calculate next watering
                     const nextDate = new Date();
@@ -1951,6 +2338,215 @@
             }
         }
 
+        async function openProgressingModal(plantId) {
+            currentEditingPlantId = plantId;
+            const plant = plants.find(p => p.id === plantId);
+            const progress = document.getElementById('progressingDetail');
+
+            let wateringImage = 'assets/no-image.png';
+            if (plant.waterinProofId) {
+                wateringImage = await getImageFromIndexedDB(plant.waterinProofId);
+            }
+
+            progress.innerHTML = `
+                <p>Nama : ${plant.name}</p>
+                <p>Jenis : ${plant.type}</p>
+                <p>Lokasi : ${plant.location}</p>
+                <p>Progress Tumbuh : ${plant.progress}%</p>
+                <p>Terakhir Disiram: ${plant.lastWatered ? formatDate(plant.lastWatered) : "Belum pernah"}</p>
+                <p>Siram Berikutnya: ${formatDate(plant.nextWatering)}</p>
+                <p>Perkiraan Panen: ${formatDate(plant.harvestDate)}</p>
+
+                <div class="plant-image-box">
+                    <img class="plant-image" src="${wateringImage}" alt="${plant.name}">
+                </div>
+                
+                <div class="plant-actions">
+                    <button class="btn-edit" onclick="openEditPlantModal('${plant.id}')">
+                        <i class="fas fa-edit"></i> Edit Tanaman
+                    </button>
+                    <button class="btn-delete" onclick="deletePlant('${plant.id}')">
+                        <i class="fas fa-trash"></i> Hapus Tanaman
+                    </button>
+                </div>
+            `
+            document.getElementById('progressingModal').style.display = 'block';
+        }
+
+        function openEditPlantModal(plantId) {
+            currentEditingPlantId = plantId;
+            const plant = plants.find(p => p.id === plantId);
+            if (!plant) return alert("Tanaman tidak ditemukan");
+
+            document.getElementById('editPlantForm').reset();
+            editToggleCustomPlantType();
+            editToggleCustomWaterSchedule();
+            initializeClock();
+
+
+            document.getElementById('progressingModal').style.display = 'none';
+            document.getElementById('editPlantingModal').style.display = 'block';
+
+            document.getElementById('editPlantName').value = plant.name || '';
+            document.getElementById('editPlantType').value = ['Padi','Kecambah','Sayuran','Buah','Herbal','Bunga'].includes(plant.type) ? plant.type : 'custom';
+
+            // Jika jenis custom, tampilkan input custom
+            if (document.getElementById('editPlantType').value === 'custom') {
+                document.getElementById('editCustomPlantType').style.display = 'block';
+                document.querySelector('#editCustomPlantType input').value = plant.type;
+            } else {
+                document.getElementById('editCustomPlantType').style.display = 'none';
+            }
+
+            document.getElementById('editPlantLocation').value = plant.location || '';
+            document.getElementById('editStartDate').value = plant.startDate || '';
+            document.getElementById('editHarvestDate').value = plant.harvestDate || '';
+            
+            // Jadwal siram
+            const schedule = plant.waterSchedule?.toString() || '';
+            if (['1','2','3','7'].includes(schedule)) {
+                document.getElementById('editWaterSchedule').value = schedule;
+                document.getElementById('editCustomWaterSchedule').style.display = 'none';
+            } else if (schedule.startsWith('custom-')) {
+                document.getElementById('editWaterSchedule').value = 'custom';
+                document.getElementById('editCustomWaterSchedule').style.display = 'block';
+                document.getElementById('editCustomWaterScheduleInput').value = schedule.split('-')[1];
+            }
+            
+            document.getElementById('editWaterTime').value = plant.waterTime || '';
+            document.getElementById('editQuantity').value = plant.quantity || 1;
+        }
+
+        // Toggle custom plant type input
+        function editToggleCustomPlantType() {
+            const plantType = document.getElementById('editPlantType');
+            const customPlantType = document.getElementById('editCustomPlantType');
+            
+            if (plantType.value === 'custom') {
+                customPlantType.style.display = 'block';
+            } else {
+                customPlantType.style.display = 'none';
+            }
+        }
+
+        // Toggle custom water schedule input
+        function editToggleCustomWaterSchedule() {
+            const waterSchedule = document.getElementById('editWaterSchedule');
+            const customWaterSchedule = document.getElementById('editCustomWaterSchedule');
+            
+            if (waterSchedule.value === 'custom') {
+                customWaterSchedule.style.display = 'block';
+            } else {
+                customWaterSchedule.style.display = 'none';
+            }
+        }
+
+        // Form submission handler untuk form tanam baru
+        document.getElementById('editPlantForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('editPlantName').value.trim();
+            const typeSelect = document.getElementById('editPlantType').value;
+            const type = typeSelect === 'custom' 
+                ? document.querySelector('#editCustomPlantType input').value.trim() 
+                : typeSelect;
+
+            const location = document.getElementById('editPlantLocation').value.trim();
+            const startDate = document.getElementById('editStartDate').value;
+            const harvestDate = document.getElementById('editHarvestDate').value;
+            const quantity = parseInt(document.getElementById('editQuantity').value);
+            const waterScheduleSelect = document.getElementById('editWaterSchedule').value;
+
+            let waterSchedule = waterScheduleSelect;
+            if (waterScheduleSelect === 'custom') {
+                const customVal = document.getElementById('editCustomWaterScheduleInput').value;
+                if (!customVal) return alert("Masukkan jumlah hari penyiraman");
+                waterSchedule = `custom-${customVal}`;
+            }
+            const waterTime = document.getElementById('editWaterTime').value;
+
+
+            // Validasi
+            if (!name || !type || !location || !startDate || !harvestDate || !waterSchedule) {
+                return alert("Harap isi semua field yang diperlukan");
+            }
+
+            // Ambil data dari localStorage
+            let allPlants = JSON.parse(localStorage.getItem('plants')) || [];
+            const plantIndex = allPlants.findIndex(p => p.id === currentEditingPlantId);
+            if (plantIndex === -1) return alert("Tanaman tidak ditemukan");
+
+            // Update data tanaman
+            allPlants[plantIndex] = {
+                ...allPlants[plantIndex],
+                name,
+                type,
+                location,
+                startDate,
+                harvestDate,
+                quantity,
+                waterSchedule,
+                waterTime,
+            };
+            
+            // Simpan kembali ke localStorage
+            localStorage.setItem('plants', JSON.stringify(allPlants));
+
+            // Tutup modal & update tampilan
+            loadUserPlants();
+            updatePlantsPage();
+            closeEditPlantingModal();
+            alert("Perubahan tanaman berhasil disimpan!");
+
+        });
+
+        async function deletePlant(plantId) {
+            // Konfirmasi dulu
+            const confirmDelete = confirm("Apakah Anda yakin ingin menghapus tanaman ini?");
+            if (!confirmDelete) return;
+
+            // Ambil semua tanaman dari localStorage
+            let allPlants = JSON.parse(localStorage.getItem('plants')) || [];
+
+            // Cari indeks tanaman berdasarkan ID
+            const index = allPlants.findIndex(p => p.id === plantId);
+            if (index === -1) {
+                alert("Tanaman tidak ditemukan!");
+                return;
+            }
+
+            if (index && index.plantImage) {
+                try {
+                    await deleteImageFromIndexedDB(index.plantImage);
+                    console.log("Gambar dihapus dari IndexedDB:", index.plantImage);
+                } catch (err) {
+                    console.error("Gagal menghapus gambar dari IndexedDB:", err);
+                }
+            }
+
+            // Hapus tanaman dari array
+            allPlants.splice(index, 1);
+
+            // Simpan kembali ke localStorage
+            localStorage.setItem('plants', JSON.stringify(allPlants));
+
+            // Perbarui variabel global plants (kalau kamu pakai di file ini)
+            plants = allPlants;
+
+            // Render ulang halaman tanaman
+            closeProgressingModal();
+            updatePlantsPage();
+            alert("Tanaman berhasil dihapus ✅");
+        }
+
+        function closeEditPlantingModal() {
+            document.getElementById('editPlantingModal').style.display = 'none';
+        }
+
+        function closeProgressingModal() {
+            document.getElementById('progressingModal').style.display = 'none';
+        }
+
         // Setup event listeners
         function setupEventListeners() {
             // Mobile menu toggle
@@ -1987,12 +2583,16 @@
         function logout() {
             if (confirm('Apakah Anda yakin ingin logout?')) {
                 localStorage.removeItem('currentUser');
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
             }
         }
 
         // Initialize page when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initPlantsPage);
+        // document.addEventListener('DOMContentLoaded', initPlantsPage);
+        document.addEventListener('DOMContentLoaded', async () => {
+            await initDB(); // Pastikan IndexedDB siap
+            initPlantsPage();
+        });
     </script>
 </body>
 </html>

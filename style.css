@@ -1253,7 +1253,7 @@ body {
     align-items: center;
     gap: 10px;
     max-width: 350px;
-    animation: slideIn 0.3s ease-out;
+    animation: slideIn 5s alternate-reverse;
 }
 
 .notification.success {

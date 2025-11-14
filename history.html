@@ -205,7 +205,7 @@
             align-items: center;
             justify-content: center;
             background: var(--primary-light);
-            color: var(--primary-color);
+            color: white;
             font-size: 20px;
         }
 
@@ -560,11 +560,14 @@
             </button>
             
             <nav class="nav">
-                <a href="index.html">
+                <a href="dashboard.html">
                     <i class="fas fa-home"></i> Dashboard
                 </a>
                 <a href="plants.html">
                     <i class="fas fa-leaf"></i> Tanaman Saya
+                </a>
+                <a href="schedule.html" >
+                    <i class="fas fa-clock"></i> Jadwal
                 </a>
                 <a href="history.html" class="active">
                     <i class="fas fa-history"></i> Riwayat
@@ -674,7 +677,7 @@
             // Check if user is logged in
             if (!currentUser) {
                 alert('Silakan login terlebih dahulu');
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
                 return;
             }
 
@@ -1042,7 +1045,7 @@
         function logout() {
             if (confirm('Apakah Anda yakin ingin logout?')) {
                 localStorage.removeItem('currentUser');
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
             }
         }
 
