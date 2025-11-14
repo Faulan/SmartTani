@@ -1632,6 +1632,27 @@
             });
         }
 
+        function deleteImageFromIndexedDB(imageId) {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open('PlantDB', 1);
+
+                request.onsuccess = function (event) {
+                    const db = event.target.result;
+                    const tx = db.transaction('images', 'readwrite');
+                    const store = tx.objectStore('images');
+
+                    const deleteRequest = store.delete(imageId);
+
+                    deleteRequest.onsuccess = () => resolve(true);
+                    deleteRequest.onerror = () => reject(deleteRequest.error);
+                };
+
+                request.onerror = function () {
+                    reject(request.error);
+                };
+            });
+        }
+
         // Initialize plants page
         function initPlantsPage() {
             // Check if user is logged in
@@ -2419,7 +2440,7 @@
 
         });
 
-        function deletePlant(plantId) {
+        async function deletePlant(plantId) {
             // Konfirmasi dulu
             const confirmDelete = confirm("Apakah Anda yakin ingin menghapus tanaman ini?");
             if (!confirmDelete) return;
@@ -2432,6 +2453,15 @@
             if (index === -1) {
                 alert("Tanaman tidak ditemukan!");
                 return;
+            }
+
+            if (index && index.plantImage) {
+                try {
+                    await deleteImageFromIndexedDB(index.plantImage);
+                    console.log("Gambar dihapus dari IndexedDB:", index.plantImage);
+                } catch (err) {
+                    console.error("Gagal menghapus gambar dari IndexedDB:", err);
+                }
             }
 
             // Hapus tanaman dari array
@@ -2448,7 +2478,6 @@
             updatePlantsPage();
             alert("Tanaman berhasil dihapus ✅");
         }
-
 
         function closeEditPlantingModal() {
             document.getElementById('editPlantingModal').style.display = 'none';
