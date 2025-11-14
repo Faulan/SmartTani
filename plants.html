@@ -406,6 +406,15 @@
             color: var(--primary-color);
         }
 
+        .plant-image-container{
+            display: flex;
+            justify-content: center;
+        }
+
+        .plant-image-box {
+            width: 120px;
+        }
+
         .plant-progress {
             margin: 20px 0;
         }
@@ -1657,9 +1666,9 @@
         }
 
         // Update plants page with plant data
-        async function updatePlantsPage() {
+       function updatePlantsPage() {
             updateStats();
-            await renderPlants();
+            renderPlants();
         }
 
         // Update statistics
@@ -1735,11 +1744,21 @@
                 return;
             }
             
-            grid.innerHTML = filteredPlants.map(plant => {
+            const imagePromises = filteredPlants.map(async plant => {
+                if (!plant.plantImage) return 'assets/img/default-plant.jpg';
+                const img = await getImageFromIndexedDB(plant.plantImage);
+                return img || 'assets/img/default-plant.jpg';
+            });
+
+            const imageResults = await Promise.all(imagePromises);
+
+            grid.innerHTML = filteredPlants.map((plant, index) => {
                 const today = new Date().toISOString().split('T')[0];
                 const harvestDate = new Date(plant.harvestDate);
                 const daysUntilHarvest = Math.ceil((harvestDate - new Date()) / (1000 * 60 * 60 * 24));
                 
+                const imageSrc = imageResults[index];
+
                 let cardClass = '';
                 let harvestStatus = '';
                 
@@ -1759,17 +1778,6 @@
                     harvestStatus = `${daysUntilHarvest} hari lagi`;
                 }
 
-                getImageFromIndexedDB(plant.plantImage).then(dataUrl => {
-                    if (dataUrl) {
-                        console.log(dataUrl);
-                        imageHTML += `
-                            <div class="plant-proof-container">
-                                <img src="${dataUrl}" alt="Bukti penyiraman" class="plant-proof">
-                            </div>
-                        `;
-                    }
-                });
-                
                 return `
                     <div class="plant-card ${cardClass}">
                         <div class="plant-header">
@@ -1799,6 +1807,12 @@
                             </div>
                         </div>
                         
+                        <div class="plant-image-container">
+                            <div class="plant-image-box">
+                                <img class="plant-image" src="${imageSrc}" alt="${plant.name}">
+                            </div>
+                        </div>
+                        
                         <div class="plant-schedule">
                             <div class="schedule-item">
                                 <span class="schedule-label">Siram Berikutnya:</span>
@@ -1814,8 +1828,6 @@
                             </div>
                         </div>
                         
-                        ${imageHTML}
-
                         <div class="plant-progress">
                             <div class="progress-info">
                                 <span>Progress Tumbuh</span>
