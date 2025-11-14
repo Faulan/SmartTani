@@ -2248,7 +2248,7 @@
                 if (plantIndex !== -1) {
                     plants[plantIndex].lastWatered = new Date().toISOString().split('T')[0];
                     plants[plantIndex].progress = Math.min(plants[plantIndex].progress + 10, 100);
-                    plants[plantIndex].image_id = imageId; //
+                    plants[plantIndex].waterinProofId = imageId; //
                     
                     // Calculate next watering
                     const nextDate = new Date();
@@ -2288,10 +2288,16 @@
             }
         }
 
-        function openProgressingModal(plantId) {
+        async function openProgressingModal(plantId) {
             currentEditingPlantId = plantId;
             const plant = plants.find(p => p.id === plantId);
             const progress = document.getElementById('progressingDetail');
+
+            let wateringImage = 'assets/img/default-plant.jpg';
+            if (plant.waterinProofId) {
+                wateringImage = await getImageFromIndexedDB(plant.waterinProofId);
+            }
+
             progress.innerHTML = `
                 <p>Nama : ${plant.name}</p>
                 <p>Jenis : ${plant.type}</p>
@@ -2301,6 +2307,10 @@
                 <p>Siram Berikutnya: ${formatDate(plant.nextWatering)}</p>
                 <p>Perkiraan Panen: ${formatDate(plant.harvestDate)}</p>
 
+                <div class="plant-image-box">
+                    <img class="plant-image" src="${wateringImage}" alt="${plant.name}">
+                </div>
+                
                 <div class="plant-actions">
                     <button class="btn-edit" onclick="openEditPlantModal('${plant.id}')">
                         <i class="fas fa-edit"></i> Edit Tanaman
