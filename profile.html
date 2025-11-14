@@ -781,11 +781,14 @@
             </button>
             
             <nav class="nav">
-                <a href="index.html">
+                <a href="dashboard.html">
                     <i class="fas fa-home"></i> Dashboard
                 </a>
                 <a href="plants.html">
                     <i class="fas fa-leaf"></i> Tanaman Saya
+                </a>
+                <a href="schedule.html" >
+                    <i class="fas fa-clock"></i> Jadwal
                 </a>
                 <a href="history.html">
                     <i class="fas fa-history"></i> Riwayat
@@ -1275,7 +1278,7 @@
             if (!savedUser) {
                 showNotification('Silakan login terlebih dahulu', 'error');
                 setTimeout(() => {
-                    window.location.href = 'login.html';
+                    window.location.href = 'index.html';
                 }, 2000);
                 return;
             }
@@ -1343,7 +1346,7 @@
 
         // Load user plants data
         function loadUserPlants() {
-            const savedPlants = JSON.parse(localStorage.getItem('userPlants')) || [];
+            const savedPlants = JSON.parse(localStorage.getItem('plants')) || [];
             // Handle berbagai cara identifikasi user
             if (currentUser) {
                 userPlants = savedPlants.filter(plant => 
@@ -1776,7 +1779,7 @@
             localStorage.removeItem('currentUser');
             showNotification('Logout berhasil', 'success');
             setTimeout(() => {
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
             }, 1000);
         }
     </script>

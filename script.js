@@ -561,7 +561,7 @@ function handleResetPassword(e) {
     
     setTimeout(() => {
         document.getElementById('resetPasswordModal').style.display = 'none';
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }, 2000);
 }
 
@@ -579,7 +579,7 @@ function handleVerification(e) {
     showNotification('Verifikasi berhasil! Akun Anda telah aktif.', 'success');
     
     setTimeout(() => {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }, 2000);
 }
 
@@ -995,13 +995,13 @@ function updateUIForUser() {
 }
 
 function checkAuthState() {
-    const authPages = ['login.html', 'register.html', 'verification.html'];
+    const authPages = ['index.html', 'register.html', 'verification.html'];
     const currentPage = window.location.pathname.split('/').pop();
     
     if (authPages.includes(currentPage) && currentUser) {
         window.location.href = 'dashboard.html';
     } else if (!authPages.includes(currentPage) && !currentUser) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }
 }
 
@@ -1023,7 +1023,7 @@ function logout() {
     showNotification('Logout berhasil', 'success');
     
     setTimeout(() => {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }, 1000);
 }
 
