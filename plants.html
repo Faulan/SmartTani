@@ -1398,7 +1398,7 @@
                     <div class="form-group">
                         <label>Pilih Metode Unggah Foto</label>
                         <div class="camera-options">
-                            <button type="button" class="camera-btn" onclick="openCamera()">
+                            <button type="button" class="camera-btn" onclick="openCameraWateringProof()">
                                 <i class="fas fa-camera"></i> Ambil Foto
                             </button>
                             <button type="button" class="camera-btn secondary" onclick="document.getElementById('wateringProof').click()">
@@ -1410,11 +1410,11 @@
                             <i class="fas fa-cloud-upload-alt"></i>
                             <p>Klik untuk mengunggah foto</p>
                             <p style="font-size: 12px; margin-top: 5px;">Format: JPG, PNG (Maks. 5MB)</p>
-                            <input type="file" id="wateringProof" class="file-input" accept="image/*" onchange="previewImage(this)">
+                            <input type="file" id="wateringProof" class="file-input" accept="image/*" onchange="previewImageWateringProof(this)">
                         </div>
                         <div class="file-preview">
-                            <img id="imagePreview" src="" alt="Preview">
-                            <div class="file-name" id="fileName"></div>
+                            <img id="imagePreviewWateringProof" src="" alt="Preview">
+                            <div class="file-name" id="fileNameWateringProof"></div>
                         </div>
                     </div>
                     
@@ -1975,8 +1975,8 @@
             document.getElementById('wateringModal').style.display = 'block';
             // Reset form
             document.getElementById('wateringForm').reset();
-            document.getElementById('imagePreview').style.display = 'none';
-            document.getElementById('fileName').textContent = '';
+            document.getElementById('imagePreviewWateringProof').style.display = 'none';
+            document.getElementById('fileNameWateringProof').textContent = '';
         }
 
         function closeWateringModal() {
@@ -2125,6 +2125,56 @@
             }
             
             reader.readAsDataURL(file);
+        }
+
+        function openCameraWateringProof() {
+            const cameraInput = document.createElement('input');
+            cameraInput.type = 'file';
+            cameraInput.accept = 'image/*';
+            cameraInput.capture = 'camera'; // Langsung ke kamera
+            
+            cameraInput.onchange = function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
+                    previewImageWateringProofFromFile(file);
+                }
+            };
+            
+            cameraInput.click();
+        }
+
+        function previewImageWateringProofFromFile(file) {
+            const preview = document.getElementById('imagePreviewWateringProof');
+            const fileName = document.getElementById('fileNameWateringProof');
+            
+            // Check file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Ukuran file terlalu besar. Maksimal 5MB.');
+                return;
+            }
+            
+            // Check file type
+            if (!file.type.match('image.*')) {
+                alert('Hanya file gambar yang diizinkan.');
+                return;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                fileName.textContent = file.name;
+            }
+            
+            reader.readAsDataURL(file);
+        }
+
+        function previewImageWateringProof(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                previewImageWateringProofFromFile(file);
+            }
         }
 
         // Form submission handler untuk form tanam baru
@@ -2293,7 +2343,7 @@
             const plant = plants.find(p => p.id === plantId);
             const progress = document.getElementById('progressingDetail');
 
-            let wateringImage = 'assets/img/default-plant.jpg';
+            let wateringImage = 'assets/no-image.png';
             if (plant.waterinProofId) {
                 wateringImage = await getImageFromIndexedDB(plant.waterinProofId);
             }
