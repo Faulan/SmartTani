@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanaman Saya - SmartTani</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --primary-dark: #388E3C;
+            --primary-light: #C8E6C9;
+            --text-color: #333;
+            --text-light: #666;
+            --border-color: #ddd;
+            --success: #4CAF50;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --info: #2196F3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f5f5;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styling */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .nav a.active {
+            color: var(--primary-color);
+        }
+
+        .nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px 0;
+            min-width: 150px;
+            z-index: 1000;
+        }
+
+        .user-menu:hover .dropdown {
+            display: block;
+        }
+
+        .dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown a:hover {
+            background: var(--primary-light);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 30px 0;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .page-header p {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-light);
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+
+        .stat-info h3 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .stat-info p {
+            margin: 5px 0 0 0;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-container {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .category-filter {
+            padding: 10px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            background: white;
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-filter:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .category-filter.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-tanam-baru {
+            padding: 12px 24px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .btn-tanam-baru:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        /* Plants Grid */
+        .plants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .plant-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .plant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .plant-card.urgent {
+            border-left: 4px solid var(--danger);
+        }
+
+        .plant-card.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .plant-card.info {
+            border-left: 4px solid var(--info);
+        }
+
+        .plant-card.completed {
+            border-left: 4px solid var(--success);
+        }
+
+        .plant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .plant-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        .plant-type {
+            background: var(--primary-light);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .plant-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .plant-detail {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .plant-detail i {
+            width: 16px;
+            color: var(--primary-color);
+        }
+
+        .plant-progress {
+            margin: 20px 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .plant-schedule {
+            background: var(--primary-light);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .schedule-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .schedule-label {
+            color: var(--text-light);
+        }
+
+        .schedule-value {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .schedule-value.urgent {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .schedule-value.warning {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        .plant-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-water {
+            flex: 1;
+            padding: 10px 16px;
+            background: var(--info);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-water:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        .btn-water:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-details {
+            padding: 10px 16px;
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-details:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            margin: 0 0 10px 0;
+            color: var(--text-color);
+            font-size: 20px;
+        }
+
+        .empty-state p {
+            margin: 0 0 25px 0;
+            font-size: 14px;
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            width: 90%;
+            max-width: 650px;
+            margin: 5% auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            color: var(--text-color);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        .input-with-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            color: var(--text-light);
+            z-index: 1;
+        }
+
+        .input-with-icon input,
+        .input-with-icon select {
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+            box-sizing: border-box;
+        }
+
+        .input-with-icon input:focus,
+        .input-with-icon select:focus {
+            outline: none;
+            border-color: var(--primary-dark);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-primary, .btn-secondary {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: #e9e9e9;
+        }
+
+        /* Custom Input Styling */
+        .custom-input {
+            display: none;
+            margin-top: 8px;
+        }
+
+        .custom-input input {
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .custom-input input:focus {
+            outline: none;
+            border-color: var(--primary-dark);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        /* Time Picker Styling */
+        .time-picker-container {
+            position: relative;
+        }
+
+        .time-input {
+            cursor: pointer;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            width: 100%;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .time-input:focus {
+            outline: none;
+            border-color: var(--primary-dark);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .time-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .time-modal-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 20px;
+        }
+
+        .analog-clock {
+            width: 200px;
+            height: 200px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            position: relative;
+            margin: 20px auto;
+            background: #f9f9f9;
+        }
+
+        .clock-center {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .hour-hand, .minute-hand {
+            position: absolute;
+            background: var(--text-color);
+            transform-origin: bottom center;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hour-hand {
+            width: 4px;
+            height: 50px;
+            margin-top: -50px;
+            background: var(--text-color);
+        }
+
+        .minute-hand {
+            width: 3px;
+            height: 70px;
+            margin-top: -70px;
+            background: var(--text-color);
+        }
+
+        .clock-numbers {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .clock-number {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+        }
+
+        .time-display {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 15px 0;
+            color: var(--text-color);
+        }
+
+        .time-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* File Upload Styling */
+        .file-upload {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary-color);
+        }
+
+        .file-upload i {
+            font-size: 48px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .file-upload p {
+            margin: 0;
+            color: var(--text-light);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-preview {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .file-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .file-name {
+            margin-top: 10px;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        /* Camera Options */
+        .camera-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .camera-btn {
+            flex: 1;
+            padding: 12px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .camera-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .camera-btn.secondary {
+            background: #f5f5f5;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .camera-btn.secondary:hover {
+            background: #e9e9e9;
+        }
+
+        /* Custom Water Schedule Input */
+        .custom-water-schedule {
+            display: none;
+            margin-top: 8px;
+        }
+
+        .custom-water-schedule input {
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .custom-water-schedule input:focus {
+            outline: none;
+            border-color: var(--primary-dark);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            border-top: 1px solid var(--border-color);
+            padding: 20px 0;
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 50px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                gap: 15px;
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .plants-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-container {
+                min-width: auto;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .plant-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .filter-section {
+                padding: 15px;
+            }
+            
+            .plant-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>SmartTani</h1>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav">
+                <a href="index.html">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="plants.html" class="active">
+                    <i class="fas fa-leaf"></i> Tanaman Saya
+                </a>
+                <a href="history.html">
+                    <i class="fas fa-history"></i> Riwayat
+                </a>
+                
+                <div class="user-menu">
+                    <img src="https://ui-avatars.com/api/?name=User&background=4CAF50&color=fff" alt="User" class="user-avatar">
+                    <span id="userName">User</span>
+                    <div class="dropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> Profil</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Tanaman Saya</h1>
+                <p>Kelola dan pantau semua tanaman yang sedang Anda tanam</p>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalPlants">0</h3>
+                        <p>Total Tanaman</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="needWatering">0</h3>
+                        <p>Perlu Disiram</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="upcomingHarvest">0</h3>
+                        <p>Akan Panen</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="completedPlants">0</h3>
+                        <p>Selesai</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-row">
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="Cari tanaman..." id="searchPlants">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    
+                    <div class="category-filters">
+                        <button class="category-filter active" data-category="all">
+                            <i class="fas fa-layer-group"></i> Semua
+                        </button>
+                        <button class="category-filter" data-category="needs-water">
+                            <i class="fas fa-tint"></i> Perlu Disiram
+                        </button>
+                        <button class="category-filter" data-category="upcoming-harvest">
+                            <i class="fas fa-seedling"></i> Akan Panen
+                        </button>
+                        <button class="category-filter" data-category="completed">
+                            <i class="fas fa-check-circle"></i> Selesai
+                        </button>
+                    </div>
+                    
+                    <button class="btn-tanam-baru" onclick="openPlantingModal()">
+                        <i class="fas fa-plus"></i> Tanam Baru
+                    </button>
+                </div>
+            </div>
+
+            <!-- Plants Grid -->
+            <div class="plants-grid" id="plantsGrid">
+                <!-- Plants will be populated by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>@2025 SmartTani - Mesin Pengingat Masa Tanam dan Panen</p>
+        </div>
+    </footer>
+
+    <!-- Planting Modal -->
+    <div id="plantingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Tanam Tanaman Baru</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="plantForm" class="plant-form">
+                    <div class="form-group">
+                        <label for="plantName">Nama Tanaman</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-leaf"></i>
+                            <input type="text" id="plantName" name="plantName" placeholder="Contoh: Padi Ciherang" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="plantType">Jenis Tanaman</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-seedling"></i>
+                            <select id="plantType" name="plantType" required onchange="toggleCustomPlantType()">
+                                <option value="">Pilih Jenis</option>
+                                <option value="Padi">Padi</option>
+                                <option value="Kecambah">Kecambah</option>
+                                <option value="Sayuran">Sayuran</option>
+                                <option value="Buah">Buah</option>
+                                <option value="Herbal">Herbal</option>
+                                <option value="Bunga">Bunga</option>
+                                <option value="custom">Lainnya (isi sendiri)</option>
+                            </select>
+                        </div>
+                        <div id="customPlantType" class="custom-input">
+                            <input type="text" placeholder="Masukkan jenis tanaman">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="plantLocation">Lokasi Tanam</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" id="plantLocation" name="plantLocation" placeholder="Contoh: Lahan Utara" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startDate">Tanggal Mulai</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                                <input type="date" id="startDate" name="startDate" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="harvestDate">Perkiraan Panen</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-seedling"></i>
+                                <input type="date" id="harvestDate" name="harvestDate" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="waterSchedule">Jadwal Siram</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-tint"></i>
+                                <select id="waterSchedule" name="waterSchedule" required onchange="toggleCustomWaterSchedule()">
+                                    <option value="">Pilih Jadwal</option>
+                                    <option value="1">Setiap Hari</option>
+                                    <option value="2">2 Hari Sekali</option>
+                                    <option value="3">3 Hari Sekali</option>
+                                    <option value="7">Mingguan</option>
+                                    <option value="custom">Lainnya (isi sendiri)</option>
+                                </select>
+                            </div>
+                            <div id="customWaterSchedule" class="custom-water-schedule">
+                                <input type="number" id="customWaterScheduleInput" placeholder="Masukkan jumlah hari" min="1">
+                                <small style="color: var(--text-light); font-size: 12px; margin-top: 5px; display: block;">
+                                    * Masukkan jumlah hari untuk jadwal penyiraman
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="waterTime">Waktu Siram</label>
+                            <div class="time-picker-container">
+                                <input type="text" id="waterTime" class="time-input" placeholder="Pilih waktu" readonly onclick="openTimePicker()">
+                                <i class="fas fa-clock" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--text-light);"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantity">Jumlah Tanaman</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-hashtag"></i>
+                            <input type="number" id="quantity" name="quantity" placeholder="Contoh: 100" min="1" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closePlantingModal()">Batal</button>
+                        <button type="submit" class="btn-primary">Mulai Menanam</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Time Picker Modal -->
+    <div id="timePickerModal" class="time-modal">
+        <div class="time-modal-content">
+            <div class="modal-header">
+                <h3>Pilih Waktu</h3>
+                <button class="close-modal" onclick="closeTimePicker()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="time-display" id="selectedTime">12:00</div>
+                <div class="analog-clock" id="analogClock">
+                    <div class="clock-center"></div>
+                    <div class="hour-hand" id="hourHand"></div>
+                    <div class="minute-hand" id="minuteHand"></div>
+                    <div class="clock-numbers" id="clockNumbers"></div>
+                </div>
+                <div class="time-controls">
+                    <button type="button" class="btn-secondary" onclick="closeTimePicker()">Batal</button>
+                    <button type="button" class="btn-primary" onclick="setSelectedTime()">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Watering Modal -->
+    <div id="wateringModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Konfirmasi Penyiraman</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Silakan unggah bukti foto penyiraman tanaman.</p>
+                <form id="wateringForm" class="plant-form">
+                    <div class="form-group">
+                        <label>Pilih Metode Unggah Foto</label>
+                        <div class="camera-options">
+                            <button type="button" class="camera-btn" onclick="openCamera()">
+                                <i class="fas fa-camera"></i> Ambil Foto
+                            </button>
+                            <button type="button" class="camera-btn secondary" onclick="document.getElementById('wateringProof').click()">
+                                <i class="fas fa-images"></i> Pilih dari Galeri
+                            </button>
+                        </div>
+                        
+                        <div class="file-upload" onclick="document.getElementById('wateringProof').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Klik untuk mengunggah foto</p>
+                            <p style="font-size: 12px; margin-top: 5px;">Format: JPG, PNG (Maks. 5MB)</p>
+                            <input type="file" id="wateringProof" class="file-input" accept="image/*" onchange="previewImage(this)">
+                        </div>
+                        <div class="file-preview">
+                            <img id="imagePreview" src="" alt="Preview">
+                            <div class="file-name" id="fileName"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="wateringNotes">Catatan (Opsional)</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-sticky-note"></i>
+                            <textarea id="wateringNotes" placeholder="Tambahkan catatan tentang kondisi tanaman..." rows="3"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeWateringModal()">Batal</button>
+                        <button type="submit" class="btn-primary" id="confirmWateringBtn">
+                            <i class="fas fa-tint"></i> Konfirmasi Penyiraman
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data tanaman dari localStorage (spesifik user)
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        let plants = [];
+        let currentEditingPlantId = null;
+        let currentFilter = 'all';
+        let selectedHour = 12;
+        let selectedMinute = 0;
+
+        // Initialize plants page
+        function initPlantsPage() {
+            // Check if user is logged in
+            if (!currentUser) {
+                alert('Silakan login terlebih dahulu');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Load user-specific plants data
+            loadUserPlants();
+            updateUserInfo();
+            updatePlantsPage();
+            setupEventListeners();
+        }
+
+        // Load plants data for current user
+        function loadUserPlants() {
+            const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
+            plants = allPlants.filter(plant => plant.userId === currentUser.id);
+        }
+
+        // Update user info in header
+        function updateUserInfo() {
+            const userNameElement = document.getElementById('userName');
+            const userAvatar = document.querySelector('.user-avatar');
+            
+            if (currentUser) {
+                userNameElement.textContent = currentUser.name || currentUser.email || 'User';
+                userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name || 'User')}&background=4CAF50&color=fff`;
+            }
+        }
+
+        // Update plants page with plant data
+        function updatePlantsPage() {
+            updateStats();
+            renderPlants();
+        }
+
+        // Update statistics
+        function updateStats() {
+            const today = new Date().toISOString().split('T')[0];
+            const needWatering = plants.filter(plant => plant.nextWatering === today && plant.progress < 100);
+            
+            // Plants that will be harvested in the next 7 days
+            const nextWeek = new Date();
+            nextWeek.setDate(nextWeek.getDate() + 7);
+            const upcomingHarvest = plants.filter(plant => {
+                const harvestDate = new Date(plant.harvestDate);
+                return harvestDate <= nextWeek && harvestDate >= new Date() && plant.progress < 100;
+            });
+            
+            const completedPlants = plants.filter(plant => plant.progress >= 100);
+            
+            document.getElementById('totalPlants').textContent = plants.length;
+            document.getElementById('needWatering').textContent = needWatering.length;
+            document.getElementById('upcomingHarvest').textContent = upcomingHarvest.length;
+            document.getElementById('completedPlants').textContent = completedPlants.length;
+        }
+
+        // Render plants based on filter
+        function renderPlants() {
+            const grid = document.getElementById('plantsGrid');
+            let filteredPlants = plants;
+
+            const today = new Date().toISOString().split('T')[0];
+            const nextWeek = new Date();
+            nextWeek.setDate(nextWeek.getDate() + 7);
+
+            // Apply filter
+            switch(currentFilter) {
+                case 'needs-water':
+                    filteredPlants = plants.filter(plant => plant.nextWatering === today && plant.progress < 100);
+                    break;
+                case 'upcoming-harvest':
+                    filteredPlants = plants.filter(plant => {
+                        const harvestDate = new Date(plant.harvestDate);
+                        return harvestDate <= nextWeek && harvestDate >= new Date() && plant.progress < 100;
+                    });
+                    break;
+                case 'completed':
+                    filteredPlants = plants.filter(plant => plant.progress >= 100);
+                    break;
+                default:
+                    filteredPlants = plants;
+            }
+
+            // Apply search filter
+            const searchTerm = document.getElementById('searchPlants').value.toLowerCase();
+            if (searchTerm) {
+                filteredPlants = filteredPlants.filter(plant => 
+                    plant.name.toLowerCase().includes(searchTerm) ||
+                    plant.type.toLowerCase().includes(searchTerm) ||
+                    plant.location.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            if (filteredPlants.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-seedling"></i>
+                        <h3>Tidak ada tanaman</h3>
+                        <p>${currentFilter !== 'all' || searchTerm ? 'Coba ubah filter atau kata kunci pencarian' : 'Mulai dengan menanam tanaman pertama Anda'}</p>
+                        ${!searchTerm && currentFilter === 'all' ? 
+                            '<button class="btn-tanam-baru" onclick="openPlantingModal()"><i class="fas fa-plus"></i> Tanam Tanaman Pertama</button>' : 
+                            '<button class="btn-tanam-baru" onclick="clearFilters()"><i class="fas fa-times"></i> Hapus Filter</button>'
+                        }
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = filteredPlants.map(plant => {
+                const today = new Date().toISOString().split('T')[0];
+                const harvestDate = new Date(plant.harvestDate);
+                const daysUntilHarvest = Math.ceil((harvestDate - new Date()) / (1000 * 60 * 60 * 24));
+                
+                let cardClass = '';
+                let harvestStatus = '';
+                
+                if (plant.progress >= 100) {
+                    cardClass = 'completed';
+                    harvestStatus = 'Sudah Panen';
+                } else if (daysUntilHarvest <= 3) {
+                    cardClass = 'urgent';
+                    harvestStatus = `${daysUntilHarvest} hari lagi`;
+                } else if (daysUntilHarvest <= 7) {
+                    cardClass = 'warning';
+                    harvestStatus = `${daysUntilHarvest} hari lagi`;
+                } else if (plant.nextWatering === today) {
+                    cardClass = 'info';
+                    harvestStatus = `${daysUntilHarvest} hari lagi`;
+                } else {
+                    harvestStatus = `${daysUntilHarvest} hari lagi`;
+                }
+
+                return `
+                    <div class="plant-card ${cardClass}">
+                        <div class="plant-header">
+                            <h3 class="plant-name">${plant.name}</h3>
+                            <span class="plant-type">${plant.type}</span>
+                        </div>
+                        <div class="plant-details">
+                            <div class="plant-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${plant.location}</span>
+                            </div>
+                            <div class="plant-detail">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Mulai: ${formatDate(plant.startDate)}</span>
+                            </div>
+                            <div class="plant-detail">
+                                <i class="fas fa-tint"></i>
+                                <span>Siram: ${getWaterScheduleText(plant.waterSchedule)}</span>
+                            </div>
+                            <div class="plant-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>Waktu: ${plant.waterTime}</span>
+                            </div>
+                            <div class="plant-detail">
+                                <i class="fas fa-hashtag"></i>
+                                <span>Jumlah: ${plant.quantity} tanaman</span>
+                            </div>
+                        </div>
+                        
+                        <div class="plant-schedule">
+                            <div class="schedule-item">
+                                <span class="schedule-label">Siram Berikutnya:</span>
+                                <span class="schedule-value ${plant.nextWatering === today ? 'urgent' : ''}">
+                                    ${plant.nextWatering === today ? 'HARI INI' : formatDate(plant.nextWatering)}
+                                </span>
+                            </div>
+                            <div class="schedule-item">
+                                <span class="schedule-label">Perkiraan Panen:</span>
+                                <span class="schedule-value ${daysUntilHarvest <= 3 ? 'urgent' : daysUntilHarvest <= 7 ? 'warning' : ''}">
+                                    ${harvestStatus}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="plant-progress">
+                            <div class="progress-info">
+                                <span>Progress Tumbuh</span>
+                                <span>${plant.progress}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${plant.progress}%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="plant-actions">
+                            <button class="btn-water" onclick="openWateringModal('${plant.id}')" ${plant.progress >= 100 ? 'disabled' : ''}>
+                                <i class="fas fa-tint"></i> ${plant.progress >= 100 ? 'Selesai' : 'Konfirmasi Siram'}
+                            </button>
+                            <button class="btn-details" onclick="viewPlantDetails('${plant.id}')">
+                                <i class="fas fa-chart-line"></i> Progress
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Format date to readable format
+        function formatDate(dateString) {
+            const options = { day: 'numeric', month: 'short', year: 'numeric' };
+            return new Date(dateString).toLocaleDateString('id-ID', options);
+        }
+
+        // Get water schedule text
+        function getWaterScheduleText(schedule) {
+            if (typeof schedule === 'string' && schedule.startsWith('custom-')) {
+                const days = schedule.split('-')[1];
+                return `${days} Hari Sekali`;
+            }
+            
+            switch(parseInt(schedule)) {
+                case 1: return 'Setiap Hari';
+                case 2: return '2 Hari Sekali';
+                case 3: return '3 Hari Sekali';
+                case 7: return 'Mingguan';
+                default: return `${schedule} Hari Sekali`;
+            }
+        }
+
+        // Toggle custom plant type input
+        function toggleCustomPlantType() {
+            const plantType = document.getElementById('plantType');
+            const customPlantType = document.getElementById('customPlantType');
+            
+            if (plantType.value === 'custom') {
+                customPlantType.style.display = 'block';
+            } else {
+                customPlantType.style.display = 'none';
+            }
+        }
+
+        // Toggle custom water schedule input
+        function toggleCustomWaterSchedule() {
+            const waterSchedule = document.getElementById('waterSchedule');
+            const customWaterSchedule = document.getElementById('customWaterSchedule');
+            
+            if (waterSchedule.value === 'custom') {
+                customWaterSchedule.style.display = 'block';
+            } else {
+                customWaterSchedule.style.display = 'none';
+            }
+        }
+
+        // Filter plants by category
+        function filterPlants(category) {
+            currentFilter = category;
+            
+            // Update active filter button
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderPlants();
+        }
+
+        // Clear all filters
+        function clearFilters() {
+            currentFilter = 'all';
+            document.getElementById('searchPlants').value = '';
+            
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('[data-category="all"]').classList.add('active');
+            
+            renderPlants();
+        }
+
+        // Search plants
+        function searchPlants() {
+            renderPlants();
+        }
+
+        // Modal Functions
+        function openPlantingModal() {
+            document.getElementById('plantingModal').style.display = 'block';
+            document.getElementById('plantForm').reset();
+            toggleCustomPlantType();
+            toggleCustomWaterSchedule();
+            initializeClock();
+            
+            // Set default dates
+            const today = new Date();
+            document.getElementById('startDate').valueAsDate = today;
+            
+            const harvestDate = new Date(today);
+            harvestDate.setDate(today.getDate() + 60); // Default 60 days for harvest
+            document.getElementById('harvestDate').valueAsDate = harvestDate;
+        }
+
+        function closePlantingModal() {
+            document.getElementById('plantingModal').style.display = 'none';
+        }
+
+        function openWateringModal(plantId) {
+            currentEditingPlantId = plantId;
+            document.getElementById('wateringModal').style.display = 'block';
+            // Reset form
+            document.getElementById('wateringForm').reset();
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('fileName').textContent = '';
+        }
+
+        function closeWateringModal() {
+            document.getElementById('wateringModal').style.display = 'none';
+        }
+
+        // Initialize analog clock
+        function initializeClock() {
+            const clockNumbers = document.getElementById('clockNumbers');
+            clockNumbers.innerHTML = '';
+            
+            // Create clock numbers
+            for (let i = 1; i <= 12; i++) {
+                const number = document.createElement('div');
+                number.className = 'clock-number';
+                number.textContent = i;
+                
+                const angle = (i - 3) * 30 * (Math.PI / 180);
+                const radius = 80;
+                const x = 100 + radius * Math.cos(angle);
+                const y = 100 + radius * Math.sin(angle);
+                
+                number.style.left = (x - 10) + 'px';
+                number.style.top = (y - 10) + 'px';
+                
+                clockNumbers.appendChild(number);
+            }
+            
+            // Set initial time
+            updateClockHands();
+            
+            // Add click event to clock
+            document.getElementById('analogClock').addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const clickX = e.clientX - centerX;
+                const clickY = e.clientY - centerY;
+                
+                // Calculate angle
+                let angle = Math.atan2(clickY, clickX) * (180 / Math.PI);
+                if (angle < 0) angle += 360;
+                
+                // Determine if click is closer to hour or minute
+                const distance = Math.sqrt(clickX * clickX + clickY * clickY);
+                const isHour = distance < 60; // Inside radius for hours
+                
+                if (isHour) {
+                    selectedHour = Math.round(angle / 30) % 12;
+                    if (selectedHour === 0) selectedHour = 12;
+                } else {
+                    selectedMinute = Math.round(angle / 6) % 60;
+                }
+                
+                updateClockHands();
+                updateTimeDisplay();
+            });
+        }
+
+        // Update clock hands
+        function updateClockHands() {
+            const hourHand = document.getElementById('hourHand');
+            const minuteHand = document.getElementById('minuteHand');
+            
+            const hourAngle = (selectedHour % 12) * 30 + selectedMinute * 0.5;
+            const minuteAngle = selectedMinute * 6;
+            
+            hourHand.style.transform = `translateX(-50%) rotate(${hourAngle}deg)`;
+            minuteHand.style.transform = `translateX(-50%) rotate(${minuteAngle}deg)`;
+        }
+
+        // Update time display
+        function updateTimeDisplay() {
+            const timeDisplay = document.getElementById('selectedTime');
+            const hourStr = selectedHour.toString().padStart(2, '0');
+            const minuteStr = selectedMinute.toString().padStart(2, '0');
+            timeDisplay.textContent = `${hourStr}:${minuteStr}`;
+        }
+
+        // Open time picker
+        function openTimePicker() {
+            document.getElementById('timePickerModal').style.display = 'block';
+        }
+
+        // Close time picker
+        function closeTimePicker() {
+            document.getElementById('timePickerModal').style.display = 'none';
+        }
+
+        // Set selected time
+        function setSelectedTime() {
+            const hourStr = selectedHour.toString().padStart(2, '0');
+            const minuteStr = selectedMinute.toString().padStart(2, '0');
+            document.getElementById('waterTime').value = `${hourStr}:${minuteStr}`;
+            closeTimePicker();
+        }
+
+        // Open camera for taking photo
+        function openCamera() {
+            const cameraInput = document.createElement('input');
+            cameraInput.type = 'file';
+            cameraInput.accept = 'image/*';
+            cameraInput.capture = 'camera'; // Langsung ke kamera
+            
+            cameraInput.onchange = function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
+                    previewImageFromFile(file);
+                }
+            };
+            
+            cameraInput.click();
+        }
+
+        // Preview uploaded image
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                previewImageFromFile(file);
+            }
+        }
+
+        // Preview image from file
+        function previewImageFromFile(file) {
+            const preview = document.getElementById('imagePreview');
+            const fileName = document.getElementById('fileName');
+            
+            // Check file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Ukuran file terlalu besar. Maksimal 5MB.');
+                return;
+            }
+            
+            // Check file type
+            if (!file.type.match('image.*')) {
+                alert('Hanya file gambar yang diizinkan.');
+                return;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                fileName.textContent = file.name;
+            }
+            
+            reader.readAsDataURL(file);
+        }
+
+        // Form submission handler untuk form tanam baru
+        document.getElementById('plantForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const plantName = document.getElementById('plantName').value;
+            let plantType = document.getElementById('plantType').value;
+            const customPlantType = document.getElementById('customPlantType').querySelector('input').value;
+            const plantLocation = document.getElementById('plantLocation').value;
+            const startDate = document.getElementById('startDate').value;
+            const harvestDate = document.getElementById('harvestDate').value;
+            let waterSchedule = document.getElementById('waterSchedule').value;
+            const customWaterSchedule = document.getElementById('customWaterScheduleInput').value;
+            const waterTime = document.getElementById('waterTime').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+
+            // Use custom plant type if selected
+            if (plantType === 'custom') {
+                if (!customPlantType.trim()) {
+                    alert('Silakan isi jenis tanaman');
+                    return;
+                }
+                plantType = customPlantType;
+            }
+
+            // Use custom water schedule if selected
+            if (waterSchedule === 'custom') {
+                if (!customWaterSchedule || customWaterSchedule < 1) {
+                    alert('Silakan isi jadwal penyiraman yang valid');
+                    return;
+                }
+                waterSchedule = `custom-${customWaterSchedule}`;
+            }
+
+            // Validate water time
+            if (!waterTime) {
+                alert('Silakan pilih waktu penyiraman');
+                return;
+            }
+
+            const newPlant = {
+                id: Date.now().toString(),
+                name: plantName,
+                type: plantType,
+                location: plantLocation,
+                startDate: startDate,
+                harvestDate: harvestDate,
+                waterSchedule: waterSchedule,
+                waterTime: waterTime,
+                quantity: quantity,
+                progress: 0,
+                lastWatered: null,
+                nextWatering: startDate, // First watering on start date
+                status: 'active',
+                userId: currentUser.id,
+                createdAt: new Date().toISOString()
+            };
+
+            // Save to localStorage
+            const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
+            allPlants.push(newPlant);
+            localStorage.setItem('plants', JSON.stringify(allPlants));
+            
+            // Reload plants and update display
+            loadUserPlants();
+            updatePlantsPage();
+            closePlantingModal();
+            
+            alert('Tanaman berhasil ditambahkan!');
+        });
+
+        // Form submission handler untuk form penyiraman
+        document.getElementById('wateringForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const wateringProof = document.getElementById('wateringProof');
+            if (!wateringProof.files[0]) {
+                alert('Silakan unggah bukti foto penyiraman');
+                return;
+            }
+
+            if (currentEditingPlantId) {
+                const plantIndex = plants.findIndex(p => p.id === currentEditingPlantId);
+                if (plantIndex !== -1) {
+                    plants[plantIndex].lastWatered = new Date().toISOString().split('T')[0];
+                    plants[plantIndex].progress = Math.min(plants[plantIndex].progress + 10, 100);
+                    
+                    // Calculate next watering
+                    const nextDate = new Date();
+                    let waterScheduleDays = plants[plantIndex].waterSchedule;
+                    
+                    // Handle custom water schedule
+                    if (typeof waterScheduleDays === 'string' && waterScheduleDays.startsWith('custom-')) {
+                        waterScheduleDays = parseInt(waterScheduleDays.split('-')[1]);
+                    } else {
+                        waterScheduleDays = parseInt(waterScheduleDays);
+                    }
+                    
+                    nextDate.setDate(nextDate.getDate() + waterScheduleDays);
+                    plants[plantIndex].nextWatering = nextDate.toISOString().split('T')[0];
+                    
+                    // Update localStorage
+                    const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
+                    const globalPlantIndex = allPlants.findIndex(p => p.id === currentEditingPlantId);
+                    if (globalPlantIndex !== -1) {
+                        allPlants[globalPlantIndex] = plants[plantIndex];
+                        localStorage.setItem('plants', JSON.stringify(allPlants));
+                    }
+                    
+                    updatePlantsPage();
+                    alert('Penyiraman berhasil dikonfirmasi! Progress tanaman bertambah.');
+                }
+            }
+            
+            closeWateringModal();
+        });
+
+        // View plant details
+        function viewPlantDetails(plantId) {
+            const plant = plants.find(p => p.id === plantId);
+            if (plant) {
+                alert(`Detail Progress Tanaman:\n\nNama: ${plant.name}\nJenis: ${plant.type}\nLokasi: ${plant.location}\nProgress Tumbuh: ${plant.progress}%\nTerakhir Disiram: ${plant.lastWatered ? formatDate(plant.lastWatered) : 'Belum pernah'}\nSiram Berikutnya: ${formatDate(plant.nextWatering)}\nPerkiraan Panen: ${formatDate(plant.harvestDate)}`);
+            }
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+                document.querySelector('.nav').classList.toggle('active');
+            });
+
+            // Filter buttons
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterPlants(this.dataset.category);
+                });
+            });
+
+            // Search input
+            document.getElementById('searchPlants').addEventListener('input', searchPlants);
+
+            // Modal close events
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                });
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal')) {
+                    e.target.style.display = 'none';
+                }
+            });
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin logout?')) {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Initialize page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initPlantsPage);
+    </script>
+</body>
+</html>
