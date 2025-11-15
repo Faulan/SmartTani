@@ -1472,14 +1472,13 @@
 
         // Notification Settings
         function setupNotificationToggles() {
-            // Sound notification
+            // Sound notification - TIDAK ADA NOTIFIKASI
             const soundNotification = document.getElementById('soundNotification');
             if (soundNotification) {
                 soundNotification.addEventListener('change', function() {
                     const savedPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
                     savedPreferences.soundNotification = this.checked;
                     localStorage.setItem('userPreferences', JSON.stringify(savedPreferences));
-                    showNotification(`Notifikasi suara ${this.checked ? 'diaktifkan' : 'dimatikan'}`, 'success');
                 });
             }
 
@@ -1563,8 +1562,6 @@
             
             // Apply default theme
             changeTheme('light');
-            
-            showNotification('Preferensi berhasil direset ke default', 'success');
         }
 
         // Modal functions
