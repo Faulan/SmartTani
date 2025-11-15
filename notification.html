@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil - SmartTani</title>
+    <title>Notifikasi - SmartTani</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -176,11 +176,11 @@
         }
 
         /* Profile Layout */
-        .profile-container {
+        /* .profile-container {
             display: grid;
-            grid-template-columns: 300px 1fr;
+            display: flex;
             gap: 30px;
-        }
+        } */
 
         .profile-sidebar {
             display: flex;
@@ -255,11 +255,11 @@
             text-align: center;
         }
 
-        .profile-content {
+        /* .profile-content {
             display: flex;
             flex-direction: column;
             gap: 30px;
-        }
+        } */
 
         .profile-tab {
             display: none;
@@ -360,13 +360,48 @@
             font-size: 14px;
         }
 
+        .notification-item:hover {
+            transition: all 0.3s ease;
+            background-color: var(--primary-light);
+        }
+
         /* Security Items */
-        .security-item, .preference-item, .notification-item {
+        .notification-item {
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 10px 10px;
             border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .notification-read {
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 10px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        /* .nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .nav a.active {
+            color: var(--primary-color);
+        } */
+
+        .notification-item {
+            text-decoration: none;
         }
 
         .security-item:last-child, .preference-item:last-child, .notification-item:last-child {
@@ -816,13 +851,13 @@
         <div class="container">
             <!-- Page Header -->
             <div class="page-header">
-                <h1>Profil Saya</h1>
-                <p>Kelola informasi akun dan preferensi Anda</p>
+                <h1>Notifikasi</h1>
+                <p>Lihat semua notifikasi disini</p>
             </div>
 
             <div class="profile-container">
                 <!-- Sidebar Profil -->
-                <div class="profile-sidebar">
+                <div class="" style="display: none;">
                     <div class="profile-card">
                         <div class="profile-avatar" id="profileAvatar">
                             <i class="fas fa-user"></i>
@@ -863,7 +898,7 @@
                 <!-- Konten Profil -->
                 <div class="profile-content">
                     <!-- Tab Informasi Pribadi -->
-                    <div class="profile-tab active" id="info-tab">
+                    <div class="profile-tab" id="info-tab" style="display: none;">
                         <div class="section-header">
                             <h2><i class="fas fa-user-circle"></i> Informasi Pribadi</h2>
                         </div>
@@ -1038,63 +1073,19 @@
                     </div>
 
                     <!-- Tab Notifikasi -->
-                    <div class="profile-tab" id="notifications-tab">
-                        <div class="section-header">
-                            <h2><i class="fas fa-bell"></i> Pengaturan Notifikasi</h2>
+                    <div class="profile-tab active" id="notifications-tab">
+                        <div class="notifications-card" id="notificationsCard">
                         </div>
-                        
-                        <div class="notifications-card">
-                            <div class="notification-item">
-                                <div>
-                                    <h4>Notifikasi Penyiraman</h4>
-                                    <p>Ingatkan saat waktu penyiraman tiba</p>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" id="notifWatering" checked>
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                            
-                            <div class="notification-item" style="display: none;">
-                                <div>
-                                    <h4>Notifikasi Pemupukan</h4>
-                                    <p>Ingatkan saat waktu pemupukan tiba</p>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" id="notifFertilizing" checked>
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                            
-                            <div class="notification-item">
-                                <div>
-                                    <h4>Notifikasi Panen</h4>
-                                    <p>Ingatkan saat mendekati waktu panen</p>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" id="notifHarvest" checked>
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                            
-                            <div class="notification-item" style="display: none;">
-                                <div>
-                                    <h4>Notifikasi Email</h4>
-                                    <p>Kirim notifikasi ke email</p>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" id="notifEmail">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
+
+                        <div class="notifications-card" id="notificationsReadCard">
                         </div>
 
                         <!-- Pengaturan Waktu Notifikasi -->
-                        <div class="section-header" style="margin-top: 30px;">
+                        <div class="section-header" style="margin-top: 30px; display: none;">
                             <h2><i class="fas fa-clock"></i> Waktu Notifikasi</h2>
                         </div>
 
-                        <div class="preferences-card">
+                        <div class="preferences-card" style="display: none;">
                             <div class="form-group">
                                 <label for="notificationTime">Waktu Default Notifikasi</label>
                                 <div class="input-with-icon">
@@ -1275,6 +1266,10 @@
 
             initializeNotificationSystem();
             updateNotificationBadge();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const notifId = urlParams.get('id'); // watering / harvest / planting
+            renderAllNotificactions(notifId);
         });
 
         // Load current user data
@@ -1463,6 +1458,8 @@
                 option.classList.remove('active');
             });
             document.querySelector(`.theme-option[data-theme="${theme}"]`)?.classList.add('active');
+            
+            showNotification(`Tema berhasil diubah ke ${theme === 'light' ? 'Terang' : 'Gelap'}`, 'success');
         }
 
         function selectTheme(theme) {
@@ -1498,7 +1495,7 @@
         function saveNotificationSettings() {
             const settings = {
                 watering: document.getElementById('notifWatering').checked,
-                fertilizing: document.getElementById('notifFertilizing').checked,
+                // fertilizing: document.getElementById('notifFertilizing').checked,
                 harvest: document.getElementById('notifHarvest').checked,
                 email: document.getElementById('notifEmail').checked,
                 time: document.getElementById('notificationTime').value
@@ -1517,11 +1514,11 @@
                 time: '08:00'
             };
             
-            document.getElementById('notifWatering').checked = settings.watering;
-            document.getElementById('notifFertilizing').checked = settings.fertilizing;
-            document.getElementById('notifHarvest').checked = settings.harvest;
-            document.getElementById('notifEmail').checked = settings.email;
-            document.getElementById('notificationTime').value = settings.time;
+            // document.getElementById('notifWatering').checked = settings.watering;
+            // document.getElementById('notifFertilizing').checked = settings.fertilizing;
+            // document.getElementById('notifHarvest').checked = settings.harvest;
+            // document.getElementById('notifEmail').checked = settings.email;
+            // document.getElementById('notificationTime').value = settings.time;
         }
 
         // Security Functions
@@ -1912,6 +1909,71 @@
                 harvest,
                 total: water + harvest
             };
+        }
+
+        function renderAllNotificactions(notifId) {
+            if (notifId) {
+                const notification = notifications.find(n => n.id === notifId);
+                document.getElementById('notificationsCard').style.display = 'none';
+                const notifGrid = document.getElementById('notificationsReadCard');
+                
+                const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
+                const filteredPlants = allPlants.find(plant => plant.id === notification.plantId);
+
+                let messageDesc = "";
+                if (notification.type === "watering") {
+                    messageDesc = "Tanggal Siram " + filteredPlants.nextWatering + " Jam " + filteredPlants.waterTime;
+                }
+                if (notification.type === "harvest") {
+                    messageDesc = "Tanggal panen " + filteredPlants.harvestDate
+                }
+
+                notifGrid.innerHTML =`
+                    <div class="notification-read">
+                        <div>
+                            <h4>${notification.title}</h4>
+                            <p>${notification.message}</p>
+                            <p>${messageDesc}</>
+                            <p>
+                        </div>
+                    </div>
+                `;
+                markNotificationAsRead(notifId);
+            } else {
+                document.getElementById('notificationsReadCard').style.display = 'none';
+                const notifGrid = document.getElementById('notificationsCard');
+            
+                if (notifications.length === 0) {
+                    notifGrid.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-calendar-check"></i>
+                            <p>Belum ada notifikasi</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                notifGrid.innerHTML = notifications.map(notification => {
+                    let notifTitle = '';
+                    let notifMessage = '';
+                    let cardClass = '';
+                    let isRead = 'Belum dibaca';
+
+                    if (notification.read) {
+                        isRead = 'Sudah dibaca'
+                    }
+                    
+                    return `
+                        <a href="notification.html?id=${notification.id}" class="notification-item">
+                            <div>
+                                <h4>${notification.title}</h4>
+                                <p>${notification.message}</p>
+                            </div>
+                            <span style="font-size:12px; font-style: italic">${isRead}</span>
+                        </a>
+                    `;
+                }).join('');
+            }
         }
 
         // Logout function

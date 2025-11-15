@@ -153,6 +153,17 @@ body {
     background-color: #f5f5f5;
 }
 
+.notification-menu {
+    align-items: center;
+    gap: 10px;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.notification-count {
+    color: var(--danger);
+}
+
 /* Main Content */
 .main {
     padding: 30px 0;

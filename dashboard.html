@@ -573,6 +573,10 @@
                         <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </div>
+                <a href="notification.html" class="notification-menu">
+                    <span id=""><i class="fas fa-bell"></i></span>
+                    <span id="notification-count">0</span>
+                </a>
             </nav>
         </div>
     </header>
@@ -736,7 +740,7 @@
 
         // Update statistics
         function updateStats() {
-            const today = new Date().toISOString().split('T')[0];
+            const today = new Intl.DateTimeFormat('en-CA').format(new Date());
             const activePlants = plants.filter(plant => plant.status === 'active');
             const needWatering = plants.filter(plant => plant.nextWatering === today && plant.progress < 100);
             
@@ -764,7 +768,7 @@
 
         // Render today's schedule
         function renderTodaysSchedule() {
-            const today = new Date().toISOString().split('T')[0];
+            const today = new Intl.DateTimeFormat('en-CA').format(new Date());
             const todaysPlants = plants.filter(plant => 
                 (plant.nextWatering === today || 
                 plant.startDate === today || 
@@ -794,8 +798,8 @@
                     scheduleText = `Waktu: ${plant.waterTime}`;
                     cardClass = 'info';
                 } else if (plant.startDate === today) {
-                    scheduleType = 'Menanam';
-                    scheduleText = 'Hari ini waktu tanam';
+                    scheduleType = 'Menyiram';
+                    scheduleText = 'Hari ini waktu menyiram';
                     cardClass = 'warning';
                 } else if (plant.harvestDate === today) {
                     scheduleType = 'Panen';
@@ -992,7 +996,7 @@
             const plant = plants.find(p => p.id === plantId);
             if (plant) {
                 if (actionType === 'menyiram') {
-                    plant.lastWatered = new Date().toISOString().split('T')[0];
+                    plant.lastWatered = new Intl.DateTimeFormat('en-CA').format(new Date());
                     // Calculate next watering
                     const nextDate = new Date();
                     nextDate.setDate(nextDate.getDate() + plant.waterSchedule);
@@ -1056,7 +1060,148 @@
         }
 
         // Initialize dashboard when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initDashboard);
+        document.addEventListener('DOMContentLoaded', () => {
+            initDashboard();
+            initializeNotificationSystem();
+            updateNotificationBadge();
+        });
+
+        let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
+        let lastNotificationDate = localStorage.getItem("lastNotificationDate") || null;
+        let notificationSettings = JSON.parse(localStorage.getItem("notificationSettings")) || {
+            email: false,
+            fertilizing: false,
+            harvest: true,
+            watering: true,
+            time: "08:00"
+        };
+
+        function updateNotificationBadge() {
+            const badge = document.getElementById("notification-count");
+            const unread = getUnreadNotificationsCount();
+
+            if (unread > 0) {
+                badge.textContent = unread;
+                badge.style.display = "inline-block";
+            } else {
+                badge.innerText = 0;
+            }
+        }
+        
+        function getNotificationTime() {
+            const settings = JSON.parse(localStorage.getItem("notificationSettings"));
+            return settings?.time || "08:00"; 
+        }
+
+        function generateDailyNotifications() {
+            const today = new Intl.DateTimeFormat('en-CA').format(new Date());
+
+            if (lastNotificationDate === today) {
+                return; // sudah buat hari ini
+            }
+
+            const todaysPlants = plants.filter(plant => 
+                (plant.nextWatering === today || 
+                plant.startDate === today || 
+                plant.harvestDate === today) && 
+                plant.progress < 100
+            );
+
+            todaysPlants.forEach(plant => {
+                if (plant.nextWatering === today && (notificationSettings.watering)) {
+                    notifications.push({
+                        id: generateUniqueID(),
+                        type: "watering",
+                        plantId: plant.id,
+                        title: "Jadwal Penyiraman",
+                        message: `${plant.name} perlu disiram hari ini.`,
+                        date: today,
+                        read: false
+                    });
+                }
+
+                if (plant.harvestDate === today && (notificationSettings.harvest)) {
+                    notifications.push({
+                        id: generateUniqueID(),
+                        type: "harvest",
+                        plantId: plant.id,
+                        title: "Waktunya Panen",
+                        message: `${plant.name} siap dipanen hari ini!`,
+                        date: today,
+                        read: false
+                    });
+                }
+            });
+
+            localStorage.setItem("notifications", JSON.stringify(notifications));
+            localStorage.setItem("lastNotificationDate", today);
+            lastNotificationDate = today;
+        }
+
+        function generateUniqueID() {
+            const timestamp = Date.now().toString(); 
+            const randomNumber = Math.random().toString(36).substring(2)
+            return timestamp + randomNumber;
+        }
+
+        function scheduleDailyNotification() {
+            const now = new Date();
+            const [hour, minute] = getNotificationTime().split(":").map(Number);
+
+            const next = new Date();
+            next.setHours(hour, minute, 0, 0);
+
+            // Jika waktu sudah lewat → jadwalkan besok
+            if (now > next) next.setDate(next.getDate() + 1);
+
+            const ms = next - now;
+
+            setTimeout(() => {
+                generateDailyNotifications();
+                scheduleDailyNotification(); // ulangi untuk besok
+            }, ms);
+        }
+
+        function initializeNotificationSystem() {
+            const now = new Date();
+            const today = now.toISOString().split("T")[0];
+            const [hour, minute] = getNotificationTime().split(":").map(Number);
+
+            const alreadyPassed =
+                now.getHours() > hour ||
+                (now.getHours() === hour && now.getMinutes() >= minute);
+
+            // Buat notifikasi jika sudah lewat waktu dan belum dibuat hari ini
+            if (alreadyPassed && lastNotificationDate !== today) {
+                generateDailyNotifications();
+            }
+
+            scheduleDailyNotification();
+        }
+
+        function markNotificationAsRead(id) {
+            notifications = notifications.map(n =>
+                n.id === id ? { ...n, read: true } : n
+            );
+            localStorage.setItem("notifications", JSON.stringify(notifications));
+        }
+
+        function getUnreadNotificationsCount() {
+            return notifications.filter(n => !n.read).length;
+        }
+
+        function getDailyCounts() {
+            const today = new Intl.DateTimeFormat('en-CA').format(new Date());
+
+            const water = notifications.filter(n => n.type === "watering" && n.date === today).length;
+            const harvest = notifications.filter(n => n.type === "harvest" && n.date === today).length;
+
+            return {
+                water,
+                harvest,
+                total: water + harvest
+            };
+        }
 
         // Logout function
         function logout() {
