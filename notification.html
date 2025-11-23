@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notifikasi - SmartTani</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -161,6 +160,9 @@
 
         .page-header {
             margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .page-header h1 {
@@ -175,124 +177,41 @@
             font-size: 16px;
         }
 
-        /* Profile Layout */
-        /* .profile-container {
-            display: grid;
+        /* Filter Container */
+        .filter-container {
             display: flex;
-            gap: 30px;
-        } */
-
-        .profile-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .profile-card {
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            padding: 15px;
             background: white;
             border-radius: 12px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
-            text-align: center;
-        }
-
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 48px;
-        }
-
-        .profile-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .profile-menu {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
         }
 
-        .profile-menu-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 15px 20px;
-            color: var(--text-color);
-            text-decoration: none;
-            border-bottom: 1px solid var(--border-color);
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
             transition: all 0.3s ease;
         }
 
-        .profile-menu-item:last-child {
-            border-bottom: none;
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
         }
 
-        .profile-menu-item:hover,
-        .profile-menu-item.active {
+        .filter-btn:hover:not(.active) {
             background: var(--primary-light);
-            color: var(--primary-color);
-        }
-
-        .profile-menu-item i {
-            width: 20px;
-            text-align: center;
-        }
-
-        /* .profile-content {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        } */
-
-        .profile-tab {
-            display: none;
-        }
-
-        .profile-tab.active {
-            display: block;
-        }
-
-        /* Section Header */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .section-header h2 {
-            margin: 0;
-            color: var(--text-color);
-            font-size: 20px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-header h2 i {
-            color: var(--primary-color);
         }
 
         /* Cards */
-        .info-card, .security-card, .preferences-card, .notifications-card {
+        .notifications-card {
             background: white;
             border-radius: 12px;
             padding: 25px;
@@ -300,80 +219,21 @@
             border: 1px solid var(--border-color);
         }
 
-        .info-grid {
-            display: grid;
-            gap: 20px;
-        }
-
-        .info-item label {
-            display: block;
-            color: var(--text-light);
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-
-        /* Stats Section */
-        .stats-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--primary-light);
-            color: var(--primary-color);
-            font-size: 20px;
-        }
-
-        .stat-info h3 {
-            margin: 0;
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--text-color);
-        }
-
-        .stat-info p {
-            margin: 5px 0 0 0;
-            color: var(--text-light);
-            font-size: 14px;
-        }
-
-        .notification-item:hover {
-            transition: all 0.3s ease;
-            background-color: var(--primary-light);
-        }
-
-        /* Security Items */
         .notification-item {
             border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 10px;
+            padding: 15px;
             border-bottom: 1px solid var(--border-color);
             color: var(--text-color);
+            position: relative;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .notification-item:hover {
+            background-color: var(--primary-light);
         }
 
         .notification-read {
@@ -381,223 +241,74 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 10px;
+            padding: 15px;
             border-bottom: 1px solid var(--border-color);
             color: var(--text-color);
         }
 
-        /* .nav a {
-            text-decoration: none;
-            color: var(--text-light);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s ease;
+        .notification-content {
+            flex: 1;
         }
 
-        .nav a.active {
-            color: var(--primary-color);
-        } */
-
-        .notification-item {
-            text-decoration: none;
-        }
-
-        .security-item:last-child, .preference-item:last-child, .notification-item:last-child {
+        .notification-item:last-child {
             border-bottom: none;
         }
 
-        /* Switch Toggle */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 24px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 24px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
+        /* Notification Icons */
+        .notification-icon {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 16px;
         }
 
-        input:checked + .slider {
-            background-color: var(--primary-color);
+        .notification-icon.watering {
+            background: rgba(33, 150, 243, 0.1);
+            color: #2196F3;
         }
 
-        input:checked + .slider:before {
-            transform: translateX(26px);
+        .notification-icon.harvest {
+            background: rgba(255, 152, 0, 0.1);
+            color: #FF9800;
         }
 
-        /* Theme Options */
-        .theme-options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .theme-option {
-            cursor: pointer;
-            padding: 15px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .theme-option.active {
-            border-color: var(--primary-color);
+        .notification-icon.planting {
             background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
         }
 
-        .theme-preview {
-            width: 100%;
-            height: 60px;
-            border: 1px solid #e0e0e0;
-            border-radius: 4px;
-            margin-bottom: 8px;
+        .notification-icon.fertilizing {
+            background: rgba(121, 85, 72, 0.1);
+            color: #795548;
         }
 
-        .theme-preview.dark {
-            background: #1a1a1a;
-            border-color: #333;
+        .notification-icon.pest {
+            background: rgba(244, 67, 54, 0.1);
+            color: #F44336;
         }
 
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 20px;
+        .notification-icon.success {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--text-color);
-            font-size: 14px;
+        .notification-icon.create-plant {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
         }
 
-        .input-with-icon {
-            position: relative;
-            display: flex;
-            align-items: center;
+        .notification-icon.watering-confirmation {
+            background: rgba(33, 150, 243, 0.1);
+            color: #2196F3;
         }
 
-        .input-with-icon i {
-            position: absolute;
-            left: 15px;
-            color: var(--text-light);
-            z-index: 2;
-        }
-
-        .input-with-icon input,
-        .input-with-icon textarea,
-        .input-with-icon select {
-            width: 100%;
-            padding: 12px 15px 12px 45px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            background: white;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .input-with-icon input:focus,
-        .input-with-icon textarea:focus,
-        .input-with-icon select:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
-            outline: none;
-        }
-
-        .input-with-icon textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .password-container {
-            position: relative;
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 15px;
-            background: none;
-            border: none;
-            color: var(--text-light);
-            cursor: pointer;
-            z-index: 2;
-        }
-
-        /* Password Requirements */
-        .password-requirements {
-            margin: 15px 0;
-            padding: 15px;
-            background: rgba(76, 175, 80, 0.05);
-            border-radius: 8px;
-            border: 1px solid rgba(76, 175, 80, 0.2);
-        }
-
-        .password-requirements h4 {
-            margin-bottom: 10px;
-            color: var(--text-color);
-            font-size: 14px;
-        }
-
-        .password-requirements ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .password-requirements li {
-            font-size: 12px;
-            color: var(--text-light);
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .password-requirements li:before {
-            content: '●';
-            font-size: 8px;
-            color: var(--text-light);
-        }
-
-        .password-requirements li.valid {
-            color: var(--success);
-        }
-
-        .password-requirements li.valid:before {
-            content: '✓';
-            color: var(--success);
+        .notification-icon.fertilizing-confirmation {
+            background: rgba(121, 85, 72, 0.1);
+            color: #795548;
         }
 
         /* Buttons */
@@ -637,92 +348,164 @@
             background: #e9e9e9;
         }
 
-        .form-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
+        /* Notification Actions */
+        .notification-actions {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
-        /* Modal Styling */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            position: relative;
-            width: 90%;
-            max-width: 500px;
-            margin: 5% auto;
-            animation: modalSlideIn 0.3s ease;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-header {
-            padding: 20px 25px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h3 {
-            margin: 0;
-            color: var(--text-color);
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .close-modal {
+        .notification-menu-btn {
             background: none;
             border: none;
-            font-size: 24px;
             cursor: pointer;
             color: var(--text-light);
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
         }
 
-        .close-modal:hover {
+        .notification-menu-btn:hover {
+            background: var(--primary-light);
+            color: var(--primary-color);
+        }
+
+        .notification-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 5px 0;
+            min-width: 120px;
+            z-index: 1000;
+        }
+
+        .notification-dropdown.show {
+            display: block;
+        }
+
+        .notification-dropdown button {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .notification-dropdown button:hover {
+            background: var(--primary-light);
+        }
+
+        .notification-dropdown button.delete {
+            color: var(--danger);
+        }
+
+        .notification-dropdown button.delete:hover {
+            background: rgba(244, 67, 54, 0.1);
+        }
+
+        /* Back Button */
+        .back-button {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 20px;
+            cursor: pointer;
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: white;
+            transition: all 0.3s ease;
+            width: fit-content;
+        }
+
+        .back-button:hover {
+            background: var(--primary-light);
+        }
+
+        .back-button.show {
+            display: flex;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--border-color);
+        }
+
+        /* Bulk Actions */
+        .bulk-actions {
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .bulk-actions.show {
+            display: flex;
+        }
+
+        .selected-count {
+            font-weight: 500;
             color: var(--text-color);
         }
 
-        .modal-body {
-            padding: 25px;
+        .bulk-action-buttons {
+            display: flex;
+            gap: 10px;
         }
 
-        /* Session Item */
-        .session-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 10px;
+        /* Checkbox */
+        .notification-checkbox {
+            margin-right: 10px;
+        }
+
+        /* Notification Status */
+        .notification-status {
+            font-size: 12px;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .notification-status.unread {
+            color: var(--warning);
+        }
+
+        .notification-status.read {
+            color: var(--success);
+        }
+
+        /* Notification Date */
+        .notification-date {
+            font-size: 11px;
+            color: var(--text-light);
+            display: block;
+            margin-top: 5px;
         }
 
         /* Footer */
@@ -758,46 +541,44 @@
                 display: flex;
             }
 
-            .profile-container {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-section {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .section-header {
+            .bulk-actions {
                 flex-direction: column;
                 gap: 15px;
                 align-items: flex-start;
             }
 
-            .security-item, .preference-item, .notification-item {
+            .bulk-action-buttons {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .page-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
             }
 
-            .form-actions {
-                flex-direction: column;
+            .filter-container {
+                justify-content: center;
             }
         }
 
         @media (max-width: 480px) {
-            .stats-section {
-                grid-template-columns: 1fr;
-            }
-            
             .container {
                 padding: 0 15px;
             }
             
-            .profile-card {
+            .notifications-card {
                 padding: 20px;
             }
-            
-            .info-card, .security-card, .preferences-card, .notifications-card {
-                padding: 20px;
+
+            .bulk-action-buttons {
+                flex-direction: column;
+            }
+
+            .filter-container {
+                flex-direction: column;
+                align-items: center;
             }
         }
     </style>
@@ -833,12 +614,12 @@
                     <img id="headerAvatar" src="https://ui-avatars.com/api/?name=User&background=4CAF50&color=fff" alt="User" class="user-avatar">
                     <span id="headerName">User</span>
                     <div class="dropdown">
-                        <a href="profile.html" class="active"><i class="fas fa-user"></i> Profil</a>
+                        <a href="profile.html"><i class="fas fa-user"></i> Profil</a>
                         <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </div>
 
-                <a href="notification.html" class="notification-menu">
+                <a href="notification.html" class="notification-menu active">
                     <span id=""><i class="fas fa-bell"></i></span>
                     <span id="notification-count">0</span>
                 </a>
@@ -851,254 +632,50 @@
         <div class="container">
             <!-- Page Header -->
             <div class="page-header">
-                <h1>Notifikasi</h1>
-                <p>Lihat semua notifikasi disini</p>
+                <div>
+                    <h1>Notifikasi</h1>
+                    <p>Lihat semua notifikasi disini</p>
+                </div>
+                <button class="btn-secondary" onclick="toggleBulkActions()" id="bulkActionBtn">
+                    <i class="fas fa-check-square"></i> Pilih Notifikasi
+                </button>
+            </div>
+
+            <!-- Back Button -->
+            <a href="#" class="back-button" id="backButton" onclick="goBackToList()">
+                <i class="fas fa-arrow-left"></i> Kembali ke Daftar Notifikasi
+            </a>
+
+            <!-- Bulk Actions -->
+            <div class="bulk-actions" id="bulkActions">
+                <div class="selected-count" id="selectedCount">
+                    Terpilih: <span id="selectedNumber">0</span> notifikasi
+                </div>
+                <div class="bulk-action-buttons">
+                    <button class="btn-secondary" onclick="selectAllNotifications()">
+                        <i class="fas fa-check-double"></i> Pilih Semua
+                    </button>
+                    <button class="btn-primary" onclick="markSelectedAsRead()">
+                        <i class="fas fa-check"></i> Tandai Sudah Dibaca
+                    </button>
+                    <button class="btn-secondary" style="background: var(--danger); color: white;" onclick="deleteSelectedNotifications()">
+                        <i class="fas fa-trash"></i> Hapus Terpilih
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter Container -->
+            <div class="filter-container" id="filterContainer">
+                <!-- Filter buttons akan diisi oleh JavaScript -->
             </div>
 
             <div class="profile-container">
-                <!-- Sidebar Profil -->
-                <div class="" style="display: none;">
-                    <div class="profile-card">
-                        <div class="profile-avatar" id="profileAvatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3 id="profileName">User</h3>
-                        <p>Petani Aktif</p>
-                        
-                        <div class="profile-stats">
-                            <div class="stat-item">
-                                <div id="totalPlants">0</div>
-                                <div>Tanaman</div>
-                            </div>
-                            <div class="stat-item">
-                                <div id="totalHarvests">0</div>
-                                <div>Panen</div>
-                            </div>
-                        </div>
-                        
-                        <button class="btn-secondary" onclick="openEditProfileModal()">
-                            <i class="fas fa-edit"></i> Edit Profil
-                        </button>
-                    </div>
-
-                    <!-- Menu Profil -->
-                    <div class="profile-menu">
-                        <a href="#info" class="profile-menu-item active" data-tab="info">
-                            <i class="fas fa-user-circle"></i> Informasi Pribadi
-                        </a>
-                        <a href="#security" class="profile-menu-item" data-tab="security">
-                            <i class="fas fa-shield-alt"></i> Keamanan
-                        </a>
-                        <a href="#notifications" class="profile-menu-item" data-tab="notifications">
-                            <i class="fas fa-bell"></i> Notifikasi
-                        </a>
-                    </div>
-                </div>
-
                 <!-- Konten Profil -->
-                <div class="profile-content">
-                    <!-- Tab Informasi Pribadi -->
-                    <div class="profile-tab" id="info-tab" style="display: none;">
-                        <div class="section-header">
-                            <h2><i class="fas fa-user-circle"></i> Informasi Pribadi</h2>
-                        </div>
-                        
-                        <div class="info-card">
-                            <div class="info-grid">
-                                <div class="info-item">
-                                    <label>Nama Lengkap</label>
-                                    <div id="displayName">-</div>
-                                </div>
-                                
-                                <div class="info-item">
-                                    <label>Email</label>
-                                    <div id="displayEmail">-</div>
-                                </div>
-                                
-                                <div class="info-item">
-                                    <label>Nomor Telepon</label>
-                                    <div id="displayPhone">-</div>
-                                </div>
-                                
-                                <div class="info-item">
-                                    <label>Alamat</label>
-                                    <div id="displayAddress">-</div>
-                                </div>
-                                
-                                <div class="info-item">
-                                    <label>Bergabung Sejak</label>
-                                    <div id="displayJoinDate">-</div>
-                                </div>
-                                
-                                <div class="info-item">
-                                    <label>Status</label>
-                                    <div style="color: var(--primary-color); font-weight: 500;">Aktif</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Statistik Tanaman -->
-                        <div class="section-header" style="margin-top: 30px;">
-                            <h2><i class="fas fa-chart-bar"></i> Statistik Tanaman</h2>
-                        </div>
-                        
-                        <div class="stats-section">
-                            <div class="stat-card">
-                                <div class="stat-icon" style="background: #E8F5E8; color: #4CAF50;">
-                                    <i class="fas fa-seedling"></i>
-                                </div>
-                                <div class="stat-info">
-                                    <h3 id="statsTotalPlants">0</h3>
-                                    <p>Total Tanaman</p>
-                                </div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-icon" style="background: #E3F2FD; color: #2196F3;">
-                                    <i class="fas fa-leaf"></i>
-                                </div>
-                                <div class="stat-info">
-                                    <h3 id="statsActivePlants">0</h3>
-                                    <p>Sedang Aktif</p>
-                                </div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-icon" style="background: #FFF3E0; color: #FF9800;">
-                                    <i class="fas fa-check-circle"></i>
-                                </div>
-                                <div class="stat-info">
-                                    <h3 id="statsSuccessHarvest">0</h3>
-                                    <p>Panen Sukses</p>
-                                </div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-icon" style="background: #FFEBEE; color: #F44336;">
-                                    <i class="fas fa-times-circle"></i>
-                                </div>
-                                <div class="stat-info">
-                                    <h3 id="statsFailedHarvest">0</h3>
-                                    <p>Gagal Panen</p>
-                                </div>
-                            </div>
-                        </div>
+                <div class="profile-tab active" id="notifications-tab">
+                    <div class="notifications-card" id="notificationsCard">
                     </div>
 
-                    <!-- Tab Keamanan -->
-                    <div class="profile-tab" id="security-tab">
-                        <div class="section-header">
-                            <h2><i class="fas fa-shield-alt"></i> Keamanan Akun</h2>
-                        </div>
-                        
-                        <div class="security-card">
-                            <div class="security-item">
-                                <div>
-                                    <h4>Password</h4>
-                                    <p id="lastPasswordChange">-</p>
-                                </div>
-                                <button class="btn-secondary" onclick="openChangePasswordModal()">
-                                    Ubah Password
-                                </button>
-                            </div>
-                            
-                            <div class="security-item">
-                                <div>
-                                    <h4>Sesi Aktif</h4>
-                                    <p>1 perangkat aktif</p>
-                                </div>
-                                <button class="btn-secondary" onclick="manageSessions()">
-                                    Kelola Sesi
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tab Preferensi -->
-                    <div class="profile-tab" id="preferences-tab">
-                        <div class="section-header">
-                            <h2><i class="fas fa-cog"></i> Preferensi Aplikasi</h2>
-                        </div>
-                        
-                        <div class="preferences-card">
-                            <!-- Tema Aplikasi -->
-                            <div class="preference-item">
-                                <div>
-                                    <h4>Tema Aplikasi</h4>
-                                    <p>Pilih tampilan yang nyaman untuk mata</p>
-                                </div>
-                                <div class="input-with-icon">
-                                    <i class="fas fa-palette"></i>
-                                    <select id="themeSelect" style="max-width: 200px; padding-left: 45px;">
-                                        <option value="light">Terang</option>
-                                        <option value="dark">Gelap</option>
-                                        <option value="auto">Sesuai Perangkat</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <!-- Notifikasi Suara -->
-                            <div class="preference-item">
-                                <div>
-                                    <h4>Notifikasi Suara</h4>
-                                    <p>Putar suara saat notifikasi muncul</p>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" id="soundNotification">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Preview Tema -->
-                        <div class="section-header" style="margin-top: 30px;">
-                            <h2><i class="fas fa-eye"></i> Preview Tema</h2>
-                        </div>
-
-                        <div class="preferences-card">
-                            <div class="theme-options">
-                                <div class="theme-option active" data-theme="light" onclick="selectTheme('light')">
-                                    <div class="theme-preview" style="background: #ffffff; border-color: #e0e0e0;"></div>
-                                    <span>Terang</span>
-                                </div>
-                                <div class="theme-option" data-theme="dark" onclick="selectTheme('dark')">
-                                    <div class="theme-preview dark"></div>
-                                    <span>Gelap</span>
-                                </div>
-                            </div>
-                            
-                            <div style="text-align: center;">
-                                <button class="btn-secondary" onclick="resetPreferences()">
-                                    <i class="fas fa-undo"></i> Reset ke Default
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tab Notifikasi -->
-                    <div class="profile-tab active" id="notifications-tab">
-                        <div class="notifications-card" id="notificationsCard">
-                        </div>
-
-                        <div class="notifications-card" id="notificationsReadCard">
-                        </div>
-
-                        <!-- Pengaturan Waktu Notifikasi -->
-                        <div class="section-header" style="margin-top: 30px; display: none;">
-                            <h2><i class="fas fa-clock"></i> Waktu Notifikasi</h2>
-                        </div>
-
-                        <div class="preferences-card" style="display: none;">
-                            <div class="form-group">
-                                <label for="notificationTime">Waktu Default Notifikasi</label>
-                                <div class="input-with-icon">
-                                    <i class="fas fa-clock"></i>
-                                    <input type="time" id="notificationTime" value="08:00">
-                                </div>
-                                <span style="font-size: 12px; color: var(--text-light);">Notifikasi harian akan dikirim pada waktu ini</span>
-                            </div>
-                            
-                            <button class="btn-primary" onclick="saveNotificationSettings()">
-                                <i class="fas fa-save"></i> Simpan Pengaturan Notifikasi
-                            </button>
-                        </div>
+                    <div class="notifications-card" id="notificationsReadCard">
                     </div>
                 </div>
             </div>
@@ -1112,164 +689,23 @@
         </div>
     </footer>
 
-    <!-- Edit Profile Modal -->
-    <div id="editProfileModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Edit Profil</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="editProfileForm">
-                    <div class="form-group">
-                        <label for="editName">Nama Lengkap</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="editName" placeholder="Masukkan nama lengkap" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="editEmail">Email</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="editEmail" placeholder="Masukkan alamat email" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="editPhone">Nomor Telepon</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-phone"></i>
-                            <input type="tel" id="editPhone" placeholder="Masukkan nomor telepon" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="editAddress">Alamat</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <textarea id="editAddress" rows="3" placeholder="Masukkan alamat lengkap"></textarea>
-                        </div>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn-secondary" onclick="document.getElementById('editProfileModal').style.display='none'">Batal</button>
-                        <button type="submit" class="btn-primary">Simpan Perubahan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Change Password Modal -->
-    <div id="changePasswordModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Ubah Password</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="changePasswordForm">
-                    <div class="form-group">
-                        <label for="currentPassword">Password Saat Ini</label>
-                        <div class="input-with-icon password-container">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="currentPassword" placeholder="Masukkan password saat ini" required>
-                            <button type="button" class="toggle-password">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="newPassword">Password Baru</label>
-                        <div class="input-with-icon password-container">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="newPassword" placeholder="Masukkan password baru" required>
-                            <button type="button" class="toggle-password">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="confirmNewPassword">Konfirmasi Password Baru</label>
-                        <div class="input-with-icon password-container">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="confirmNewPassword" placeholder="Konfirmasi password baru" required>
-                            <button type="button" class="toggle-password">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="password-requirements">
-                        <h4>Password harus mengandung:</h4>
-                        <ul>
-                            <li data-requirement="length">Minimal 8 karakter</li>
-                            <li data-requirement="lowercase">Huruf kecil (a-z)</li>
-                            <li data-requirement="uppercase">Huruf besar (A-Z)</li>
-                            <li data-requirement="number">Angka (0-9)</li>
-                            <li data-requirement="special">Karakter khusus</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn-secondary" onclick="document.getElementById('changePasswordModal').style.display='none'">Batal</button>
-                        <button type="submit" class="btn-primary">Ubah Password</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Sessions Modal -->
-    <div id="sessionsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Kelola Sesi Aktif</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="session-list">
-                    <div class="session-item">
-                        <div>
-                            <div style="font-weight: 600; color: var(--text-color);">Browser Aktif</div>
-                            <div style="font-size: 12px; color: var(--text-light);">Aktif sekarang</div>
-                            <div style="font-size: 12px; color: var(--text-light);" id="currentSessionTime">-</div>
-                        </div>
-                        <div style="color: var(--success); font-size: 12px; font-weight: 600;">Aktif</div>
-                    </div>
-                </div>
-                
-                <div class="form-actions" style="margin-top: 20px;">
-                    <button type="button" class="btn-secondary" onclick="document.getElementById('sessionsModal').style.display='none'">Tutup</button>
-                    <button type="button" class="btn-primary" onclick="logout()">Logout</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Profile Management Functions
+        // Notification Management Functions
         let currentUser = null;
-        let userPlants = [];
+        let selectedNotifications = new Set();
+        let isBulkActionMode = false;
+        let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
+        let lastNotificationDate = localStorage.getItem("lastNotificationDate") || null;
+        let currentFilter = 'all';
 
         // Load data when page loads
         document.addEventListener('DOMContentLoaded', function() {
             loadCurrentUser();
-            loadUserPlants();
-            loadPreferences();
-            loadNotificationSettings();
-            setupEventListeners();
-
             initializeNotificationSystem();
             updateNotificationBadge();
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const notifId = urlParams.get('id'); // watering / harvest / planting
-            renderAllNotificactions(notifId);
+            setupNotificationFilters();
+            renderAllNotifications();
+            generateFertilizingNotifications(); // Generate notifikasi pemupukan yang tertunda
         });
 
         // Load current user data
@@ -1289,103 +725,21 @@
             const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
             let userData = registeredUsers.find(u => u.id === currentUser.id);
             
-            // Jika tidak ditemukan di registeredUsers, coba cari dengan email
             if (!userData) {
                 userData = registeredUsers.find(u => u.email === currentUser.email);
             }
             
-            // Jika masih tidak ditemukan, gunakan currentUser sebagai fallback
             if (!userData) {
                 userData = currentUser;
             }
 
-            // Update UI with user data
             updateUserProfile(userData);
         }
 
         // Update user profile in UI
         function updateUserProfile(userData) {
-            // Update header
             document.getElementById('headerName').textContent = userData.name || 'User';
             document.getElementById('headerAvatar').src = userData.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name || 'User')}&background=4CAF50&color=fff`;
-            
-            // Update profile sidebar
-            document.getElementById('profileName').textContent = userData.name || 'User';
-            const profileAvatar = document.getElementById('profileAvatar');
-            if (userData.avatar) {
-                profileAvatar.innerHTML = `<img src="${userData.avatar}" alt="${userData.name}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
-            } else {
-                profileAvatar.innerHTML = `<i class="fas fa-user"></i>`;
-            }
-            
-            // Update info tab
-            document.getElementById('displayName').textContent = userData.name || '-';
-            document.getElementById('displayEmail').textContent = userData.email || '-';
-            document.getElementById('displayPhone').textContent = userData.phone || '-';
-            document.getElementById('displayAddress').textContent = userData.address || '-';
-            
-            // Format join date
-            const joinDate = userData.createdAt ? new Date(userData.createdAt) : new Date();
-            document.getElementById('displayJoinDate').textContent = joinDate.toLocaleDateString('id-ID', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            
-            // Update edit form
-            document.getElementById('editName').value = userData.name || '';
-            document.getElementById('editEmail').value = userData.email || '';
-            document.getElementById('editPhone').value = userData.phone || '';
-            document.getElementById('editAddress').value = userData.address || '';
-
-            // Update last password change
-            const lastPasswordChange = localStorage.getItem('lastPasswordChange_' + (userData.id || userData.email));
-            document.getElementById('lastPasswordChange').textContent = lastPasswordChange ? 
-                `Terakhir diubah ${lastPasswordChange}` : 'Belum pernah diubah';
-        }
-
-        // Load user plants data
-        function loadUserPlants() {
-            const savedPlants = JSON.parse(localStorage.getItem('plants')) || [];
-            // Handle berbagai cara identifikasi user
-            if (currentUser) {
-                userPlants = savedPlants.filter(plant => 
-                    plant.userId === currentUser.id || 
-                    plant.userEmail === currentUser.email ||
-                    !plant.userId // Untuk tanaman yang dibuat sebelum sistem userId
-                );
-            } else {
-                userPlants = [];
-            }
-            
-            updatePlantStatistics();
-        }
-
-        // Update plant statistics
-        function updatePlantStatistics() {
-            const totalPlants = userPlants.length;
-            const activePlants = userPlants.filter(plant => plant.status === 'active' || plant.status === 'Growing').length;
-            const completedPlants = userPlants.filter(plant => plant.status === 'completed' || plant.status === 'Harvested').length;
-            const failedPlants = userPlants.filter(plant => plant.status === 'failed' || plant.status === 'Failed').length;
-
-            // Update sidebar stats
-            document.getElementById('totalPlants').textContent = totalPlants;
-            document.getElementById('totalHarvests').textContent = completedPlants;
-
-            // Update statistics section
-            document.getElementById('statsTotalPlants').textContent = totalPlants;
-            document.getElementById('statsActivePlants').textContent = activePlants;
-            document.getElementById('statsSuccessHarvest').textContent = completedPlants;
-            document.getElementById('statsFailedHarvest').textContent = failedPlants;
-        }
-
-        // Setup event listeners
-        function setupEventListeners() {
-            setupProfileTabs();
-            setupThemeSelector();
-            setupNotificationToggles();
-            setupFormSubmissions();
-            setupMobileMenu();
         }
 
         // Mobile menu functionality
@@ -1400,333 +754,54 @@
             }
         }
 
-        // Profile Tab Functionality
-        function setupProfileTabs() {
-            const profileMenuItems = document.querySelectorAll('.profile-menu-item');
-            profileMenuItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Remove active class from all items
-                    document.querySelectorAll('.profile-menu-item').forEach(i => i.classList.remove('active'));
-                    document.querySelectorAll('.profile-tab').forEach(tab => tab.classList.remove('active'));
-                    
-                    // Add active class to clicked item
+        // Setup notification filters
+        function setupNotificationFilters() {
+            const filterContainer = document.getElementById('filterContainer');
+            filterContainer.innerHTML = `
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="create-plant">Penanaman</button>
+                <button class="filter-btn" data-filter="watering">Penyiraman</button>
+                <button class="filter-btn" data-filter="watering-confirmation">Konfirmasi Siram</button>
+                <button class="filter-btn" data-filter="fertilizing">Pemupukan</button>
+                <button class="filter-btn" data-filter="fertilizing-confirmation">Konfirmasi Pupuk</button>
+                <button class="filter-btn" data-filter="harvest">Panen</button>
+                <button class="filter-btn" data-filter="pest">Hama</button>
+                <button class="filter-btn" data-filter="success">Berhasil</button>
+            `;
+
+            filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
-                    
-                    // Show corresponding tab
-                    const tabId = this.dataset.tab + '-tab';
-                    document.getElementById(tabId).classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    renderAllNotifications();
                 });
             });
         }
 
-        // Theme Management
-        function setupThemeSelector() {
-            const themeSelect = document.getElementById('themeSelect');
-            if (themeSelect) {
-                themeSelect.addEventListener('change', function() {
-                    changeTheme(this.value);
-                });
-            }
-        }
-
-        function changeTheme(theme) {
-            const root = document.documentElement;
-            const savedPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
-            
-            savedPreferences.theme = theme;
-            localStorage.setItem('userPreferences', JSON.stringify(savedPreferences));
-            
-            if (theme === 'dark') {
-                root.style.setProperty('--bg-color', '#1a1a1a');
-                root.style.setProperty('--card-bg', '#2d2d2d');
-                root.style.setProperty('--text-color', '#ffffff');
-                root.style.setProperty('--text-light', '#b0b0b0');
-                root.style.setProperty('--border-color', '#404040');
-            } else {
-                // Reset to light theme (default)
-                root.style.setProperty('--bg-color', '#f5f5f5');
-                root.style.setProperty('--card-bg', '#fff');
-                root.style.setProperty('--text-color', '#333');
-                root.style.setProperty('--text-light', '#666');
-                root.style.setProperty('--border-color', '#ddd');
-            }
-            
-            // Update theme preview
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.classList.remove('active');
-            });
-            document.querySelector(`.theme-option[data-theme="${theme}"]`)?.classList.add('active');
-            
-            showNotification(`Tema berhasil diubah ke ${theme === 'light' ? 'Terang' : 'Gelap'}`, 'success');
-        }
-
-        function selectTheme(theme) {
-            document.getElementById('themeSelect').value = theme;
-            changeTheme(theme);
-        }
-
-        // Notification Settings
-        function setupNotificationToggles() {
-            // Sound notification
-            const soundNotification = document.getElementById('soundNotification');
-            if (soundNotification) {
-                soundNotification.addEventListener('change', function() {
-                    const savedPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
-                    savedPreferences.soundNotification = this.checked;
-                    localStorage.setItem('userPreferences', JSON.stringify(savedPreferences));
-                    showNotification(`Notifikasi suara ${this.checked ? 'diaktifkan' : 'dimatikan'}`, 'success');
-                });
-            }
-
-            // Setup all notification toggles
-            const notificationToggles = ['notifWatering', 'notifFertilizing', 'notifHarvest', 'notifEmail'];
-            notificationToggles.forEach(toggleId => {
-                const toggle = document.getElementById(toggleId);
-                if (toggle) {
-                    toggle.addEventListener('change', function() {
-                        saveNotificationSettings();
-                    });
-                }
-            });
-        }
-
-        function saveNotificationSettings() {
-            const settings = {
-                watering: document.getElementById('notifWatering').checked,
-                // fertilizing: document.getElementById('notifFertilizing').checked,
-                harvest: document.getElementById('notifHarvest').checked,
-                email: document.getElementById('notifEmail').checked,
-                time: document.getElementById('notificationTime').value
+        // Get notification type icon
+        function getNotificationTypeIcon(type) {
+            const icons = {
+                watering: 'fa-tint',
+                harvest: 'fa-shopping-basket',
+                'create-plant': 'fa-seedling',
+                fertilizing: 'fa-seedling',
+                'fertilizing-confirmation': 'fa-check-circle',
+                'watering-confirmation': 'fa-check-circle',
+                pest: 'fa-bug',
+                success: 'fa-award',
+                default: 'fa-bell'
             };
-            
-            localStorage.setItem('notificationSettings', JSON.stringify(settings));
-            showNotification('Pengaturan notifikasi berhasil disimpan', 'success');
+            return icons[type] || icons.default;
         }
 
-        function loadNotificationSettings() {
-            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {
-                watering: true,
-                fertilizing: true,
-                harvest: true,
-                email: false,
-                time: '08:00'
-            };
-            
-            // document.getElementById('notifWatering').checked = settings.watering;
-            // document.getElementById('notifFertilizing').checked = settings.fertilizing;
-            // document.getElementById('notifHarvest').checked = settings.harvest;
-            // document.getElementById('notifEmail').checked = settings.email;
-            // document.getElementById('notificationTime').value = settings.time;
+        // Get notification type class
+        function getNotificationTypeClass(type) {
+            return type || 'default';
         }
-
-        // Security Functions
-        function manageSessions() {
-            document.getElementById('currentSessionTime').textContent = `Login: ${new Date().toLocaleString('id-ID')}`;
-            document.getElementById('sessionsModal').style.display = 'block';
-        }
-
-        // Load all preferences
-        function loadPreferences() {
-            const savedPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
-            
-            // Load theme
-            if (savedPreferences.theme) {
-                document.getElementById('themeSelect').value = savedPreferences.theme;
-                document.querySelector(`.theme-option[data-theme="${savedPreferences.theme}"]`)?.classList.add('active');
-                changeTheme(savedPreferences.theme);
-            }
-            
-            // Load sound notification
-            if (savedPreferences.soundNotification !== undefined) {
-                document.getElementById('soundNotification').checked = savedPreferences.soundNotification;
-            }
-        }
-
-        // Reset preferences to default
-        function resetPreferences() {
-            localStorage.removeItem('userPreferences');
-            
-            // Reset UI to default values
-            document.getElementById('themeSelect').value = 'light';
-            document.getElementById('soundNotification').checked = false;
-            
-            // Reset theme preview
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.classList.remove('active');
-            });
-            document.querySelector('.theme-option[data-theme="light"]').classList.add('active');
-            
-            // Apply default theme
-            changeTheme('light');
-            
-            showNotification('Preferensi berhasil direset ke default', 'success');
-        }
-
-        // Modal functions
-        function openEditProfileModal() {
-            document.getElementById('editProfileModal').style.display = 'block';
-        }
-
-        function openChangePasswordModal() {
-            document.getElementById('changePasswordModal').style.display = 'block';
-        }
-
-        // Setup form submissions
-        function setupFormSubmissions() {
-            // Edit Profile Form
-            document.getElementById('editProfileForm')?.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                if (!currentUser) return;
-                
-                const updatedData = {
-                    name: document.getElementById('editName').value,
-                    email: document.getElementById('editEmail').value,
-                    phone: document.getElementById('editPhone').value,
-                    address: document.getElementById('editAddress').value
-                };
-                
-                // Update in registered users
-                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-                let userIndex = registeredUsers.findIndex(u => u.id === currentUser.id);
-                
-                // Jika tidak ditemukan dengan ID, cari dengan email
-                if (userIndex === -1) {
-                    userIndex = registeredUsers.findIndex(u => u.email === currentUser.email);
-                }
-                
-                if (userIndex !== -1) {
-                    registeredUsers[userIndex] = { ...registeredUsers[userIndex], ...updatedData };
-                    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-                }
-                
-                // Update current user
-                currentUser = { ...currentUser, ...updatedData };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                
-                // Update display
-                updateUserProfile(currentUser);
-                
-                showNotification('Profil berhasil diperbarui!', 'success');
-                document.getElementById('editProfileModal').style.display = 'none';
-            });
-
-            // Change Password Form
-            document.getElementById('changePasswordForm')?.addEventListener('submit', function(e) {
-                e.preventDefault();
-                if (!currentUser) return;
-                
-                const currentPassword = document.getElementById('currentPassword').value;
-                const newPassword = document.getElementById('newPassword').value;
-                const confirmPassword = document.getElementById('confirmNewPassword').value;
-                
-                // Verify current password
-                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-                let user = registeredUsers.find(u => u.id === currentUser.id);
-                
-                // Jika tidak ditemukan dengan ID, cari dengan email
-                if (!user) {
-                    user = registeredUsers.find(u => u.email === currentUser.email);
-                }
-                
-                if (!user || user.password !== currentPassword) {
-                    showNotification('Password saat ini salah!', 'error');
-                    return;
-                }
-                
-                if (newPassword !== confirmPassword) {
-                    showNotification('Password baru tidak cocok!', 'error');
-                    return;
-                }
-                
-                // Update password
-                let userIndex = registeredUsers.findIndex(u => u.id === currentUser.id);
-                if (userIndex === -1) {
-                    userIndex = registeredUsers.findIndex(u => u.email === currentUser.email);
-                }
-                
-                if (userIndex !== -1) {
-                    registeredUsers[userIndex].password = newPassword;
-                    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-                    
-                    // Save last password change time dengan identifier yang unik
-                    const userIdentifier = currentUser.id || currentUser.email;
-                    localStorage.setItem('lastPasswordChange_' + userIdentifier, new Date().toLocaleDateString('id-ID'));
-                }
-                
-                showNotification('Password berhasil diubah!', 'success');
-                document.getElementById('changePasswordModal').style.display = 'none';
-                document.getElementById('changePasswordForm').reset();
-                
-                // Update last password change display
-                const userIdentifier = currentUser.id || currentUser.email;
-                const lastChange = localStorage.getItem('lastPasswordChange_' + userIdentifier);
-                document.getElementById('lastPasswordChange').textContent = lastChange ? 
-                    `Terakhir diubah ${lastChange}` : 'Belum pernah diubah';
-            });
-        }
-
-        // Password requirements validation
-        const newPasswordInput = document.getElementById('newPassword');
-        if (newPasswordInput) {
-            newPasswordInput.addEventListener('input', function() {
-                const password = this.value;
-                const requirements = {
-                    length: password.length >= 8,
-                    lowercase: /[a-z]/.test(password),
-                    uppercase: /[A-Z]/.test(password),
-                    number: /[0-9]/.test(password),
-                    special: /[^A-Za-z0-9]/.test(password)
-                };
-
-                Object.keys(requirements).forEach(key => {
-                    const element = document.querySelector(`[data-requirement="${key}"]`);
-                    if (element) {
-                        if (requirements[key]) {
-                            element.classList.add('valid');
-                        } else {
-                            element.classList.remove('valid');
-                        }
-                    }
-                });
-            });
-        }
-
-        // Setup password toggle
-        document.querySelectorAll('.toggle-password').forEach(button => {
-            button.addEventListener('click', function() {
-                const input = this.parentElement.querySelector('input');
-                const icon = this.querySelector('i');
-                
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    icon.className = 'fas fa-eye-slash';
-                } else {
-                    input.type = 'password';
-                    icon.className = 'fas fa-eye';
-                }
-            });
-        });
-
-        // Close modals when clicking outside
-        window.addEventListener('click', function(e) {
-            if (e.target.classList.contains('modal')) {
-                e.target.style.display = 'none';
-            }
-        });
-
-        // Close modals with close button
-        document.querySelectorAll('.close-modal').forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.closest('.modal').style.display = 'none';
-            });
-        });
 
         // Notification function
         function showNotification(message, type = 'info') {
-            // Remove existing notifications
             document.querySelectorAll('.notification').forEach(notif => notif.remove());
             
             const notification = document.createElement('div');
@@ -1736,7 +811,6 @@
                 <span>${message}</span>
             `;
             
-            // Add styles for notification
             notification.style.cssText = `
                 position: fixed;
                 top: 20px;
@@ -1758,7 +832,6 @@
             
             document.body.appendChild(notification);
             
-            // Auto remove after 5 seconds
             setTimeout(() => {
                 notification.remove();
             }, 5000);
@@ -1774,16 +847,6 @@
             return icons[type] || 'info-circle';
         }
 
-        let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
-        let lastNotificationDate = localStorage.getItem("lastNotificationDate") || null;
-        let notificationSettings = JSON.parse(localStorage.getItem("notificationSettings")) || {
-            email: false,
-            fertilizing: false,
-            harvest: true,
-            watering: true,
-            time: "08:00"
-        };
-
         function updateNotificationBadge() {
             const badge = document.getElementById("notification-count");
             const unread = getUnreadNotificationsCount();
@@ -1793,98 +856,12 @@
                 badge.style.display = "inline-block";
             } else {
                 badge.innerText = 0;
+                badge.style.display = "none";
             }
         }
-        
-        function getNotificationTime() {
-            const settings = JSON.parse(localStorage.getItem("notificationSettings"));
-            return settings?.time || "08:00"; 
-        }
 
-        function generateDailyNotifications() {
-            const today = new Intl.DateTimeFormat('en-CA').format(new Date());
-
-            if (lastNotificationDate === today) {
-                return; // sudah buat hari ini
-            }
-
-            const todaysPlants = plants.filter(plant => 
-                (plant.nextWatering === today || 
-                plant.startDate === today || 
-                plant.harvestDate === today) && 
-                plant.progress < 100
-            );
-
-            todaysPlants.forEach(plant => {
-                if (plant.nextWatering === today && (notificationSettings.watering)) {
-                    notifications.push({
-                        id: generateUniqueID(),
-                        type: "watering",
-                        plantId: plant.id,
-                        title: "Jadwal Penyiraman",
-                        message: `${plant.name} perlu disiram hari ini.`,
-                        date: today,
-                        read: false
-                    });
-                }
-
-                if (plant.harvestDate === today && (notificationSettings.harvest)) {
-                    notifications.push({
-                        id: generateUniqueID(),
-                        type: "harvest",
-                        plantId: plant.id,
-                        title: "Waktunya Panen",
-                        message: `${plant.name} siap dipanen hari ini!`,
-                        date: today,
-                        read: false
-                    });
-                }
-            });
-
-            localStorage.setItem("notifications", JSON.stringify(notifications));
-            localStorage.setItem("lastNotificationDate", today);
-            lastNotificationDate = today;
-        }
-
-        function generateUniqueID() {
-            const timestamp = Date.now().toString(); 
-            const randomNumber = Math.random().toString(36).substring(2)
-            return timestamp + randomNumber;
-        }
-
-        function scheduleDailyNotification() {
-            const now = new Date();
-            const [hour, minute] = getNotificationTime().split(":").map(Number);
-
-            const next = new Date();
-            next.setHours(hour, minute, 0, 0);
-
-            // Jika waktu sudah lewat → jadwalkan besok
-            if (now > next) next.setDate(next.getDate() + 1);
-
-            const ms = next - now;
-
-            setTimeout(() => {
-                generateDailyNotifications();
-                scheduleDailyNotification(); // ulangi untuk besok
-            }, ms);
-        }
-
-        function initializeNotificationSystem() {
-            const now = new Date();
-            const today = now.toISOString().split("T")[0];
-            const [hour, minute] = getNotificationTime().split(":").map(Number);
-
-            const alreadyPassed =
-                now.getHours() > hour ||
-                (now.getHours() === hour && now.getMinutes() >= minute);
-
-            // Buat notifikasi jika sudah lewat waktu dan belum dibuat hari ini
-            if (alreadyPassed && lastNotificationDate !== today) {
-                generateDailyNotifications();
-            }
-
-            scheduleDailyNotification();
+        function getUnreadNotificationsCount() {
+            return notifications.filter(n => !n.read).length;
         }
 
         function markNotificationAsRead(id) {
@@ -1892,88 +869,339 @@
                 n.id === id ? { ...n, read: true } : n
             );
             localStorage.setItem("notifications", JSON.stringify(notifications));
+            updateNotificationBadge();
         }
 
-        function getUnreadNotificationsCount() {
-            return notifications.filter(n => !n.read).length;
+        function deleteNotification(id) {
+            notifications = notifications.filter(n => n.id !== id);
+            localStorage.setItem("notifications", JSON.stringify(notifications));
+            updateNotificationBadge();
+            renderAllNotifications();
+            showNotification('Notifikasi berhasil dihapus', 'success');
         }
 
-        function getDailyCounts() {
-            const today = new Intl.DateTimeFormat('en-CA').format(new Date());
-
-            const water = notifications.filter(n => n.type === "watering" && n.date === today).length;
-            const harvest = notifications.filter(n => n.type === "harvest" && n.date === today).length;
-
-            return {
-                water,
-                harvest,
-                total: water + harvest
-            };
+        // Bulk Actions Functions
+        function toggleBulkActions() {
+            isBulkActionMode = !isBulkActionMode;
+            const bulkActions = document.getElementById('bulkActions');
+            const bulkActionBtn = document.getElementById('bulkActionBtn');
+            
+            if (isBulkActionMode) {
+                bulkActions.classList.add('show');
+                bulkActionBtn.innerHTML = '<i class="fas fa-times"></i> Batal Pilih';
+                bulkActionBtn.style.background = 'var(--danger)';
+                bulkActionBtn.style.color = 'white';
+            } else {
+                bulkActions.classList.remove('show');
+                bulkActionBtn.innerHTML = '<i class="fas fa-check-square"></i> Pilih Notifikasi';
+                bulkActionBtn.style.background = '';
+                bulkActionBtn.style.color = '';
+                selectedNotifications.clear();
+                updateSelectedCount();
+            }
+            
+            renderAllNotifications();
         }
 
-        function renderAllNotificactions(notifId) {
+        function toggleNotificationSelection(id) {
+            if (selectedNotifications.has(id)) {
+                selectedNotifications.delete(id);
+            } else {
+                selectedNotifications.add(id);
+            }
+            updateSelectedCount();
+        }
+
+        function selectAllNotifications() {
+            // Hanya pilih notifikasi yang sesuai dengan filter aktif
+            const filteredNotifications = getFilteredNotifications();
+            const filteredNotificationIds = filteredNotifications.map(n => n.id);
+            
+            // Jika semua notifikasi yang difilter sudah terpilih, hapus semua
+            const allFilteredSelected = filteredNotificationIds.every(id => selectedNotifications.has(id));
+            
+            if (allFilteredSelected) {
+                filteredNotificationIds.forEach(id => selectedNotifications.delete(id));
+            } else {
+                filteredNotificationIds.forEach(id => selectedNotifications.add(id));
+            }
+            
+            updateSelectedCount();
+            renderAllNotifications();
+        }
+
+        function updateSelectedCount() {
+            document.getElementById('selectedNumber').textContent = selectedNotifications.size;
+        }
+
+        function markSelectedAsRead() {
+            if (selectedNotifications.size === 0) {
+                showNotification('Pilih notifikasi yang ingin ditandai sudah dibaca', 'warning');
+                return;
+            }
+
+            notifications = notifications.map(n =>
+                selectedNotifications.has(n.id) ? { ...n, read: true } : n
+            );
+            localStorage.setItem("notifications", JSON.stringify(notifications));
+            selectedNotifications.clear();
+            updateSelectedCount();
+            renderAllNotifications();
+            updateNotificationBadge();
+            showNotification('Notifikasi berhasil ditandai sudah dibaca', 'success');
+        }
+
+        function deleteSelectedNotifications() {
+            if (selectedNotifications.size === 0) {
+                showNotification('Pilih notifikasi yang ingin dihapus', 'warning');
+                return;
+            }
+
+            if (confirm(`Apakah Anda yakin ingin menghapus ${selectedNotifications.size} notifikasi?`)) {
+                notifications = notifications.filter(n => !selectedNotifications.has(n.id));
+                localStorage.setItem("notifications", JSON.stringify(notifications));
+                selectedNotifications.clear();
+                updateSelectedCount();
+                renderAllNotifications();
+                updateNotificationBadge();
+                showNotification('Notifikasi berhasil dihapus', 'success');
+            }
+        }
+
+        // Back to list function
+        function goBackToList() {
+            window.location.href = 'notification.html';
+        }
+
+        // PERBAIKAN: Fungsi untuk mendapatkan notifikasi yang sudah difilter dengan benar
+        function getFilteredNotifications() {
+            if (currentFilter === 'all') {
+                return notifications;
+            }
+            
+            // Filter berdasarkan type yang sesuai
+            const filtered = notifications.filter(n => n.type === currentFilter);
+            console.log(`Filter: ${currentFilter}, Jumlah: ${filtered.length}`);
+            
+            return filtered;
+        }
+
+        function renderAllNotifications(notifId) {
+            const urlParams = new URLSearchParams(window.location.search);
+            notifId = notifId || urlParams.get('id');
+            
             if (notifId) {
+                // Tampilkan detail notifikasi
                 const notification = notifications.find(n => n.id === notifId);
+                if (!notification) {
+                    showNotification('Notifikasi tidak ditemukan', 'error');
+                    window.location.href = 'notification.html';
+                    return;
+                }
+
                 document.getElementById('notificationsCard').style.display = 'none';
                 const notifGrid = document.getElementById('notificationsReadCard');
+                document.getElementById('backButton').classList.add('show');
+                document.getElementById('bulkActionBtn').style.display = 'none';
+                document.getElementById('bulkActions').classList.remove('show');
                 
                 const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
                 const filteredPlants = allPlants.find(plant => plant.id === notification.plantId);
 
                 let messageDesc = "";
+                let additionalInfo = "";
+                let actionButton = "";
+                
                 if (notification.type === "watering") {
-                    messageDesc = "Tanggal Siram " + filteredPlants.nextWatering + " Jam " + filteredPlants.waterTime;
-                }
-                if (notification.type === "harvest") {
-                    messageDesc = "Tanggal panen " + filteredPlants.harvestDate
+                    messageDesc = "Jadwal Penyiraman";
+                    additionalInfo = filteredPlants ? 
+                        `Tanaman ${filteredPlants.name} perlu disiram hari ini sesuai jadwal` : 
+                        "Informasi tanaman tidak tersedia";
+                    actionButton = `<button class="btn-primary" onclick="confirmWatering('${notification.plantId}', '${notification.id}')" style="margin-top: 15px;">
+                        <i class="fas fa-tint"></i> Konfirmasi Penyiraman
+                    </button>`;
+                } else if (notification.type === "harvest") {
+                    messageDesc = "Waktunya Panen";
+                    additionalInfo = filteredPlants ? 
+                        `Tanaman ${filteredPlants.name} siap dipanen pada tanggal ${filteredPlants.harvestDate || '-'}` : 
+                        "Informasi tanaman tidak tersedia";
+                } else if (notification.type === "create-plant") {
+                    messageDesc = "Tanaman Baru";
+                    additionalInfo = filteredPlants ? 
+                        `Tanaman ${filteredPlants.name} berhasil ditanam pada tanggal ${filteredPlants.startDate || '-'}` : 
+                        "Informasi tanaman tidak tersedia";
+                } else if (notification.type === "watering-confirmation") {
+                    messageDesc = "Konfirmasi Penyiraman";
+                    additionalInfo = filteredPlants ? 
+                        `Penyiraman tanaman ${filteredPlants.name} berhasil dikonfirmasi` : 
+                        "Informasi tanaman tidak tersedia";
+                } else if (notification.type === "fertilizing") {
+                    messageDesc = "Jadwal Pemupukan";
+                    additionalInfo = filteredPlants ? 
+                        `Tanaman ${filteredPlants.name} perlu dipupuk hari ini sesuai jadwal` : 
+                        "Informasi tanaman tidak tersedia";
+                    actionButton = `<button class="btn-primary" onclick="confirmFertilizing('${notification.plantId}', '${notification.id}')" style="margin-top: 15px; background: #795548;">
+                        <i class="fas fa-seedling"></i> Konfirmasi Pemupukan
+                    </button>`;
+                } else if (notification.type === "fertilizing-confirmation") {
+                    messageDesc = "Konfirmasi Pemupukan";
+                    additionalInfo = filteredPlants ? 
+                        `Pemupukan tanaman ${filteredPlants.name} berhasil dikonfirmasi` : 
+                        "Informasi tanaman tidak tersedia";
+                } else if (notification.type === "pest") {
+                    messageDesc = "Peringatan Hama";
+                    additionalInfo = filteredPlants ? 
+                        `Tanaman ${filteredPlants.name} terdeteksi serangan hama, segera lakukan penanganan` : 
+                        "Informasi tanaman tidak tersedia";
+                } else if (notification.type === "success") {
+                    messageDesc = "Hasil Panen Berhasil";
+                    additionalInfo = filteredPlants ? 
+                        `Panen tanaman ${filteredPlants.name} berhasil dengan hasil yang memuaskan` : 
+                        "Informasi tanaman tidak tersedia";
+                } else {
+                    messageDesc = notification.title;
+                    additionalInfo = notification.message;
                 }
 
                 notifGrid.innerHTML =`
                     <div class="notification-read">
-                        <div>
-                            <h4>${notification.title}</h4>
+                        <div class="notification-content">
+                            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                <div class="notification-icon ${getNotificationTypeClass(notification.type)}">
+                                    <i class="fas ${getNotificationTypeIcon(notification.type)}"></i>
+                                </div>
+                                <h4>${notification.title}</h4>
+                            </div>
                             <p>${notification.message}</p>
-                            <p>${messageDesc}</>
-                            <p>
+                            <div style="margin-top: 15px; padding: 15px; background: var(--primary-light); border-radius: 8px;">
+                                <h5 style="margin-bottom: 10px; color: var(--primary-color);">Detail:</h5>
+                                <p style="color: var(--text-color); line-height: 1.6;">${additionalInfo}</p>
+                                ${actionButton}
+                            </div>
+                            <p style="color: var(--text-light); font-size: 12px; margin-top: 15px;">
+                                <strong>Diterima:</strong> ${notification.date}<br>
+                                <strong>Status:</strong> <span style="color: ${notification.read ? 'var(--success)' : 'var(--warning)'}">
+                                    ${notification.read ? 'Sudah dibaca' : 'Belum dibaca'}
+                                </span>
+                            </p>
                         </div>
                     </div>
                 `;
-                markNotificationAsRead(notifId);
+                
+                // Tandai sebagai sudah dibaca saat membuka detail
+                if (!notification.read) {
+                    markNotificationAsRead(notifId);
+                }
             } else {
+                // Tampilkan daftar notifikasi
                 document.getElementById('notificationsReadCard').style.display = 'none';
+                document.getElementById('backButton').classList.remove('show');
+                document.getElementById('bulkActionBtn').style.display = 'inline-flex';
                 const notifGrid = document.getElementById('notificationsCard');
             
-                if (notifications.length === 0) {
+                // Gunakan notifikasi yang sudah difilter
+                const filteredNotifications = getFilteredNotifications();
+                
+                console.log('Notifikasi yang ditampilkan:', filteredNotifications);
+                console.log('Filter aktif:', currentFilter);
+                
+                if (filteredNotifications.length === 0) {
                     notifGrid.innerHTML = `
                         <div class="empty-state">
-                            <i class="fas fa-calendar-check"></i>
-                            <p>Belum ada notifikasi</p>
+                            <i class="fas fa-bell-slash"></i>
+                            <h3 style="color: var(--text-light); margin-bottom: 10px;">Tidak ada notifikasi</h3>
+                            <p style="color: var(--text-light);">Tidak ada notifikasi dengan filter "${currentFilter}".</p>
                         </div>
                     `;
                     return;
                 }
                 
-                notifGrid.innerHTML = notifications.map(notification => {
-                    let notifTitle = '';
-                    let notifMessage = '';
-                    let cardClass = '';
-                    let isRead = 'Belum dibaca';
-
-                    if (notification.read) {
-                        isRead = 'Sudah dibaca'
+                // Urutkan notifikasi: yang belum dibaca di atas, kemudian berdasarkan tanggal terbaru
+                const sortedNotifications = [...filteredNotifications].sort((a, b) => {
+                    if (a.read !== b.read) {
+                        return a.read ? 1 : -1;
                     }
+                    return new Date(b.date) - new Date(a.date);
+                });
+
+                notifGrid.innerHTML = sortedNotifications.map(notification => {
+                    const isSelected = selectedNotifications.has(notification.id);
+                    const isRead = notification.read;
+                    const statusClass = isRead ? 'read' : 'unread';
+                    const statusText = isRead ? 'Sudah dibaca' : 'Belum dibaca';
                     
                     return `
-                        <a href="notification.html?id=${notification.id}" class="notification-item">
-                            <div>
-                                <h4>${notification.title}</h4>
-                                <p>${notification.message}</p>
+                        <div class="notification-item" style="display: flex; align-items: center; ${isRead ? 'opacity: 0.7;' : ''}">
+                            ${isBulkActionMode ? `
+                                <input type="checkbox" class="notification-checkbox" ${isSelected ? 'checked' : ''} 
+                                    onchange="toggleNotificationSelection('${notification.id}')" style="margin-right: 15px;">
+                            ` : ''}
+                            <div class="notification-content" style="flex: 1;">
+                                <div style="display: flex; justify-content: between; align-items: flex-start;">
+                                    <div style="flex: 1; display: flex; align-items: flex-start;">
+                                        <div class="notification-icon ${getNotificationTypeClass(notification.type)}">
+                                            <i class="fas ${getNotificationTypeIcon(notification.type)}"></i>
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <h4 style="margin: 0 0 5px 0; color: ${isRead ? 'var(--text-light)' : 'var(--text-color)'};">${notification.title}</h4>
+                                            <p style="margin: 0; color: var(--text-light); font-size: 14px;">${notification.message}</p>
+                                            <span class="notification-status ${statusClass}">${statusText}</span>
+                                            <span class="notification-date">${notification.date}</span>
+                                        </div>
+                                    </div>
+                                    ${!isBulkActionMode ? `
+                                        <div class="notification-actions">
+                                            <a href="notification.html?id=${notification.id}" style="margin-right: 10px; color: var(--primary-color);" title="Lihat Detail">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <button class="notification-menu-btn" onclick="showNotificationMenu(event, '${notification.id}')" title="Menu">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <div class="notification-dropdown" id="dropdown-${notification.id}">
+                                                <button onclick="markNotificationAsRead('${notification.id}'); renderAllNotifications();">
+                                                    <i class="fas fa-check"></i> Tandai Dibaca
+                                                </button>
+                                                <button class="delete" onclick="deleteNotification('${notification.id}')">
+                                                    <i class="fas fa-trash"></i> Hapus
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ` : ''}
+                                </div>
                             </div>
-                            <span style="font-size:12px; font-style: italic">${isRead}</span>
-                        </a>
+                        </div>
                     `;
                 }).join('');
             }
+
+            updateNotificationBadge();
+        }
+
+        // Show notification menu
+        function showNotificationMenu(event, notificationId) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            // Hide all other dropdowns
+            document.querySelectorAll('.notification-dropdown').forEach(dropdown => {
+                dropdown.classList.remove('show');
+            });
+            
+            // Show current dropdown
+            const dropdown = document.getElementById(`dropdown-${notificationId}`);
+            dropdown.classList.toggle('show');
+            
+            // Close dropdown when clicking outside
+            const closeDropdown = (e) => {
+                if (!dropdown.contains(e.target) && !event.target.closest('.notification-menu-btn')) {
+                    dropdown.classList.remove('show');
+                    document.removeEventListener('click', closeDropdown);
+                }
+            };
+            
+            setTimeout(() => {
+                document.addEventListener('click', closeDropdown);
+            }, 0);
         }
 
         // Logout function
@@ -1984,6 +1212,303 @@
                 window.location.href = 'index.html';
             }, 1000);
         }
+
+        // Initialize notification system
+        function initializeNotificationSystem() {
+            // Check if we need to generate daily notifications
+            const today = new Date().toISOString().split('T')[0];
+            if (lastNotificationDate !== today) {
+                generateDailyNotifications();
+            }
+            
+            // Setup mobile menu
+            setupMobileMenu();
+        }
+
+        function loadNotificationSettings() {
+            // Load notification settings from localStorage
+            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {
+                watering: true,
+                harvest: true,
+                'create-plant': true,
+                'watering-confirmation': true,
+                fertilizing: true,
+                'fertilizing-confirmation': true,
+                pest: true,
+                success: true,
+                email: false,
+                time: "08:00"
+            };
+            return settings;
+        }
+
+        // FUNGSI BARU: Generate notifikasi pemupukan
+        function generateFertilizingNotifications() {
+            const today = new Date().toISOString().split('T')[0];
+            const plants = JSON.parse(localStorage.getItem('plants')) || [];
+            const settings = loadNotificationSettings();
+            
+            plants.forEach(plant => {
+                // Cek apakah tanaman milik user saat ini
+                const isUserPlant = plant.userId === currentUser?.id || 
+                                  plant.userEmail === currentUser?.email ||
+                                  !plant.userId;
+                
+                if (!isUserPlant || !settings.fertilizing) return;
+                
+                // Cek jika tanaman perlu pemupukan hari ini
+                if (plant.nextFertilizing === today && plant.progress < 100) {
+                    const existingNotification = notifications.find(n => 
+                        n.plantId === plant.id && n.type === "fertilizing" && n.date === today
+                    );
+                    
+                    if (!existingNotification) {
+                        notifications.push({
+                            id: generateUniqueID(),
+                            type: "fertilizing",
+                            plantId: plant.id,
+                            title: "Jadwal Pemupukan",
+                            message: `Tanaman ${plant.name} perlu dipupuk hari ini`,
+                            date: today,
+                            read: false
+                        });
+                        
+                        console.log(`Notifikasi pemupukan dibuat untuk tanaman: ${plant.name}`);
+                    }
+                }
+            });
+            
+            localStorage.setItem("notifications", JSON.stringify(notifications));
+            updateNotificationBadge();
+        }
+
+        // FUNGSI BARU: Konfirmasi pemupukan
+        function confirmFertilizing(plantId, notificationId) {
+            const plants = JSON.parse(localStorage.getItem('plants')) || [];
+            const plantIndex = plants.findIndex(p => p.id === plantId);
+            
+            if (plantIndex === -1) {
+                showNotification('Tanaman tidak ditemukan', 'error');
+                return;
+            }
+            
+            const plant = plants[plantIndex];
+            
+            // Update status pemupukan
+            plant.lastFertilized = new Date().toISOString().split('T')[0];
+            
+            // Calculate next fertilizing date
+            const nextDate = new Date();
+            let fertilizeScheduleDays = plant.fertilizerSchedule;
+            
+            // Handle custom fertilize schedule
+            if (typeof fertilizeScheduleDays === 'string' && fertilizeScheduleDays.startsWith('custom-')) {
+                fertilizeScheduleDays = parseInt(fertilizeScheduleDays.split('-')[1]);
+            } else {
+                fertilizeScheduleDays = parseInt(fertilizeScheduleDays);
+            }
+            
+            nextDate.setDate(nextDate.getDate() + fertilizeScheduleDays);
+            plant.nextFertilizing = nextDate.toISOString().split('T')[0];
+            
+            // Update progress (pemupukan menambah progress 5%)
+            plant.progress = Math.min(plant.progress + 5, 100);
+            
+            // Update localStorage
+            localStorage.setItem('plants', JSON.stringify(plants));
+            
+            // Buat notifikasi konfirmasi
+            const today = new Date().toISOString().split('T')[0];
+            notifications.push({
+                id: generateUniqueID(),
+                type: "fertilizing-confirmation",
+                plantId: plantId,
+                title: "Konfirmasi Pemupukan",
+                message: `Pemupukan tanaman ${plant.name} berhasil dikonfirmasi`,
+                date: today,
+                read: false
+            });
+            
+            // Tandai notifikasi asli sebagai sudah dibaca
+            markNotificationAsRead(notificationId);
+            
+            localStorage.setItem("notifications", JSON.stringify(notifications));
+            updateNotificationBadge();
+            
+            showNotification('Pemupukan berhasil dikonfirmasi! Progress tanaman bertambah.', 'success');
+            renderAllNotifications();
+        }
+
+        // FUNGSI BARU: Konfirmasi penyiraman dari notifikasi
+        function confirmWatering(plantId, notificationId) {
+            const plants = JSON.parse(localStorage.getItem('plants')) || [];
+            const plantIndex = plants.findIndex(p => p.id === plantId);
+            
+            if (plantIndex === -1) {
+                showNotification('Tanaman tidak ditemukan', 'error');
+                return;
+            }
+            
+            const plant = plants[plantIndex];
+            
+            // Update status penyiraman
+            plant.lastWatered = new Date().toISOString().split('T')[0];
+            plant.progress = Math.min(plant.progress + 10, 100);
+            
+            // Calculate next watering date
+            const nextDate = new Date();
+            let waterScheduleDays = plant.waterSchedule;
+            
+            if (typeof waterScheduleDays === 'string' && waterScheduleDays.startsWith('custom-')) {
+                waterScheduleDays = parseInt(waterScheduleDays.split('-')[1]);
+            } else {
+                waterScheduleDays = parseInt(waterScheduleDays);
+            }
+            
+            nextDate.setDate(nextDate.getDate() + waterScheduleDays);
+            plant.nextWatering = nextDate.toISOString().split('T')[0];
+            
+            // Update localStorage
+            localStorage.setItem('plants', JSON.stringify(plants));
+            
+            // Buat notifikasi konfirmasi
+            const today = new Date().toISOString().split('T')[0];
+            notifications.push({
+                id: generateUniqueID(),
+                type: "watering-confirmation",
+                plantId: plantId,
+                title: "Konfirmasi Penyiraman",
+                message: `Penyiraman tanaman ${plant.name} berhasil dikonfirmasi`,
+                date: today,
+                read: false
+            });
+            
+            // Tandai notifikasi asli sebagai sudah dibaca
+            markNotificationAsRead(notificationId);
+            
+            localStorage.setItem("notifications", JSON.stringify(notifications));
+            updateNotificationBadge();
+            
+            showNotification('Penyiraman berhasil dikonfirmasi! Progress tanaman bertambah.', 'success');
+            renderAllNotifications();
+        }
+
+        function generateDailyNotifications() {
+            const today = new Date().toISOString().split('T')[0];
+            const settings = loadNotificationSettings();
+            
+            // Get plants that need notifications today
+            const plants = JSON.parse(localStorage.getItem('plants')) || [];
+            const todaysPlants = plants.filter(plant => {
+                const isUserPlant = plant.userId === currentUser?.id || 
+                                  plant.userEmail === currentUser?.email ||
+                                  !plant.userId;
+                
+                if (!isUserPlant) return false;
+                
+                if (settings.watering && plant.nextWatering === today && plant.progress < 100) {
+                    return true;
+                }
+                
+                if (settings.harvest && plant.harvestDate === today && plant.progress < 100) {
+                    return true;
+                }
+                
+                if (settings.fertilizing && plant.nextFertilizing === today && plant.progress < 100) {
+                    return true;
+                }
+                
+                return false;
+            });
+
+            // Generate notifications
+            todaysPlants.forEach(plant => {
+                if (settings.watering && plant.nextWatering === today) {
+                    const existingNotification = notifications.find(n => 
+                        n.plantId === plant.id && n.type === "watering" && n.date === today
+                    );
+                    
+                    if (!existingNotification) {
+                        notifications.push({
+                            id: generateUniqueID(),
+                            type: "watering",
+                            plantId: plant.id,
+                            title: "Jadwal Penyiraman",
+                            message: `Tanaman ${plant.name} perlu disiram hari ini`,
+                            date: today,
+                            read: false
+                        });
+                    }
+                }
+
+                if (settings.harvest && plant.harvestDate === today) {
+                    const existingNotification = notifications.find(n => 
+                        n.plantId === plant.id && n.type === "harvest" && n.date === today
+                    );
+                    
+                    if (!existingNotification) {
+                        notifications.push({
+                            id: generateUniqueID(),
+                            type: "harvest",
+                            plantId: plant.id,
+                            title: "Waktunya Panen",
+                            message: `${plant.name} siap dipanen hari ini!`,
+                            date: today,
+                            read: false
+                        });
+                    }
+                }
+
+                if (settings.fertilizing && plant.nextFertilizing === today) {
+                    const existingNotification = notifications.find(n => 
+                        n.plantId === plant.id && n.type === "fertilizing" && n.date === today
+                    );
+                    
+                    if (!existingNotification) {
+                        notifications.push({
+                            id: generateUniqueID(),
+                            type: "fertilizing",
+                            plantId: plant.id,
+                            title: "Jadwal Pemupukan",
+                            message: `Tanaman ${plant.name} perlu dipupuk hari ini`,
+                            date: today,
+                            read: false
+                        });
+                    }
+                }
+            });
+
+            // Save notifications and update last notification date
+            localStorage.setItem("notifications", JSON.stringify(notifications));
+            localStorage.setItem("lastNotificationDate", today);
+            lastNotificationDate = today;
+            
+            updateNotificationBadge();
+        }
+
+        function generateUniqueID() {
+            return Date.now().toString() + Math.random().toString(36).substring(2);
+        }
+
+        // PERBAIKAN: Fungsi untuk sinkronisasi notifikasi dari plants.html
+        function syncNotificationsFromPlants() {
+            // Ambil notifikasi terbaru dari localStorage
+            const latestNotifications = JSON.parse(localStorage.getItem("notifications")) || [];
+            
+            // Periksa apakah ada notifikasi baru yang perlu ditambahkan
+            if (latestNotifications.length > notifications.length) {
+                notifications = latestNotifications;
+                renderAllNotifications();
+                updateNotificationBadge();
+                console.log('Notifikasi disinkronisasi dari plants.html');
+            }
+            
+            // Generate notifikasi pemupukan yang mungkin tertunda
+            generateFertilizingNotifications();
+        }
+
+        // PERBAIKAN: Tambahkan interval untuk sinkronisasi notifikasi
+        setInterval(syncNotificationsFromPlants, 2000); // Sinkron setiap 2 detik
     </script>
 </body>
 </html>

@@ -414,20 +414,27 @@
     </div>
 
     <script>
-        // Improved Checkbox Functionality
+        // Improved Checkbox Functionality - PERBAIKAN UTAMA DI SINI
         function setupLoginCheckbox() {
             const rememberMeCheckbox = document.getElementById('rememberMe');
-            const checkmark = document.querySelector('.checkmark');
+            const checkboxContainer = document.querySelector('.checkbox-container');
+            const rememberText = document.querySelector('.remember-text');
             
-            if (rememberMeCheckbox && checkmark) {
+            if (rememberMeCheckbox && checkboxContainer && rememberText) {
                 // Load saved state from localStorage
                 const savedState = localStorage.getItem('rememberMe');
                 if (savedState === 'true') {
                     rememberMeCheckbox.checked = true;
                 }
                 
-                // Add click event to checkmark
-                checkmark.addEventListener('click', function() {
+                // Add click event to entire checkbox container (including text)
+                checkboxContainer.addEventListener('click', function() {
+                    rememberMeCheckbox.checked = !rememberMeCheckbox.checked;
+                });
+                
+                // Add click event specifically to text
+                rememberText.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent triggering the container's click event twice
                     rememberMeCheckbox.checked = !rememberMeCheckbox.checked;
                 });
             }
@@ -460,7 +467,7 @@
             });
         }
 
-        // Form submission handler
+        // Form submission handler - PERBAIKAN UTAMA DI SINI
         function setupLoginForm() {
             const loginForm = document.getElementById('loginForm');
             if (!loginForm) return;
@@ -475,6 +482,12 @@
                 // Validasi
                 if (!phone || !password) {
                     showNotification('Harap isi semua field', 'error');
+                    return;
+                }
+
+                // PERBAIKAN: Validasi checkbox "Ingat Saya"
+                if (!rememberMe) {
+                    showNotification('Harap centang kotak "Ingat Saya" sebelum melanjutkan', 'error');
                     return;
                 }
 
@@ -510,8 +523,8 @@
                 showNotification('Login berhasil!', 'success');
 
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 3000);
+                    window.location.href = 'index.html';
+                }, 1000);
             });
         }
 

@@ -854,7 +854,7 @@
                         <a href="#security" class="profile-menu-item" data-tab="security">
                             <i class="fas fa-shield-alt"></i> Keamanan
                         </a>
-                        <a href="#notifications" class="profile-menu-item" data-tab="notifications">
+                        <a href="#notifications" class="profile-menu-item" data-tab="notifications" style="display: none;">
                             <i class="fas fa-bell"></i> Notifikasi
                         </a>
                     </div>
@@ -1431,12 +1431,12 @@
             const themeSelect = document.getElementById('themeSelect');
             if (themeSelect) {
                 themeSelect.addEventListener('change', function() {
-                    changeTheme(this.value);
+                    changeTheme(this.value, true); // true = tampilkan notifikasi
                 });
             }
         }
 
-        function changeTheme(theme) {
+        function changeTheme(theme, showNotification = false) {
             const root = document.documentElement;
             const savedPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
             
@@ -1463,22 +1463,28 @@
                 option.classList.remove('active');
             });
             document.querySelector(`.theme-option[data-theme="${theme}"]`)?.classList.add('active');
+            
+            // Hanya tampilkan notifikasi jika diminta
+            if (showNotification) {
+                showNotification(`Tema berhasil diubah ke ${theme === 'light' ? 'Terang' : 'Gelap'}`, 'success');
+            }
         }
 
         function selectTheme(theme) {
             document.getElementById('themeSelect').value = theme;
-            changeTheme(theme);
+            changeTheme(theme, true); // true = tampilkan notifikasi
         }
 
         // Notification Settings
         function setupNotificationToggles() {
-            // Sound notification - TIDAK ADA NOTIFIKASI
+            // Sound notification
             const soundNotification = document.getElementById('soundNotification');
             if (soundNotification) {
                 soundNotification.addEventListener('change', function() {
                     const savedPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
                     savedPreferences.soundNotification = this.checked;
                     localStorage.setItem('userPreferences', JSON.stringify(savedPreferences));
+                    showNotification(`Notifikasi suara ${this.checked ? 'diaktifkan' : 'dimatikan'}`, 'success');
                 });
             }
 
@@ -1533,11 +1539,11 @@
         function loadPreferences() {
             const savedPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
             
-            // Load theme
+            // Load theme - TANPA menampilkan notifikasi
             if (savedPreferences.theme) {
                 document.getElementById('themeSelect').value = savedPreferences.theme;
                 document.querySelector(`.theme-option[data-theme="${savedPreferences.theme}"]`)?.classList.add('active');
-                changeTheme(savedPreferences.theme);
+                changeTheme(savedPreferences.theme, false); // false = jangan tampilkan notifikasi
             }
             
             // Load sound notification
@@ -1560,8 +1566,10 @@
             });
             document.querySelector('.theme-option[data-theme="light"]').classList.add('active');
             
-            // Apply default theme
-            changeTheme('light');
+            // Apply default theme tanpa notifikasi
+            changeTheme('light', false);
+            
+            showNotification('Preferensi berhasil direset ke default', 'success');
         }
 
         // Modal functions
@@ -1910,7 +1918,7 @@
                 total: water + harvest
             };
         }
-
+        
         // Logout function
         function logout() {
             localStorage.removeItem('currentUser');
