@@ -3108,6 +3108,206 @@
             return texts[type] || 'Notifikasi';
         }
 
+        // Show notification detail - PERBAIKAN UTAMA DI SINI
+        function showNotificationDetail(notificationId) {
+            console.log("Menampilkan detail notifikasi:", notificationId);
+            const notification = notifications.find(n => n.id === notificationId);
+            if (!notification) {
+                showToast('Notifikasi tidak ditemukan', 'error');
+                return;
+            }
+
+            currentDetailId = notificationId;
+            
+            // Update URL tanpa reload
+            const newUrl = window.location.pathname + '?id=' + notificationId;
+            window.history.pushState({ path: newUrl }, '', newUrl);
+            
+            // Hide notifications list and show detail
+            document.getElementById('notificationsSection').style.display = 'none';
+            document.getElementById('bulkActionBtn').style.display = 'none';
+            document.getElementById('bulkActions').style.display = 'none';
+            document.getElementById('bulkActionBtn').parentElement.style.display = 'none';
+            document.getElementById('dateFilterContainer').style.display = 'none';
+            document.getElementById('categoryFilterSection').style.display = 'none';
+            document.getElementById('statsSection').style.display = 'none';
+            
+            // Show back button and detail view
+            document.getElementById('backButton').classList.add('show');
+            const detailView = document.getElementById('notificationDetailView');
+            detailView.classList.add('show');
+            
+            // Update detail content
+            const typeClass = getNotificationTypeClass(notification.type);
+            const icon = getNotificationIcon(notification.type);
+            const isRead = notification.read;
+            const dateTime = formatDateTime(notification.timestamp || notification.createdAt || notification.date);
+            
+            // Update detail icon
+            const detailIcon = document.getElementById('detailIcon');
+            detailIcon.className = `notification-icon ${typeClass}`;
+            detailIcon.innerHTML = `<i class="fas ${icon}"></i>`;
+            
+            // Update detail text
+            document.getElementById('detailTitle').textContent = notification.title || 'Notifikasi';
+            document.getElementById('detailMessage').textContent = notification.message || 'Tidak ada pesan';
+            document.getElementById('detailType').textContent = getNotificationTypeText(notification.type);
+            document.getElementById('detailStatus').innerHTML = `<span style="color: ${isRead ? 'var(--success)' : 'var(--warning)'}">${isRead ? 'Sudah dibaca' : 'Belum dibaca'}</span>`;
+            document.getElementById('detailDate').textContent = dateTime;
+            
+            // Get plant details
+            const plants = JSON.parse(localStorage.getItem('plants')) || [];
+            const plant = plants.find(p => p.id === notification.plantId);
+            document.getElementById('detailPlant').textContent = plant ? plant.name : '-';
+            
+            // Clear previous additional info
+            const additionalInfoDiv = document.getElementById('detailAdditionalInfo');
+            additionalInfoDiv.innerHTML = '';
+            
+            // Set detail actions
+            const detailActions = document.getElementById('detailActions');
+            detailActions.innerHTML = '';
+            
+            // Tambahkan tombol berdasarkan jenis notifikasi
+            if (!notification.read) {
+                detailActions.innerHTML += `
+                    <button class="btn-primary" onclick="markNotificationAsRead('${notification.id}')">
+                        <i class="fas fa-check"></i> Tandai Sudah Dibaca
+                    </button>
+                `;
+            }
+            
+            if (notification.type === 'watering' && !notification.read) {
+                detailActions.innerHTML += `
+                    <button class="btn-primary" onclick="confirmWatering('${notification.plantId}', '${notification.id}')">
+                        <i class="fas fa-tint"></i> Konfirmasi Penyiraman
+                    </button>
+                `;
+            }
+            
+            if (notification.type === 'fertilizing' && !notification.read) {
+                detailActions.innerHTML += `
+                    <button class="btn-primary" style="background: linear-gradient(135deg, var(--fertilizer), #5D4037);" onclick="confirmFertilizing('${notification.plantId}', '${notification.id}')">
+                        <i class="fas fa-seedling"></i> Konfirmasi Pemupukan
+                    </button>
+                `;
+            }
+            
+            if (notification.type === 'harvest' && !notification.read) {
+                detailActions.innerHTML += `
+                    <button class="btn-primary" style="background: linear-gradient(135deg, var(--harvest), #D84315);" onclick="handleNotificationAction('${notification.id}', '${notification.type}', '${notification.plantId}')">
+                        <i class="fas fa-shopping-basket"></i> Konfirmasi Panen
+                    </button>
+                `;
+            }
+            
+            if (notification.type === 'plant-new' && notification.plantId) {
+                detailActions.innerHTML += `
+                    <button class="btn-go-to-dashboard" onclick="goToDashboard('${notification.plantId}')">
+                        <i class="fas fa-external-link-alt"></i> Lihat Tanaman di Dashboard
+                    </button>
+                `;
+            }
+            
+            detailActions.innerHTML += `
+                <button class="btn-danger" onclick="deleteNotification('${notification.id}')">
+                    <i class="fas fa-trash"></i> Hapus Notifikasi
+                </button>
+            `;
+            
+            // Mark as read when viewing detail
+            if (!notification.read) {
+                markNotificationAsRead(notificationId);
+            }
+            
+            // Update additional info based on notification type
+            if (notification.type === "watering") {
+                additionalInfoDiv.innerHTML = `
+                    <div style="margin-top: 20px; padding: 20px; background: rgba(33, 150, 243, 0.1); border-radius: var(--card-radius); border-left: 5px solid var(--info);">
+                        <h4 style="color: var(--info); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Informasi Penyiraman</h4>
+                        <p style="color: var(--text-color); line-height: 1.6;">
+                            ${plant ? `Tanaman <strong>${plant.name}</strong> perlu disiram hari ini sesuai jadwal penyiraman setiap ${plant.waterSchedule} hari.` : 'Tanaman perlu disiram sesuai jadwal.'}
+                        </p>
+                    </div>
+                `;
+            } else if (notification.type === "harvest") {
+                additionalInfoDiv.innerHTML = `
+                    <div style="margin-top: 20px; padding: 20px; background: rgba(255, 87, 34, 0.1); border-radius: var(--card-radius); border-left: 5px solid var(--harvest);">
+                        <h4 style="color: var(--harvest); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Informasi Panen</h4>
+                        <p style="color: var(--text-color); line-height: 1.6;">
+                            ${plant ? `Tanaman <strong>${plant.name}</strong> siap dipanen. Perkiraan panen pada tanggal ${plant.harvestDate ? new Date(plant.harvestDate).toLocaleDateString('id-ID') : '-'}.` : 'Tanaman siap dipanen.'}
+                        </p>
+                    </div>
+                `;
+            } else if (notification.type === "plant-new" || notification.type === "create-plant") {
+                additionalInfoDiv.innerHTML = `
+                    <div style="margin-top: 20px; padding: 20px; background: rgba(156, 39, 176, 0.1); border-radius: var(--card-radius); border-left: 5px solid var(--plant-new);">
+                        <h4 style="color: var(--plant-new); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Informasi Tanaman Baru</h4>
+                        <p style="color: var(--text-color); line-height: 1.6;">
+                            ${plant ? `Tanaman <strong>${plant.name}</strong> berhasil ditanam pada ${plant.startDate ? new Date(plant.startDate).toLocaleDateString('id-ID') : '-'}.` : 'Tanaman baru berhasil ditanam.'}
+                        </p>
+                    </div>
+                `;
+            } else if (notification.type === "watering-confirmation") {
+                additionalInfoDiv.innerHTML = `
+                    <div style="margin-top: 20px; padding: 20px; background: rgba(33, 150, 243, 0.1); border-radius: var(--card-radius); border-left: 5px solid var(--info);">
+                        <h4 style="color: var(--info); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Konfirmasi Berhasil</h4>
+                        <p style="color: var(--text-color); line-height: 1.6;">
+                            ${plant ? `Penyiraman tanaman <strong>${plant.name}</strong> berhasil dikonfirmasi. Progress tanaman meningkat.` : 'Penyiraman berhasil dikonfirmasi.'}
+                        </p>
+                    </div>
+                `;
+            } else if (notification.type === "fertilizing") {
+                additionalInfoDiv.innerHTML = `
+                    <div style="margin-top: 20px; padding: 20px; background: rgba(121, 85, 72, 0.1); border-radius: var(--card-radius); border-left: 5px solid var(--fertilizer);">
+                        <h4 style="color: var(--fertilizer); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Informasi Pemupukan</h4>
+                        <p style="color: var(--text-color); line-height: 1.6;">
+                            ${plant ? `Tanaman <strong>${plant.name}</strong> perlu dipupuk hari ini sesuai jadwal pemupukan setiap ${plant.fertilizerSchedule} hari.` : 'Tanaman perlu dipupuk sesuai jadwal.'}
+                        </p>
+                    </div>
+                `;
+            } else if (notification.type === "fertilizing-confirmation") {
+                additionalInfoDiv.innerHTML = `
+                    <div style="margin-top: 20px; padding: 20px; background: rgba(121, 85, 72, 0.1); border-radius: var(--card-radius); border-left: 5px solid var(--fertilizer);">
+                        <h4 style="color: var(--fertilizer); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Konfirmasi Berhasil</h4>
+                        <p style="color: var(--text-color); line-height: 1.6;">
+                            ${plant ? `Pemupukan tanaman <strong>${plant.name}</strong> berhasil dikonfirmasi. Progress tanaman meningkat.` : 'Pemupukan berhasil dikonfirmasi.'}
+                        </p>
+                    </div>
+                `;
+            } else if (notification.type === "success") {
+                additionalInfoDiv.innerHTML = `
+                    <div style="margin-top: 20px; padding: 20px; background: rgba(76, 175, 80, 0.1); border-radius: var(--card-radius); border-left: 5px solid var(--success);">
+                        <h4 style="color: var(--success); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Informasi Berhasil</h4>
+                        <p style="color: var(--text-color); line-height: 1.6;">
+                            ${plant ? `Panen tanaman <strong>${plant.name}</strong> berhasil dengan hasil yang memuaskan.` : 'Operasi berhasil diselesaikan.'}
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
+        // Go back to notifications list
+        function goBackToList() {
+            currentDetailId = null;
+            
+            // Update URL tanpa reload
+            window.history.pushState({ path: window.location.pathname }, '', window.location.pathname);
+            
+            // Show notifications list and hide detail
+            document.getElementById('notificationsSection').style.display = 'block';
+            document.getElementById('bulkActionBtn').style.display = 'inline-flex';
+            document.getElementById('bulkActionBtn').parentElement.style.display = 'flex';
+            document.getElementById('dateFilterContainer').style.display = 'block';
+            document.getElementById('categoryFilterSection').style.display = 'block';
+            document.getElementById('statsSection').style.display = 'grid';
+            document.getElementById('backButton').classList.remove('show');
+            document.getElementById('notificationDetailView').classList.remove('show');
+            document.getElementById('bulkActions').style.display = isBulkActionMode ? 'flex' : 'none';
+            
+            renderNotifications();
+        }
+
         // Filter berdasarkan tanggal
         function filterByDate() {
             const dateInput = document.getElementById('dateFilterInput');
@@ -3259,114 +3459,6 @@
                     this.style.color = 'var(--text-color)';
                 }
             });
-        }
-
-        // Show notification detail
-        function showNotificationDetail(notificationId) {
-            const notification = notifications.find(n => n.id === notificationId);
-            if (!notification) {
-                showToast('Notifikasi tidak ditemukan', 'error');
-                return;
-            }
-
-            currentDetailId = notificationId;
-            
-            // Update URL tanpa reload
-            const newUrl = window.location.pathname + '?id=' + notificationId;
-            window.history.pushState({ path: newUrl }, '', newUrl);
-            
-            // Hide notifications list and show detail
-            document.getElementById('notificationsSection').style.display = 'none';
-            document.getElementById('bulkActionBtn').style.display = 'none';
-            document.getElementById('bulkActions').style.display = 'none';
-            document.getElementById('bulkActionBtn').parentElement.style.display = 'none';
-            document.getElementById('dateFilterSection').style.display = 'none';
-            document.getElementById('categoryFilterSection').style.display = 'none';
-            document.getElementById('statsSection').style.display = 'none';
-            
-            // Show back button and detail view
-            document.getElementById('backButton').classList.add('show');
-            const detailView = document.getElementById('notificationDetailView');
-            detailView.classList.add('show');
-            
-            // Update detail content
-            const typeClass = getNotificationTypeClass(notification.type);
-            const icon = getNotificationIcon(notification.type);
-            const isRead = notification.read;
-            const dateTime = formatDateTime(notification.timestamp || notification.createdAt || notification.date);
-            
-            document.getElementById('detailIcon').className = `notification-icon ${typeClass}`;
-            document.getElementById('detailIcon').innerHTML = `<i class="fas ${icon}"></i>`;
-            document.getElementById('detailTitle').textContent = notification.title || 'Notifikasi';
-            document.getElementById('detailMessage').textContent = notification.message || 'Tidak ada pesan';
-            document.getElementById('detailType').textContent = getNotificationTypeText(notification.type);
-            document.getElementById('detailStatus').innerHTML = `<span style="color: ${isRead ? 'var(--success)' : 'var(--warning)'}">${isRead ? 'Sudah dibaca' : 'Belum dibaca'}</span>`;
-            document.getElementById('detailDate').textContent = dateTime;
-            
-            // Get plant details
-            const plants = JSON.parse(localStorage.getItem('plants')) || [];
-            const plant = plants.find(p => p.id === notification.plantId);
-            document.getElementById('detailPlant').textContent = plant ? plant.name : '-';
-            
-            // Set detail actions
-            const detailActions = document.getElementById('detailActions');
-            detailActions.innerHTML = '';
-            
-            if (!notification.read) {
-                detailActions.innerHTML += `
-                    <button class="btn-primary" onclick="markNotificationAsRead('${notification.id}')">
-                        <i class="fas fa-check"></i> Tandai Sudah Dibaca
-                    </button>
-                `;
-            }
-            
-            if (notification.type === 'watering' || notification.type === 'fertilizing' || notification.type === 'harvest') {
-                detailActions.innerHTML += `
-                    <button class="btn-go-to-dashboard" onclick="goToDashboard('${notification.plantId}')">
-                        <i class="fas fa-external-link-alt"></i> Konfirmasi di Dashboard
-                    </button>
-                `;
-            }
-            
-            if (notification.type === 'plant-new' && notification.plantId) {
-                detailActions.innerHTML += `
-                    <button class="btn-go-to-dashboard" onclick="goToDashboard('${notification.plantId}')">
-                        <i class="fas fa-external-link-alt"></i> Lihat Tanaman di Dashboard
-                    </button>
-                `;
-            }
-            
-            detailActions.innerHTML += `
-                <button class="btn-danger" onclick="deleteNotification('${notification.id}')">
-                    <i class="fas fa-trash"></i> Hapus Notifikasi
-                </button>
-            `;
-            
-            // Mark as read when viewing detail
-            if (!notification.read) {
-                markNotificationAsRead(notificationId);
-            }
-        }
-
-        // Go back to notifications list
-        function goBackToList() {
-            currentDetailId = null;
-            
-            // Update URL tanpa reload
-            window.history.pushState({ path: window.location.pathname }, '', window.location.pathname);
-            
-            // Show notifications list and hide detail
-            document.getElementById('notificationsSection').style.display = 'block';
-            document.getElementById('bulkActionBtn').style.display = 'inline-flex';
-            document.getElementById('bulkActionBtn').parentElement.style.display = 'flex';
-            document.getElementById('dateFilterSection').style.display = 'block';
-            document.getElementById('categoryFilterSection').style.display = 'block';
-            document.getElementById('statsSection').style.display = 'grid';
-            document.getElementById('backButton').classList.remove('show');
-            document.getElementById('notificationDetailView').classList.remove('show');
-            document.getElementById('bulkActions').style.display = isBulkActionMode ? 'flex' : 'none';
-            
-            renderNotifications();
         }
 
         // Toggle sidebar
@@ -3566,12 +3658,143 @@
         }
 
         function handleNotificationAction(notificationId, type, plantId) {
-            // Untuk semua konfirmasi (penyiraman, pemupukan, panen)
-            // Arahkan ke dashboard dengan highlight tanaman
-            if (plantId) {
-                goToDashboard(plantId);
+            if (type === 'watering') {
+                confirmWatering(plantId, notificationId);
+            } else if (type === 'fertilizing') {
+                confirmFertilizing(plantId, notificationId);
+            } else if (type === 'harvest') {
+                confirmHarvest(plantId, notificationId);
             } else {
-                showToast('ID tanaman tidak ditemukan', 'error');
+                showToast('Aksi tidak tersedia untuk notifikasi ini', 'warning');
+            }
+        }
+
+        function confirmWatering(plantId, notificationId) {
+            // Update plant watering status
+            const plants = JSON.parse(localStorage.getItem('plants')) || [];
+            const plantIndex = plants.findIndex(p => p.id === plantId);
+            
+            if (plantIndex !== -1) {
+                const plant = plants[plantIndex];
+                plant.lastWatered = new Date().toISOString().split('T')[0];
+                plant.progress = Math.min(plant.progress + 10, 100);
+                
+                // Calculate next watering date
+                const nextDate = new Date();
+                let waterScheduleDays = plant.waterSchedule;
+                
+                if (typeof waterScheduleDays === 'string' && waterScheduleDays.startsWith('custom-')) {
+                    waterScheduleDays = parseInt(waterScheduleDays.split('-')[1]);
+                } else {
+                    waterScheduleDays = parseInt(waterScheduleDays);
+                }
+                
+                nextDate.setDate(nextDate.getDate() + waterScheduleDays);
+                plant.nextWatering = nextDate.toISOString().split('T')[0];
+                
+                // Update localStorage
+                localStorage.setItem('plants', JSON.stringify(plants));
+                
+                // Create confirmation notification
+                createNotification(
+                    'Konfirmasi Penyiraman',
+                    `Penyiraman tanaman ${plant.name} berhasil dikonfirmasi`,
+                    'watering-confirmation',
+                    plantId,
+                    plant.name
+                );
+                
+                // Mark original notification as read
+                markNotificationAsRead(notificationId);
+                
+                showToast('Penyiraman berhasil dikonfirmasi! Progress tanaman bertambah.', 'success');
+                
+                // Refresh detail view jika sedang melihat notifikasi ini
+                if (currentDetailId === notificationId) {
+                    showNotificationDetail(notificationId);
+                }
+            }
+        }
+
+        function confirmFertilizing(plantId, notificationId) {
+            // Update plant fertilizing status
+            const plants = JSON.parse(localStorage.getItem('plants')) || [];
+            const plantIndex = plants.findIndex(p => p.id === plantId);
+            
+            if (plantIndex !== -1) {
+                const plant = plants[plantIndex];
+                plant.lastFertilized = new Date().toISOString().split('T')[0];
+                plant.progress = Math.min(plant.progress + 5, 100);
+                
+                // Calculate next fertilizing date
+                const nextDate = new Date();
+                let fertilizerScheduleDays = plant.fertilizerSchedule;
+                
+                if (typeof fertilizerScheduleDays === 'string' && fertilizerScheduleDays.startsWith('custom-')) {
+                    fertilizerScheduleDays = parseInt(fertilizerScheduleDays.split('-')[1]);
+                } else {
+                    fertilizerScheduleDays = parseInt(fertilizerScheduleDays);
+                }
+                
+                nextDate.setDate(nextDate.getDate() + fertilizerScheduleDays);
+                plant.nextFertilizing = nextDate.toISOString().split('T')[0];
+                
+                // Update localStorage
+                localStorage.setItem('plants', JSON.stringify(plants));
+                
+                // Create confirmation notification
+                createNotification(
+                    'Konfirmasi Pemupukan',
+                    `Pemupukan tanaman ${plant.name} berhasil dikonfirmasi`,
+                    'fertilizing-confirmation',
+                    plantId,
+                    plant.name
+                );
+                
+                // Mark original notification as read
+                markNotificationAsRead(notificationId);
+                
+                showToast('Pemupukan berhasil dikonfirmasi! Progress tanaman bertambah.', 'success');
+                
+                // Refresh detail view jika sedang melihat notifikasi ini
+                if (currentDetailId === notificationId) {
+                    showNotificationDetail(notificationId);
+                }
+            }
+        }
+
+        function confirmHarvest(plantId, notificationId) {
+            // Update plant harvest status
+            const plants = JSON.parse(localStorage.getItem('plants')) || [];
+            const plantIndex = plants.findIndex(p => p.id === plantId);
+            
+            if (plantIndex !== -1) {
+                const plant = plants[plantIndex];
+                plant.harvested = true;
+                plant.progress = 100;
+                plant.harvestDate = new Date().toISOString().split('T')[0];
+                
+                // Update localStorage
+                localStorage.setItem('plants', JSON.stringify(plants));
+                
+                // Create confirmation notification
+                createNotification(
+                    'Konfirmasi Panen',
+                    `Panen tanaman ${plant.name} berhasil dikonfirmasi`,
+                    'harvest-confirmation',
+                    plantId,
+                    plant.name
+                );
+                
+                // Mark original notification as read
+                markNotificationAsRead(notificationId);
+                
+                showToast('Panen berhasil dikonfirmasi! Tanaman sudah selesai dipanen.', 'success');
+                
+                // Refresh detail view jika sedang melihat notifikasi ini
+                if (currentDetailId === notificationId) {
+                    showNotificationDetail(notificationId);
+                }
             }
         }
 
