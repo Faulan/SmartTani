@@ -1651,12 +1651,15 @@
         display: none;
         background: white;
         border-radius: var(--border-radius);
-        padding: 30px;
+        padding: 40px;
         box-shadow: var(--shadow-heavy);
         border: 3px solid var(--primary-extra-light);
         margin-bottom: 30px;
         animation: fadeIn 0.5s ease;
         width: 100%;
+        position: relative;
+        overflow: hidden;
+        border-left: 5px solid var(--primary-color);
     }
 
     .notification-detail-view.show {
@@ -1671,69 +1674,159 @@
     .notification-detail-header {
         display: flex;
         align-items: center;
-        gap: 20px;
-        margin-bottom: 25px;
-        padding-bottom: 20px;
+        gap: 25px;
+        margin-bottom: 30px;
+        padding-bottom: 25px;
         border-bottom: 2px solid var(--border-color);
     }
 
-    .notification-detail-title {
-        font-size: 24px;
-        font-weight: 700;
-        color: var(--text-color);
+    .notification-detail-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        color: white;
+        flex-shrink: 0;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    .notification-detail-title-section {
         flex: 1;
     }
 
+    .notification-detail-title {
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--text-color);
+        margin-bottom: 8px;
+    }
+
+    .notification-detail-subtitle {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .notification-detail-type {
+        background: linear-gradient(135deg, var(--primary-extra-light), var(--primary-light));
+        color: var(--primary-color);
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 700;
+        border: 2px solid rgba(46, 125, 50, 0.3);
+    }
+
+    .notification-detail-status {
+        background: linear-gradient(135deg, var(--warning), #FF8F00);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 700;
+        border: 2px solid rgba(255, 152, 0, 0.3);
+    }
+
+    .notification-detail-status.read {
+        background: linear-gradient(135deg, var(--success), #388E3C);
+        border-color: rgba(76, 175, 80, 0.3);
+    }
+
     .notification-detail-body {
-        margin-bottom: 25px;
+        margin-bottom: 30px;
     }
 
     .notification-detail-message {
-        font-size: 16px;
-        line-height: 1.6;
+        font-size: 18px;
+        line-height: 1.7;
         color: var(--text-color);
-        margin-bottom: 25px;
-        padding: 20px;
+        margin-bottom: 30px;
+        padding: 25px;
         background: linear-gradient(135deg, rgba(46, 125, 50, 0.05), rgba(27, 94, 32, 0.03));
         border-radius: var(--card-radius);
         border-left: 5px solid var(--primary-color);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
     .notification-detail-info {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-        margin-bottom: 25px;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
     }
 
     .detail-info-item {
-        padding: 15px;
+        padding: 20px;
         background: white;
         border-radius: var(--card-radius);
         border: 2px solid var(--primary-extra-light);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        transition: var(--transition);
+    }
+
+    .detail-info-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        border-color: var(--primary-light);
     }
 
     .detail-info-item h4 {
-        margin: 0 0 8px 0;
+        margin: 0 0 12px 0;
         color: var(--primary-color);
         font-size: 14px;
         font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .detail-info-item h4 i {
+        font-size: 16px;
     }
 
     .detail-info-item p {
         margin: 0;
         color: var(--text-color);
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+
+    .notification-detail-additional {
+        margin-bottom: 30px;
+        padding: 25px;
+        background: linear-gradient(135deg, rgba(46, 125, 50, 0.03), rgba(27, 94, 32, 0.02));
+        border-radius: var(--card-radius);
+        border: 2px solid var(--primary-extra-light);
+    }
+
+    .notification-detail-additional h3 {
+        margin: 0 0 15px 0;
+        color: var(--primary-color);
+        font-size: 20px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .notification-detail-additional p {
+        margin: 0;
+        color: var(--text-color);
         font-size: 16px;
-        font-weight: 600;
+        line-height: 1.6;
     }
 
     .notification-detail-actions {
         display: flex;
-        gap: 12px;
+        gap: 15px;
         flex-wrap: wrap;
-        margin-top: 25px;
-        padding-top: 25px;
+        margin-top: 30px;
+        padding-top: 30px;
         border-top: 2px solid var(--border-color);
     }
 
@@ -1965,7 +2058,8 @@
         .page-header,
         .date-filter-section,
         .category-filter-section,
-        .notifications-section {
+        .notifications-section,
+        .notification-detail-view {
             padding: 25px;
         }
         
@@ -2003,8 +2097,10 @@
             justify-content: flex-end;
         }
 
-        .notification-detail-view {
-            padding: 25px;
+        .notification-detail-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
         }
 
         .bulk-action-container {
@@ -2052,7 +2148,8 @@
         .page-header,
         .date-filter-section,
         .category-filter-section,
-        .notifications-section {
+        .notifications-section,
+        .notification-detail-view {
             padding: 20px;
         }
         
@@ -2204,7 +2301,13 @@
         }
 
         .notification-detail-title {
-            font-size: 22px;
+            font-size: 24px;
+        }
+
+        .notification-detail-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
         }
 
         .bulk-action-container {
@@ -2246,7 +2349,8 @@
         .page-header,
         .date-filter-section,
         .category-filter-section,
-        .notifications-section {
+        .notifications-section,
+        .notification-detail-view {
             padding: 15px;
         }
         
@@ -2555,10 +2659,16 @@
             <div class="notification-detail-view" id="notificationDetailView">
                 <div class="notification-detail-content">
                     <div class="notification-detail-header">
-                        <div class="notification-icon default" id="detailIcon">
+                        <div class="notification-detail-icon" id="detailIcon">
                             <i class="fas fa-bell"></i>
                         </div>
-                        <div class="notification-detail-title" id="detailTitle">Detail Notifikasi</div>
+                        <div class="notification-detail-title-section">
+                            <h1 class="notification-detail-title" id="detailTitle">Detail Notifikasi</h1>
+                            <div class="notification-detail-subtitle">
+                                <span class="notification-detail-type" id="detailType">-</span>
+                                <span class="notification-detail-status" id="detailStatus">-</span>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="notification-detail-body">
@@ -2568,24 +2678,27 @@
                         
                         <div class="notification-detail-info">
                             <div class="detail-info-item">
-                                <h4>Jenis Notifikasi</h4>
-                                <p id="detailType">-</p>
-                            </div>
-                            <div class="detail-info-item">
-                                <h4>Status</h4>
-                                <p id="detailStatus">-</p>
-                            </div>
-                            <div class="detail-info-item">
-                                <h4>Tanggal & Jam</h4>
+                                <h4><i class="fas fa-calendar-alt"></i> Tanggal & Jam</h4>
                                 <p id="detailDate">-</p>
                             </div>
                             <div class="detail-info-item">
-                                <h4>Tanaman</h4>
+                                <h4><i class="fas fa-leaf"></i> Tanaman</h4>
                                 <p id="detailPlant">-</p>
+                            </div>
+                            <div class="detail-info-item">
+                                <h4><i class="fas fa-clock"></i> Waktu Rekomendasi</h4>
+                                <p id="detailTime">-</p>
+                            </div>
+                            <div class="detail-info-item">
+                                <h4><i class="fas fa-user"></i> Dikirim Untuk</h4>
+                                <p id="detailUser">-</p>
                             </div>
                         </div>
                         
-                        <div id="detailAdditionalInfo"></div>
+                        <div class="notification-detail-additional" id="detailAdditionalInfo">
+                            <h3><i class="fas fa-info-circle"></i> Informasi Tambahan</h3>
+                            <p id="detailAdditionalText">Tidak ada informasi tambahan</p>
+                        </div>
                     </div>
                     
                     <div class="notification-detail-actions" id="detailActions">
@@ -2838,7 +2951,7 @@
             return icons[type] || 'fa-bell';
         }
 
-        // Get notification type class
+        // Get notification type class for CSS
         function getNotificationTypeClass(type) {
             const classes = {
                 'watering': 'watering',
@@ -2850,11 +2963,30 @@
                 'plant-new': 'plant-new',
                 'create-plant': 'plant-new',
                 'success': 'success',
-                'info': 'default',
-                'warning': 'default',
-                'error': 'default'
+                'info': 'info',
+                'warning': 'warning',
+                'error': 'error'
             };
             return classes[type] || 'default';
+        }
+
+        // Get notification background color based on type
+        function getNotificationBackgroundColor(type) {
+            const colors = {
+                'watering': 'linear-gradient(135deg, var(--info), #1976D2)',
+                'watering-confirmation': 'linear-gradient(135deg, var(--info), #1976D2)',
+                'fertilizing': 'linear-gradient(135deg, var(--fertilizer), #5D4037)',
+                'fertilizing-confirmation': 'linear-gradient(135deg, var(--fertilizer), #5D4037)',
+                'harvest': 'linear-gradient(135deg, var(--harvest), #D84315)',
+                'harvest-confirmation': 'linear-gradient(135deg, var(--harvest), #D84315)',
+                'plant-new': 'linear-gradient(135deg, var(--plant-new), #7B1FA2)',
+                'create-plant': 'linear-gradient(135deg, var(--plant-new), #7B1FA2)',
+                'success': 'linear-gradient(135deg, var(--success), #388E3C)',
+                'info': 'linear-gradient(135deg, var(--info), #1976D2)',
+                'warning': 'linear-gradient(135deg, var(--warning), #FF8F00)',
+                'error': 'linear-gradient(135deg, var(--danger), #d32f2f)'
+            };
+            return colors[type] || 'linear-gradient(135deg, var(--primary-color), var(--primary-dark))';
         }
 
         // Format tanggal dan jam
@@ -3108,9 +3240,8 @@
             return texts[type] || 'Notifikasi';
         }
 
-        // Show notification detail - PERBAIKAN UTAMA DI SINI
+        // Show notification detail - PERBAIKAN UTAMA
         function showNotificationDetail(notificationId) {
-            console.log("Menampilkan detail notifikasi:", notificationId);
             const notification = notifications.find(n => n.id === notificationId);
             if (!notification) {
                 showToast('Notifikasi tidak ditemukan', 'error');
@@ -3137,32 +3268,76 @@
             const detailView = document.getElementById('notificationDetailView');
             detailView.classList.add('show');
             
-            // Update detail content
+            // Set border color based on notification type
             const typeClass = getNotificationTypeClass(notification.type);
+            detailView.style.borderLeftColor = getBorderColorByType(notification.type);
+            
+            // Update detail content
             const icon = getNotificationIcon(notification.type);
             const isRead = notification.read;
             const dateTime = formatDateTime(notification.timestamp || notification.createdAt || notification.date);
+            const backgroundColor = getNotificationBackgroundColor(notification.type);
             
             // Update detail icon
             const detailIcon = document.getElementById('detailIcon');
-            detailIcon.className = `notification-icon ${typeClass}`;
+            detailIcon.style.background = backgroundColor;
             detailIcon.innerHTML = `<i class="fas ${icon}"></i>`;
             
             // Update detail text
             document.getElementById('detailTitle').textContent = notification.title || 'Notifikasi';
             document.getElementById('detailMessage').textContent = notification.message || 'Tidak ada pesan';
             document.getElementById('detailType').textContent = getNotificationTypeText(notification.type);
-            document.getElementById('detailStatus').innerHTML = `<span style="color: ${isRead ? 'var(--success)' : 'var(--warning)'}">${isRead ? 'Sudah dibaca' : 'Belum dibaca'}</span>`;
+            
+            // Update status
+            const statusElement = document.getElementById('detailStatus');
+            statusElement.textContent = isRead ? 'Sudah Dibaca' : 'Belum Dibaca';
+            statusElement.className = `notification-detail-status ${isRead ? 'read' : ''}`;
+            
+            // Update other details
             document.getElementById('detailDate').textContent = dateTime;
             
             // Get plant details
             const plants = JSON.parse(localStorage.getItem('plants')) || [];
             const plant = plants.find(p => p.id === notification.plantId);
-            document.getElementById('detailPlant').textContent = plant ? plant.name : '-';
+            document.getElementById('detailPlant').textContent = plant ? plant.name : 'Tidak ada tanaman terkait';
             
-            // Clear previous additional info
+            // Update recommended time
+            const recommendedTime = notification.recommendedTime || 
+                (notification.type === 'watering' ? 'Pagi hari (06:00 - 09:00)' : 
+                 notification.type === 'fertilizing' ? 'Sore hari (15:00 - 17:00)' : 
+                 'Kapan saja');
+            document.getElementById('detailTime').textContent = recommendedTime;
+            
+            // Update user
+            document.getElementById('detailUser').textContent = currentUser.name || 'User';
+            
+            // Update additional info
+            const additionalText = document.getElementById('detailAdditionalText');
             const additionalInfoDiv = document.getElementById('detailAdditionalInfo');
-            additionalInfoDiv.innerHTML = '';
+            
+            if (notification.type === 'watering') {
+                additionalText.textContent = plant ? 
+                    `Tanaman ${plant.name} perlu disiram sesuai jadwal. Pastikan tanah sudah cukup lembab sebelum penyiraman.` : 
+                    'Pastikan untuk menyiram tanaman sesuai jadwal yang telah ditentukan.';
+                additionalInfoDiv.style.display = 'block';
+            } else if (notification.type === 'fertilizing') {
+                additionalText.textContent = plant ? 
+                    `Tanaman ${plant.name} perlu dipupuk untuk mendukung pertumbuhan yang optimal. Gunakan pupuk yang sesuai.` : 
+                    'Pemupukan penting untuk menjaga nutrisi tanaman. Gunakan dosis yang tepat.';
+                additionalInfoDiv.style.display = 'block';
+            } else if (notification.type === 'harvest') {
+                additionalText.textContent = plant ? 
+                    `Tanaman ${plant.name} siap dipanen. Pastikan kondisi buah/tanaman sudah matang sempurna.` : 
+                    'Waktu panen telah tiba. Segera lakukan panen untuk hasil yang optimal.';
+                additionalInfoDiv.style.display = 'block';
+            } else if (notification.type === 'plant-new') {
+                additionalText.textContent = plant ? 
+                    `Tanaman ${plant.name} baru saja ditambahkan ke sistem. Pantau pertumbuhannya secara rutin.` : 
+                    'Tanaman baru telah ditambahkan. Pastikan perawatan sesuai kebutuhan.';
+                additionalInfoDiv.style.display = 'block';
+            } else {
+                additionalInfoDiv.style.display = 'none';
+            }
             
             // Set detail actions
             const detailActions = document.getElementById('detailActions');
@@ -3195,7 +3370,7 @@
             
             if (notification.type === 'harvest' && !notification.read) {
                 detailActions.innerHTML += `
-                    <button class="btn-primary" style="background: linear-gradient(135deg, var(--harvest), #D84315);" onclick="handleNotificationAction('${notification.id}', '${notification.type}', '${notification.plantId}')">
+                    <button class="btn-primary" style="background: linear-gradient(135deg, var(--harvest), #D84315);" onclick="confirmHarvest('${notification.plantId}', '${notification.id}')">
                         <i class="fas fa-shopping-basket"></i> Konfirmasi Panen
                     </button>
                 `;
@@ -3219,93 +3394,25 @@
             if (!notification.read) {
                 markNotificationAsRead(notificationId);
             }
-            
-            // Update additional info based on notification type
-            if (notification.type === "watering") {
-                additionalInfoDiv.innerHTML = `
-                    <div style="margin-top: 20px; padding: 20px; background: rgba(33, 150, 243, 0.1); border-radius: var(--card-radius); border-left: 5px solid var(--info);">
-                        <h4 style="color: var(--info); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Informasi Penyiraman</h4>
-                        <p style="color: var(--text-color); line-height: 1.6;">
-                            ${plant ? `Tanaman <strong>${plant.name}</strong> perlu disiram hari ini sesuai jadwal penyiraman setiap ${plant.waterSchedule} hari.` : 'Tanaman perlu disiram sesuai jadwal.'}
-                        </p>
-                    </div>
-                `;
-            } else if (notification.type === "harvest") {
-                additionalInfoDiv.innerHTML = `
-                    <div style="margin-top: 20px; padding: 20px; background: rgba(255, 87, 34, 0.1); border-radius: var(--card-radius); border-left: 5px solid var(--harvest);">
-                        <h4 style="color: var(--harvest); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Informasi Panen</h4>
-                        <p style="color: var(--text-color); line-height: 1.6;">
-                            ${plant ? `Tanaman <strong>${plant.name}</strong> siap dipanen. Perkiraan panen pada tanggal ${plant.harvestDate ? new Date(plant.harvestDate).toLocaleDateString('id-ID') : '-'}.` : 'Tanaman siap dipanen.'}
-                        </p>
-                    </div>
-                `;
-            } else if (notification.type === "plant-new" || notification.type === "create-plant") {
-                additionalInfoDiv.innerHTML = `
-                    <div style="margin-top: 20px; padding: 20px; background: rgba(156, 39, 176, 0.1); border-radius: var(--card-radius); border-left: 5px solid var(--plant-new);">
-                        <h4 style="color: var(--plant-new); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Informasi Tanaman Baru</h4>
-                        <p style="color: var(--text-color); line-height: 1.6;">
-                            ${plant ? `Tanaman <strong>${plant.name}</strong> berhasil ditanam pada ${plant.startDate ? new Date(plant.startDate).toLocaleDateString('id-ID') : '-'}.` : 'Tanaman baru berhasil ditanam.'}
-                        </p>
-                    </div>
-                `;
-            } else if (notification.type === "watering-confirmation") {
-                additionalInfoDiv.innerHTML = `
-                    <div style="margin-top: 20px; padding: 20px; background: rgba(33, 150, 243, 0.1); border-radius: var(--card-radius); border-left: 5px solid var(--info);">
-                        <h4 style="color: var(--info); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Konfirmasi Berhasil</h4>
-                        <p style="color: var(--text-color); line-height: 1.6;">
-                            ${plant ? `Penyiraman tanaman <strong>${plant.name}</strong> berhasil dikonfirmasi. Progress tanaman meningkat.` : 'Penyiraman berhasil dikonfirmasi.'}
-                        </p>
-                    </div>
-                `;
-            } else if (notification.type === "fertilizing") {
-                additionalInfoDiv.innerHTML = `
-                    <div style="margin-top: 20px; padding: 20px; background: rgba(121, 85, 72, 0.1); border-radius: var(--card-radius); border-left: 5px solid var(--fertilizer);">
-                        <h4 style="color: var(--fertilizer); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Informasi Pemupukan</h4>
-                        <p style="color: var(--text-color); line-height: 1.6;">
-                            ${plant ? `Tanaman <strong>${plant.name}</strong> perlu dipupuk hari ini sesuai jadwal pemupukan setiap ${plant.fertilizerSchedule} hari.` : 'Tanaman perlu dipupuk sesuai jadwal.'}
-                        </p>
-                    </div>
-                `;
-            } else if (notification.type === "fertilizing-confirmation") {
-                additionalInfoDiv.innerHTML = `
-                    <div style="margin-top: 20px; padding: 20px; background: rgba(121, 85, 72, 0.1); border-radius: var(--card-radius); border-left: 5px solid var(--fertilizer);">
-                        <h4 style="color: var(--fertilizer); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Konfirmasi Berhasil</h4>
-                        <p style="color: var(--text-color); line-height: 1.6;">
-                            ${plant ? `Pemupukan tanaman <strong>${plant.name}</strong> berhasil dikonfirmasi. Progress tanaman meningkat.` : 'Pemupukan berhasil dikonfirmasi.'}
-                        </p>
-                    </div>
-                `;
-            } else if (notification.type === "success") {
-                additionalInfoDiv.innerHTML = `
-                    <div style="margin-top: 20px; padding: 20px; background: rgba(76, 175, 80, 0.1); border-radius: var(--card-radius); border-left: 5px solid var(--success);">
-                        <h4 style="color: var(--success); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Informasi Berhasil</h4>
-                        <p style="color: var(--text-color); line-height: 1.6;">
-                            ${plant ? `Panen tanaman <strong>${plant.name}</strong> berhasil dengan hasil yang memuaskan.` : 'Operasi berhasil diselesaikan.'}
-                        </p>
-                    </div>
-                `;
-            }
         }
 
-        // Go back to notifications list
-        function goBackToList() {
-            currentDetailId = null;
-            
-            // Update URL tanpa reload
-            window.history.pushState({ path: window.location.pathname }, '', window.location.pathname);
-            
-            // Show notifications list and hide detail
-            document.getElementById('notificationsSection').style.display = 'block';
-            document.getElementById('bulkActionBtn').style.display = 'inline-flex';
-            document.getElementById('bulkActionBtn').parentElement.style.display = 'flex';
-            document.getElementById('dateFilterContainer').style.display = 'block';
-            document.getElementById('categoryFilterSection').style.display = 'block';
-            document.getElementById('statsSection').style.display = 'grid';
-            document.getElementById('backButton').classList.remove('show');
-            document.getElementById('notificationDetailView').classList.remove('show');
-            document.getElementById('bulkActions').style.display = isBulkActionMode ? 'flex' : 'none';
-            
-            renderNotifications();
+        // Get border color by notification type
+        function getBorderColorByType(type) {
+            const colors = {
+                'watering': 'var(--info)',
+                'watering-confirmation': 'var(--info)',
+                'fertilizing': 'var(--fertilizer)',
+                'fertilizing-confirmation': 'var(--fertilizer)',
+                'harvest': 'var(--harvest)',
+                'harvest-confirmation': 'var(--harvest)',
+                'plant-new': 'var(--plant-new)',
+                'create-plant': 'var(--plant-new)',
+                'success': 'var(--success)',
+                'info': 'var(--info)',
+                'warning': 'var(--warning)',
+                'error': 'var(--danger)'
+            };
+            return colors[type] || 'var(--primary-color)';
         }
 
         // Filter berdasarkan tanggal
@@ -3339,6 +3446,27 @@
                 month: 'long',
                 year: 'numeric'
             });
+        }
+
+        // Go back to notifications list
+        function goBackToList() {
+            currentDetailId = null;
+            
+            // Update URL tanpa reload
+            window.history.pushState({ path: window.location.pathname }, '', window.location.pathname);
+            
+            // Show notifications list and hide detail
+            document.getElementById('notificationsSection').style.display = 'block';
+            document.getElementById('bulkActionBtn').style.display = 'inline-flex';
+            document.getElementById('bulkActionBtn').parentElement.style.display = 'flex';
+            document.getElementById('dateFilterContainer').style.display = 'block';
+            document.getElementById('categoryFilterSection').style.display = 'block';
+            document.getElementById('statsSection').style.display = 'grid';
+            document.getElementById('backButton').classList.remove('show');
+            document.getElementById('notificationDetailView').classList.remove('show');
+            document.getElementById('bulkActions').style.display = isBulkActionMode ? 'flex' : 'none';
+            
+            renderNotifications();
         }
 
         // Go to dashboard with plant ID
