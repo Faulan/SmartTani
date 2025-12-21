@@ -177,52 +177,116 @@
             z-index: 1;
         }
 
-        /* Modal styling improvements */
+        /* PERBAIKAN: Modal Styles agar konsisten dengan register.html */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
         .modal-content {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            position: relative;
-            width: 90%;
+            border-radius: 15px;
+            width: 100%;
             max-width: 500px;
-            margin: 5% auto;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--primary-color);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
         }
 
         .modal-header {
-            padding: 20px 25px;
+            padding: 25px;
             border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: between;
-            align-items: center;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(56, 142, 60, 0.05));
+            position: relative;
+            border-radius: 15px 15px 0 0;
         }
 
         .modal-header h3 {
             margin: 0;
             color: var(--text-color);
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 22px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-header h3:before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 2px;
         }
 
         .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
             background: none;
             border: none;
             font-size: 24px;
-            cursor: pointer;
             color: var(--text-light);
-            padding: 0;
-            width: 30px;
-            height: 30px;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
         }
 
         .close-modal:hover {
+            background: rgba(0, 0, 0, 0.05);
             color: var(--text-color);
         }
 
         .modal-body {
             padding: 25px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 3px;
         }
 
         /* Password strength indicator untuk reset password */
@@ -294,6 +358,254 @@
         .email-validation.invalid {
             color: var(--danger);
         }
+
+        /* Animation for modal */
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-content {
+            animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN - KONSISTEN DENGAN REGISTER.HTML
+           ============================================ */
+        
+        /* Tablet (768px ke bawah) */
+        @media (max-width: 768px) {
+            .modal-content {
+                max-width: 90%;
+                max-height: 85vh;
+            }
+            
+            .modal-header {
+                padding: 20px;
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .modal-header h3 {
+                font-size: 20px;
+                padding-right: 30px;
+            }
+            
+            .auth-card {
+                padding: 35px 30px;
+                margin: 20px auto;
+                max-width: 90%;
+            }
+            
+            .auth-header .logo h1 {
+                font-size: 28px;
+            }
+            
+            .auth-header p {
+                font-size: 16px;
+            }
+            
+            .form-group {
+                margin-bottom: 20px;
+            }
+            
+            .form-group label {
+                font-size: 14px;
+            }
+            
+            .input-with-icon input {
+                padding: 14px 15px 14px 50px;
+                font-size: 15px;
+            }
+            
+            .input-with-icon i {
+                font-size: 18px;
+                left: 15px;
+            }
+            
+            .form-options {
+                padding: 12px;
+            }
+            
+            .remember-me {
+                font-size: 13px;
+            }
+            
+            .forgot-password {
+                font-size: 13px;
+            }
+            
+            .btn-primary {
+                padding: 16px;
+                font-size: 16px;
+            }
+        }
+        
+        /* Mobile Landscape (576px ke bawah) */
+        @media (max-width: 576px) {
+            .modal-content {
+                max-width: 95%;
+                max-height: 90vh;
+            }
+            
+            .modal-header {
+                padding: 18px;
+            }
+            
+            .modal-body {
+                padding: 18px;
+            }
+            
+            .modal-header h3 {
+                font-size: 18px;
+            }
+            
+            .auth-card {
+                padding: 30px 25px;
+                max-width: 95%;
+            }
+            
+            .auth-header .logo h1 {
+                font-size: 26px;
+            }
+            
+            .auth-header p {
+                font-size: 15px;
+            }
+            
+            .input-with-icon input {
+                padding: 12px 15px 12px 45px;
+                font-size: 14px;
+            }
+            
+            .input-with-icon i {
+                font-size: 16px;
+                left: 12px;
+            }
+            
+            .form-options {
+                padding: 10px;
+                margin: 15px 0;
+            }
+            
+            .remember-me {
+                font-size: 12px;
+            }
+            
+            .forgot-password {
+                font-size: 12px;
+            }
+            
+            .btn-primary {
+                padding: 14px;
+                font-size: 15px;
+            }
+        }
+        
+        /* Mobile Portrait (425px ke bawah) */
+        @media (max-width: 425px) {
+            .auth-card {
+                padding: 25px 20px;
+                border-radius: 12px;
+            }
+            
+            .auth-header .logo h1 {
+                font-size: 24px;
+            }
+            
+            .auth-header p {
+                font-size: 14px;
+            }
+            
+            .input-with-icon input {
+                padding: 11px 12px 11px 42px;
+                font-size: 14px;
+            }
+            
+            .input-with-icon i {
+                font-size: 15px;
+                left: 12px;
+            }
+            
+            .form-options {
+                padding: 8px;
+            }
+            
+            .remember-me {
+                font-size: 11px;
+            }
+            
+            .forgot-password {
+                font-size: 11px;
+            }
+            
+            .btn-primary {
+                padding: 13px;
+                font-size: 14px;
+            }
+        }
+        
+        /* Small Mobile (375px ke bawah) */
+        @media (max-width: 375px) {
+            .auth-card {
+                padding: 20px 18px;
+            }
+            
+            .auth-header .logo h1 {
+                font-size: 22px;
+            }
+            
+            .auth-header p {
+                font-size: 13px;
+            }
+            
+            .input-with-icon input {
+                padding: 10px 12px 10px 40px;
+                font-size: 13px;
+            }
+            
+            .input-with-icon i {
+                font-size: 14px;
+                left: 10px;
+            }
+            
+            .form-options {
+                padding: 6px;
+            }
+            
+            .remember-me {
+                font-size: 10px;
+            }
+            
+            .forgot-password {
+                font-size: 10px;
+            }
+        }
+        
+        /* Fix untuk input pada iOS */
+        @media (max-width: 768px) {
+            input {
+                font-size: 16px !important;
+            }
+        }
+        
+        /* Touch-friendly untuk mobile */
+        @media (hover: none) and (pointer: coarse) {
+            .btn-primary, 
+            .toggle-password,
+            .close-modal {
+                min-height: 44px;
+                min-width: 44px;
+            }
+        }
     </style>
 </head>
 <body class="auth-body">
@@ -334,7 +646,7 @@
                         <span class="checkmark"></span>
                         <span class="remember-text">Ingat Saya</span>
                     </label>
-                    <a href="#" class="forgot-password" onclick="openForgotPasswordModal()">Lupa Password?</a>
+                    <a href="#" class="forgot-password" onclick="openForgotPasswordModal(event)">Lupa Password?</a>
                 </div>
 
                 <button type="submit" class="btn-primary btn-full">
@@ -348,7 +660,7 @@
         </div>
     </div>
 
-    <!-- Forgot Password Modal -->
+    <!-- Forgot Password Modal - KONSISTEN dengan register.html -->
     <div id="forgotPasswordModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -421,7 +733,10 @@
             const rememberText = document.querySelector('.remember-text');
             
             if (rememberMeCheckbox && checkboxContainer && rememberText) {
-                // Load saved state from localStorage
+                // Checkbox awal TIDAK dicentang
+                rememberMeCheckbox.checked = false;
+                
+                // Load saved state from localStorage (hanya untuk mengisi jika ada)
                 const savedState = localStorage.getItem('rememberMe');
                 if (savedState === 'true') {
                     rememberMeCheckbox.checked = true;
@@ -440,34 +755,48 @@
             }
         }
 
-        // Forgot Password Modal
-        function openForgotPasswordModal() {
+        // Forgot Password Modal - KONSISTEN dengan register.html
+        function openForgotPasswordModal(event) {
             event.preventDefault();
-            document.getElementById('forgotPasswordModal').style.display = 'block';
+            document.getElementById('forgotPasswordModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeForgotPasswordModal() {
-            document.getElementById('forgotPasswordModal').style.display = 'none';
+            document.getElementById('forgotPasswordModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
         }
 
         // Modal event listeners
         function setupModals() {
-            // Close modals
-            document.querySelectorAll('.close-modal').forEach(btn => {
+            const closeButtons = document.querySelectorAll('.close-modal');
+            const modals = document.querySelectorAll('.modal');
+            
+            // Close buttons
+            closeButtons.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    this.closest('.modal').style.display = 'none';
+                    closeForgotPasswordModal();
                 });
             });
-
-            // Close modals when clicking outside
-            window.addEventListener('click', function(e) {
-                if (e.target.classList.contains('modal')) {
-                    e.target.style.display = 'none';
+            
+            // Close modal when clicking outside
+            modals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeForgotPasswordModal();
+                    }
+                });
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeForgotPasswordModal();
                 }
             });
         }
 
-        // Form submission handler - PERBAIKAN UTAMA DI SINI
+        // Form submission handler - FUNGSI AWAL ANDA
         function setupLoginForm() {
             const loginForm = document.getElementById('loginForm');
             if (!loginForm) return;
@@ -485,7 +814,7 @@
                     return;
                 }
 
-                // PERBAIKAN: Validasi checkbox "Ingat Saya"
+                // PERBAIKAN: Validasi checkbox "Ingat Saya" - TAMPILKAN NOTIFIKASI
                 if (!rememberMe) {
                     showNotification('Harap centang kotak "Ingat Saya" sebelum melanjutkan', 'error');
                     return;
@@ -523,7 +852,7 @@
                 showNotification('Login berhasil!', 'success');
 
                 setTimeout(() => {
-                    window.location.href = 'index.html';
+                    window.location.href = 'dashboard.html';
                 }, 1000);
             });
         }
@@ -573,7 +902,7 @@
                 showNotification('Password berhasil direset!', 'success');
 
                 setTimeout(() => {
-                    document.getElementById('forgotPasswordModal').style.display = 'none';
+                    closeForgotPasswordModal();
                     // Clear form
                     document.getElementById('forgotPasswordForm').reset();
                     // Reset strength indicator
@@ -697,7 +1026,7 @@
             });
         }
 
-        // Notification function
+        // Notification function - SAMA PERSIS DENGAN AWAL
         function showNotification(message, type = 'info') {
             // Remove existing notifications
             document.querySelectorAll('.notification').forEach(notif => notif.remove());
@@ -718,7 +1047,7 @@
             `;
 
             document.body.appendChild(notification);
-
+ 
             // Auto remove after 5 seconds
             setTimeout(() => {
                 notification.remove();

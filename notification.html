@@ -7,880 +7,3415 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #4CAF50;
-            --primary-dark: #388E3C;
-            --primary-light: #C8E6C9;
-            --text-color: #333;
-            --text-light: #666;
-            --border-color: #ddd;
-            --success: #4CAF50;
-            --danger: #f44336;
-            --warning: #ff9800;
-            --info: #2196F3;
-            --card-bg: white;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+    :root {
+        --primary-color: #2E7D32;
+        --primary-dark: #1B5E20;
+        --primary-light: #C8E6C9;
+        --primary-extra-light: #E8F5E9;
+        --text-color: #333;
+        --text-light: #666;
+        --border-color: #e0e0e0;
+        --success: #4CAF50;
+        --danger: #F44336;
+        --warning: #ff9800;
+        --info: #2196F3;
+        --fertilizer: #795548;
+        --harvest: #FF5722;
+        --plant-new: #9C27B0;
+        --sidebar-width: 310px;
+        --header-height: 80px;
+        --sidebar-bg: #ffffff;
+        --sidebar-hover: #f5f5f5;
+        --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --shadow-heavy: 0 8px 24px rgba(0, 0, 0, 0.12);
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --border-radius: 16px;
+        --card-radius: 14px;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f5f5f5;
-            color: var(--text-color);
-            line-height: 1.6;
-        }
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        color: var(--text-color);
+        line-height: 1.6;
+        min-height: 100vh;
+        overflow-x: hidden;
+        transition: var(--transition);
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+    /* ==================== HEADER ==================== */
+    .header {
+        height: var(--header-height);
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+    }
 
-        /* Header Styling */
-        .header {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
 
-        .header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-        }
+    .hamburger-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: white;
+        padding: 10px;
+        border-radius: 12px;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        backdrop-filter: blur(10px);
+    }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    .hamburger-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
 
-        .logo i {
-            font-size: 24px;
-            color: var(--primary-color);
-        }
+    .hamburger-btn.active {
+        background: rgba(255, 255,255, 0.25);
+    }
 
-        .logo h1 {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--text-color);
-        }
+    .header-title {
+        font-size: 26px;
+        font-weight: 800;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        letter-spacing: 0.5px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
 
-        .nav {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
+    .header-title::before {
+        content: '🌱';
+        font-size: 32px;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        animation: pulse 2s infinite;
+    }
 
-        .nav a {
-            text-decoration: none;
-            color: var(--text-light);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s ease;
-        }
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
 
-        .nav a.active {
-            color: var(--primary-color);
-        }
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
 
-        .nav a:hover {
-            color: var(--primary-color);
-        }
+    .notification-wrapper {
+        position: relative;
+    }
 
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            position: relative;
-            cursor: pointer;
-        }
+    .notification-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: white;
+        padding: 10px;
+        border-radius: 12px;
+        transition: var(--transition);
+        position: relative;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+    }
 
-        .user-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+    .notification-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
 
-        .dropdown {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            padding: 10px 0;
-            min-width: 150px;
-            z-index: 1000;
-        }
+    .notification-badge {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: linear-gradient(135deg, var(--danger), #d32f2f);
+        color: white;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        animation: pulse 2s infinite;
+        border: 3px solid var(--primary-dark);
+        box-shadow: 0 2px 8px rgba(244, 67, 54, 0.4);
+    }
 
-        .user-menu:hover .dropdown {
-            display: block;
-        }
+    .user-wrapper {
+        position: relative;
+    }
 
-        .dropdown a {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 15px;
-            color: var(--text-color);
-            text-decoration: none;
-            transition: background 0.3s ease;
-        }
+    .user-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        padding: 8px 16px;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: var(--transition);
+        backdrop-filter: blur(10px);
+        position: relative;
+        z-index: 1002;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-        .dropdown a:hover {
-            background: var(--primary-light);
-        }
+    .user-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
 
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            color: var(--text-color);
-        }
+    .user-btn.active {
+        background: rgba(255, 255, 255, 0.25);
+    }
 
-        /* Main Content */
+    .user-avatar-header {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        transition: var(--transition);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .user-btn:hover .user-avatar-header {
+        transform: scale(1.1);
+        border-color: white;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .user-info {
+        text-align: left;
+    }
+
+    .user-name {
+        font-weight: 700;
+        font-size: 15px;
+        color: white;
+    }
+
+    .user-role {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+
+    .user-dropdown {
+        display: none;
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        background: white;
+        box-shadow: var(--shadow-heavy);
+        border-radius: var(--border-radius);
+        padding: 10px 0;
+        min-width: 200px;
+        z-index: 1003;
+        animation: slideDown 0.3s ease;
+        border: 1px solid var(--border-color);
+        backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.95);
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .user-dropdown.show {
+        display: block;
+    }
+
+    .user-dropdown::before {
+        content: '';
+        position: absolute;
+        top: -8px;
+        right: 20px;
+        width: 16px;
+        height: 16px;
+        background: white;
+        transform: rotate(45deg);
+        border-left: 1px solid var(--border-color);
+        border-top: 1px solid var(--border-color);
+    }
+
+    .user-dropdown a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        color: var(--text-color);
+        text-decoration: none;
+        transition: var(--transition);
+        border-radius: 10px;
+        margin: 0 5px;
+        font-weight: 500;
+    }
+
+    .user-dropdown a:hover {
+        background: var(--primary-extra-light);
+        color: var(--primary-color);
+        transform: translateX(5px);
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
+    }
+
+    .user-dropdown a i {
+        width: 20px;
+        text-align: center;
+        color: var(--primary-color);
+        font-size: 16px;
+    }
+
+    /* ==================== MAIN LAYOUT ==================== */
+    .main-container {
+        display: flex;
+        min-height: 100vh;
+        padding-top: var(--header-height);
+        position: relative;
+        transition: var(--transition);
+    }
+
+    /* ==================== SIDEBAR ==================== */
+    .sidebar {
+        width: var(--sidebar-width);
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow-heavy);
+        position: fixed;
+        top: var(--header-height);
+        left: -310px;
+        height: calc(100vh - var(--header-height));
+        z-index: 1001;
+        display: flex;
+        flex-direction: column;
+        transition: var(--transition);
+        overflow: hidden;
+        border-right: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .sidebar.open {
+        left: 0;
+        box-shadow: 20px 0 60px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar-user {
+        padding: 30px 25px;
+        text-align: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(27, 94, 32, 0.05));
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .sidebar-user::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px);
+        background-size: 40px 40px;
+        transform: rotate(30deg);
+        opacity: 0.5;
+    }
+
+    .user-avatar-sidebar {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid white;
+        margin-bottom: 15px;
+        transition: var(--transition);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        position: relative;
+        z-index: 1;
+    }
+
+    .user-avatar-sidebar:hover {
+        transform: scale(1.05);
+        border-color: var(--primary-color);
+        box-shadow: 0 12px 32px rgba(46, 125, 50, 0.3);
+    }
+
+    .sidebar-user h3 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: var(--text-color);
+        position: relative;
+        z-index: 1;
+    }
+
+    .sidebar-user p {
+        color: var(--primary-color);
+        font-size: 14px;
+        background: rgba(46, 125, 50, 0.1);
+        padding: 8px 20px;
+        border-radius: 20px;
+        display: inline-block;
+        font-weight: 600;
+        border: 1px solid rgba(46, 125, 50, 0.2);
+        position: relative;
+        z-index: 1;
+    }
+
+    /* ==================== SIDEBAR MENU SCROLLBAR ==================== */
+    .sidebar-menu {
+        flex: 1;
+        padding: 20px 0;
+        overflow-y: auto;
+        max-height: calc(100vh - var(--header-height) - 300px);
+        position: relative;
+    }
+
+    .sidebar-menu::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .sidebar-menu::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.03);
+        border-radius: 3px;
+        margin: 5px 0;
+    }
+
+    .sidebar-menu::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, rgba(46, 125, 50, 0.6), rgba(27, 94, 32, 0.6));
+        border-radius: 3px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .sidebar-menu::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, rgba(46, 125, 50, 0.8), rgba(27, 94, 32, 0.8));
+    }
+
+    .sidebar-menu {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(46, 125, 50, 0.6) rgba(0, 0, 0, 0.03);
+    }
+
+    .sidebar-menu ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .sidebar-menu li {
+        margin: 0;
+        position: relative;
+    }
+
+    .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 18px 30px;
+        color: var(--text-light);
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+        margin: 8px 20px;
+        border-radius: 14px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .sidebar-menu a:not(.active) {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        color: var(--text-light);
+    }
+
+    .sidebar-menu a.active {
+        background: linear-gradient(135deg, var(--primary-light), var(--primary-extra-light));
+        color: var(--primary-color);
+        font-weight: 600;
+        border: 1px solid var(--primary-light);
+        box-shadow: 0 4px 16px rgba(46, 125, 50, 0.15);
+    }
+
+    .sidebar-menu a:hover {
+        background: var(--primary-extra-light);
+        color: var(--primary-color);
+        transform: translateX(5px);
+        border-color: var(--primary-light);
+        box-shadow: 0 4px 16px rgba(46, 125, 50, 0.1);
+    }
+
+    .sidebar-menu a::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 5px;
+        height: 100%;
+        background: var(--primary-color);
+        transform: translateX(-100%);
+        transition: var(--transition);
+        border-radius: 0 5px 5px 0;
+    }
+
+    .sidebar-menu a:hover::before {
+        transform: translateX(0);
+    }
+
+    .sidebar-menu a.active::before {
+        transform: translateX(0);
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    }
+
+    .sidebar-menu a i {
+        width: 24px;
+        text-align: center;
+        font-size: 20px;
+        transition: var(--transition);
+    }
+
+    .sidebar-menu a:hover i {
+        transform: scale(1.1);
+    }
+
+    .sidebar-menu a .notification-badge-sidebar {
+        margin-left: auto;
+        font-size: 12px;
+        background: linear-gradient(135deg, var(--danger), #d32f2f);
+        color: white;
+        padding: 6px 10px;
+        border-radius: 20px;
+        min-width: 26px;
+        text-align: center;
+        font-weight: 700;
+        animation: pulse 2s infinite;
+        transition: var(--transition);
+        display: none;
+        border: 2px solid white;
+    }
+
+    .sidebar-menu a:hover .notification-badge-sidebar {
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+    }
+
+    .sidebar-footer {
+        padding: 20px;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        margin-top: auto;
+        background: linear-gradient(135deg, rgba(248, 249, 250, 0.8), rgba(233, 236, 239, 0.6));
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .sidebar-footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+    }
+
+    .sidebar-footer .btn-logout {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 16px;
+        width: 100%;
+        background: linear-gradient(135deg, var(--danger), #d32f2f);
+        color: white;
+        border: none;
+        border-radius: 14px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: button;
+        transition: var(--transition);
+        box-shadow: 0 4px 20px rgba(244, 67, 54, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-logout:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 32px rgba(244, 67, 54, 0.4);
+    }
+
+    .btn-logout:active {
+        transform: translateY(-1px);
+    }
+
+    /* ==================== MAIN CONTENT ==================== */
+    .main {
+        flex: 1;
+        padding: 30px;
+        transition: var(--transition);
+        min-height: calc(100vh - var(--header-height));
+        width: 100%;
+        background: transparent;
+        position: relative;
+        z-index: 1;
+        margin-left: 0;
+    }
+
+    @media (min-width: 993px) {
+        .main.sidebar-open {
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+        }
+    }
+
+    @media (max-width: 992px) {
+        .main.sidebar-open {
+            filter: blur(5px);
+            pointer-events: none;
+            user-select: none;
+        }
+    }
+
+    .sidebar-overlay {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        width: 100%;
+        height: calc(100vh - var(--header-height));
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(3px);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+    }
+
+    .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Page Header */
+    .page-header {
+        margin-bottom: 30px;
+        animation: fadeIn 0.5s ease;
+        background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(27, 94, 32, 0.05));
+        padding: 35px 40px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-heavy);
+        border: 3px solid var(--primary-color);
+        width: 100%;
+        backdrop-filter: blur(20px);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        background: linear-gradient(45deg, transparent 30%, rgba(46, 125, 50, 0.03) 100%);
+        pointer-events: none;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-header h1 {
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 10px;
+        color: var(--text-color);
+        position: relative;
+        display: inline-block;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .page-header h1::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -12px;
+        width: 100px;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary-color), transparent);
+        border-radius: 3px;
+    }
+
+    .page-header p {
+        color: var(--text-color);
+        font-size: 17px;
+        max-width: 600px;
+        margin-top: 20px;
+        font-weight: 500;
+        opacity: 0.9;
+    }
+
+    /* Stats Section */
+    .stats-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+        animation: fadeIn 0.6s ease 0.4s both;
+        width: 100%;
+    }
+
+    .stat-card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+        border-radius: var(--card-radius);
+        padding: 25px;
+        box-shadow: var(--shadow-heavy);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        border: 3px solid var(--primary-light);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(20px);
+        cursor: pointer;
+        height: 120px;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+        border-color: var(--primary-color);
+    }
+
+    .stat-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        transition: var(--transition);
+        flex-shrink: 0;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-icon::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .stat-card:hover .stat-icon {
+        transform: translateY(-5px) scale(1.05);
+    }
+
+    .stat-card:hover .stat-icon::before {
+        opacity: 1;
+    }
+
+    .stat-icon.total {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    }
+
+    .stat-icon.unread {
+        background: linear-gradient(135deg, var(--warning), #FF8F00);
+    }
+
+    .stat-icon.water {
+        background: linear-gradient(135deg, var(--info), #1976D2);
+    }
+
+    .stat-icon.fertilizer {
+        background: linear-gradient(135deg, var(--fertilizer), #5D4037);
+    }
+
+    .stat-icon.harvest {
+        background: linear-gradient(135deg, var(--harvest), #D84315);
+    }
+
+    .stat-icon.plant-new {
+        background: linear-gradient(135deg, var(--plant-new), #7B1FA2);
+    }
+
+    .stat-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .stat-info h3 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--text-color);
+        line-height: 1;
+    }
+
+    .stat-info p {
+        margin: 8px 0 0 0;
+        color: var(--text-color);
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        opacity: 0.9;
+    }
+
+    /* ==================== DATE FILTER SECTION ==================== */
+    .date-filter-section {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: var(--shadow);
+        border: 2px solid var(--primary-light);
+        animation: fadeIn 0.6s ease 0.6s both;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition);
+    }
+
+    .date-filter-section:hover {
+        border-color: var(--primary-color);
+        box-shadow: var(--shadow-heavy);
+    }
+
+    .date-filter-row {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .date-filter-label {
+        font-weight: 600;
+        color: var(--text-color);
+        font-size: 16px;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .date-filter-label i {
+        color: var(--primary-color);
+        font-size: 18px;
+    }
+
+    .date-input-wrapper {
+        flex: 1;
+        min-width: 280px;
+        position: relative;
+    }
+
+    .date-input {
+        width: 100%;
+        padding: 14px 20px;
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+        color: var(--text-light);
+        transition: var(--transition);
+        background: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        cursor: pointer;
+        height: 52px;
+    }
+
+    .date-input:not(:focus):not(:valid) {
+        color: var(--text-light);
+    }
+
+    .date-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.15);
+        color: var(--text-color);
+    }
+
+    .date-filter-actions {
+        display: flex;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+
+    .btn-apply-filter {
+        padding: 14px 24px;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+        white-space: nowrap;
+        min-width: 140px;
+        justify-content: center;
+        height: 52px;
+    }
+
+    .btn-apply-filter:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(46, 125, 50, 0.3);
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    }
+
+    .btn-apply-filter:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.2);
+    }
+
+    .btn-clear-filter {
+        padding: 14px 24px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        color: var(--text-color);
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        white-space: nowrap;
+        min-width: 140px;
+        justify-content: center;
+        height: 52px;
+    }
+
+    .btn-clear-filter:hover {
+        background: linear-gradient(135deg, #e9ecef, #dee2e6);
+        border-color: #adb5bd;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+
+    .btn-clear-filter:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* Category Filter Section */
+    .category-filter-section {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 35px;
+        margin-bottom: 20px;
+        box-shadow: var(--shadow-heavy);
+        border: 3px solid var(--primary-extra-light);
+        animation: fadeIn 0.6s ease;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition);
+    }
+
+    .category-filter-section:hover {
+        border-color: var(--primary-light);
+    }
+
+    .category-filter-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--primary-extra-light);
+    }
+
+    .category-filter-header h2 {
+        margin: 0;
+        color: var(--text-color);
+        font-size: 24px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .category-filter-header h2 i {
+        color: white;
+        font-size: 20px;
+        background: var(--primary-color);
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    }
+
+    .category-filters {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .category-filter {
+        padding: 14px 24px;
+        border: 3px solid var(--border-color);
+        border-radius: 14px;
+        background: white;
+        color: var(--text-color);
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        min-height: 50px;
+    }
+
+    .category-filter:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(46, 125, 50, 0.1);
+    }
+
+    .category-filter.active {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        border-color: var(--primary-color);
+        color: white;
+        box-shadow: 0 8px 24px rgba(46, 125, 50, 0.2);
+    }
+
+    .category-filter i {
+        font-size: 16px;
+    }
+
+    /* Bulk Actions Container */
+    .bulk-action-container {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 20px;
+        margin-top: 0;
+        width: 100%;
+    }
+
+    .bulk-action-btn {
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text-color);
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        height: 52px;
+    }
+
+    .bulk-action-btn:hover {
+        background: linear-gradient(135deg, #e9ecef, #dee2e6);
+        border-color: #adb5bd;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+
+    .bulk-action-btn.active {
+        background: linear-gradient(135deg, var(--danger), #d32f2f);
+        color: white;
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Bulk Actions Panel */
+    .bulk-actions {
+        display: none;
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 20px 30px;
+        margin-bottom: 20px;
+        box-shadow: var(--shadow-heavy);
+        border: 3px solid var(--primary-extra-light);
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        animation: slideIn 0.3s ease;
+        width: 100%;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .bulk-actions.show {
+        display: flex;
+    }
+
+    .selected-count {
+        font-weight: 600;
+        color: var(--text-color);
+        font-size: 16px;
+    }
+
+    .bulk-action-buttons {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    /* Notifications Section */
+    .notifications-section {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 35px;
+        margin-bottom: 30px;
+        box-shadow: var(--shadow-heavy);
+        border: 3px solid var(--primary-extra-light);
+        animation: fadeIn 0.6s ease;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition);
+        margin-top: 0;
+    }
+
+    .notifications-section:hover {
+        border-color: var(--primary-light);
+    }
+
+    .notifications-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary-color), transparent);
+        opacity: 0.5;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .section-header h2 {
+        margin: 0;
+        color: var(--text-color);
+        font-size: 26px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .section-header h2 i {
+        color: white;
+        font-size: 24px;
+        background: var(--primary-color);
+        padding: 12px;
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    }
+
+    .view-all {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        padding: 12px 24px;
+        border-radius: 12px;
+        background: rgba(46, 125, 50, 0.1);
+        border: 2px solid rgba(46, 125, 50, 0.2);
+        font-size: 15px;
+        position: relative;
+        overflow: hidden;
+        transform: scale(1);
+        min-height: 48px;
+        min-width: 140px;
+        justify-content: center;
+        box-sizing: border-box;
+        height: 52px;
+    }
+
+    .view-all:hover {
+        gap: 12px;
+        background: var(--primary-color);
+        color: white;
+        transform: scale(1.02);
+        box-shadow: 0 6px 20px rgba(46, 125, 50, 0.25);
+        border-color: var(--primary-color);
+    }
+
+    .view-all:active {
+        transform: scale(1);
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+        transition: transform 0.1s ease;
+    }
+
+    /* Notification Items */
+    .notification-item {
+        background: white;
+        border-radius: var(--card-radius);
+        padding: 25px;
+        box-shadow: var(--shadow);
+        border: 2px solid var(--primary-extra-light);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 15px;
+        border-left: 5px solid var(--primary-color);
+    }
+
+    .notification-item:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-heavy);
+        border-color: var(--primary-color);
+    }
+
+    .notification-item.unread {
+        border-left-color: var(--warning);
+        background: linear-gradient(135deg, rgba(255, 152, 0, 0.05), rgba(255, 152, 0, 0.02));
+    }
+
+    .notification-item.read {
+        border-left-color: var(--success);
+        opacity: 0.9;
+    }
+
+    .notification-item.watering {
+        border-left-color: var(--info) !important;
+    }
+
+    .notification-item.harvest {
+        border-left-color: var(--harvest) !important;
+    }
+
+    .notification-item.fertilizing {
+        border-left-color: var(--fertilizer) !important;
+    }
+
+    .notification-item.success {
+        border-left-color: var(--success) !important;
+    }
+
+    .notification-item.watering-confirmation {
+        border-left-color: var(--info) !important;
+    }
+
+    .notification-item.fertilizing-confirmation {
+        border-left-color: var(--fertilizer) !important;
+    }
+
+    .notification-item.harvest-confirmation {
+        border-left-color: var(--harvest) !important;
+    }
+
+    .notification-item.plant-new {
+        border-left-color: var(--plant-new) !important;
+    }
+
+    .notification-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 15px;
+    }
+
+    .notification-title-container {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        gap: 15px;
+        min-width: 0;
+    }
+
+    .notification-title-wrapper {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .notification-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text-color);
+        margin: 0 0 5px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .notification-type {
+        background: linear-gradient(135deg, var(--primary-extra-light), var(--primary-light));
+        color: var(--primary-color);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        white-space: nowrap;
+        border: 1px solid rgba(46, 125, 50, 0.2);
+        display: inline-block;
+        margin-left: 8px;
+    }
+
+    .notification-actions-top {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+        flex-shrink: 0;
+    }
+
+    .notification-content {
+        margin-bottom: 15px;
+    }
+
+    .notification-message {
+        color: var(--text-color);
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 12px;
+        opacity: 0.9;
+    }
+
+    .notification-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 15px;
+        font-size: 13px;
+        color: var(--text-light);
+    }
+
+    .notification-detail {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .notification-detail i {
+        color: var(--primary-color);
+        font-size: 12px;
+        width: 16px;
+        text-align: center;
+    }
+
+    .notification-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+    }
+
+    /* Buttons */
+    .btn-primary, .btn-secondary, .btn-danger {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: var(--transition);
+        text-decoration: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        font-family: 'Poppins', sans-serif;
+        min-height: 40px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(46, 125, 50, 0.3);
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    }
+
+    .btn-secondary {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        color: var(--text-color);
+        border: 2px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+        background: linear-gradient(135deg, #e9ecef, #dee2e6);
+        border-color: #adb5bd;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, var(--danger), #d32f2f);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(244, 67, 54, 0.3);
+        background: linear-gradient(135deg, #d32f2f, var(--danger));
+    }
+
+    .btn-small {
+        padding: 6px 12px;
+        font-size: 13px;
+        min-height: 32px;
+        border-radius: 8px;
+    }
+
+    .btn-mark-read {
+        background: linear-gradient(135deg, var(--info), #1976D2);
+        color: white;
+        border: none;
+    }
+
+    .btn-mark-read:hover {
+        background: linear-gradient(135deg, #1976D2, var(--info));
+    }
+
+    .btn-view-details {
+        background: transparent;
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        font-weight: 600;
+    }
+
+    .btn-view-details:hover {
+        background: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(46, 125, 50, 0.3);
+    }
+
+    .btn-go-to-dashboard {
+        background: linear-gradient(135deg, var(--plant-new), #7B1FA2);
+        color: white;
+        border: none;
+    }
+
+    .btn-go-to-dashboard:hover {
+        background: linear-gradient(135deg, #7B1FA2, var(--plant-new));
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(156, 39, 176, 0.3);
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-color);
+        background: white;
+        border-radius: var(--border-radius);
+        border: 3px dashed var(--primary-light);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+    .empty-state i {
+        font-size: 72px;
+        margin-bottom: 25px;
+        color: var(--primary-color);
+        opacity: 0.7;
+    }
+
+    .empty-state h3 {
+        margin-bottom: 15px;
+        font-size: 24px;
+        color: var(--text-color);
+        font-weight: 700;
+    }
+
+    .empty-state p {
+        margin-bottom: 30px;
+        font-size: 16px;
+        color: var(--text-color);
+        font-weight: 500;
+        text-align: center;
+        opacity: 0.9;
+        max-width: 500px;
+    }
+
+    /* Checkbox */
+    .notification-checkbox {
+        width: 18px;
+        height: 18px;
+        border-radius: 5px;
+        border: 2px solid var(--border-color);
+        cursor: pointer;
+        transition: var(--transition);
+        margin-right: 12px;
+        flex-shrink: 0;
+    }
+
+    .notification-checkbox:checked {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    /* Notification Icon */
+    .notification-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: white;
+        flex-shrink: 0;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        margin-right: 0;
+    }
+
+    .notification-icon.watering {
+        background: linear-gradient(135deg, var(--info), #1976D2);
+    }
+
+    .notification-icon.harvest {
+        background: linear-gradient(135deg, var(--harvest), #D84315);
+    }
+
+    .notification-icon.fertilizing {
+        background: linear-gradient(135deg, var(--fertilizer), #5D4037);
+    }
+
+    .notification-icon.success {
+        background: linear-gradient(135deg, var(--success), #388E3C);
+    }
+
+    .notification-icon.watering-confirmation {
+        background: linear-gradient(135deg, var(--info), #1976D2);
+    }
+
+    .notification-icon.fertilizing-confirmation {
+        background: linear-gradient(135deg, var(--fertilizer), #5D4037);
+    }
+
+    .notification-icon.harvest-confirmation {
+        background: linear-gradient(135deg, var(--harvest), #D84315);
+    }
+
+    .notification-icon.plant-new {
+        background: linear-gradient(135deg, var(--plant-new), #7B1FA2);
+    }
+
+    .notification-icon.default {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    }
+
+    /* Back Button */
+    .back-button {
+        display: none;
+        align-items: center;
+        gap: 10px;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 600;
+        margin-bottom: 20px;
+        padding: 12px 20px;
+        border: 2px solid var(--primary-color);
+        border-radius: 10px;
+        background: white;
+        transition: var(--transition);
+        width: fit-content;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .back-button:hover {
+        background: var(--primary-extra-light);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(46, 125, 50, 0.15);
+    }
+
+    .back-button.show {
+        display: flex;
+    }
+
+    /* Notification Detail View */
+    .notification-detail-view {
+        display: none;
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 30px;
+        box-shadow: var(--shadow-heavy);
+        border: 3px solid var(--primary-extra-light);
+        margin-bottom: 30px;
+        animation: fadeIn 0.5s ease;
+        width: 100%;
+    }
+
+    .notification-detail-view.show {
+        display: block;
+    }
+
+    .notification-detail-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .notification-detail-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 25px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    .notification-detail-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--text-color);
+        flex: 1;
+    }
+
+    .notification-detail-body {
+        margin-bottom: 25px;
+    }
+
+    .notification-detail-message {
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--text-color);
+        margin-bottom: 25px;
+        padding: 20px;
+        background: linear-gradient(135deg, rgba(46, 125, 50, 0.05), rgba(27, 94, 32, 0.03));
+        border-radius: var(--card-radius);
+        border-left: 5px solid var(--primary-color);
+    }
+
+    .notification-detail-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .detail-info-item {
+        padding: 15px;
+        background: white;
+        border-radius: var(--card-radius);
+        border: 2px solid var(--primary-extra-light);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .detail-info-item h4 {
+        margin: 0 0 8px 0;
+        color: var(--primary-color);
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .detail-info-item p {
+        margin: 0;
+        color: var(--text-color);
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .notification-detail-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 25px;
+        padding-top: 25px;
+        border-top: 2px solid var(--border-color);
+    }
+
+    /* ==================== FOOTER ==================== */
+    .footer {
+        background: white;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 30px;
+        text-align: center;
+        color: var(--text-color);
+        width: 100%;
+        margin-top: auto;
+        border: 3px solid var(--primary-extra-light);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+    }
+
+    .footer-content {
+        width: 100%;
+        max-width: none;
+    }
+
+    .footer p {
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 5px;
+        opacity: 0.9;
+    }
+
+    .footer-text {
+        display: block;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+
+    .footer-copyright {
+        display: block;
+        font-size: 14px;
+        opacity: 0.8;
+        margin-top: 10px;
+    }
+
+    /* Toast Notification */
+    .toast {
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        background: white;
+        color: var(--text-color);
+        padding: 20px 30px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-heavy);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        z-index: 3000;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        max-width: 450px;
+        border-left: 5px solid var(--primary-color);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .toast i {
+        font-size: 28px;
+    }
+
+    .toast.success i {
+        color: var(--success);
+    }
+
+    .toast.error i {
+        color: var(--danger);
+    }
+
+    .toast.warning i {
+        color: var(--warning);
+    }
+
+    .toast.info i {
+        color: var(--info);
+    }
+
+    .toast-content {
+        flex: 1;
+    }
+
+    .toast-content p {
+        margin: 0;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .toast-close {
+        background: none;
+        border: none;
+        color: var(--text-light);
+        font-size: 24px;
+        cursor: pointer;
+        padding: 0;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: var(--transition);
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    .toast-close:hover {
+        color: var(--text-color);
+        background: rgba(46, 125, 50, 0.1);
+    }
+
+    /* Loading Animation */
+    .loading {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        border: 3px solid rgba(255,255,255,.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    /* ==================== MAIN CONTENT SCROLLBAR ==================== */
+    .main::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .main::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
+    }
+
+    .main::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        border-radius: 4px;
+    }
+
+    .main::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    }
+
+    .main {
+        scrollbar-width: thin;
+        scrollbar-color: var(--primary-color) rgba(0, 0, 0, 0.05);
+    }
+
+    /* ==================== RESPONSIVE DESIGN ==================== */
+    @media (min-width: 993px) {
+        .sidebar {
+            position: fixed;
+            height: calc(100vh - var(--header-height));
+            left: -310px;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .sidebar.open {
+            left: 0;
+            box-shadow: 20px 0 60px rgba(0, 0, 0, 0.2);
+        }
+        
         .main {
-            padding: 30px 0;
-        }
-
-        .page-header {
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .page-header h1 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--text-color);
-        }
-
-        .page-header p {
-            color: var(--text-light);
-            font-size: 16px;
-        }
-
-        /* Filter Container */
-        .filter-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            padding: 15px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
-        }
-
-        .filter-btn {
-            padding: 8px 16px;
-            border: 1px solid var(--border-color);
-            background: white;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .filter-btn.active {
-            background: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .filter-btn:hover:not(.active) {
-            background: var(--primary-light);
-        }
-
-        /* Cards */
-        .notifications-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
-        }
-
-        .notification-item {
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-color);
-            position: relative;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .notification-item:hover {
-            background-color: var(--primary-light);
-        }
-
-        .notification-read {
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-color);
-        }
-
-        .notification-content {
-            flex: 1;
-        }
-
-        .notification-item:last-child {
-            border-bottom: none;
-        }
-
-        /* Notification Icons */
-        .notification-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-size: 16px;
-        }
-
-        .notification-icon.watering {
-            background: rgba(33, 150, 243, 0.1);
-            color: #2196F3;
-        }
-
-        .notification-icon.harvest {
-            background: rgba(255, 152, 0, 0.1);
-            color: #FF9800;
-        }
-
-        .notification-icon.planting {
-            background: rgba(76, 175, 80, 0.1);
-            color: #4CAF50;
-        }
-
-        .notification-icon.fertilizing {
-            background: rgba(121, 85, 72, 0.1);
-            color: #795548;
-        }
-
-        .notification-icon.pest {
-            background: rgba(244, 67, 54, 0.1);
-            color: #F44336;
-        }
-
-        .notification-icon.success {
-            background: rgba(76, 175, 80, 0.1);
-            color: #4CAF50;
-        }
-
-        .notification-icon.create-plant {
-            background: rgba(76, 175, 80, 0.1);
-            color: #4CAF50;
-        }
-
-        .notification-icon.watering-confirmation {
-            background: rgba(33, 150, 243, 0.1);
-            color: #2196F3;
-        }
-
-        .notification-icon.fertilizing-confirmation {
-            background: rgba(121, 85, 72, 0.1);
-            color: #795548;
-        }
-
-        /* Buttons */
-        .btn-primary, .btn-secondary {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
-        }
-
-        .btn-secondary {
-            background: #f5f5f5;
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-secondary:hover {
-            background: #e9e9e9;
-        }
-
-        /* Notification Actions */
-        .notification-actions {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .notification-menu-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--text-light);
-            padding: 5px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .notification-menu-btn:hover {
-            background: var(--primary-light);
-            color: var(--primary-color);
-        }
-
-        .notification-dropdown {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 100%;
-            background: white;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            padding: 5px 0;
-            min-width: 120px;
-            z-index: 1000;
-        }
-
-        .notification-dropdown.show {
-            display: block;
-        }
-
-        .notification-dropdown button {
+            margin-left: 0;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             width: 100%;
-            text-align: left;
-            background: none;
-            border: none;
-            padding: 8px 15px;
-            cursor: pointer;
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: background 0.3s ease;
         }
-
-        .notification-dropdown button:hover {
-            background: var(--primary-light);
+        
+        .main.sidebar-open {
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
         }
-
-        .notification-dropdown button.delete {
-            color: var(--danger);
-        }
-
-        .notification-dropdown button.delete:hover {
-            background: rgba(244, 67, 54, 0.1);
-        }
-
-        /* Back Button */
-        .back-button {
+        
+        .sidebar-overlay {
             display: none;
-            align-items: center;
-            gap: 8px;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-            margin-bottom: 20px;
-            cursor: pointer;
-            padding: 8px 16px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background: white;
-            transition: all 0.3s ease;
-            width: fit-content;
         }
 
-        .back-button:hover {
-            background: var(--primary-light);
+        .stats-section {
+            grid-template-columns: repeat(6, 1fr);
+        }
+        
+        /* Layout untuk desktop - sejajar */
+        .date-filter-row {
+            flex-wrap: nowrap;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .stats-section {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+        
+        .date-filter-row {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .date-input-wrapper {
+            min-width: 100%;
+        }
+        
+        .date-filter-actions {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .stats-section {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .main {
+            padding: 25px;
+        }
+        
+        .page-header,
+        .date-filter-section,
+        .category-filter-section,
+        .notifications-section {
+            padding: 25px;
+        }
+        
+        .sidebar {
+            width: 320px;
+            left: -320px;
+        }
+        
+        .main.sidebar-open {
+            margin-left: 0;
         }
 
-        .back-button.show {
-            display: flex;
+        .category-filters {
+            justify-content: flex-start;
         }
 
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-light);
-        }
-
-        .empty-state i {
-            font-size: 48px;
-            margin-bottom: 15px;
-            color: var(--border-color);
-        }
-
-        /* Bulk Actions */
         .bulk-actions {
-            display: none;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
-        }
-
-        .bulk-actions.show {
-            display: flex;
-        }
-
-        .selected-count {
-            font-weight: 500;
-            color: var(--text-color);
+            flex-direction: column;
+            align-items: stretch;
+            gap: 15px;
         }
 
         .bulk-action-buttons {
-            display: flex;
+            justify-content: flex-start;
+        }
+
+        .notification-title-container {
+            flex-direction: column;
+            align-items: flex-start;
             gap: 10px;
         }
 
-        /* Checkbox */
-        .notification-checkbox {
-            margin-right: 10px;
+        .notification-actions-top {
+            width: 100%;
+            justify-content: flex-end;
         }
 
-        /* Notification Status */
-        .notification-status {
-            font-size: 12px;
-            font-style: italic;
-            margin-top: 5px;
+        .notification-detail-view {
+            padding: 25px;
         }
 
-        .notification-status.unread {
-            color: var(--warning);
+        .bulk-action-container {
+            justify-content: flex-start;
+            margin-bottom: 15px;
         }
 
-        .notification-status.read {
-            color: var(--success);
+        .date-filter-actions {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .btn-apply-filter,
+        .btn-clear-filter {
+            flex: 1;
+            justify-content: center;
+            min-width: 120px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .stats-section {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .notification-header {
+            flex-direction: column;
+            gap: 15px;
+            align-items: stretch;
+        }
+        
+        .notification-title-container {
+            flex-direction: row;
+        }
+        
+        .notification-actions {
+            flex-direction: column;
+        }
+        
+        .main {
+            padding: 20px;
+        }
+        
+        .page-header,
+        .date-filter-section,
+        .category-filter-section,
+        .notifications-section {
+            padding: 20px;
+        }
+        
+        .bulk-action-buttons {
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        .category-filters {
+            grid-template-columns: repeat(2, 1fr);
         }
 
-        /* Notification Date */
-        .notification-date {
-            font-size: 11px;
-            color: var(--text-light);
-            display: block;
-            margin-top: 5px;
+        .category-filter {
+            width: 100%;
+            justify-content: center;
         }
 
-        /* Footer */
+        .notification-detail-info {
+            grid-template-columns: 1fr;
+        }
+
+        .notification-detail-actions {
+            flex-direction: column;
+        }
+
+        .bulk-action-container {
+            justify-content: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .date-filter-section {
+            padding: 15px;
+        }
+        
+        .date-filter-label {
+            font-size: 15px;
+        }
+        
+        .btn-apply-filter,
+        .btn-clear-filter {
+            padding: 12px 18px;
+            font-size: 14px;
+            min-width: 130px;
+        }
+        
+        .date-filter-header,
+        .category-filter-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        /* Layout mobile untuk filter tanggal */
+        .date-filter-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 15px;
+        }
+        
+        .date-input-wrapper {
+            min-width: 100%;
+            max-width: 100%;
+        }
+        
+        .date-filter-actions {
+            width: 100%;
+            flex-direction: column;
+        }
+        
+        .btn-apply-filter,
+        .btn-clear-filter {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .stats-section {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .header {
+            padding: 0 15px;
+        }
+        
+        .header-title {
+            font-size: 22px;
+        }
+        
+        .page-header h1 {
+            font-size: 30px;
+        }
+        
+        .stat-card {
+            padding: 20px;
+            height: 100px;
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+        }
+        
+        .stat-info h3 {
+            font-size: 24px;
+        }
+        
+        .sidebar {
+            width: 280px;
+            left: -280px;
+        }
+        
         .footer {
-            background: white;
-            border-top: 1px solid var(--border-color);
-            padding: 20px 0;
-            text-align: center;
-            color: var(--text-light);
-            margin-top: 50px;
+            padding: 25px 20px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .nav {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                padding: 20px;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-                gap: 15px;
-            }
-
-            .nav.active {
-                display: flex;
-            }
-
-            .bulk-actions {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
-            }
-
-            .bulk-action-buttons {
-                width: 100%;
-                justify-content: flex-end;
-            }
-
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-
-            .filter-container {
-                justify-content: center;
-            }
+        .category-filters {
+            grid-template-columns: 1fr;
         }
 
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
-            }
-            
-            .notifications-card {
-                padding: 20px;
-            }
-
-            .bulk-action-buttons {
-                flex-direction: column;
-            }
-
-            .filter-container {
-                flex-direction: column;
-                align-items: center;
-            }
+        .category-filter {
+            justify-content: flex-start;
         }
+
+        .notification-title-container {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+        }
+
+        .notification-title {
+            font-size: 16px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 13px;
+            min-height: 36px;
+        }
+
+        .notification-detail-view {
+            padding: 20px;
+        }
+
+        .notification-detail-title {
+            font-size: 22px;
+        }
+
+        .bulk-action-container {
+            justify-content: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .date-filter-actions {
+            flex-direction: column;
+        }
+        
+        .btn-apply-filter,
+        .btn-clear-filter {
+            width: 100%;
+        }
+        
+        .category-filters {
+            flex-direction: column;
+        }
+        
+        .category-filter {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .stats-section {
+            grid-template-columns: 1fr;
+        }
+        
+        .header {
+            padding: 0 10px;
+        }
+        
+        .main {
+            padding: 15px;
+        }
+        
+        .page-header,
+        .date-filter-section,
+        .category-filter-section,
+        .notifications-section {
+            padding: 15px;
+        }
+        
+        .stat-card {
+            padding: 15px;
+            height: 90px;
+        }
+        
+        .stat-icon {
+            width: 45px;
+            height: 45px;
+            font-size: 18px;
+        }
+        
+        .stat-info h3 {
+            font-size: 22px;
+        }
+        
+        .footer {
+            padding: 20px 15px;
+        }
+        
+        .toast {
+            bottom: 20px;
+            right: 20px;
+            left: 20px;
+            max-width: none;
+        }
+
+        .notification-actions-top {
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-small {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .category-filter {
+            padding: 12px 18px;
+            font-size: 14px;
+        }
+        
+        .date-filter-section {
+            padding: 12px;
+        }
+        
+        .btn-apply-filter,
+        .btn-clear-filter {
+            padding: 12px;
+            font-size: 13px;
+            min-width: auto;
+        }
+    }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
-        <div class="container">
-            <div class="logo">
-                <i class="fas fa-seedling"></i>
-                <h1>SmartTani</h1>
-            </div>
-            
-            <button class="mobile-menu-btn">
+        <div class="header-left">
+            <button class="hamburger-btn" id="hamburgerBtn">
                 <i class="fas fa-bars"></i>
             </button>
-            
-            <nav class="nav">
-                <a href="dashboard.html">
-                    <i class="fas fa-home"></i> Dashboard
-                </a>
-                <a href="plants.html">
-                    <i class="fas fa-leaf"></i> Tanaman Saya
-                </a>
-                <a href="schedule.html" >
-                    <i class="fas fa-clock"></i> Jadwal
-                </a>
-                <a href="history.html">
-                    <i class="fas fa-history"></i> Riwayat
-                </a>
-                
-                <div class="user-menu">
-                    <img id="headerAvatar" src="https://ui-avatars.com/api/?name=User&background=4CAF50&color=fff" alt="User" class="user-avatar">
-                    <span id="headerName">User</span>
-                    <div class="dropdown">
-                        <a href="profile.html"><i class="fas fa-user"></i> Profil</a>
-                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    </div>
-                </div>
-
-                <a href="notification.html" class="notification-menu active">
-                    <span id=""><i class="fas fa-bell"></i></span>
-                    <span id="notification-count">0</span>
-                </a>
-            </nav>
+            <div class="header-title">SmartTani</div>
         </div>
-    </header>
 
-    <!-- Main Content -->
-    <main class="main">
-        <div class="container">
-            <!-- Page Header -->
-            <div class="page-header">
-                <div>
-                    <h1>Notifikasi</h1>
-                    <p>Lihat semua notifikasi disini</p>
-                </div>
-                <button class="btn-secondary" onclick="toggleBulkActions()" id="bulkActionBtn">
-                    <i class="fas fa-check-square"></i> Pilih Notifikasi
+        <div class="header-right">
+            <div class="notification-wrapper">
+                <button class="notification-btn" onclick="window.location.href='notification.html'">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">0</span>
                 </button>
             </div>
 
+            <div class="user-wrapper">
+                <button class="user-btn" id="userProfileBtn">
+                    <img id="userAvatarHeader" src="https://ui-avatars.com/api/?name=User&background=2E7D32&color=fff" alt="User" class="user-avatar-header">
+                    <div class="user-info">
+                        <div class="user-name" id="userNameHeader">User</div>
+                        <div class="user-role">Petani</div>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        <span>Profil</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container untuk Sidebar dan Content -->
+    <div class="main-container">
+        <!-- Overlay for Sidebar (Mobile only) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Sidebar Menu -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-user">
+                <img id="userAvatarSidebar" src="https://ui-avatars.com/api/?name=User&background=2E7D32&color=fff" alt="User" class="user-avatar-sidebar">
+                <h3 id="userNameSidebar">User</h3>
+                <p id="userEmailSidebar">Petani</p>
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="plants.html">
+                            <i class="fas fa-leaf"></i>
+                            <span>Tanaman Saya</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="schedule.html">
+                            <i class="fas fa-clock"></i>
+                            <span>Jadwal</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="history.html">
+                            <i class="fas fa-history"></i>
+                            <span>Riwayat</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.html">
+                            <i class="fas fa-user"></i>
+                            <span>Profil</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="notification.html" class="active">
+                            <i class="fas fa-bell"></i>
+                            <span>Notifikasi</span>
+                            <span class="notification-badge-sidebar" id="sidebarNotificationBadge">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Keluar</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main" id="mainContent">
             <!-- Back Button -->
             <a href="#" class="back-button" id="backButton" onclick="goBackToList()">
                 <i class="fas fa-arrow-left"></i> Kembali ke Daftar Notifikasi
             </a>
 
-            <!-- Bulk Actions -->
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 id="titleHeader">Notifikasi</h1>
+                <p id="messageHeader">Kelola dan pantau semua notifikasi Anda</p>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-section" id="statsSection">
+                <div class="stat-card">
+                    <div class="stat-icon total">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalNotificationsCount">0</h3>
+                        <p>Total Notifikasi</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon unread">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="unreadNotificationsCount">0</h3>
+                        <p>Belum Dibaca</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon plant-new">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="plantNewNotificationsCount">0</h3>
+                        <p>Tanaman Baru</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon water">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="wateringNotificationsCount">0</h3>
+                        <p>Penyiraman</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon fertilizer">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="fertilizingNotificationsCount">0</h3>
+                        <p>Pemupukan</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon harvest">
+                        <i class="fas fa-shopping-basket"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="harvestNotificationsCount">0</h3>
+                        <p>Panen</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Date Filter Container -->
+            <div class="date-filter-section" id="dateFilterContainer">
+                <div class="date-filter-row">
+                    <div class="date-filter-label">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Filter Tanggal:</span>
+                    </div>
+                    <div class="date-input-wrapper">
+                        <input type="date" id="dateFilterInput" class="date-input">
+                    </div>
+                    <div class="date-filter-actions">
+                        <button class="btn-apply-filter" id="applyDateFilterBtn">
+                            <i class="fas fa-filter"></i>
+                            <span>Terapkan Filter</span>
+                        </button>
+                        <button class="btn-clear-filter" id="clearDateFilterBtn">
+                            <i class="fas fa-times"></i>
+                            <span>Hapus Filter</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Filter Section -->
+            <div class="category-filter-section" id="categoryFilterSection">
+                <div class="category-filter-header">
+                    <h2><i class="fas fa-filter"></i> Filter Kategori Notifikasi</h2>
+                </div>
+                
+                <div class="category-filters">
+                    <button class="category-filter active" data-category="all">
+                        <i class="fas fa-layer-group"></i> Semua
+                    </button>
+                    <button class="category-filter" data-category="unread">
+                        <i class="fas fa-envelope"></i> Belum Dibaca
+                    </button>
+                    <button class="category-filter" data-category="plant-new">
+                        <i class="fas fa-plus-circle"></i> Tanaman Baru
+                    </button>
+                    <button class="category-filter" data-category="watering">
+                        <i class="fas fa-tint"></i> Penyiraman
+                    </button>
+                    <button class="category-filter" data-category="fertilizing">
+                        <i class="fas fa-seedling"></i> Pemupukan
+                    </button>
+                    <button class="category-filter" data-category="harvest">
+                        <i class="fas fa-shopping-basket"></i> Panen
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bulk Action Button -->
+            <div class="bulk-action-container">
+                <button class="bulk-action-btn" id="bulkActionBtn" onclick="toggleBulkActions()">
+                    <i class="fas fa-check-square"></i> Pilih Notifikasi
+                </button>
+            </div>
+
+            <!-- Bulk Actions Panel -->
             <div class="bulk-actions" id="bulkActions">
                 <div class="selected-count" id="selectedCount">
                     Terpilih: <span id="selectedNumber">0</span> notifikasi
                 </div>
                 <div class="bulk-action-buttons">
-                    <button class="btn-secondary" onclick="selectAllNotifications()">
+                    <button class="btn-secondary btn-small" onclick="selectAllNotifications()">
                         <i class="fas fa-check-double"></i> Pilih Semua
                     </button>
-                    <button class="btn-primary" onclick="markSelectedAsRead()">
+                    <button class="btn-primary btn-small" onclick="markSelectedAsRead()">
                         <i class="fas fa-check"></i> Tandai Sudah Dibaca
                     </button>
-                    <button class="btn-secondary" style="background: var(--danger); color: white;" onclick="deleteSelectedNotifications()">
+                    <button class="btn-danger btn-small" onclick="deleteSelectedNotifications()">
                         <i class="fas fa-trash"></i> Hapus Terpilih
                     </button>
                 </div>
             </div>
 
-            <!-- Filter Container -->
-            <div class="filter-container" id="filterContainer">
-                <!-- Filter buttons akan diisi oleh JavaScript -->
-            </div>
-
-            <div class="profile-container">
-                <!-- Konten Profil -->
-                <div class="profile-tab active" id="notifications-tab">
-                    <div class="notifications-card" id="notificationsCard">
+            <!-- Notification Detail View -->
+            <div class="notification-detail-view" id="notificationDetailView">
+                <div class="notification-detail-content">
+                    <div class="notification-detail-header">
+                        <div class="notification-icon default" id="detailIcon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="notification-detail-title" id="detailTitle">Detail Notifikasi</div>
                     </div>
-
-                    <div class="notifications-card" id="notificationsReadCard">
+                    
+                    <div class="notification-detail-body">
+                        <div class="notification-detail-message" id="detailMessage">
+                            Pesan notifikasi akan muncul di sini
+                        </div>
+                        
+                        <div class="notification-detail-info">
+                            <div class="detail-info-item">
+                                <h4>Jenis Notifikasi</h4>
+                                <p id="detailType">-</p>
+                            </div>
+                            <div class="detail-info-item">
+                                <h4>Status</h4>
+                                <p id="detailStatus">-</p>
+                            </div>
+                            <div class="detail-info-item">
+                                <h4>Tanggal & Jam</h4>
+                                <p id="detailDate">-</p>
+                            </div>
+                            <div class="detail-info-item">
+                                <h4>Tanaman</h4>
+                                <p id="detailPlant">-</p>
+                            </div>
+                        </div>
+                        
+                        <div id="detailAdditionalInfo"></div>
+                    </div>
+                    
+                    <div class="notification-detail-actions" id="detailActions">
+                        <!-- Aksi akan diisi oleh JavaScript -->
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>@2025 SmartTani - Mesin Pengingat Masa Tanam dan Panen</p>
+            <!-- Notifications List -->
+            <div class="notifications-section" id="notificationsSection">
+                <div class="section-header">
+                    <h2><i class="fas fa-bell"></i> Daftar Notifikasi</h2>
+                    <a href="#" class="view-all" id="markAllReadBtn" onclick="markAllAsRead()">
+                        <i class="fas fa-check-double"></i> Tandai Semua Dibaca
+                    </a>
+                </div>
+                
+                <div id="notificationsGrid">
+                    <!-- Notifications akan diisi oleh JavaScript -->
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <p>
+                        <span class="footer-copyright">© 2025 SmartTani - Sistem Manajemen Pertanian Pintar</span>
+                    </p>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <div class="toast-content">
+            <p id="toastMessage">Operasi berhasil!</p>
         </div>
-    </footer>
+        <button class="toast-close" onclick="hideToast()">&times;</button>
+    </div>
 
     <script>
-        // Notification Management Functions
+        // State management
         let currentUser = null;
+        let notifications = [];
+        let userDropdownOpen = false;
+        let sidebarOpen = false;
+        let currentFilter = 'all';
         let selectedNotifications = new Set();
         let isBulkActionMode = false;
-        let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
-        let lastNotificationDate = localStorage.getItem("lastNotificationDate") || null;
-        let currentFilter = 'all';
+        let currentDetailId = null;
+        let currentDateFilter = null;
 
-        // Load data when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            loadCurrentUser();
-            initializeNotificationSystem();
-            updateNotificationBadge();
-            setupNotificationFilters();
-            renderAllNotifications();
-            generateFertilizingNotifications(); // Generate notifikasi pemupukan yang tertunda
-        });
-
-        // Load current user data
-        function loadCurrentUser() {
-            const savedUser = localStorage.getItem('currentUser');
-            if (!savedUser) {
-                showNotification('Silakan login terlebih dahulu', 'error');
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 2000);
+        // Initialize notification page
+        function initNotificationPage() {
+            // Check authentication
+            currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                showToast('Silakan login terlebih dahulu', 'error');
+                setTimeout(() => window.location.href = 'index.html', 1500);
                 return;
             }
 
-            currentUser = JSON.parse(savedUser);
+            // Update UI
+            updateUserInfo();
+            loadNotifications();
+            updateNotificationStats();
+            setupEventListeners();
+            generateDailyNotifications();
             
-            // Load additional user data from registered users
-            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-            let userData = registeredUsers.find(u => u.id === currentUser.id);
-            
-            if (!userData) {
-                userData = registeredUsers.find(u => u.email === currentUser.email);
-            }
-            
-            if (!userData) {
-                userData = currentUser;
-            }
-
-            updateUserProfile(userData);
-        }
-
-        // Update user profile in UI
-        function updateUserProfile(userData) {
-            document.getElementById('headerName').textContent = userData.name || 'User';
-            document.getElementById('headerAvatar').src = userData.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name || 'User')}&background=4CAF50&color=fff`;
-        }
-
-        // Mobile menu functionality
-        function setupMobileMenu() {
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const nav = document.querySelector('.nav');
-            
-            if (mobileMenuBtn && nav) {
-                mobileMenuBtn.addEventListener('click', function() {
-                    nav.classList.toggle('active');
-                });
+            // Check URL for detail view
+            const urlParams = new URLSearchParams(window.location.search);
+            const notificationId = urlParams.get('id');
+            if (notificationId) {
+                showNotificationDetail(notificationId);
             }
         }
 
-        // Setup notification filters
-        function setupNotificationFilters() {
-            const filterContainer = document.getElementById('filterContainer');
-            filterContainer.innerHTML = `
-                <button class="filter-btn active" data-filter="all">Semua</button>
-                <button class="filter-btn" data-filter="create-plant">Penanaman</button>
-                <button class="filter-btn" data-filter="watering">Penyiraman</button>
-                <button class="filter-btn" data-filter="watering-confirmation">Konfirmasi Siram</button>
-                <button class="filter-btn" data-filter="fertilizing">Pemupukan</button>
-                <button class="filter-btn" data-filter="fertilizing-confirmation">Konfirmasi Pupuk</button>
-                <button class="filter-btn" data-filter="harvest">Panen</button>
-                <button class="filter-btn" data-filter="pest">Hama</button>
-                <button class="filter-btn" data-filter="success">Berhasil</button>
-            `;
-
-            filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    filterContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentFilter = this.dataset.filter;
-                    renderAllNotifications();
-                });
+        // Load notifications
+        function loadNotifications() {
+            notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+            
+            // Filter hanya notifikasi user saat ini
+            notifications = notifications.filter(notif => 
+                notif.userId === currentUser.id || !notif.userId
+            );
+            
+            // Urutkan dari TERBARU ke TERLAMA
+            notifications.sort((a, b) => {
+                const timeA = a.timestamp || a.createdAt || a.date || 0;
+                const timeB = b.timestamp || b.createdAt || b.date || 0;
+                return new Date(timeB) - new Date(timeA);
             });
+            
+            renderNotifications();
         }
 
-        // Get notification type icon
-        function getNotificationTypeIcon(type) {
+        // Update user information in UI
+        function updateUserInfo() {
+            if (!currentUser) return;
+            
+            // Set user name
+            const userName = getUserName();
+            
+            // Update sidebar
+            document.getElementById('userNameSidebar').textContent = userName;
+            document.getElementById('userAvatarSidebar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=2E7D32&color=fff`;
+            
+            // Update header
+            document.getElementById('userNameHeader').textContent = userName;
+            document.getElementById('userAvatarHeader').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=2E7D32&color=fff`;
+        }
+
+        // Get user name
+        function getUserName() {
+            try {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (currentUser && currentUser.name) {
+                    return currentUser.name;
+                }
+                
+                // Try to get from user profiles
+                const userProfiles = JSON.parse(localStorage.getItem('userProfiles')) || [];
+                if (currentUser && currentUser.email) {
+                    const userProfile = userProfiles.find(profile => profile.email === currentUser.email);
+                    if (userProfile && userProfile.name) {
+                        return userProfile.name;
+                    }
+                }
+                
+                // Try to get from registration data
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                if (currentUser && currentUser.email) {
+                    const registeredUser = registeredUsers.find(user => user.email === currentUser.email);
+                    if (registeredUser && registeredUser.name) {
+                        return registeredUser.name;
+                    }
+                }
+                
+                return 'User';
+                
+            } catch (error) {
+                console.error("Error getting user name:", error);
+                return 'User';
+            }
+        }
+
+        // Update notification statistics
+        function updateNotificationStats() {
+            const total = notifications.length;
+            const unread = notifications.filter(n => !n.read).length;
+            
+            // Hitung dengan benar termasuk konfirmasi penyiraman dan pemupukan
+            const watering = notifications.filter(n => 
+                n.type === 'watering' || 
+                n.type === 'watering-confirmation' ||
+                (n.title && n.title.toLowerCase().includes('siram')) ||
+                (n.message && n.message.toLowerCase().includes('siram'))
+            ).length;
+            
+            const fertilizing = notifications.filter(n => 
+                n.type === 'fertilizing' || 
+                n.type === 'fertilizing-confirmation' ||
+                (n.title && n.title.toLowerCase().includes('pupuk')) ||
+                (n.message && n.message.toLowerCase().includes('pupuk'))
+            ).length;
+            
+            const harvest = notifications.filter(n => 
+                n.type === 'harvest' || 
+                n.type === 'harvest-confirmation' ||
+                (n.title && n.title.toLowerCase().includes('panen')) ||
+                (n.message && n.message.toLowerCase().includes('panen'))
+            ).length;
+            
+            const plantNew = notifications.filter(n => 
+                n.type === 'plant-new' ||
+                (n.title && n.title.toLowerCase().includes('tanaman baru')) ||
+                (n.title && n.title.toLowerCase().includes('tambah tanaman'))
+            ).length;
+            
+            // Update counters with animation
+            animateCounter('totalNotificationsCount', total);
+            animateCounter('unreadNotificationsCount', unread);
+            animateCounter('wateringNotificationsCount', watering);
+            animateCounter('fertilizingNotificationsCount', fertilizing);
+            animateCounter('harvestNotificationsCount', harvest);
+            animateCounter('plantNewNotificationsCount', plantNew);
+            
+            // Update notification badges
+            updateNotificationBadges(unread);
+        }
+
+        // Animate counter value
+        function animateCounter(elementId, targetValue) {
+            const element = document.getElementById(elementId);
+            const currentValue = parseInt(element.textContent) || 0;
+            const duration = 600;
+            const steps = 40;
+            const increment = (targetValue - currentValue) / steps;
+            let step = 0;
+            
+            function updateCounter() {
+                if (step < steps) {
+                    const value = Math.floor(currentValue + (increment * step));
+                    element.textContent = value;
+                    step++;
+                    setTimeout(updateCounter, duration / steps);
+                } else {
+                    element.textContent = targetValue;
+                }
+            }
+            
+            updateCounter();
+        }
+
+        // Update notification badges
+        function updateNotificationBadges(unreadCount) {
+            // Update header badge
+            const notificationBadge = document.getElementById('notificationBadge');
+            if (notificationBadge) {
+                notificationBadge.textContent = unreadCount;
+                notificationBadge.style.display = unreadCount > 0 ? 'flex' : 'none';
+            }
+            
+            // Update sidebar badge
+            const sidebarNotificationBadge = document.getElementById('sidebarNotificationBadge');
+            if (sidebarNotificationBadge) {
+                sidebarNotificationBadge.textContent = unreadCount;
+                sidebarNotificationBadge.style.display = unreadCount > 0 ? 'inline-flex' : 'none';
+            }
+        }
+
+        // Get notification icon by type
+        function getNotificationIcon(type) {
             const icons = {
-                watering: 'fa-tint',
-                harvest: 'fa-shopping-basket',
-                'create-plant': 'fa-seedling',
-                fertilizing: 'fa-seedling',
-                'fertilizing-confirmation': 'fa-check-circle',
+                'watering': 'fa-tint',
                 'watering-confirmation': 'fa-check-circle',
-                pest: 'fa-bug',
-                success: 'fa-award',
-                default: 'fa-bell'
+                'fertilizing': 'fa-seedling',
+                'fertilizing-confirmation': 'fa-check-circle',
+                'harvest': 'fa-shopping-basket',
+                'harvest-confirmation': 'fa-check-circle',
+                'plant-new': 'fa-plus-circle',
+                'create-plant': 'fa-seedling',
+                'success': 'fa-award',
+                'info': 'fa-info-circle',
+                'warning': 'fa-exclamation-triangle',
+                'error': 'fa-exclamation-circle'
             };
-            return icons[type] || icons.default;
+            return icons[type] || 'fa-bell';
         }
 
         // Get notification type class
         function getNotificationTypeClass(type) {
-            return type || 'default';
-        }
-
-        // Notification function
-        function showNotification(message, type = 'info') {
-            document.querySelectorAll('.notification').forEach(notif => notif.remove());
-            
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                <i class="fas fa-${getNotificationIcon(type)}"></i>
-                <span>${message}</span>
-            `;
-            
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 15px 20px;
-                border-radius: 8px;
-                color: white;
-                font-weight: 500;
-                z-index: 10000;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                ${type === 'success' ? 'background: var(--success);' : ''}
-                ${type === 'error' ? 'background: var(--danger);' : ''}
-                ${type === 'warning' ? 'background: var(--warning);' : ''}
-                ${type === 'info' ? 'background: var(--info);' : ''}
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 5000);
-        }
-
-        function getNotificationIcon(type) {
-            const icons = {
-                success: 'check-circle',
-                error: 'exclamation-circle',
-                warning: 'exclamation-triangle',
-                info: 'info-circle'
+            const classes = {
+                'watering': 'watering',
+                'watering-confirmation': 'watering-confirmation',
+                'fertilizing': 'fertilizing',
+                'fertilizing-confirmation': 'fertilizing-confirmation',
+                'harvest': 'harvest',
+                'harvest-confirmation': 'harvest-confirmation',
+                'plant-new': 'plant-new',
+                'create-plant': 'plant-new',
+                'success': 'success',
+                'info': 'default',
+                'warning': 'default',
+                'error': 'default'
             };
-            return icons[type] || 'info-circle';
+            return classes[type] || 'default';
         }
 
-        function updateNotificationBadge() {
-            const badge = document.getElementById("notification-count");
-            const unread = getUnreadNotificationsCount();
+        // Format tanggal dan jam
+        function formatDateTime(dateTimeString) {
+            if (!dateTimeString) return '-';
+            
+            const date = new Date(dateTimeString);
+            const now = new Date();
+            
+            // Cek jika tanggal tidak valid
+            if (isNaN(date.getTime())) {
+                return '-';
+            }
+            
+            // Format tanggal dan jam lengkap
+            const options = { 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            };
+            
+            const dateStr = date.toLocaleDateString('id-ID', options);
+            
+            // Tampilkan waktu relatif jika hari ini
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const notificationDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            
+            if (notificationDate.getTime() === today.getTime()) {
+                const hours = date.getHours().toString().padStart(2, '0');
+                const minutes = date.getMinutes().toString().padStart(2, '0');
+                return `Hari ini, ${hours}:${minutes}`;
+            }
+            
+            return dateStr;
+        }
 
-            if (unread > 0) {
-                badge.textContent = unread;
-                badge.style.display = "inline-block";
-            } else {
-                badge.innerText = 0;
-                badge.style.display = "none";
+        // Render notifications dengan filter
+        function renderNotifications() {
+            const grid = document.getElementById('notificationsGrid');
+            
+            // Filter notifications berdasarkan kategori yang dipilih
+            let filteredNotifications = getFilteredNotifications();
+            
+            // Terapkan filter tanggal jika ada
+            if (currentDateFilter) {
+                filteredNotifications = filteredNotifications.filter(notification => {
+                    const notificationDate = getNotificationDate(notification);
+                    return notificationDate === currentDateFilter;
+                });
+            }
+            
+            if (filteredNotifications.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-bell-slash"></i>
+                        <h3>Tidak ada notifikasi</h3>
+                        <p>${currentDateFilter ? `Tidak ada notifikasi pada tanggal ${formatDateForDisplay(currentDateFilter)}` : `Tidak ada notifikasi dengan filter "${getFilterName(currentFilter)}"`}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Tampilkan notifikasi terbaru di atas
+            filteredNotifications.sort((a, b) => {
+                // Prioritas pertama: status belum dibaca
+                if (a.read !== b.read) {
+                    return a.read ? 1 : -1;
+                }
+                // Prioritas kedua: tanggal terbaru di atas
+                const timeA = a.timestamp || a.createdAt || a.date || 0;
+                const timeB = b.timestamp || b.createdAt || b.date || 0;
+                return new Date(timeB) - new Date(timeA);
+            });
+            
+            // Tampilkan notifikasi
+            grid.innerHTML = filteredNotifications.map(notification => {
+                const isSelected = selectedNotifications.has(notification.id);
+                const isRead = notification.read;
+                const typeClass = getNotificationTypeClass(notification.type);
+                const icon = getNotificationIcon(notification.type);
+                const dateText = formatDateTime(notification.timestamp || notification.createdAt || notification.date);
+                const statusClass = isRead ? 'read' : 'unread';
+                
+                return `
+                    <div class="notification-item ${statusClass} ${typeClass}" id="notification-${notification.id}">
+                        <div class="notification-header">
+                            <div class="notification-title-container">
+                                ${isBulkActionMode ? `
+                                    <input type="checkbox" class="notification-checkbox" ${isSelected ? 'checked' : ''} 
+                                        onchange="toggleNotificationSelection('${notification.id}', this.checked)">
+                                ` : ''}
+                                <div class="notification-icon ${typeClass}">
+                                    <i class="fas ${icon}"></i>
+                                </div>
+                                <div class="notification-title-wrapper">
+                                    <h3 class="notification-title">
+                                        <span>${notification.title || 'Notifikasi'}</span>
+                                        <span class="notification-type">${getNotificationTypeText(notification.type)}</span>
+                                    </h3>
+                                </div>
+                            </div>
+                            ${!isBulkActionMode ? `
+                                <div class="notification-actions-top">
+                                    <button class="btn-small ${isRead ? 'btn-secondary' : 'btn-mark-read'}" 
+                                        onclick="markNotificationAsRead('${notification.id}')">
+                                        <i class="fas ${isRead ? 'fa-envelope-open' : 'fa-envelope'}"></i>
+                                        ${isRead ? 'Dibaca' : 'Tandai'}
+                                    </button>
+                                    <button class="btn-small btn-view-details" onclick="showNotificationDetail('${notification.id}')">
+                                        <i class="fas fa-eye"></i> Detail
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div class="notification-content">
+                            <p class="notification-message">${notification.message || 'Tidak ada pesan'}</p>
+                            
+                            <div class="notification-details">
+                                <div class="notification-detail">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>${dateText}</span>
+                                </div>
+                                ${notification.plantName ? `
+                                    <div class="notification-detail">
+                                        <i class="fas fa-leaf"></i>
+                                        <span>${notification.plantName}</span>
+                                    </div>
+                                ` : ''}
+                                <div class="notification-detail">
+                                    <i class="fas fa-circle" style="color: ${isRead ? 'var(--success)' : 'var(--warning)'}; font-size: 8px;"></i>
+                                    <span style="color: ${isRead ? 'var(--success)' : 'var(--warning)'}">
+                                        ${isRead ? 'Sudah dibaca' : 'Belum dibaca'}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        ${!isRead && (notification.type === 'watering' || notification.type === 'fertilizing' || notification.type === 'harvest') ? `
+                            <div class="notification-actions">
+                                <button class="btn-primary" onclick="handleNotificationAction('${notification.id}', '${notification.type}', '${notification.plantId}')">
+                                    <i class="fas ${notification.type === 'watering' ? 'fa-tint' : notification.type === 'fertilizing' ? 'fa-seedling' : 'fa-shopping-basket'}"></i>
+                                    Konfirmasi ${notification.type === 'watering' ? 'Penyiraman' : notification.type === 'fertilizing' ? 'Pemupukan' : 'Panen'}
+                                </button>
+                            </div>
+                        ` : ''}
+                        
+                        ${notification.type === 'plant-new' && notification.plantId ? `
+                            <div class="notification-actions">
+                                <button class="btn-go-to-dashboard" onclick="goToDashboard('${notification.plantId}')">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Lihat Tanaman di Dashboard
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+            
+            // Update selected count
+            updateSelectedCount();
+        }
+
+        // Fungsi filter untuk menampilkan notifikasi
+        function getFilteredNotifications() {
+            let filtered = [...notifications];
+            
+            if (currentFilter === 'unread') {
+                filtered = filtered.filter(n => !n.read);
+            } else if (currentFilter === 'watering') {
+                // Filter untuk penyiraman termasuk konfirmasi penyiraman
+                filtered = filtered.filter(n => 
+                    n.type === 'watering' || 
+                    n.type === 'watering-confirmation' ||
+                    (n.title && n.title.toLowerCase().includes('siram')) ||
+                    (n.message && n.message.toLowerCase().includes('siram'))
+                );
+            } else if (currentFilter === 'fertilizing') {
+                // Filter untuk pemupukan termasuk konfirmasi pemupukan
+                filtered = filtered.filter(n => 
+                    n.type === 'fertilizing' || 
+                    n.type === 'fertilizing-confirmation' ||
+                    (n.title && n.title.toLowerCase().includes('pupuk')) ||
+                    (n.message && n.message.toLowerCase().includes('pupuk'))
+                );
+            } else if (currentFilter === 'harvest') {
+                // Filter untuk panen termasuk konfirmasi panen
+                filtered = filtered.filter(n => 
+                    n.type === 'harvest' ||
+                    n.type === 'harvest-confirmation' ||
+                    (n.title && n.title.toLowerCase().includes('panen')) ||
+                    (n.message && n.message.toLowerCase().includes('panen'))
+                );
+            } else if (currentFilter === 'plant-new') {
+                // Filter untuk tanaman baru
+                filtered = filtered.filter(n => 
+                    n.type === 'plant-new' ||
+                    n.type === 'create-plant' ||
+                    (n.title && n.title.toLowerCase().includes('tanaman baru')) ||
+                    (n.title && n.title.toLowerCase().includes('tambah tanaman'))
+                );
+            }
+            // 'all' tidak perlu filter tambahan
+            
+            return filtered;
+        }
+
+        // Get notification date in YYYY-MM-DD format
+        function getNotificationDate(notification) {
+            const dateTime = notification.timestamp || notification.createdAt || notification.date;
+            if (!dateTime) return null;
+            
+            const date = new Date(dateTime);
+            if (isNaN(date.getTime())) return null;
+            
+            return date.toISOString().split('T')[0];
+        }
+
+        // Get filter name
+        function getFilterName(filter) {
+            const names = {
+                'all': 'Semua',
+                'unread': 'Belum Dibaca',
+                'watering': 'Penyiraman',
+                'fertilizing': 'Pemupukan',
+                'harvest': 'Panen',
+                'plant-new': 'Tanaman Baru'
+            };
+            return names[filter] || filter;
+        }
+
+        // Get notification type text
+        function getNotificationTypeText(type) {
+            const texts = {
+                'watering': 'Jadwal Siram',
+                'watering-confirmation': 'Konfirmasi Siram',
+                'fertilizing': 'Jadwal Pupuk',
+                'fertilizing-confirmation': 'Konfirmasi Pupuk',
+                'harvest': 'Panen',
+                'harvest-confirmation': 'Konfirmasi Panen',
+                'plant-new': 'Tanaman Baru',
+                'create-plant': 'Tanaman Baru',
+                'success': 'Berhasil',
+                'info': 'Informasi',
+                'warning': 'Peringatan',
+                'error': 'Kesalahan'
+            };
+            return texts[type] || 'Notifikasi';
+        }
+
+        // Filter berdasarkan tanggal
+        function filterByDate() {
+            const dateInput = document.getElementById('dateFilterInput');
+            const selectedDate = dateInput.value;
+            
+            if (!selectedDate) {
+                showToast('Pilih tanggal terlebih dahulu', 'warning');
+                return;
+            }
+            
+            currentDateFilter = selectedDate;
+            renderNotifications();
+            showToast(`Menampilkan notifikasi pada tanggal ${formatDateForDisplay(selectedDate)}`, 'info');
+        }
+
+        // Hapus filter tanggal
+        function clearDateFilter() {
+            currentDateFilter = null;
+            document.getElementById('dateFilterInput').value = '';
+            renderNotifications();
+            showToast('Filter tanggal dihapus', 'info');
+        }
+
+        // Format tanggal untuk display
+        function formatDateForDisplay(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+
+        // Go to dashboard with plant ID
+        function goToDashboard(plantId) {
+            // Simpan plantId yang dipilih di localStorage untuk dashboard
+            localStorage.setItem('selectedPlantId', plantId);
+            
+            // Redirect ke dashboard
+            window.location.href = 'dashboard.html?highlight=' + plantId;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Hamburger menu toggle
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            
+            hamburgerBtn.addEventListener('click', toggleSidebar);
+            sidebarOverlay.addEventListener('click', closeSidebar);
+            
+            // Profile button click
+            const userProfileBtn = document.getElementById('userProfileBtn');
+            const userDropdown = document.getElementById('userDropdown');
+            
+            userProfileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle('show');
+                userProfileBtn.classList.toggle('active');
+                userDropdownOpen = !userDropdownOpen;
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (userDropdownOpen && !userProfileBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.remove('show');
+                    userProfileBtn.classList.remove('active');
+                    userDropdownOpen = false;
+                }
+            });
+            
+            // Filter buttons
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active filter button
+                    document.querySelectorAll('.category-filter').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update filter and render
+                    currentFilter = this.dataset.category;
+                    renderNotifications();
+                });
+            });
+            
+            // Close sidebar when clicking on menu item
+            document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                link.addEventListener('click', function() {
+                    closeSidebar();
+                });
+            });
+            
+            // Close sidebar with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && sidebarOpen) {
+                    closeSidebar();
+                }
+            });
+            
+            // Handle browser back button
+            window.addEventListener('popstate', function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const notificationId = urlParams.get('id');
+                
+                if (notificationId) {
+                    showNotificationDetail(notificationId);
+                } else {
+                    goBackToList();
+                }
+            });
+            
+            // Date filter input enter key
+            document.getElementById('dateFilterInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    filterByDate();
+                }
+            });
+            
+            // Date filter buttons
+            document.getElementById('applyDateFilterBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                filterByDate();
+            });
+            
+            document.getElementById('clearDateFilterBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                clearDateFilter();
+            });
+            
+            // Hapus setting tanggal otomatis - biarkan kosong
+            // document.getElementById('dateFilterInput').value = '';
+            
+            // Fokus pada input tanggal saat halaman dimuat
+            document.getElementById('dateFilterInput').focus();
+            
+            // Tambahkan event listener untuk mengubah warna saat fokus
+            const dateInput = document.getElementById('dateFilterInput');
+            dateInput.addEventListener('focus', function() {
+                this.style.borderColor = 'var(--primary-color)';
+                this.style.boxShadow = '0 0 0 4px rgba(46, 125, 50, 0.15)';
+                this.style.color = 'var(--text-color)';
+            });
+            
+            dateInput.addEventListener('blur', function() {
+                this.style.borderColor = 'var(--border-color)';
+                this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)';
+                if (!this.value) {
+                    this.style.color = 'var(--text-light)';
+                } else {
+                    this.style.color = 'var(--text-color)';
+                }
+            });
+        }
+
+        // Show notification detail
+        function showNotificationDetail(notificationId) {
+            const notification = notifications.find(n => n.id === notificationId);
+            if (!notification) {
+                showToast('Notifikasi tidak ditemukan', 'error');
+                return;
+            }
+
+            currentDetailId = notificationId;
+            
+            // Update URL tanpa reload
+            const newUrl = window.location.pathname + '?id=' + notificationId;
+            window.history.pushState({ path: newUrl }, '', newUrl);
+            
+            // Hide notifications list and show detail
+            document.getElementById('notificationsSection').style.display = 'none';
+            document.getElementById('bulkActionBtn').style.display = 'none';
+            document.getElementById('bulkActions').style.display = 'none';
+            document.getElementById('bulkActionBtn').parentElement.style.display = 'none';
+            document.getElementById('dateFilterSection').style.display = 'none';
+            document.getElementById('categoryFilterSection').style.display = 'none';
+            document.getElementById('statsSection').style.display = 'none';
+            
+            // Show back button and detail view
+            document.getElementById('backButton').classList.add('show');
+            const detailView = document.getElementById('notificationDetailView');
+            detailView.classList.add('show');
+            
+            // Update detail content
+            const typeClass = getNotificationTypeClass(notification.type);
+            const icon = getNotificationIcon(notification.type);
+            const isRead = notification.read;
+            const dateTime = formatDateTime(notification.timestamp || notification.createdAt || notification.date);
+            
+            document.getElementById('detailIcon').className = `notification-icon ${typeClass}`;
+            document.getElementById('detailIcon').innerHTML = `<i class="fas ${icon}"></i>`;
+            document.getElementById('detailTitle').textContent = notification.title || 'Notifikasi';
+            document.getElementById('detailMessage').textContent = notification.message || 'Tidak ada pesan';
+            document.getElementById('detailType').textContent = getNotificationTypeText(notification.type);
+            document.getElementById('detailStatus').innerHTML = `<span style="color: ${isRead ? 'var(--success)' : 'var(--warning)'}">${isRead ? 'Sudah dibaca' : 'Belum dibaca'}</span>`;
+            document.getElementById('detailDate').textContent = dateTime;
+            
+            // Get plant details
+            const plants = JSON.parse(localStorage.getItem('plants')) || [];
+            const plant = plants.find(p => p.id === notification.plantId);
+            document.getElementById('detailPlant').textContent = plant ? plant.name : '-';
+            
+            // Set detail actions
+            const detailActions = document.getElementById('detailActions');
+            detailActions.innerHTML = '';
+            
+            if (!notification.read) {
+                detailActions.innerHTML += `
+                    <button class="btn-primary" onclick="markNotificationAsRead('${notification.id}')">
+                        <i class="fas fa-check"></i> Tandai Sudah Dibaca
+                    </button>
+                `;
+            }
+            
+            if (notification.type === 'watering' || notification.type === 'fertilizing' || notification.type === 'harvest') {
+                detailActions.innerHTML += `
+                    <button class="btn-go-to-dashboard" onclick="goToDashboard('${notification.plantId}')">
+                        <i class="fas fa-external-link-alt"></i> Konfirmasi di Dashboard
+                    </button>
+                `;
+            }
+            
+            if (notification.type === 'plant-new' && notification.plantId) {
+                detailActions.innerHTML += `
+                    <button class="btn-go-to-dashboard" onclick="goToDashboard('${notification.plantId}')">
+                        <i class="fas fa-external-link-alt"></i> Lihat Tanaman di Dashboard
+                    </button>
+                `;
+            }
+            
+            detailActions.innerHTML += `
+                <button class="btn-danger" onclick="deleteNotification('${notification.id}')">
+                    <i class="fas fa-trash"></i> Hapus Notifikasi
+                </button>
+            `;
+            
+            // Mark as read when viewing detail
+            if (!notification.read) {
+                markNotificationAsRead(notificationId);
             }
         }
 
-        function getUnreadNotificationsCount() {
-            return notifications.filter(n => !n.read).length;
+        // Go back to notifications list
+        function goBackToList() {
+            currentDetailId = null;
+            
+            // Update URL tanpa reload
+            window.history.pushState({ path: window.location.pathname }, '', window.location.pathname);
+            
+            // Show notifications list and hide detail
+            document.getElementById('notificationsSection').style.display = 'block';
+            document.getElementById('bulkActionBtn').style.display = 'inline-flex';
+            document.getElementById('bulkActionBtn').parentElement.style.display = 'flex';
+            document.getElementById('dateFilterSection').style.display = 'block';
+            document.getElementById('categoryFilterSection').style.display = 'block';
+            document.getElementById('statsSection').style.display = 'grid';
+            document.getElementById('backButton').classList.remove('show');
+            document.getElementById('notificationDetailView').classList.remove('show');
+            document.getElementById('bulkActions').style.display = isBulkActionMode ? 'flex' : 'none';
+            
+            renderNotifications();
         }
 
-        function markNotificationAsRead(id) {
-            notifications = notifications.map(n =>
-                n.id === id ? { ...n, read: true } : n
-            );
-            localStorage.setItem("notifications", JSON.stringify(notifications));
-            updateNotificationBadge();
+        // Toggle sidebar
+        function toggleSidebar() {
+            if (sidebarOpen) {
+                closeSidebar();
+            } else {
+                openSidebar();
+            }
         }
 
-        function deleteNotification(id) {
-            notifications = notifications.filter(n => n.id !== id);
-            localStorage.setItem("notifications", JSON.stringify(notifications));
-            updateNotificationBadge();
-            renderAllNotifications();
-            showNotification('Notifikasi berhasil dihapus', 'success');
+        // Open sidebar
+        function openSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const mainContent = document.getElementById('mainContent');
+            
+            sidebar.classList.add('open');
+            hamburgerBtn.classList.add('active');
+            mainContent.classList.add('sidebar-open');
+            sidebarOpen = true;
+            
+            // Check if mobile or desktop
+            const isDesktop = window.innerWidth >= 993;
+            if (!isDesktop) {
+                // Mobile: show overlay
+                sidebarOverlay.classList.add('active');
+            } else {
+                // Desktop: content shifts, no overlay
+                sidebarOverlay.classList.remove('active');
+            }
         }
 
-        // Bulk Actions Functions
+        // Close sidebar
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const mainContent = document.getElementById('mainContent');
+            
+            sidebar.classList.remove('open');
+            hamburgerBtn.classList.remove('active');
+            mainContent.classList.remove('sidebar-open');
+            sidebarOverlay.classList.remove('active');
+            sidebarOpen = false;
+        }
+
+        // Bulk actions functions
         function toggleBulkActions() {
             isBulkActionMode = !isBulkActionMode;
             const bulkActions = document.getElementById('bulkActions');
@@ -888,46 +3423,56 @@
             
             if (isBulkActionMode) {
                 bulkActions.classList.add('show');
+                bulkActions.style.display = 'flex';
                 bulkActionBtn.innerHTML = '<i class="fas fa-times"></i> Batal Pilih';
-                bulkActionBtn.style.background = 'var(--danger)';
-                bulkActionBtn.style.color = 'white';
+                bulkActionBtn.classList.add('active');
             } else {
                 bulkActions.classList.remove('show');
+                bulkActions.style.display = 'none';
                 bulkActionBtn.innerHTML = '<i class="fas fa-check-square"></i> Pilih Notifikasi';
-                bulkActionBtn.style.background = '';
-                bulkActionBtn.style.color = '';
+                bulkActionBtn.classList.remove('active');
                 selectedNotifications.clear();
                 updateSelectedCount();
             }
             
-            renderAllNotifications();
+            renderNotifications();
         }
 
-        function toggleNotificationSelection(id) {
-            if (selectedNotifications.has(id)) {
-                selectedNotifications.delete(id);
-            } else {
+        function toggleNotificationSelection(id, isChecked) {
+            if (isChecked) {
                 selectedNotifications.add(id);
+            } else {
+                selectedNotifications.delete(id);
             }
             updateSelectedCount();
         }
 
         function selectAllNotifications() {
-            // Hanya pilih notifikasi yang sesuai dengan filter aktif
+            // Get all notification IDs based on current filter
             const filteredNotifications = getFilteredNotifications();
-            const filteredNotificationIds = filteredNotifications.map(n => n.id);
             
-            // Jika semua notifikasi yang difilter sudah terpilih, hapus semua
-            const allFilteredSelected = filteredNotificationIds.every(id => selectedNotifications.has(id));
+            // Terapkan filter tanggal jika ada
+            let filtered = filteredNotifications;
+            if (currentDateFilter) {
+                filtered = filtered.filter(notification => {
+                    const notificationDate = getNotificationDate(notification);
+                    return notificationDate === currentDateFilter;
+                });
+            }
             
-            if (allFilteredSelected) {
-                filteredNotificationIds.forEach(id => selectedNotifications.delete(id));
+            // Check if all are already selected
+            const allSelected = filtered.every(n => selectedNotifications.has(n.id));
+            
+            if (allSelected) {
+                // Deselect all
+                filtered.forEach(n => selectedNotifications.delete(n.id));
             } else {
-                filteredNotificationIds.forEach(id => selectedNotifications.add(id));
+                // Select all
+                filtered.forEach(n => selectedNotifications.add(n.id));
             }
             
             updateSelectedCount();
-            renderAllNotifications();
+            renderNotifications();
         }
 
         function updateSelectedCount() {
@@ -935,580 +3480,273 @@
         }
 
         function markSelectedAsRead() {
-            if (selectedNotifications.size === 0) {
-                showNotification('Pilih notifikasi yang ingin ditandai sudah dibaca', 'warning');
+            const selectedCount = selectedNotifications.size;
+            if (selectedCount === 0) {
+                showToast('Pilih notifikasi yang ingin ditandai sudah dibaca', 'warning');
                 return;
             }
 
             notifications = notifications.map(n =>
                 selectedNotifications.has(n.id) ? { ...n, read: true } : n
             );
-            localStorage.setItem("notifications", JSON.stringify(notifications));
+            
+            saveNotifications();
             selectedNotifications.clear();
             updateSelectedCount();
-            renderAllNotifications();
-            updateNotificationBadge();
-            showNotification('Notifikasi berhasil ditandai sudah dibaca', 'success');
+            renderNotifications();
+            updateNotificationStats();
+            showToast(`${selectedCount} notifikasi ditandai sudah dibaca`, 'success');
+            
+            // Auto exit bulk mode setelah selesai
+            if (isBulkActionMode) {
+                toggleBulkActions();
+            }
         }
 
         function deleteSelectedNotifications() {
-            if (selectedNotifications.size === 0) {
-                showNotification('Pilih notifikasi yang ingin dihapus', 'warning');
+            const selectedCount = selectedNotifications.size;
+            if (selectedCount === 0) {
+                showToast('Pilih notifikasi yang ingin dihapus', 'warning');
                 return;
             }
 
-            if (confirm(`Apakah Anda yakin ingin menghapus ${selectedNotifications.size} notifikasi?`)) {
+            if (confirm(`Apakah Anda yakin ingin menghapus ${selectedCount} notifikasi?`)) {
                 notifications = notifications.filter(n => !selectedNotifications.has(n.id));
-                localStorage.setItem("notifications", JSON.stringify(notifications));
+                saveNotifications();
                 selectedNotifications.clear();
                 updateSelectedCount();
-                renderAllNotifications();
-                updateNotificationBadge();
-                showNotification('Notifikasi berhasil dihapus', 'success');
+                renderNotifications();
+                updateNotificationStats();
+                showToast(`${selectedCount} notifikasi berhasil dihapus`, 'success');
+                
+                // Auto exit bulk mode setelah selesai
+                if (isBulkActionMode) {
+                    toggleBulkActions();
+                }
             }
         }
 
-        // Back to list function
-        function goBackToList() {
-            window.location.href = 'notification.html';
-        }
-
-        // PERBAIKAN: Fungsi untuk mendapatkan notifikasi yang sudah difilter dengan benar
-        function getFilteredNotifications() {
-            if (currentFilter === 'all') {
-                return notifications;
+        function markAllAsRead() {
+            if (notifications.length === 0) {
+                showToast('Tidak ada notifikasi', 'warning');
+                return;
             }
-            
-            // Filter berdasarkan type yang sesuai
-            const filtered = notifications.filter(n => n.type === currentFilter);
-            console.log(`Filter: ${currentFilter}, Jumlah: ${filtered.length}`);
-            
-            return filtered;
+
+            notifications = notifications.map(n => ({ ...n, read: true }));
+            saveNotifications();
+            renderNotifications();
+            updateNotificationStats();
+            showToast('Semua notifikasi ditandai sudah dibaca', 'success');
         }
 
-        function renderAllNotifications(notifId) {
-            const urlParams = new URLSearchParams(window.location.search);
-            notifId = notifId || urlParams.get('id');
-            
-            if (notifId) {
-                // Tampilkan detail notifikasi
-                const notification = notifications.find(n => n.id === notifId);
-                if (!notification) {
-                    showNotification('Notifikasi tidak ditemukan', 'error');
-                    window.location.href = 'notification.html';
-                    return;
-                }
+        // Notification functions
+        function markNotificationAsRead(id) {
+            notifications = notifications.map(n =>
+                n.id === id ? { ...n, read: true } : n
+            );
+            saveNotifications();
+            renderNotifications();
+            updateNotificationStats();
+            showToast('Notifikasi ditandai sudah dibaca', 'success');
+        }
 
-                document.getElementById('notificationsCard').style.display = 'none';
-                const notifGrid = document.getElementById('notificationsReadCard');
-                document.getElementById('backButton').classList.add('show');
-                document.getElementById('bulkActionBtn').style.display = 'none';
-                document.getElementById('bulkActions').classList.remove('show');
+        function deleteNotification(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus notifikasi ini?')) {
+                notifications = notifications.filter(n => n.id !== id);
+                saveNotifications();
+                renderNotifications();
+                updateNotificationStats();
+                showToast('Notifikasi berhasil dihapus', 'success');
                 
-                const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
-                const filteredPlants = allPlants.find(plant => plant.id === notification.plantId);
-
-                let messageDesc = "";
-                let additionalInfo = "";
-                let actionButton = "";
-                
-                if (notification.type === "watering") {
-                    messageDesc = "Jadwal Penyiraman";
-                    additionalInfo = filteredPlants ? 
-                        `Tanaman ${filteredPlants.name} perlu disiram hari ini sesuai jadwal` : 
-                        "Informasi tanaman tidak tersedia";
-                    actionButton = `<button class="btn-primary" onclick="confirmWatering('${notification.plantId}', '${notification.id}')" style="margin-top: 15px;">
-                        <i class="fas fa-tint"></i> Konfirmasi Penyiraman
-                    </button>`;
-                } else if (notification.type === "harvest") {
-                    messageDesc = "Waktunya Panen";
-                    additionalInfo = filteredPlants ? 
-                        `Tanaman ${filteredPlants.name} siap dipanen pada tanggal ${filteredPlants.harvestDate || '-'}` : 
-                        "Informasi tanaman tidak tersedia";
-                } else if (notification.type === "create-plant") {
-                    messageDesc = "Tanaman Baru";
-                    additionalInfo = filteredPlants ? 
-                        `Tanaman ${filteredPlants.name} berhasil ditanam pada tanggal ${filteredPlants.startDate || '-'}` : 
-                        "Informasi tanaman tidak tersedia";
-                } else if (notification.type === "watering-confirmation") {
-                    messageDesc = "Konfirmasi Penyiraman";
-                    additionalInfo = filteredPlants ? 
-                        `Penyiraman tanaman ${filteredPlants.name} berhasil dikonfirmasi` : 
-                        "Informasi tanaman tidak tersedia";
-                } else if (notification.type === "fertilizing") {
-                    messageDesc = "Jadwal Pemupukan";
-                    additionalInfo = filteredPlants ? 
-                        `Tanaman ${filteredPlants.name} perlu dipupuk hari ini sesuai jadwal` : 
-                        "Informasi tanaman tidak tersedia";
-                    actionButton = `<button class="btn-primary" onclick="confirmFertilizing('${notification.plantId}', '${notification.id}')" style="margin-top: 15px; background: #795548;">
-                        <i class="fas fa-seedling"></i> Konfirmasi Pemupukan
-                    </button>`;
-                } else if (notification.type === "fertilizing-confirmation") {
-                    messageDesc = "Konfirmasi Pemupukan";
-                    additionalInfo = filteredPlants ? 
-                        `Pemupukan tanaman ${filteredPlants.name} berhasil dikonfirmasi` : 
-                        "Informasi tanaman tidak tersedia";
-                } else if (notification.type === "pest") {
-                    messageDesc = "Peringatan Hama";
-                    additionalInfo = filteredPlants ? 
-                        `Tanaman ${filteredPlants.name} terdeteksi serangan hama, segera lakukan penanganan` : 
-                        "Informasi tanaman tidak tersedia";
-                } else if (notification.type === "success") {
-                    messageDesc = "Hasil Panen Berhasil";
-                    additionalInfo = filteredPlants ? 
-                        `Panen tanaman ${filteredPlants.name} berhasil dengan hasil yang memuaskan` : 
-                        "Informasi tanaman tidak tersedia";
-                } else {
-                    messageDesc = notification.title;
-                    additionalInfo = notification.message;
+                // Jika yang dihapus adalah notifikasi yang sedang dilihat detailnya
+                if (currentDetailId === id) {
+                    goBackToList();
                 }
+            }
+        }
 
-                notifGrid.innerHTML =`
-                    <div class="notification-read">
-                        <div class="notification-content">
-                            <div style="display: flex; align-items: center; margin-bottom: 15px;">
-                                <div class="notification-icon ${getNotificationTypeClass(notification.type)}">
-                                    <i class="fas ${getNotificationTypeIcon(notification.type)}"></i>
-                                </div>
-                                <h4>${notification.title}</h4>
-                            </div>
-                            <p>${notification.message}</p>
-                            <div style="margin-top: 15px; padding: 15px; background: var(--primary-light); border-radius: 8px;">
-                                <h5 style="margin-bottom: 10px; color: var(--primary-color);">Detail:</h5>
-                                <p style="color: var(--text-color); line-height: 1.6;">${additionalInfo}</p>
-                                ${actionButton}
-                            </div>
-                            <p style="color: var(--text-light); font-size: 12px; margin-top: 15px;">
-                                <strong>Diterima:</strong> ${notification.date}<br>
-                                <strong>Status:</strong> <span style="color: ${notification.read ? 'var(--success)' : 'var(--warning)'}">
-                                    ${notification.read ? 'Sudah dibaca' : 'Belum dibaca'}
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                `;
-                
-                // Tandai sebagai sudah dibaca saat membuka detail
-                if (!notification.read) {
-                    markNotificationAsRead(notifId);
-                }
+        function handleNotificationAction(notificationId, type, plantId) {
+            // Untuk semua konfirmasi (penyiraman, pemupukan, panen)
+            // Arahkan ke dashboard dengan highlight tanaman
+            if (plantId) {
+                goToDashboard(plantId);
             } else {
-                // Tampilkan daftar notifikasi
-                document.getElementById('notificationsReadCard').style.display = 'none';
-                document.getElementById('backButton').classList.remove('show');
-                document.getElementById('bulkActionBtn').style.display = 'inline-flex';
-                const notifGrid = document.getElementById('notificationsCard');
-            
-                // Gunakan notifikasi yang sudah difilter
-                const filteredNotifications = getFilteredNotifications();
-                
-                console.log('Notifikasi yang ditampilkan:', filteredNotifications);
-                console.log('Filter aktif:', currentFilter);
-                
-                if (filteredNotifications.length === 0) {
-                    notifGrid.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-bell-slash"></i>
-                            <h3 style="color: var(--text-light); margin-bottom: 10px;">Tidak ada notifikasi</h3>
-                            <p style="color: var(--text-light);">Tidak ada notifikasi dengan filter "${currentFilter}".</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // Urutkan notifikasi: yang belum dibaca di atas, kemudian berdasarkan tanggal terbaru
-                const sortedNotifications = [...filteredNotifications].sort((a, b) => {
-                    if (a.read !== b.read) {
-                        return a.read ? 1 : -1;
-                    }
-                    return new Date(b.date) - new Date(a.date);
-                });
-
-                notifGrid.innerHTML = sortedNotifications.map(notification => {
-                    const isSelected = selectedNotifications.has(notification.id);
-                    const isRead = notification.read;
-                    const statusClass = isRead ? 'read' : 'unread';
-                    const statusText = isRead ? 'Sudah dibaca' : 'Belum dibaca';
-                    
-                    return `
-                        <div class="notification-item" style="display: flex; align-items: center; ${isRead ? 'opacity: 0.7;' : ''}">
-                            ${isBulkActionMode ? `
-                                <input type="checkbox" class="notification-checkbox" ${isSelected ? 'checked' : ''} 
-                                    onchange="toggleNotificationSelection('${notification.id}')" style="margin-right: 15px;">
-                            ` : ''}
-                            <div class="notification-content" style="flex: 1;">
-                                <div style="display: flex; justify-content: between; align-items: flex-start;">
-                                    <div style="flex: 1; display: flex; align-items: flex-start;">
-                                        <div class="notification-icon ${getNotificationTypeClass(notification.type)}">
-                                            <i class="fas ${getNotificationTypeIcon(notification.type)}"></i>
-                                        </div>
-                                        <div style="flex: 1;">
-                                            <h4 style="margin: 0 0 5px 0; color: ${isRead ? 'var(--text-light)' : 'var(--text-color)'};">${notification.title}</h4>
-                                            <p style="margin: 0; color: var(--text-light); font-size: 14px;">${notification.message}</p>
-                                            <span class="notification-status ${statusClass}">${statusText}</span>
-                                            <span class="notification-date">${notification.date}</span>
-                                        </div>
-                                    </div>
-                                    ${!isBulkActionMode ? `
-                                        <div class="notification-actions">
-                                            <a href="notification.html?id=${notification.id}" style="margin-right: 10px; color: var(--primary-color);" title="Lihat Detail">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <button class="notification-menu-btn" onclick="showNotificationMenu(event, '${notification.id}')" title="Menu">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
-                                            <div class="notification-dropdown" id="dropdown-${notification.id}">
-                                                <button onclick="markNotificationAsRead('${notification.id}'); renderAllNotifications();">
-                                                    <i class="fas fa-check"></i> Tandai Dibaca
-                                                </button>
-                                                <button class="delete" onclick="deleteNotification('${notification.id}')">
-                                                    <i class="fas fa-trash"></i> Hapus
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ` : ''}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
+                showToast('ID tanaman tidak ditemukan', 'error');
             }
-
-            updateNotificationBadge();
         }
 
-        // Show notification menu
-        function showNotificationMenu(event, notificationId) {
-            event.preventDefault();
-            event.stopPropagation();
-            
-            // Hide all other dropdowns
-            document.querySelectorAll('.notification-dropdown').forEach(dropdown => {
-                dropdown.classList.remove('show');
-            });
-            
-            // Show current dropdown
-            const dropdown = document.getElementById(`dropdown-${notificationId}`);
-            dropdown.classList.toggle('show');
-            
-            // Close dropdown when clicking outside
-            const closeDropdown = (e) => {
-                if (!dropdown.contains(e.target) && !event.target.closest('.notification-menu-btn')) {
-                    dropdown.classList.remove('show');
-                    document.removeEventListener('click', closeDropdown);
-                }
+        // Create notification
+        function createNotification(title, message, type, plantId, plantName, timestamp = null) {
+            const now = timestamp ? new Date(timestamp) : new Date();
+            const newNotification = {
+                id: now.getTime().toString() + Math.random().toString(36).substr(2, 9),
+                title: title,
+                message: message,
+                type: type,
+                timestamp: now.toISOString(),
+                date: now.toISOString().split('T')[0],
+                createdAt: now.toISOString(),
+                read: false,
+                userId: currentUser.id,
+                plantId: plantId,
+                plantName: plantName,
+                recommendedTime: type === 'watering' ? 'Pagi hari (06:00 - 09:00)' : 
+                               type === 'fertilizing' ? 'Sore hari (15:00 - 17:00)' : null
             };
             
+            notifications.unshift(newNotification);
+            saveNotifications();
+            renderNotifications();
+            updateNotificationStats();
+            
+            return newNotification;
+        }
+
+        function saveNotifications() {
+            // Get all notifications from localStorage
+            const allNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
+            
+            // Remove old notifications for this user
+            const otherNotifications = allNotifications.filter(n => 
+                n.userId !== currentUser.id && n.userId
+            );
+            
+            // Simpan dengan urutan terbaru di atas
+            const updatedNotifications = [...otherNotifications, ...notifications];
+            
+            // Save to localStorage
+            localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+        }
+
+        // Generate daily notifications
+        function generateDailyNotifications() {
+            const today = new Date().toISOString().split('T')[0];
+            const lastNotificationDate = localStorage.getItem('lastNotificationDate');
+            
+            // Only generate once per day
+            if (lastNotificationDate === today) return;
+            
+            const plants = JSON.parse(localStorage.getItem('plants')) || [];
+            const userPlants = plants.filter(plant => 
+                plant.userId === currentUser.id || !plant.userId
+            );
+            
+            const now = new Date();
+            const timestamp = now.toISOString();
+            
+            userPlants.forEach(plant => {
+                // Check for watering due today
+                if (plant.nextWatering === today && plant.progress < 100) {
+                    const existingNotification = notifications.find(n => 
+                        n.plantId === plant.id && n.type === 'watering' && n.date === today
+                    );
+                    
+                    if (!existingNotification) {
+                        createNotification(
+                            'Jadwal Penyiraman',
+                            `Tanaman ${plant.name} perlu disiram hari ini`,
+                            'watering',
+                            plant.id,
+                            plant.name,
+                            timestamp
+                        );
+                    }
+                }
+                
+                // Check for fertilizing due today
+                if (plant.nextFertilizing === today && plant.progress < 100) {
+                    const existingNotification = notifications.find(n => 
+                        n.plantId === plant.id && n.type === 'fertilizing' && n.date === today
+                    );
+                    
+                    if (!existingNotification) {
+                        createNotification(
+                            'Jadwal Pemupukan',
+                            `Tanaman ${plant.name} perlu dipupuk hari ini`,
+                            'fertilizing',
+                            plant.id,
+                            plant.name,
+                            timestamp
+                        );
+                    }
+                }
+                
+                // Check for harvest due in next 3 days
+                if (plant.harvestDate) {
+                    const harvestDate = new Date(plant.harvestDate);
+                    const todayDate = new Date();
+                    const diffDays = Math.ceil((harvestDate - todayDate) / (1000 * 60 * 60 * 24));
+                    
+                    if (diffDays >= 0 && diffDays <= 3 && plant.progress < 100) {
+                        const existingNotification = notifications.find(n => 
+                            n.plantId === plant.id && n.type === 'harvest' && n.date === today
+                        );
+                        
+                        if (!existingNotification) {
+                            createNotification(
+                                'Jadwal Panen',
+                                `Tanaman ${plant.name} siap dipanen dalam ${diffDays} hari`,
+                                'harvest',
+                                plant.id,
+                                plant.name,
+                                timestamp
+                            );
+                        }
+                    }
+                }
+            });
+            
+            // Update last notification date
+            localStorage.setItem('lastNotificationDate', today);
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = toast.querySelector('i');
+            
+            // Set message and icon
+            toastMessage.textContent = message;
+            
+            // Set icon based on type
+            toastIcon.className = 'fas ' + (
+                type === 'success' ? 'fa-check-circle' :
+                type === 'error' ? 'fa-exclamation-circle' :
+                type === 'warning' ? 'fa-exclamation-triangle' :
+                'fa-info-circle'
+            );
+            
+            // Set toast class
+            toast.className = 'toast ' + type;
+            
+            // Show toast
+            toast.classList.add('show');
+            
+            // Auto hide after 5 seconds
             setTimeout(() => {
-                document.addEventListener('click', closeDropdown);
-            }, 0);
+                hideToast();
+            }, 5000);
+        }
+
+        // Hide toast notification
+        function hideToast() {
+            document.getElementById('toast').classList.remove('show');
         }
 
         // Logout function
         function logout() {
-            localStorage.removeItem('currentUser');
-            showNotification('Logout berhasil', 'success');
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 1000);
-        }
-
-        // Initialize notification system
-        function initializeNotificationSystem() {
-            // Check if we need to generate daily notifications
-            const today = new Date().toISOString().split('T')[0];
-            if (lastNotificationDate !== today) {
-                generateDailyNotifications();
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                localStorage.removeItem('currentUser');
+                showToast('Berhasil keluar', 'success');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
             }
-            
-            // Setup mobile menu
-            setupMobileMenu();
         }
 
-        function loadNotificationSettings() {
-            // Load notification settings from localStorage
-            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {
-                watering: true,
-                harvest: true,
-                'create-plant': true,
-                'watering-confirmation': true,
-                fertilizing: true,
-                'fertilizing-confirmation': true,
-                pest: true,
-                success: true,
-                email: false,
-                time: "08:00"
-            };
-            return settings;
-        }
-
-        // FUNGSI BARU: Generate notifikasi pemupukan
-        function generateFertilizingNotifications() {
-            const today = new Date().toISOString().split('T')[0];
-            const plants = JSON.parse(localStorage.getItem('plants')) || [];
-            const settings = loadNotificationSettings();
-            
-            plants.forEach(plant => {
-                // Cek apakah tanaman milik user saat ini
-                const isUserPlant = plant.userId === currentUser?.id || 
-                                  plant.userEmail === currentUser?.email ||
-                                  !plant.userId;
-                
-                if (!isUserPlant || !settings.fertilizing) return;
-                
-                // Cek jika tanaman perlu pemupukan hari ini
-                if (plant.nextFertilizing === today && plant.progress < 100) {
-                    const existingNotification = notifications.find(n => 
-                        n.plantId === plant.id && n.type === "fertilizing" && n.date === today
-                    );
-                    
-                    if (!existingNotification) {
-                        notifications.push({
-                            id: generateUniqueID(),
-                            type: "fertilizing",
-                            plantId: plant.id,
-                            title: "Jadwal Pemupukan",
-                            message: `Tanaman ${plant.name} perlu dipupuk hari ini`,
-                            date: today,
-                            read: false
-                        });
-                        
-                        console.log(`Notifikasi pemupukan dibuat untuk tanaman: ${plant.name}`);
-                    }
-                }
-            });
-            
-            localStorage.setItem("notifications", JSON.stringify(notifications));
-            updateNotificationBadge();
-        }
-
-        // FUNGSI BARU: Konfirmasi pemupukan
-        function confirmFertilizing(plantId, notificationId) {
-            const plants = JSON.parse(localStorage.getItem('plants')) || [];
-            const plantIndex = plants.findIndex(p => p.id === plantId);
-            
-            if (plantIndex === -1) {
-                showNotification('Tanaman tidak ditemukan', 'error');
-                return;
-            }
-            
-            const plant = plants[plantIndex];
-            
-            // Update status pemupukan
-            plant.lastFertilized = new Date().toISOString().split('T')[0];
-            
-            // Calculate next fertilizing date
-            const nextDate = new Date();
-            let fertilizeScheduleDays = plant.fertilizerSchedule;
-            
-            // Handle custom fertilize schedule
-            if (typeof fertilizeScheduleDays === 'string' && fertilizeScheduleDays.startsWith('custom-')) {
-                fertilizeScheduleDays = parseInt(fertilizeScheduleDays.split('-')[1]);
-            } else {
-                fertilizeScheduleDays = parseInt(fertilizeScheduleDays);
-            }
-            
-            nextDate.setDate(nextDate.getDate() + fertilizeScheduleDays);
-            plant.nextFertilizing = nextDate.toISOString().split('T')[0];
-            
-            // Update progress (pemupukan menambah progress 5%)
-            plant.progress = Math.min(plant.progress + 5, 100);
-            
-            // Update localStorage
-            localStorage.setItem('plants', JSON.stringify(plants));
-            
-            // Buat notifikasi konfirmasi
-            const today = new Date().toISOString().split('T')[0];
-            notifications.push({
-                id: generateUniqueID(),
-                type: "fertilizing-confirmation",
-                plantId: plantId,
-                title: "Konfirmasi Pemupukan",
-                message: `Pemupukan tanaman ${plant.name} berhasil dikonfirmasi`,
-                date: today,
-                read: false
-            });
-            
-            // Tandai notifikasi asli sebagai sudah dibaca
-            markNotificationAsRead(notificationId);
-            
-            localStorage.setItem("notifications", JSON.stringify(notifications));
-            updateNotificationBadge();
-            
-            showNotification('Pemupukan berhasil dikonfirmasi! Progress tanaman bertambah.', 'success');
-            renderAllNotifications();
-        }
-
-        // FUNGSI BARU: Konfirmasi penyiraman dari notifikasi
-        function confirmWatering(plantId, notificationId) {
-            const plants = JSON.parse(localStorage.getItem('plants')) || [];
-            const plantIndex = plants.findIndex(p => p.id === plantId);
-            
-            if (plantIndex === -1) {
-                showNotification('Tanaman tidak ditemukan', 'error');
-                return;
-            }
-            
-            const plant = plants[plantIndex];
-            
-            // Update status penyiraman
-            plant.lastWatered = new Date().toISOString().split('T')[0];
-            plant.progress = Math.min(plant.progress + 10, 100);
-            
-            // Calculate next watering date
-            const nextDate = new Date();
-            let waterScheduleDays = plant.waterSchedule;
-            
-            if (typeof waterScheduleDays === 'string' && waterScheduleDays.startsWith('custom-')) {
-                waterScheduleDays = parseInt(waterScheduleDays.split('-')[1]);
-            } else {
-                waterScheduleDays = parseInt(waterScheduleDays);
-            }
-            
-            nextDate.setDate(nextDate.getDate() + waterScheduleDays);
-            plant.nextWatering = nextDate.toISOString().split('T')[0];
-            
-            // Update localStorage
-            localStorage.setItem('plants', JSON.stringify(plants));
-            
-            // Buat notifikasi konfirmasi
-            const today = new Date().toISOString().split('T')[0];
-            notifications.push({
-                id: generateUniqueID(),
-                type: "watering-confirmation",
-                plantId: plantId,
-                title: "Konfirmasi Penyiraman",
-                message: `Penyiraman tanaman ${plant.name} berhasil dikonfirmasi`,
-                date: today,
-                read: false
-            });
-            
-            // Tandai notifikasi asli sebagai sudah dibaca
-            markNotificationAsRead(notificationId);
-            
-            localStorage.setItem("notifications", JSON.stringify(notifications));
-            updateNotificationBadge();
-            
-            showNotification('Penyiraman berhasil dikonfirmasi! Progress tanaman bertambah.', 'success');
-            renderAllNotifications();
-        }
-
-        function generateDailyNotifications() {
-            const today = new Date().toISOString().split('T')[0];
-            const settings = loadNotificationSettings();
-            
-            // Get plants that need notifications today
-            const plants = JSON.parse(localStorage.getItem('plants')) || [];
-            const todaysPlants = plants.filter(plant => {
-                const isUserPlant = plant.userId === currentUser?.id || 
-                                  plant.userEmail === currentUser?.email ||
-                                  !plant.userId;
-                
-                if (!isUserPlant) return false;
-                
-                if (settings.watering && plant.nextWatering === today && plant.progress < 100) {
-                    return true;
-                }
-                
-                if (settings.harvest && plant.harvestDate === today && plant.progress < 100) {
-                    return true;
-                }
-                
-                if (settings.fertilizing && plant.nextFertilizing === today && plant.progress < 100) {
-                    return true;
-                }
-                
-                return false;
-            });
-
-            // Generate notifications
-            todaysPlants.forEach(plant => {
-                if (settings.watering && plant.nextWatering === today) {
-                    const existingNotification = notifications.find(n => 
-                        n.plantId === plant.id && n.type === "watering" && n.date === today
-                    );
-                    
-                    if (!existingNotification) {
-                        notifications.push({
-                            id: generateUniqueID(),
-                            type: "watering",
-                            plantId: plant.id,
-                            title: "Jadwal Penyiraman",
-                            message: `Tanaman ${plant.name} perlu disiram hari ini`,
-                            date: today,
-                            read: false
-                        });
-                    }
-                }
-
-                if (settings.harvest && plant.harvestDate === today) {
-                    const existingNotification = notifications.find(n => 
-                        n.plantId === plant.id && n.type === "harvest" && n.date === today
-                    );
-                    
-                    if (!existingNotification) {
-                        notifications.push({
-                            id: generateUniqueID(),
-                            type: "harvest",
-                            plantId: plant.id,
-                            title: "Waktunya Panen",
-                            message: `${plant.name} siap dipanen hari ini!`,
-                            date: today,
-                            read: false
-                        });
-                    }
-                }
-
-                if (settings.fertilizing && plant.nextFertilizing === today) {
-                    const existingNotification = notifications.find(n => 
-                        n.plantId === plant.id && n.type === "fertilizing" && n.date === today
-                    );
-                    
-                    if (!existingNotification) {
-                        notifications.push({
-                            id: generateUniqueID(),
-                            type: "fertilizing",
-                            plantId: plant.id,
-                            title: "Jadwal Pemupukan",
-                            message: `Tanaman ${plant.name} perlu dipupuk hari ini`,
-                            date: today,
-                            read: false
-                        });
-                    }
-                }
-            });
-
-            // Save notifications and update last notification date
-            localStorage.setItem("notifications", JSON.stringify(notifications));
-            localStorage.setItem("lastNotificationDate", today);
-            lastNotificationDate = today;
-            
-            updateNotificationBadge();
-        }
-
-        function generateUniqueID() {
-            return Date.now().toString() + Math.random().toString(36).substring(2);
-        }
-
-        // PERBAIKAN: Fungsi untuk sinkronisasi notifikasi dari plants.html
-        function syncNotificationsFromPlants() {
-            // Ambil notifikasi terbaru dari localStorage
-            const latestNotifications = JSON.parse(localStorage.getItem("notifications")) || [];
-            
-            // Periksa apakah ada notifikasi baru yang perlu ditambahkan
-            if (latestNotifications.length > notifications.length) {
-                notifications = latestNotifications;
-                renderAllNotifications();
-                updateNotificationBadge();
-                console.log('Notifikasi disinkronisasi dari plants.html');
-            }
-            
-            // Generate notifikasi pemupukan yang mungkin tertunda
-            generateFertilizingNotifications();
-        }
-
-        // PERBAIKAN: Tambahkan interval untuk sinkronisasi notifikasi
-        setInterval(syncNotificationsFromPlants, 2000); // Sinkron setiap 2 detik
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initNotificationPage);
     </script>
 </body>
 </html>
