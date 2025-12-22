@@ -753,7 +753,7 @@
         position: absolute;
         width: 15px;
         height: 15px;
-        background-image: url("data:image/svg+xml,%3Csvg width='15' height='15' viewBox='0 0 15 15' xmlns='http://www.w3.org2000/svg'%3E%3Cpath d='M7.5,1 C10,4 12,5 14,7 C11,10 9,11 6,13 C4,11 2,10 0,7 C2,5 4,4 7.5,1 Z' fill='%23C8E6C9' fill-opacity='0.3'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg width='15' height='15' viewBox='0 0 15 15' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.5,1 C10,4 12,5 14,7 C11,10 9,11 6,13 C4,11 2,10 0,7 C2,5 4,4 7.5,1 Z' fill='%23C8E6C9' fill-opacity='0.3'/%3E%3C/svg%3E");
         background-size: contain;
         opacity: 0;
         pointer-events: none;
@@ -1228,7 +1228,6 @@
         box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
     }
 
-    /* PERBAIKAN UTAMA: Button Lihat Semua yang konsisten dengan schedule.html */
     .view-all {
         color: var(--primary-color);
         text-decoration: none;
@@ -1279,7 +1278,6 @@
         }
     }
 
-    /* PERBAIKAN UTAMA: Plant Card dengan warna border sesuai jadwal */
     .plant-card {
         background: white;
         border-radius: var(--card-radius);
@@ -1304,36 +1302,6 @@
     .plant-card.today:hover {
         border-color: var(--primary-dark);
         box-shadow: 0 8px 24px rgba(76, 175, 80, 0.3);
-    }
-
-    /* Jadwal Menyiram (7 hari) - BORDER BIRU */
-    .plant-card.info {
-        border-color: var(--info);
-    }
-
-    .plant-card.info:hover {
-        border-color: #1976D2;
-        box-shadow: 0 8px 24px rgba(33, 150, 243, 0.3);
-    }
-
-    /* Jadwal Pemupukan (7 hari) - BORDER COKLAT */
-    .plant-card.fertilizer {
-        border-color: var(--fertilizer);
-    }
-
-    .plant-card.fertilizer:hover {
-        border-color: #5D4037;
-        box-shadow: 0 8px 24px rgba(121, 85, 72, 0.3);
-    }
-
-    /* Jadwal Panen (14 hari) - BORDER KUNING/ORANGE */
-    .plant-card.harvest-card {
-        border-color: var(--harvest);
-    }
-
-    .plant-card.harvest-card:hover {
-        border-color: #D84315;
-        box-shadow: 0 8px 24px rgba(255, 87, 34, 0.3);
     }
 
     /* Priority indicators untuk yang urgent */
@@ -1465,7 +1433,7 @@
         100% { background-position: 25px 25px; }
     }
 
-    /* PERBAIKAN UTAMA: Plant Actions untuk Jadwal Hari Ini */
+    /* Plant Actions untuk Jadwal Hari Ini */
     .plant-actions {
         display: flex;
         flex-wrap: wrap;
@@ -2908,7 +2876,7 @@
                 </div>
             </div>
 
-            <!-- Stats Section - DIPERBARUI dengan perhitungan yang sama dengan schedule.html -->
+            <!-- Stats Section -->
             <div class="stats-section">
                 <div class="stat-card">
                     <div class="stat-icon total">
@@ -2948,52 +2916,16 @@
                 </div>
             </div>
 
-            <!-- PERBAIKAN: Jadwal Hari Ini Section dengan BORDER HIJAU -->
+            <!-- HANYA Jadwal Hari Ini Section -->
             <div class="schedule-section">
                 <div class="section-header">
                     <h2><i class="fas fa-calendar-day"></i> Jadwal Hari Ini</h2>
+                    <a href="schedule.html" class="view-all">
+                        Lihat Jadwal Lengkap <i class="fas fa-chevron-right"></i>
+                    </a>
                 </div>
                 <div class="plants-grid" id="todaysScheduledGrid">
                     <!-- Jadwal hari ini akan diisi oleh JavaScript -->
-                </div>
-            </div>
-
-            <!-- PERBAIKAN: Jadwal Menyiram Section (7 hari) dengan BORDER BIRU -->
-            <div class="schedule-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-tint"></i> Jadwal Menyiram</h2>
-                    <a href="schedule.html?type=watering" class="view-all" id="wateringViewAll">
-                        Lihat Semua <i class="fas fa-chevron-right"></i>
-                    </a>
-                </div>
-                <div class="plants-grid" id="wateringScheduledGrid">
-                    <!-- Jadwal menyiram akan diisi oleh JavaScript -->
-                </div>
-            </div>
-
-            <!-- PERBAIKAN: Jadwal Pemupukan Section (7 hari) dengan BORDER COKLAT -->
-            <div class="schedule-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-seedling"></i> Jadwal Pemupukan</h2>
-                    <a href="schedule.html?type=fertilizing" class="view-all" id="fertilizingViewAll">
-                        Lihat Semua <i class="fas fa-chevron-right"></i>
-                    </a>
-                </div>
-                <div class="plants-grid" id="fertilizingScheduledGrid">
-                    <!-- Jadwal pemupukan akan diisi oleh JavaScript -->
-                </div>
-            </div>
-
-            <!-- PERBAIKAN: Jadwal Panen Section (14 hari) dengan BORDER KUNING/ORANGE -->
-            <div class="schedule-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-hourglass-half"></i> Jadwal Panen</h2>
-                    <a href="schedule.html?type=harvest" class="view-all" id="harvestViewAll">
-                        Lihat Semua <i class="fas fa-chevron-right"></i>
-                    </a>
-                </div>
-                <div class="plants-grid" id="harvestScheduledGrid">
-                    <!-- Jadwal panen akan diisi oleh JavaScript -->
                 </div>
             </div>
 
@@ -3127,7 +3059,7 @@
         let userCoordinates = null;
         const WEATHER_API_KEY = '6e7e8c91f7e646aa91e194852250112';
 
-        // Helper function to normalize date to start of day (SAMA DENGAN schedule.html)
+        // Helper function to normalize date to start of day
         function normalizeDate(date) {
             const normalized = new Date(date);
             normalized.setHours(0, 0, 0, 0);
@@ -3183,7 +3115,7 @@
             });
         }
 
-        // Get image from IndexedDB (SAMA DENGAN schedule.html)
+        // Get image from IndexedDB
         function getImageFromIndexedDB(imageId) {
             return new Promise((resolve, reject) => {
                 const transaction = db.transaction("images", "readonly");
@@ -3313,12 +3245,9 @@
         function updateDashboard() {
             updateStats();
             renderTodaysSchedule();
-            renderWateringSchedule();
-            renderFertilizingSchedule();
-            renderHarvestSchedule();
         }
 
-        // PERBAIKAN: Update statistics counters dengan perhitungan yang sama dengan schedule.html
+        // Update statistics counters
         function updateStats() {
             const today = normalizeDate(new Date());
             
@@ -3383,7 +3312,7 @@
             updateCounter();
         }
 
-        // PERBAIKAN UTAMA: Render today's schedule dengan BORDER HIJAU
+        // Render today's schedule dengan BORDER HIJAU
         async function renderTodaysSchedule() {
             const today = normalizeDate(new Date());
             
@@ -3547,271 +3476,6 @@
                         </div>
                         
                         ${buttonsHTML}
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // PERBAIKAN: Render watering schedule (7 hari ke depan) dengan BORDER BIRU
-        async function renderWateringSchedule() {
-            const today = normalizeDate(new Date());
-            const nextWeek = new Date(today);
-            nextWeek.setDate(today.getDate() + 7);
-            
-            const wateringPlants = plants.filter(plant => {
-                if (!plant.nextWatering) return false;
-                const waterDate = normalizeDate(new Date(plant.nextWatering));
-                return waterDate <= nextWeek && waterDate >= today && plant.progress < 100;
-            }).slice(0, 3);
-            
-            const grid = document.getElementById('wateringScheduledGrid');
-            
-            if (wateringPlants.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-tint"></i>
-                        <h3>Tidak ada jadwal menyiram</h3>
-                        <p>Tidak ada jadwal penyiraman dalam 7 hari ke depan</p>
-                        <button class="btn-primary" onclick="window.location.href='plants.html'">
-                            <i class="fas fa-plus"></i> Tambah Tanaman
-                        </button>
-                    </div>
-                `;
-                return;
-            }
-            
-            const imagePromises = wateringPlants.map(async plant => {
-                if (!plant.plantImage) return 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
-                const img = await getImageFromIndexedDB(plant.plantImage);
-                return img || 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
-            });
-
-            const imageResults = await Promise.all(imagePromises);
-            
-            grid.innerHTML = wateringPlants.map((plant, index) => {
-                const waterDate = normalizeDate(new Date(plant.nextWatering));
-                const todayNormalized = normalizeDate(new Date());
-                const daysUntil = Math.ceil((waterDate - todayNormalized) / (1000 * 60 * 60 * 24));
-                let daysText = daysUntil === 0 ? 'Hari ini' : `${daysUntil} hari lagi`;
-                
-                const imageSrc = imageResults[index];
-
-                return `
-                    <div class="plant-card info">
-                        <div class="plant-header">
-                            <h3 class="plant-name">${plant.name}</h3>
-                            <span class="plant-type">${plant.type}</span>
-                        </div>
-                        <div class="plant-details">
-                            <div class="plant-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>${plant.location}</span>
-                            </div>
-                            <div class="plant-detail">
-                                <i class="fas fa-calendar"></i>
-                                <span>${formatDate(plant.nextWatering)}</span>
-                            </div>
-                            <div class="plant-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>${plant.waterTime || '08:00'} • ${daysText}</span>
-                            </div>
-                        </div>
-                        
-                        <div class="plant-progress">
-                            <div class="progress-info">
-                                <span class="progress-label">Progress</span>
-                                <span class="progress-value">${plant.progress}%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${plant.progress}%"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="plant-actions">
-                            <button class="btn-water" onclick="openWateringModal('${plant.id}')" ${plant.progress >= 100 ? 'disabled' : ''}>
-                                <i class="fas fa-tint"></i> Konfirmasi
-                            </button>
-                            <button class="btn-details" onclick="viewPlantDetails('${plant.id}')">
-                                <i class="fas fa-info-circle"></i> Detail
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // PERBAIKAN: Render fertilizing schedule (7 hari ke depan) dengan BORDER COKLAT
-        async function renderFertilizingSchedule() {
-            const today = normalizeDate(new Date());
-            const nextWeek = new Date(today);
-            nextWeek.setDate(today.getDate() + 7);
-            
-            const fertilizingPlants = plants.filter(plant => {
-                if (!plant.nextFertilizing) return false;
-                const fertilizeDate = normalizeDate(new Date(plant.nextFertilizing));
-                return fertilizeDate <= nextWeek && fertilizeDate >= today && plant.progress < 100;
-            }).slice(0, 3);
-            
-            const grid = document.getElementById('fertilizingScheduledGrid');
-            
-            if (fertilizingPlants.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-seedling"></i>
-                        <h3>Tidak ada jadwal pemupukan</h3>
-                        <p>Tidak ada jadwal pemupukan dalam 7 hari ke depan</p>
-                        <button class="btn-primary" onclick="window.location.href='plants.html'">
-                            <i class="fas fa-plus"></i> Tambah Tanaman
-                        </button>
-                    </div>
-                `;
-                return;
-            }
-            
-            const imagePromises = fertilizingPlants.map(async plant => {
-                if (!plant.plantImage) return 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
-                const img = await getImageFromIndexedDB(plant.plantImage);
-                return img || 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
-            });
-
-            const imageResults = await Promise.all(imagePromises);
-            
-            grid.innerHTML = fertilizingPlants.map((plant, index) => {
-                const fertilizeDate = normalizeDate(new Date(plant.nextFertilizing));
-                const todayNormalized = normalizeDate(new Date());
-                const daysUntil = Math.ceil((fertilizeDate - todayNormalized) / (1000 * 60 * 60 * 24));
-                let daysText = daysUntil === 0 ? 'Hari ini' : `${daysUntil} hari lagi`;
-                
-                const imageSrc = imageResults[index];
-
-                return `
-                    <div class="plant-card fertilizer">
-                        <div class="plant-header">
-                            <h3 class="plant-name">${plant.name}</h3>
-                            <span class="plant-type">${plant.type}</span>
-                        </div>
-                        <div class="plant-details">
-                            <div class="plant-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>${plant.location}</span>
-                            </div>
-                            <div class="plant-detail">
-                                <i class="fas fa-calendar"></i>
-                                <span>${formatDate(plant.nextFertilizing)}</span>
-                            </div>
-                            <div class="plant-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>${plant.fertilizerTime || '09:00'} • ${daysText}</span>
-                            </div>
-                        </div>
-                        
-                        <div class="plant-progress">
-                            <div class="progress-info">
-                                <span class="progress-label">Progress</span>
-                                <span class="progress-value">${plant.progress}%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${plant.progress}%"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="plant-actions">
-                            <button class="btn-fertilize" onclick="openFertilizingModal('${plant.id}')" ${plant.progress >= 100 ? 'disabled' : ''}>
-                                <i class="fas fa-seedling"></i> Konfirmasi
-                            </button>
-                            <button class="btn-details" onclick="viewPlantDetails('${plant.id}')">
-                                <i class="fas fa-info-circle"></i> Detail
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // PERBAIKAN: Render harvest schedule (14 hari ke depan) dengan BORDER KUNING/ORANGE
-        async function renderHarvestSchedule() {
-            const today = normalizeDate(new Date());
-            const nextTwoWeeks = new Date(today);
-            nextTwoWeeks.setDate(today.getDate() + 14);
-            
-            const harvestPlants = plants.filter(plant => {
-                if (!plant.harvestDate) return false;
-                const harvestDate = normalizeDate(new Date(plant.harvestDate));
-                return harvestDate <= nextTwoWeeks && harvestDate >= today && plant.progress < 100;
-            }).slice(0, 3);
-            
-            const grid = document.getElementById('harvestScheduledGrid');
-            
-            if (harvestPlants.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-hourglass-half"></i>
-                        <h3>Tidak ada jadwal panen</h3>
-                        <p>Tidak ada jadwal panen dalam 14 hari ke depan</p>
-                        <button class="btn-primary" onclick="window.location.href='plants.html'">
-                            <i class="fas fa-plus"></i> Tambah Tanaman
-                        </button>
-                    </div>
-                `;
-                return;
-            }
-            
-            const imagePromises = harvestPlants.map(async plant => {
-                if (!plant.plantImage) return 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
-                const img = await getImageFromIndexedDB(plant.plantImage);
-                return img || 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
-            });
-
-            const imageResults = await Promise.all(imagePromises);
-            
-            grid.innerHTML = harvestPlants.map((plant, index) => {
-                const harvestDate = normalizeDate(new Date(plant.harvestDate));
-                const todayNormalized = normalizeDate(new Date());
-                const daysUntil = Math.ceil((harvestDate - todayNormalized) / (1000 * 60 * 60 * 24));
-                let daysText = daysUntil === 0 ? 'Hari ini' : `${daysUntil} hari lagi`;
-                let cardClass = 'harvest-card'; // BORDER KUNING/ORANGE untuk jadwal panen
-                
-                const imageSrc = imageResults[index];
-
-                return `
-                    <div class="plant-card ${cardClass}">
-                        <div class="plant-header">
-                            <h3 class="plant-name">${plant.name}</h3>
-                            <span class="plant-type">${plant.type}</span>
-                        </div>
-                        <div class="plant-details">
-                            <div class="plant-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>${plant.location}</span>
-                            </div>
-                            <div class="plant-detail">
-                                <i class="fas fa-calendar"></i>
-                                <span>${formatDate(plant.harvestDate)}</span>
-                            </div>
-                            <div class="plant-detail">
-                                <i class="fas fa-hourglass-half"></i>
-                                <span>${daysText}</span>
-                            </div>
-                        </div>
-                        
-                        <div class="plant-progress">
-                            <div class="progress-info">
-                                <span class="progress-label">Progress</span>
-                                <span class="progress-value">${plant.progress}%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${plant.progress}%"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="plant-actions">
-                            <button class="btn-harvest" onclick="confirmHarvest('${plant.id}')" style="flex: 1;">
-                                <i class="fas fa-check-circle"></i> Konfirmasi Panen
-                            </button>
-                            <button class="btn-details" onclick="viewPlantDetails('${plant.id}')">
-                                <i class="fas fa-info-circle"></i> Detail
-                            </button>
-                        </div>
                     </div>
                 `;
             }).join('');
@@ -4255,7 +3919,7 @@
             checkResponsiveBehavior();
             window.addEventListener('resize', checkResponsiveBehavior);
             
-            // PERBAIKAN: Efek yang lebih halus untuk tombol "Lihat Semua"
+            // Efek yang lebih halus untuk tombol "Lihat Semua"
             document.querySelectorAll('.view-all').forEach(button => {
                 button.addEventListener('mouseenter', function() {
                     this.style.transform = 'scale(1.02)';
@@ -4585,7 +4249,7 @@
             }
         }
 
-        // Confirm harvest (SAMA DENGAN schedule.html)
+        // Confirm harvest
         function confirmHarvest(plantId) {
             if (confirm('Apakah Anda yakin ingin mengonfirmasi panen?')) {
                 const plantIndex = plants.findIndex(p => p.id === plantId);
