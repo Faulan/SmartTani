@@ -707,7 +707,7 @@
         opacity: 0.9;
     }
 
-    /* Stats Section - KONSISTEN dengan dashboard */
+    /* Stats Section */
     .stats-section {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -837,12 +837,160 @@
         opacity: 0.9;
     }
 
-    /* Filter Section - KONSISTEN dengan dashboard */
-    .filter-section {
+    /* ==================== SEARCH FILTER SECTION (BARU) ==================== */
+    /* Disesuaikan seperti di history.html */
+    .search-filter-section {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: var(--shadow);
+        border: 2px solid var(--primary-light);
+        animation: fadeIn 0.6s ease 0.6s both;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition);
+    }
+
+    .search-filter-section:hover {
+        border-color: var(--primary-color);
+        box-shadow: var(--shadow-heavy);
+    }
+
+    .search-filter-row {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .search-filter-label {
+        font-weight: 600;
+        color: var(--text-color);
+        font-size: 16px;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .search-filter-label i {
+        color: var(--primary-color);
+        font-size: 18px;
+    }
+
+    .search-input-wrapper {
+        flex: 1;
+        min-width: 280px;
+        position: relative;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 14px 20px;
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+        color: var(--text-light);
+        transition: var(--transition);
+        background: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        cursor: pointer;
+        height: 52px;
+    }
+
+    .search-input:not(:focus):not(:valid) {
+        color: var(--text-light);
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.15);
+        color: var(--text-color);
+    }
+
+    .search-filter-actions {
+        display: flex;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+
+    .btn-search-filter {
+        padding: 14px 24px;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+        white-space: nowrap;
+        min-width: 140px;
+        justify-content: center;
+        height: 52px;
+    }
+
+    .btn-search-filter:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(46, 125, 50, 0.3);
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    }
+
+    .btn-search-filter:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.2);
+    }
+
+    .btn-clear-search {
+        padding: 14px 24px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        color: var(--text-color);
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        white-space: nowrap;
+        min-width: 140px;
+        justify-content: center;
+        height: 52px;
+    }
+
+    .btn-clear-search:hover {
+        background: linear-gradient(135deg, #e9ecef, #dee2e6);
+        border-color: #adb5bd;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+
+    .btn-clear-search:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* ==================== CATEGORY FILTER SECTION ==================== */
+    /* Disesuaikan seperti di history.html */
+    .category-filter-section {
         background: white;
         border-radius: var(--border-radius);
         padding: 35px;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
         box-shadow: var(--shadow-heavy);
         border: 3px solid var(--primary-extra-light);
         animation: fadeIn 0.6s ease;
@@ -852,50 +1000,54 @@
         transition: var(--transition);
     }
 
-    .filter-section:hover {
+    .category-filter-section:hover {
         border-color: var(--primary-light);
     }
 
-    .search-container {
-        position: relative;
-        margin-bottom: 25px;
-    }
-
-    .search-input {
-        width: 100%;
-        padding: 18px 25px 18px 50px;
-        border: 3px solid var(--primary-light);
-        border-radius: 14px;
-        font-family: 'Poppins', sans-serif;
-        font-size: 16px;
-        background: white;
-        color: var(--text-color);
-        transition: var(--transition);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-
-    .search-input:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 4px 20px rgba(46, 125, 50, 0.15);
-        transform: translateY(-2px);
-    }
-
-    .search-icon {
-        position: absolute;
-        left: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--primary-color);
-        font-size: 18px;
-    }
-
-    .filter-row {
+    .category-filter-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-wrap: wrap;
-        gap: 20px;
+        margin-bottom: 25px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--primary-extra-light);
+    }
+
+    .category-filter-header h2 {
+        margin: 0;
+        color: var(--text-color);
+        font-size: 24px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .category-filter-header h2 i {
+        color: white;
+        font-size: 20px;
+        background: var(--primary-color);
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    }
+
+    /* Bagian filter dengan keterangan "Total Tanaman" di pojok kanan */
+    .category-filter-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 14px;
+        color: var(--text-color);
+        background: linear-gradient(135deg, var(--primary-extra-light), var(--primary-light));
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: 1px solid rgba(46, 125, 50, 0.2);
+    }
+
+    .category-filter-info i {
+        color: var(--primary-color);
+        font-size: 16px;
     }
 
     .category-filters {
@@ -941,7 +1093,16 @@
         font-size: 16px;
     }
 
-    /* Button Tanam Baru - KONSISTEN dengan dashboard */
+    /* ==================== TANAM BARU BUTTON SECTION ==================== */
+    /* PERUBAHAN: Posisi button di kanan */
+    .tanam-baru-section {
+        display: flex;
+        justify-content: flex-end; /* Pindah ke kanan */
+        margin-bottom: 30px;
+        animation: fadeIn 0.6s ease;
+        width: 100%;
+    }
+
     .btn-tanam-baru {
         padding: 16px 32px;
         background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
@@ -973,14 +1134,111 @@
         transform: translateY(-1px);
     }
 
-    /* Button Tanam Baru - Perbaikan warna icon plus */
     .btn-tanam-baru i.fa-plus {
         color: white !important;
         filter: brightness(1.2);
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    /* Plants Grid - Dengan animasi border berputar */
+    /* Tombol Hapus Filter - Sama seperti di history.html */
+    .btn-clear-filter {
+        padding: 16px 32px;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 14px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        box-shadow: 0 8px 24px rgba(46, 125, 50, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        text-align: center;
+        min-width: 180px;
+        white-space: nowrap;
+        margin-top: 15px;
+    }
+
+    .btn-clear-filter i {
+        color: white !important;
+        filter: brightness(1.2);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-clear-filter:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 40px rgba(46, 125, 50, 0.4);
+    }
+
+    .btn-clear-filter:active {
+        transform: translateY(-1px);
+    }
+
+    /* ==================== PLANTS LIST SECTION ==================== */
+    /* Disesuaikan seperti di history.html */
+    .plants-list-section {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 35px;
+        margin-bottom: 30px;
+        box-shadow: var(--shadow-heavy);
+        border: 3px solid var(--primary-extra-light);
+        animation: fadeIn 0.6s ease;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition);
+    }
+
+    .plants-list-section:hover {
+        border-color: var(--primary-light);
+    }
+
+    .plants-list-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary-color), transparent);
+        opacity: 0.5;
+    }
+
+    .plants-section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .plants-section-header h2 {
+        margin: 0;
+        color: var(--text-color);
+        font-size: 26px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .plants-section-header h2 i {
+        color: white;
+        font-size: 24px;
+        background: var(--primary-color);
+        padding: 12px;
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    }
+
+    /* Plants Grid - KONSISTEN dengan history.html */
     .plants-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -994,13 +1252,13 @@
         }
     }
 
-    /* PERBAIKAN: Card tanaman dengan border transparan seperti search input */
+    /* Plant Card - KONSISTEN dengan history.html */
     .plant-card {
         background: white;
         border-radius: var(--card-radius);
         padding: 30px;
         box-shadow: var(--shadow-heavy);
-        border: 3px solid rgba(134, 239, 137, 0.8); /* Border lebih tipis dan lebih terlihat */
+        border: 3px solid rgba(134, 239, 137, 0.8);
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
@@ -1009,18 +1267,16 @@
         backdrop-filter: blur(10px);
     }
 
-    /* PERBAIKAN: Border hijau saat hover - lebih smooth */
     .plant-card:hover {
         transform: translateY(-8px);
         box-shadow: 0 20px 50px rgba(46, 125, 50, 0.2);
-        border-color: var(--primary-color); /* Border hijau saat hover */
+        border-color: var(--primary-color);
     }
 
-    /* PERBAIKAN: Border hijau saat aktif/diklik - efek lebih smooth */
     .plant-card.active {
         transform: translateY(-4px);
         box-shadow: 0 15px 40px rgba(27, 94, 32, 0.25);
-        border-color: var(--primary-color); /* Border hijau saat diklik */
+        border-color: var(--primary-color);
         animation: cardPulse 0.3s ease;
     }
 
@@ -1032,42 +1288,42 @@
 
     /* Status card variants */
     .plant-card.urgent::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         background: linear-gradient(45deg, 
-            #ffcdd2, #ffebee, 
-            #ef9a9a, #ffcdd2);
-    }
-
-    .plant-card.urgent:hover::before,
-    .plant-card.urgent.active::before {
-        background: linear-gradient(45deg, 
-            var(--danger), #ff7961,
-            var(--danger), #ff7961);
+            rgba(255, 205, 210, 0.1), 
+            rgba(239, 154, 154, 0.2));
+        z-index: 0;
     }
 
     .plant-card.warning::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         background: linear-gradient(45deg, 
-            #ffe0b2, #fff3e0, 
-            #ffcc80, #ffe0b2);
-    }
-
-    .plant-card.warning:hover::before,
-    .plant-card.warning.active::before {
-        background: linear-gradient(45deg, 
-            var(--warning), #ffb74d,
-            var(--warning), #ffb74d);
+            rgba(255, 224, 178, 0.1), 
+            rgba(255, 204, 128, 0.2));
+        z-index: 0;
     }
 
     .plant-card.completed::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         background: linear-gradient(45deg, 
-            #c8e6c9, #e8f5e9, 
-            #a5d6a7, #c8e6c9);
-    }
-
-    .plant-card.completed:hover::before,
-    .plant-card.completed.active::before {
-        background: linear-gradient(45deg, 
-            var(--success), #66bb6a,
-            var(--success), #66bb6a);
+            rgba(200, 230, 201, 0.1), 
+            rgba(165, 214, 167, 0.2));
+        z-index: 0;
     }
 
     .plant-header {
@@ -1075,6 +1331,8 @@
         justify-content: space-between;
         align-items: flex-start;
         margin-bottom: 25px;
+        position: relative;
+        z-index: 1;
     }
 
     .plant-name {
@@ -1101,6 +1359,8 @@
         flex-direction: column;
         gap: 15px;
         margin-bottom: 25px;
+        position: relative;
+        z-index: 1;
     }
 
     .plant-detail {
@@ -1158,6 +1418,8 @@
         border-radius: 14px;
         margin: 20px 0;
         border: 2px solid rgba(46, 125, 50, 0.1);
+        position: relative;
+        z-index: 1;
     }
 
     .schedule-item {
@@ -1198,6 +1460,8 @@
 
     .plant-progress {
         margin: 25px 0;
+        position: relative;
+        z-index: 1;
     }
 
     .progress-info {
@@ -1264,12 +1528,14 @@
         100% { background-position: 25px 25px; }
     }
 
-    /* Plant Actions - KONSISTEN dengan dashboard */
+    /* Plant Actions */
     .plant-actions {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 12px;
         margin-top: 25px;
+        position: relative;
+        z-index: 1;
     }
 
     .btn-water, .btn-fertilize, .btn-progress {
@@ -1283,8 +1549,10 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
-        transition: var(--transition);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
     }
 
     .btn-water {
@@ -1292,9 +1560,33 @@
         color: white;
     }
 
+    .btn-water::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        transform: translate(-50%, -50%);
+        transition: width 0.5s, height 0.5s;
+    }
+
+    .btn-water:active::before {
+        width: 200px;
+        height: 200px;
+    }
+
     .btn-water:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(33, 150, 243, 0.4);
+        box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
+    }
+
+    .btn-water:active {
+        transform: translateY(-1px) scale(0.98);
+        box-shadow: 0 4px 10px rgba(33, 150, 243, 0.2);
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
 
     .btn-water:disabled {
@@ -1309,9 +1601,33 @@
         color: white;
     }
 
+    .btn-fertilize::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        transform: translate(-50%, -50%);
+        transition: width 0.5s, height 0.5s;
+    }
+
+    .btn-fertilize:active::before {
+        width: 200px;
+        height: 200px;
+    }
+
     .btn-fertilize:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(121, 85, 72, 0.4);
+        box-shadow: 0 8px 20px rgba(121, 85, 72, 0.3);
+    }
+
+    .btn-fertilize:active {
+        transform: translateY(-1px) scale(0.98);
+        box-shadow: 0 4px 10px rgba(121, 85, 72, 0.2);
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
 
     .btn-fertilize:disabled {
@@ -1326,17 +1642,40 @@
         background: transparent;
         color: var(--primary-color);
         border: 2px solid var(--primary-color);
-        font-weight: 600;
+    }
+
+    .btn-progress::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(46, 125, 50, 0.1);
+        transform: translate(-50%, -50%);
+        transition: width 0.5s, height 0.5s;
+    }
+
+    .btn-progress:active::before {
+        width: 200px;
+        height: 200px;
     }
 
     .btn-progress:hover {
         background: var(--primary-color);
         color: white;
         transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(46, 125, 50, 0.4);
+        box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
     }
 
-    /* Empty State - KONSISTEN dengan dashboard */
+    .btn-progress:active {
+        transform: translateY(-1px) scale(0.98);
+        box-shadow: 0 4px 10px rgba(46, 125, 50, 0.2);
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    /* Empty State */
     .empty-state {
         text-align: center;
         padding: 60px 20px;
@@ -1562,7 +1901,6 @@
     }
 
     /* ==================== FORM IMPROVEMENTS ==================== */
-    /* PERBAIKAN UTAMA: Form input styling konsisten dengan login */
     .form-group {
         margin-bottom: 25px;
     }
@@ -1591,7 +1929,6 @@
         font-size: 16px;
     }
 
-    /* PERBAIKAN: Input styling konsisten dengan login page */
     .input-with-icon input,
     .input-with-icon select,
     .input-with-icon textarea {
@@ -1608,7 +1945,6 @@
         font-weight: 500;
     }
 
-    /* PERBAIKAN: Teks input tidak terlalu tipis */
     .input-with-icon input::placeholder,
     .input-with-icon select::placeholder,
     .input-with-icon textarea::placeholder {
@@ -1632,7 +1968,18 @@
         font-weight: 500;
     }
 
-    /* Improved Time Input - Modern HTML5 time input */
+    /* PERUBAHAN: Hapus ikon jam di sebelah kanan */
+    .time-input-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    /* Hapus ikon jam di sebelah kanan */
+    .time-input-wrapper::after {
+        display: none;
+    }
+
+    /* Styling khusus untuk input time di mobile */
     .input-with-icon input[type="time"] {
         padding: 14px 15px 14px 45px;
         font-family: 'Poppins', sans-serif;
@@ -1643,29 +1990,24 @@
 
     /* Custom styling untuk input time di Chrome/Edge */
     .input-with-icon input[type="time"]::-webkit-calendar-picker-indicator {
-        background: none;
-        display: none;
-    }
-
-    .time-input-wrapper {
-        position: relative;
+        background: transparent;
+        color: transparent;
         width: 100%;
-    }
-
-    .time-input-wrapper::after {
-        content: '🕐';
+        height: 100%;
         position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--text-light);
-        font-size: 16px;
-        pointer-events: none;
-        z-index: 1;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+        opacity: 0;
     }
 
-    .input-with-icon input[type="time"]:hover {
-        background-color: rgba(46, 125, 50, 0.05);
+    /* Styling untuk tampilan input time di mobile */
+    @media (max-width: 768px) {
+        .input-with-icon input[type="time"] {
+            padding-right: 15px;
+            appearance: none;
+            -webkit-appearance: none;
+        }
     }
 
     .form-row {
@@ -1850,7 +2192,7 @@
         box-shadow: 0 8px 24px rgba(0,0,0,0.15);
     }
 
-    /* PERBAIKAN: Button Mulai Menanam di modal - Efek lembut */
+    /* Button Mulai Menanam di modal */
     .btn-primary {
         flex: 1;
         padding: 16px 24px;
@@ -2447,6 +2789,26 @@
         .stats-section {
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         }
+        
+        .category-filter-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .search-filter-row {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .search-input-wrapper {
+            min-width: 100%;
+        }
+        
+        .search-filter-actions {
+            width: 100%;
+            justify-content: center;
+        }
     }
 
     @media (max-width: 992px) {
@@ -2463,7 +2825,9 @@
         }
         
         .page-header,
-        .filter-section {
+        .search-filter-section,
+        .category-filter-section,
+        .plants-list-section {
             padding: 25px;
         }
         
@@ -2485,13 +2849,20 @@
             justify-content: flex-start;
         }
 
-        .filter-row {
-            flex-direction: column;
-            align-items: stretch;
+        .plant-actions {
+            grid-template-columns: 1fr;
         }
 
-        .btn-tanam-baru {
+        .search-filter-actions {
             width: 100%;
+            justify-content: center;
+        }
+        
+        .btn-search-filter,
+        .btn-clear-search {
+            flex: 1;
+            justify-content: center;
+            min-width: 120px;
         }
     }
 
@@ -2505,26 +2876,14 @@
             grid-template-columns: 1fr;
         }
         
-        .section-header {
-            flex-direction: column;
-            gap: 20px;
-            align-items: flex-start;
-        }
-        
-        .plant-actions {
-            grid-template-columns: 1fr;
-        }
-        
-        .btn-progress {
-            grid-column: span 1;
-        }
-        
         .main {
             padding: 20px;
         }
         
         .page-header,
-        .filter-section {
+        .search-filter-section,
+        .category-filter-section,
+        .plants-list-section {
             padding: 20px;
         }
         
@@ -2555,6 +2914,60 @@
         }
 
         .category-filter {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .plant-actions {
+            grid-template-columns: 1fr;
+        }
+
+        .search-filter-actions {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .btn-search-filter,
+        .btn-clear-search {
+            flex: 1;
+            justify-content: center;
+            min-width: 130px;
+        }
+        
+        .search-filter-section {
+            padding: 15px;
+        }
+        
+        .search-filter-label {
+            font-size: 15px;
+        }
+        
+        .btn-search-filter,
+        .btn-clear-search {
+            padding: 12px 18px;
+            font-size: 14px;
+            min-width: 130px;
+        }
+        
+        /* Layout mobile untuk search filter */
+        .search-filter-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 15px;
+        }
+        
+        .search-input-wrapper {
+            min-width: 100%;
+            max-width: 100%;
+        }
+        
+        .search-filter-actions {
+            width: 100%;
+            flex-direction: column;
+        }
+        
+        .btn-search-filter,
+        .btn-clear-search {
             width: 100%;
             justify-content: center;
         }
@@ -2616,6 +3029,15 @@
         .category-filter {
             justify-content: flex-start;
         }
+        
+        .search-filter-actions {
+            flex-direction: column;
+        }
+        
+        .btn-search-filter,
+        .btn-clear-search {
+            width: 100%;
+        }
     }
 
     @media (max-width: 360px) {
@@ -2628,7 +3050,9 @@
         }
         
         .page-header,
-        .filter-section {
+        .search-filter-section,
+        .category-filter-section,
+        .plants-list-section {
             padding: 15px;
         }
         
@@ -2639,7 +3063,7 @@
         
         .stat-icon {
             width: 45px;
-        height: 45px;
+            height: 45px;
             font-size: 18px;
         }
         
@@ -2665,6 +3089,22 @@
             right: 20px;
             left: 20px;
             max-width: none;
+        }
+        
+        .category-filter {
+            padding: 12px 18px;
+            font-size: 14px;
+        }
+        
+        .search-filter-section {
+            padding: 12px;
+        }
+        
+        .btn-search-filter,
+        .btn-clear-search {
+            padding: 12px;
+            font-size: 13px;
+            min-width: auto;
         }
     }
     </style>
@@ -2826,41 +3266,75 @@
                 </div>
             </div>
 
-            <!-- Filter Section -->
-            <div class="filter-section">
-                <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Cari tanaman..." id="searchPlants">
-                    <i class="fas fa-search search-icon"></i>
-                </div>
-                
-                <div class="filter-row">
-                    <div class="category-filters">
-                        <button class="category-filter active" data-category="all">
-                            <i class="fas fa-layer-group"></i> Semua
+            <!-- Search Filter Section (BARU) -->
+            <div class="search-filter-section" id="searchFilterSection">
+                <div class="search-filter-row">
+                    <div class="search-filter-label">
+                        <i class="fas fa-search"></i>
+                        <span>Cari Tanaman:</span>
+                    </div>
+                    <div class="search-input-wrapper">
+                        <input type="text" id="searchFilterInput" class="search-input" placeholder="Masukkan nama tanaman...">
+                    </div>
+                    <div class="search-filter-actions">
+                        <button class="btn-search-filter" id="searchFilterBtn">
+                            <i class="fas fa-search"></i>
+                            <span>Cari</span>
                         </button>
-                        <button class="category-filter" data-category="needs-water">
-                            <i class="fas fa-tint"></i> Perlu Disiram
-                        </button>
-                        <button class="category-filter" data-category="needs-fertilizer">
-                            <i class="fas fa-seedling"></i> Perlu Dipupuk
-                        </button>
-                        <button class="category-filter" data-category="upcoming-harvest">
-                            <i class="fas fa-hourglass-half"></i> Akan Panen
-                        </button>
-                        <button class="category-filter" data-category="completed">
-                            <i class="fas fa-check-circle"></i> Selesai
+                        <button class="btn-clear-search" id="clearSearchBtn">
+                            <i class="fas fa-times" style="color: #333;"></i> <!-- PERUBAHAN: Ikon X berwarna hitam -->
+                            <span>Hapus Pencarian</span>
                         </button>
                     </div>
-                    
-                    <button class="btn-tanam-baru" onclick="openPlantingModal()">
-                        <i class="fas fa-plus"></i> Tanam Baru
+                </div>
+            </div>
+
+            <!-- Category Filter Section -->
+            <div class="category-filter-section" id="categoryFilterSection">
+                <div class="category-filter-header">
+                    <h2><i class="fas fa-filter"></i> Filter Kategori Tanaman Saya</h2>
+                    <div class="category-filter-info">
+                        <i class="fas fa-seedling"></i>
+                        <span>Total Tanaman: <strong id="filterTotalPlants">0</strong></span>
+                    </div>
+                </div>
+                
+                <div class="category-filters">
+                    <button class="category-filter active" data-category="all">
+                        <i class="fas fa-layer-group"></i> Semua
+                    </button>
+                    <button class="category-filter" data-category="needs-water">
+                        <i class="fas fa-tint"></i> Perlu Disiram
+                    </button>
+                    <button class="category-filter" data-category="needs-fertilizer">
+                        <i class="fas fa-seedling"></i> Perlu Dipupuk
+                    </button>
+                    <button class="category-filter" data-category="upcoming-harvest">
+                        <i class="fas fa-hourglass-half"></i> Akan Panen
+                    </button>
+                    <button class="category-filter" data-category="completed">
+                        <i class="fas fa-check-circle"></i> Selesai
                     </button>
                 </div>
             </div>
 
-            <!-- Plants Grid -->
-            <div class="plants-grid" id="plantsGrid">
-                <!-- Plants will be populated by JavaScript -->
+            <!-- Tanam Baru Button Section - DIKANAN -->
+            <div class="tanam-baru-section">
+                <button class="btn-tanam-baru" onclick="openPlantingModal()">
+                    <i class="fas fa-plus"></i> Tanam Baru
+                </button>
+            </div>
+
+            <!-- Plants List Section -->
+            <div class="plants-list-section" id="plantsListSection">
+                <div class="plants-section-header">
+                    <h2><i class="fas fa-leaf"></i> Daftar Tanaman</h2>
+                </div>
+                
+                <!-- Plants Grid -->
+                <div class="plants-grid" id="plantsGrid">
+                    <!-- Plants will be populated by JavaScript -->
+                </div>
             </div>
 
             <!-- Footer -->
@@ -3325,16 +3799,22 @@
         let userDropdownOpen = false;
         let sidebarOpen = false;
         let currentFilter = 'all';
+        let currentSearchQuery = '';
+        let cameraStream = null;
         
         // Initialize IndexedDB
         async function initDB() {
             return new Promise((resolve, reject) => {
-                const request = indexedDB.open("SmartTaniDB", 1);
+                const request = indexedDB.open("SmartTaniDB", 2);
                 
                 request.onupgradeneeded = function(event) {
                     db = event.target.result;
                     if (!db.objectStoreNames.contains("images")) {
                         db.createObjectStore("images", { keyPath: "id", autoIncrement: true });
+                    }
+                    if (!db.objectStoreNames.contains("plants")) {
+                        const plantStore = db.createObjectStore("plants", { keyPath: "id" });
+                        plantStore.createIndex("userId", "userId", { unique: false });
                     }
                 };
                 
@@ -3361,7 +3841,8 @@
                         imageData: data, 
                         createdAt: new Date().toISOString(),
                         fileName: file.name,
-                        fileType: file.type
+                        fileType: file.type,
+                        size: file.size
                     });
 
                     request.onsuccess = function() {
@@ -3371,6 +3852,9 @@
                         reject("Gagal menyimpan gambar ke database");
                     };
                 };
+                reader.onerror = function() {
+                    reject("Gagal membaca file");
+                };
                 reader.readAsDataURL(file);
             });
         }
@@ -3378,9 +3862,14 @@
         // Get image from IndexedDB
         function getImageFromIndexedDB(imageId) {
             return new Promise((resolve, reject) => {
+                if (!imageId) {
+                    resolve(null);
+                    return;
+                }
+                
                 const transaction = db.transaction("images", "readonly");
                 const store = transaction.objectStore("images");
-                const request = store.get(imageId);
+                const request = store.get(parseInt(imageId));
 
                 request.onsuccess = function(event) {
                     resolve(event.target.result ? event.target.result.imageData : null);
@@ -3413,7 +3902,7 @@
             });
         }
 
-        // PERBAIKAN: Reset image preview
+        // Reset image preview
         function resetImagePreview() {
             const imagePreview = document.getElementById('imagePreview');
             const fileName = document.getElementById('fileName');
@@ -3426,14 +3915,13 @@
                 fileName.textContent = '';
             }
             
-            // Reset file input jika ada
             const fileInput = document.getElementById('plantImage');
             if (fileInput) {
                 fileInput.value = '';
             }
         }
 
-        // PERBAIKAN: Reset form dengan lebih lengkap
+        // Reset form dengan lebih lengkap
         function resetForm(formId, previewId, fileNameId, fileInputId = null) {
             const form = document.getElementById(formId);
             if (form) {
@@ -3496,20 +3984,38 @@
             document.addEventListener('click', function(e) {
                 const plantCard = e.target.closest('.plant-card');
                 if (plantCard) {
-                    // Remove active class from all cards
                     document.querySelectorAll('.plant-card').forEach(card => {
                         card.classList.remove('active');
                     });
-                    // Add active class to clicked card
                     plantCard.classList.add('active');
                 }
             });
+            
+            // Debug: Tampilkan data di console
+            console.log('Plants page initialized successfully');
+            console.log('Current User:', currentUser);
+            console.log('Plants loaded:', plants);
         }
 
-        // Load user's plants
+        // Load user's plants - DIPERBAIKI
         function loadUserPlants() {
-            const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
-            plants = allPlants.filter(plant => plant.userId == currentUser.id);
+            try {
+                const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
+                console.log('All plants from localStorage:', allPlants);
+                console.log('Current User ID:', currentUser.id);
+                
+                // Pastikan kita membandingkan dengan string yang sama
+                plants = allPlants.filter(plant => {
+                    const userIdMatch = plant.userId == currentUser.id; // Gunakan == untuk kompatibilitas
+                    console.log(`Plant ${plant.id}: userId=${plant.userId}, match=${userIdMatch}`);
+                    return userIdMatch;
+                });
+                
+                console.log('Filtered plants for current user:', plants);
+            } catch (error) {
+                console.error('Error loading plants:', error);
+                plants = [];
+            }
         }
 
         // Update notifications
@@ -3518,28 +4024,16 @@
                 const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
                 const userNotifications = notifications.filter(notif => notif.userId === currentUser.id && !notif.read);
                 
-                // Update notification badge di header
                 const notificationBadge = document.getElementById('notificationBadge');
                 if (notificationBadge) {
                     notificationBadge.textContent = userNotifications.length;
-                    
-                    if (userNotifications.length === 0) {
-                        notificationBadge.style.display = 'none';
-                    } else {
-                        notificationBadge.style.display = 'flex';
-                    }
+                    notificationBadge.style.display = userNotifications.length === 0 ? 'none' : 'flex';
                 }
                 
-                // Update notification badge di sidebar
                 const sidebarNotificationBadge = document.getElementById('sidebarNotificationBadge');
                 if (sidebarNotificationBadge) {
                     sidebarNotificationBadge.textContent = userNotifications.length;
-                    
-                    if (userNotifications.length === 0) {
-                        sidebarNotificationBadge.style.display = 'none';
-                    } else {
-                        sidebarNotificationBadge.style.display = 'inline-flex';
-                    }
+                    sidebarNotificationBadge.style.display = userNotifications.length === 0 ? 'none' : 'inline-flex';
                 }
                 
                 return userNotifications.length;
@@ -3556,7 +4050,6 @@
         function updateUserInfo() {
             if (!currentUser) return;
             
-            // Set user name and email
             const userName = getUserName();
             const userEmail = currentUser.email || 'user@email.com';
             
@@ -3578,7 +4071,6 @@
                     return currentUser.name;
                 }
                 
-                // Try to get from user profiles
                 const userProfiles = JSON.parse(localStorage.getItem('userProfiles')) || [];
                 if (currentUser && currentUser.email) {
                     const userProfile = userProfiles.find(profile => profile.email === currentUser.email);
@@ -3587,7 +4079,6 @@
                     }
                 }
                 
-                // Try to get from registration data
                 const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
                 if (currentUser && currentUser.email) {
                     const registeredUser = registeredUsers.find(user => user.email === currentUser.email);
@@ -3607,6 +4098,7 @@
         // Update plants page with plant data
         function updatePlantsPage() {
             updateStats();
+            updateFilterTotalCount();
             renderPlants();
         }
 
@@ -3616,7 +4108,6 @@
             const needWatering = plants.filter(plant => plant.nextWatering === today && plant.progress < 100);
             const needFertilizing = plants.filter(plant => plant.nextFertilizing === today && plant.progress < 100);
             
-            // Plants that will be harvested in the next 7 days
             const nextWeek = new Date();
             nextWeek.setDate(nextWeek.getDate() + 7);
             const upcomingHarvest = plants.filter(plant => {
@@ -3626,12 +4117,57 @@
             
             const completedPlants = plants.filter(plant => plant.progress >= 100);
             
-            // Update counters with animation
             animateCounter('totalPlants', plants.length);
             animateCounter('needWatering', needWatering.length);
             animateCounter('needFertilizing', needFertilizing.length);
             animateCounter('completedPlants', completedPlants.length);
             animateCounter('upcomingHarvest', upcomingHarvest.length);
+        }
+
+        // Update filter total count
+        function updateFilterTotalCount() {
+            let filteredPlants = getFilteredPlants();
+            document.getElementById('filterTotalPlants').textContent = filteredPlants.length;
+        }
+
+        // Get filtered plants based on current filter and search
+        function getFilteredPlants() {
+            let filteredPlants = plants;
+
+            const today = new Intl.DateTimeFormat('en-CA').format(new Date());
+            const nextWeek = new Date();
+            nextWeek.setDate(nextWeek.getDate() + 7);
+
+            switch(currentFilter) {
+                case 'needs-water':
+                    filteredPlants = plants.filter(plant => plant.nextWatering === today && plant.progress < 100);
+                    break;
+                case 'needs-fertilizer':
+                    filteredPlants = plants.filter(plant => plant.nextFertilizing === today && plant.progress < 100);
+                    break;
+                case 'upcoming-harvest':
+                    filteredPlants = plants.filter(plant => {
+                        const harvestDate = new Date(plant.harvestDate);
+                        return harvestDate <= nextWeek && harvestDate >= new Date() && plant.progress < 100;
+                    });
+                    break;
+                case 'completed':
+                    filteredPlants = plants.filter(plant => plant.progress >= 100);
+                    break;
+                default:
+                    filteredPlants = plants;
+            }
+
+            if (currentSearchQuery.trim() !== '') {
+                const searchQuery = currentSearchQuery.toLowerCase().trim();
+                filteredPlants = filteredPlants.filter(plant => 
+                    plant.name.toLowerCase().includes(searchQuery) ||
+                    (plant.type && plant.type.toLowerCase().includes(searchQuery)) ||
+                    (plant.location && plant.location.toLowerCase().includes(searchQuery))
+                );
+            }
+
+            return filteredPlants;
         }
 
         // Animate counter value
@@ -3657,74 +4193,43 @@
             updateCounter();
         }
 
-        // Render plants based on filter
+        // Render plants based on filter and search - DIPERBAIKI
         async function renderPlants() {
             const grid = document.getElementById('plantsGrid');
-            let filteredPlants = plants;
-
-            const today = new Intl.DateTimeFormat('en-CA').format(new Date());
-            const nextWeek = new Date();
-            nextWeek.setDate(nextWeek.getDate() + 7);
-
-            // Apply filter
-            switch(currentFilter) {
-                case 'needs-water':
-                    filteredPlants = plants.filter(plant => plant.nextWatering === today && plant.progress < 100);
-                    break;
-                case 'needs-fertilizer':
-                    filteredPlants = plants.filter(plant => plant.nextFertilizing === today && plant.progress < 100);
-                    break;
-                case 'upcoming-harvest':
-                    filteredPlants = plants.filter(plant => {
-                        const harvestDate = new Date(plant.harvestDate);
-                        return harvestDate <= nextWeek && harvestDate >= new Date() && plant.progress < 100;
-                    });
-                    break;
-                case 'completed':
-                    filteredPlants = plants.filter(plant => plant.progress >= 100);
-                    break;
-                default:
-                    filteredPlants = plants;
-            }
-
-            // Apply search filter
-            const searchTerm = document.getElementById('searchPlants').value.toLowerCase();
-            if (searchTerm) {
-                filteredPlants = filteredPlants.filter(plant => 
-                    plant.name.toLowerCase().includes(searchTerm) ||
-                    plant.type.toLowerCase().includes(searchTerm) ||
-                    plant.location.toLowerCase().includes(searchTerm)
-                );
-            }
+            let filteredPlants = getFilteredPlants();
 
             if (filteredPlants.length === 0) {
+                let emptyMessage = '';
+                if (currentSearchQuery.trim() !== '') {
+                    emptyMessage = `Tidak ditemukan tanaman dengan nama "${currentSearchQuery}"`;
+                } else {
+                    emptyMessage = currentFilter !== 'all' ? 'Tidak ada tanaman dengan kategori ini' : 'Mulai dengan menanam tanaman pertama Anda';
+                }
+                
                 grid.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-seedling"></i>
                         <h3>Tidak ada tanaman</h3>
-                        <p>${currentFilter !== 'all' || searchTerm ? 'Coba ubah filter atau kata kunci pencarian' : 'Mulai dengan menanam tanaman pertama Anda'}</p>
-                        ${!searchTerm && currentFilter === 'all' ? 
+                        <p>${emptyMessage}</p>
+                        ${currentFilter === 'all' && currentSearchQuery.trim() === '' ? 
                             '<button class="btn-tanam-baru" onclick="openPlantingModal()"><i class="fas fa-plus"></i> Tanam Tanaman Pertama</button>' : 
-                            '<button class="btn-tanam-baru" onclick="clearFilters()"><i class="fas fa-times"></i> Hapus Filter</button>'
+                            '<button class="btn-clear-filter" onclick="clearAllFilters()"><i class="fas fa-times"></i> Hapus Filter</button>'
                         }
                     </div>
                 `;
                 return;
             }
-
-            // PERBAIKAN UTAMA: Urutkan tanaman berdasarkan kriteria
-            // 1. Tanaman yang baru ditambahkan (createdAt terbaru) di urutan pertama
-            // 2. Tanaman yang memiliki jadwal terdekat (hari ini) diutamakan
-            // 3. Tanaman dengan progress rendah diutamakan
+            
+            const today = new Intl.DateTimeFormat('en-CA').format(new Date());
+            
+            // Urutkan tanaman: yang butuh perhatian duluan
             filteredPlants.sort((a, b) => {
-                // Prioritas 1: Tanaman dengan jadwal hari ini
                 const aHasScheduleToday = (a.nextWatering === today || a.nextFertilizing === today) && a.progress < 100;
                 const bHasScheduleToday = (b.nextWatering === today || b.nextFertilizing === today) && b.progress < 100;
                 
                 if (aHasScheduleToday && !bHasScheduleToday) return -1;
                 if (!aHasScheduleToday && bHasScheduleToday) return 1;
                 
-                // Prioritas 2: Tanaman yang baru ditambahkan (createdAt terbaru)
                 if (a.createdAt && b.createdAt) {
                     const aDate = new Date(a.createdAt);
                     const bDate = new Date(b.createdAt);
@@ -3732,11 +4237,9 @@
                     if (aDate < bDate) return 1;
                 }
                 
-                // Prioritas 3: Tanaman dengan progress lebih rendah (lebih perlu perhatian)
                 if (a.progress < b.progress) return -1;
                 if (a.progress > b.progress) return 1;
                 
-                // Prioritas 4: Tanaman dengan jadwal panen lebih dekat
                 const aHarvestDays = Math.ceil((new Date(a.harvestDate) - new Date()) / (1000 * 60 * 60 * 24));
                 const bHarvestDays = Math.ceil((new Date(b.harvestDate) - new Date()) / (1000 * 60 * 60 * 24));
                 if (aHarvestDays < bHarvestDays) return -1;
@@ -3747,14 +4250,18 @@
             
             const imagePromises = filteredPlants.map(async plant => {
                 if (!plant.plantImage) return 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
-                const img = await getImageFromIndexedDB(plant.plantImage);
-                return img || 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
+                try {
+                    const img = await getImageFromIndexedDB(plant.plantImage);
+                    return img || 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
+                } catch (error) {
+                    console.error('Error loading image:', error);
+                    return 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
+                }
             });
 
             const imageResults = await Promise.all(imagePromises);
 
             grid.innerHTML = filteredPlants.map((plant, index) => {
-                const today = new Intl.DateTimeFormat('en-CA').format(new Date());
                 const harvestDate = new Date(plant.harvestDate);
                 const daysUntilHarvest = Math.ceil((harvestDate - new Date()) / (1000 * 60 * 60 * 24));
                 
@@ -3763,7 +4270,6 @@
                 let cardClass = '';
                 let harvestStatus = '';
                 
-                // Tentukan kelas dan status berdasarkan kondisi tanaman
                 if (plant.progress >= 100) {
                     cardClass = 'completed';
                     harvestStatus = 'Sudah Panen';
@@ -3787,12 +4293,12 @@
                     <div class="plant-card ${cardClass}">
                         <div class="plant-header">
                             <h3 class="plant-name">${plant.name}</h3>
-                            <span class="plant-type">${plant.type}</span>
+                            <span class="plant-type">${plant.type || 'Tanaman'}</span>
                         </div>
                         <div class="plant-details">
                             <div class="plant-detail">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>${plant.location}</span>
+                                <span>${plant.location || 'Belum ditentukan'}</span>
                             </div>
                             <div class="plant-detail">
                                 <i class="fas fa-calendar-alt"></i>
@@ -3808,13 +4314,13 @@
                             </div>
                             <div class="plant-detail">
                                 <i class="fas fa-hashtag"></i>
-                                <span>Jumlah: ${plant.quantity} tanaman</span>
+                                <span>Jumlah: ${plant.quantity || 1} tanaman</span>
                             </div>
                         </div>
                         
                         <div class="plant-image-container">
                             <div class="plant-image-box">
-                                <img class="plant-image" src="${imageSrc}" alt="${plant.name}">
+                                <img class="plant-image" src="${imageSrc}" alt="${plant.name}" onerror="this.src='https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman'">
                             </div>
                         </div>
                         
@@ -3842,19 +4348,19 @@
                         <div class="plant-progress">
                             <div class="progress-info">
                                 <span class="progress-label">Progress Tumbuh</span>
-                                <span class="progress-value">${plant.progress}%</span>
+                                <span class="progress-value">${plant.progress || 0}%</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${plant.progress}%"></div>
+                                <div class="progress-fill" style="width: ${plant.progress || 0}%"></div>
                             </div>
                         </div>
                         
                         <div class="plant-actions">
-                            <button class="btn-water" onclick="openWateringModal('${plant.id}')" ${plant.progress >= 100 ? 'disabled' : ''}>
-                                <i class="fas fa-tint"></i> ${plant.progress >= 100 ? 'Selesai' : 'Siram'}
+                            <button class="btn-water" onclick="openWateringModal('${plant.id}')" ${(plant.progress || 0) >= 100 ? 'disabled' : ''}>
+                                <i class="fas fa-tint"></i> ${(plant.progress || 0) >= 100 ? 'Selesai' : 'Siram'}
                             </button>
-                            <button class="btn-fertilize" onclick="openFertilizingModal('${plant.id}')" ${plant.progress >= 100 ? 'disabled' : ''}>
-                                <i class="fas fa-seedling"></i> ${plant.progress >= 100 ? 'Selesai' : 'Pupuk'}
+                            <button class="btn-fertilize" onclick="openFertilizingModal('${plant.id}')" ${(plant.progress || 0) >= 100 ? 'disabled' : ''}>
+                                <i class="fas fa-seedling"></i> ${(plant.progress || 0) >= 100 ? 'Selesai' : 'Pupuk'}
                             </button>
                             <button class="btn-progress" onclick="openProgressingModal('${plant.id}')">
                                 <i class="fas fa-chart-line"></i> Progress
@@ -3868,18 +4374,25 @@
         // Format date to readable format
         function formatDate(dateString) {
             if (!dateString) return '-';
-            const options = { day: 'numeric', month: 'short', year: 'numeric' };
-            return new Date(dateString).toLocaleDateString('id-ID', options);
+            try {
+                const options = { day: 'numeric', month: 'short', year: 'numeric' };
+                return new Date(dateString).toLocaleDateString('id-ID', options);
+            } catch (error) {
+                return dateString;
+            }
         }
 
         // Get schedule text
         function getScheduleText(schedule) {
+            if (!schedule) return 'Belum diatur';
+            
             if (typeof schedule === 'string' && schedule.startsWith('custom-')) {
                 const days = schedule.split('-')[1];
                 return `${days} Hari Sekali`;
             }
             
-            switch(parseInt(schedule)) {
+            const scheduleNum = parseInt(schedule);
+            switch(scheduleNum) {
                 case 1: return 'Setiap Hari';
                 case 2: return '2 Hari Sekali';
                 case 3: return '3 Hari Sekali';
@@ -3894,31 +4407,54 @@
         function filterPlants(category) {
             currentFilter = category;
             
-            // Update active filter button
             document.querySelectorAll('.category-filter').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
             
+            updateFilterTotalCount();
             renderPlants();
         }
 
-        // Clear all filters
-        function clearFilters() {
-            currentFilter = 'all';
-            document.getElementById('searchPlants').value = '';
+        // Search plants by name
+        function searchPlants() {
+            const searchInput = document.getElementById('searchFilterInput');
+            const searchQuery = searchInput.value.trim();
             
+            if (searchQuery === '') {
+                showToast('Masukkan nama tanaman yang ingin dicari', 'warning');
+                return;
+            }
+            
+            currentSearchQuery = searchQuery;
+            updateFilterTotalCount();
+            renderPlants();
+            showToast(`Menampilkan hasil pencarian untuk: ${searchQuery}`, 'info');
+        }
+
+        // Clear search
+        function clearSearch() {
+            currentSearchQuery = '';
+            document.getElementById('searchFilterInput').value = '';
+            updateFilterTotalCount();
+            renderPlants();
+            showToast('Pencarian dihapus', 'info');
+        }
+
+        // Clear all filters
+        function clearAllFilters() {
+            currentSearchQuery = '';
+            document.getElementById('searchFilterInput').value = '';
+            
+            currentFilter = 'all';
             document.querySelectorAll('.category-filter').forEach(btn => {
                 btn.classList.remove('active');
             });
             document.querySelector('[data-category="all"]').classList.add('active');
             
+            updateFilterTotalCount();
             renderPlants();
-        }
-
-        // Search plants
-        function searchPlants() {
-            renderPlants();
+            showToast('Semua filter dihapus', 'info');
         }
 
         // Toggle custom plant type input
@@ -3969,7 +4505,6 @@
             const hamburgerBtn = document.getElementById('hamburgerBtn');
             const sidebarOverlay = document.getElementById('sidebarOverlay');
             const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
             
             hamburgerBtn.addEventListener('click', toggleSidebar);
             sidebarOverlay.addEventListener('click', closeSidebar);
@@ -3998,6 +4533,11 @@
             document.querySelectorAll('.close-modal').forEach(btn => {
                 btn.addEventListener('click', function() {
                     this.closest('.modal').style.display = 'none';
+                    // Stop camera jika sedang berjalan
+                    if (cameraStream) {
+                        cameraStream.getTracks().forEach(track => track.stop());
+                        cameraStream = null;
+                    }
                 });
             });
             
@@ -4005,6 +4545,11 @@
             window.addEventListener('click', function(e) {
                 if (e.target.classList.contains('modal')) {
                     e.target.style.display = 'none';
+                    // Stop camera jika sedang berjalan
+                    if (cameraStream) {
+                        cameraStream.getTracks().forEach(track => track.stop());
+                        cameraStream = null;
+                    }
                 }
             });
             
@@ -4057,23 +4602,56 @@
                 });
             });
 
-            // Search input
-            document.getElementById('searchPlants').addEventListener('input', searchPlants);
+            // Search functionality
+            const searchInput = document.getElementById('searchFilterInput');
+            const searchBtn = document.getElementById('searchFilterBtn');
+            const clearSearchBtn = document.getElementById('clearSearchBtn');
+            
+            // Search button click
+            searchBtn.addEventListener('click', function() {
+                searchPlants();
+            });
+            
+            // Clear search button click
+            clearSearchBtn.addEventListener('click', function() {
+                clearSearch();
+            });
+            
+            // Enter key press in search input
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchPlants();
+                }
+            });
+            
+            // Focus styling for search input
+            searchInput.addEventListener('focus', function() {
+                this.style.borderColor = 'var(--primary-color)';
+                this.style.boxShadow = '0 0 0 4px rgba(46, 125, 50, 0.15)';
+                this.style.color = 'var(--text-color)';
+            });
+            
+            searchInput.addEventListener('blur', function() {
+                this.style.borderColor = 'var(--border-color)';
+                this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)';
+                if (!this.value) {
+                    this.style.color = 'var(--text-light)';
+                } else {
+                    this.style.color = 'var(--text-color)';
+                }
+            });
         }
 
         // Check responsive behavior
         function checkResponsiveBehavior() {
             const isDesktop = window.innerWidth >= 993;
-            const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('mainContent');
             const sidebarOverlay = document.getElementById('sidebarOverlay');
             
             if (isDesktop && sidebarOpen) {
-                // Desktop: sidebar open, content shifts
                 mainContent.classList.add('sidebar-open');
                 sidebarOverlay.classList.remove('active');
             } else if (!isDesktop && sidebarOpen) {
-                // Mobile: sidebar open, overlay shows
                 mainContent.classList.add('sidebar-open');
                 sidebarOverlay.classList.add('active');
             }
@@ -4100,13 +4678,10 @@
             mainContent.classList.add('sidebar-open');
             sidebarOpen = true;
             
-            // Check if mobile or desktop
             const isDesktop = window.innerWidth >= 993;
             if (!isDesktop) {
-                // Mobile: show overlay
                 sidebarOverlay.classList.add('active');
             } else {
-                // Desktop: content shifts, no overlay
                 sidebarOverlay.classList.remove('active');
             }
         }
@@ -4128,7 +4703,8 @@
         // Modal functions
         function openPlantingModal() {
             document.getElementById('plantingModal').style.display = 'block';
-            // PERBAIKAN: Reset semua form dan preview
+            
+            // Reset form dan preview
             document.getElementById('plantForm').reset();
             toggleCustomPlantType();
             toggleCustomWaterSchedule();
@@ -4139,57 +4715,78 @@
             document.getElementById('customWaterScheduleInput').value = '';
             document.getElementById('customFertilizerScheduleInput').value = '';
             
-            // PERBAIKAN: Reset preview gambar
+            // Reset preview gambar
             resetImagePreview();
             
             // Set default dates
             const today = new Date();
             const todayStr = today.toISOString().split('T')[0];
             document.getElementById('startDate').value = todayStr;
+            document.getElementById('startDate').min = todayStr;
             
+            // Set minimum harvest date ke besok
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
+            const tomorrowStr = tomorrow.toISOString().split('T')[0];
+            document.getElementById('harvestDate').min = tomorrowStr;
+            
+            // Default harvest date 60 hari dari sekarang
             const harvestDate = new Date(today);
-            harvestDate.setDate(today.getDate() + 60); // Default 60 days for harvest
+            harvestDate.setDate(today.getDate() + 60);
             const harvestStr = harvestDate.toISOString().split('T')[0];
             document.getElementById('harvestDate').value = harvestStr;
             
             // Set default times
             document.getElementById('waterTime').value = '08:00';
             document.getElementById('fertilizerTime').value = '09:00';
+            
+            // Debug: Log modal dibuka
+            console.log('Planting modal opened');
         }
 
         function closePlantingModal() {
-            // PERBAIKAN: Reset form dan preview sebelum menutup
             document.getElementById('plantForm').reset();
             resetImagePreview();
             document.getElementById('plantingModal').style.display = 'none';
+            // Stop camera jika sedang berjalan
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
         }
 
         function openWateringModal(plantId) {
             currentEditingPlantId = plantId;
             const modal = document.getElementById('wateringModal');
             modal.style.display = 'block';
-            // PERBAIKAN: Reset form dengan parameter yang benar
             resetForm('wateringForm', 'imagePreviewWateringProof', 'fileNameWateringProof', 'wateringProof');
         }
 
         function closeWateringModal() {
-            // PERBAIKAN: Reset form sebelum menutup
             resetForm('wateringForm', 'imagePreviewWateringProof', 'fileNameWateringProof', 'wateringProof');
             document.getElementById('wateringModal').style.display = 'none';
+            // Stop camera jika sedang berjalan
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
         }
 
         function openFertilizingModal(plantId) {
             currentEditingPlantId = plantId;
             const modal = document.getElementById('fertilizingModal');
             modal.style.display = 'block';
-            // PERBAIKAN: Reset form dengan parameter yang benar
             resetForm('fertilizingForm', 'imagePreviewFertilizingProof', 'fileNameFertilizingProof', 'fertilizingProof');
         }
 
         function closeFertilizingModal() {
-            // PERBAIKAN: Reset form sebelum menutup
             resetForm('fertilizingForm', 'imagePreviewFertilizingProof', 'fileNameFertilizingProof', 'fertilizingProof');
             document.getElementById('fertilizingModal').style.display = 'none';
+            // Stop camera jika sedang berjalan
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
         }
 
         function openProgressingModal(plantId) {
@@ -4206,7 +4803,10 @@
         function openEditPlantModal(plantId) {
             currentEditingPlantId = plantId;
             const plant = plants.find(p => p.id === plantId);
-            if (!plant) return alert("Tanaman tidak ditemukan");
+            if (!plant) {
+                showToast('Tanaman tidak ditemukan', 'error');
+                return;
+            }
 
             document.getElementById('editPlantForm').reset();
             editToggleCustomPlantType();
@@ -4219,7 +4819,6 @@
             document.getElementById('editPlantName').value = plant.name || '';
             document.getElementById('editPlantType').value = ['Padi','Kecambah','Sayuran','Buah','Herbal','Bunga'].includes(plant.type) ? plant.type : 'custom';
 
-            // Jika jenis custom, tampilkan input custom
             if (document.getElementById('editPlantType').value === 'custom') {
                 document.getElementById('editCustomPlantType').style.display = 'block';
                 document.getElementById('editCustomPlantTypeInput').value = plant.type;
@@ -4231,7 +4830,6 @@
             document.getElementById('editStartDate').value = plant.startDate || '';
             document.getElementById('editHarvestDate').value = plant.harvestDate || '';
             
-            // Jadwal siram
             const waterSchedule = plant.waterSchedule?.toString() || '';
             if (['1','2','3','7'].includes(waterSchedule)) {
                 document.getElementById('editWaterSchedule').value = waterSchedule;
@@ -4244,7 +4842,6 @@
             
             document.getElementById('editWaterTime').value = plant.waterTime || '08:00';
             
-            // Jadwal pemupukan
             const fertilizerSchedule = plant.fertilizerSchedule?.toString() || '';
             if (['7','14','30'].includes(fertilizerSchedule)) {
                 document.getElementById('editFertilizerSchedule').value = fertilizerSchedule;
@@ -4312,15 +4909,15 @@
                 const preview = document.getElementById(previewId);
                 const fileName = document.getElementById(fileNameId);
                 
-                // Check file size (max 5MB)
                 if (file.size > 5 * 1024 * 1024) {
                     showToast('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
+                    input.value = '';
                     return;
                 }
                 
-                // Check file type
                 if (!file.type.match('image.*')) {
                     showToast('Hanya file gambar yang diizinkan.', 'error');
+                    input.value = '';
                     return;
                 }
                 
@@ -4330,7 +4927,149 @@
                     preview.style.display = 'block';
                     fileName.textContent = file.name;
                 }
+                reader.onerror = function() {
+                    showToast('Gagal membaca file', 'error');
+                }
                 reader.readAsDataURL(file);
+            }
+        }
+
+        // PERBAIKAN BESAR: Fungsi openCamera yang benar-benar bekerja
+        async function openCamera(inputId) {
+            try {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    showToast('Kamera tidak didukung di perangkat ini', 'error');
+                    document.getElementById(inputId).click();
+                    return;
+                }
+
+                // Stop camera sebelumnya jika ada
+                if (cameraStream) {
+                    cameraStream.getTracks().forEach(track => track.stop());
+                    cameraStream = null;
+                }
+
+                // Akses kamera
+                cameraStream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: 'environment',
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    },
+                    audio: false 
+                });
+
+                // Buat modal kamera
+                const cameraModal = document.createElement('div');
+                cameraModal.className = 'modal';
+                cameraModal.style.display = 'block';
+                
+                cameraModal.innerHTML = `
+                    <div class="modal-content" style="max-width: 500px;">
+                        <div class="modal-header">
+                            <h3><i class="fas fa-camera"></i> Ambil Foto</h3>
+                            <button class="close-modal" onclick="closeCameraModal()">&times;</button>
+                        </div>
+                        <div class="modal-body" style="padding: 20px; text-align: center;">
+                            <video id="cameraPreview" autoplay playsinline style="width: 100%; max-width: 450px; border-radius: 8px;"></video>
+                            <div style="margin-top: 20px; display: flex; gap: 15px; justify-content: center;">
+                                <button id="captureBtn" class="btn-primary" style="padding: 12px 24px;">
+                                    <i class="fas fa-camera"></i> Ambil Foto
+                                </button>
+                                <button onclick="closeCameraModal()" class="btn-secondary" style="padding: 12px 24px;">
+                                    <i class="fas fa-times"></i> Batal
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(cameraModal);
+                
+                // Tampilkan preview kamera
+                const video = document.getElementById('cameraPreview');
+                video.srcObject = cameraStream;
+                
+                // Setup tombol capture
+                document.getElementById('captureBtn').onclick = function() {
+                    capturePhoto(inputId, video);
+                };
+                
+                // Tutup modal saat klik di luar
+                cameraModal.onclick = function(e) {
+                    if (e.target === cameraModal) {
+                        closeCameraModal();
+                    }
+                };
+                
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+                showToast('Tidak dapat mengakses kamera. Menggunakan file picker.', 'warning');
+                document.getElementById(inputId).click();
+                
+                if (error.name === 'NotAllowedError') {
+                    showToast('Izin kamera ditolak. Silakan izinkan akses kamera di pengaturan browser.', 'error');
+                } else if (error.name === 'NotFoundError') {
+                    showToast('Kamera tidak ditemukan di perangkat ini.', 'error');
+                } else if (error.name === 'NotReadableError') {
+                    showToast('Kamera sedang digunakan oleh aplikasi lain.', 'error');
+                }
+            }
+        }
+
+        // Fungsi untuk menutup modal kamera
+        function closeCameraModal() {
+            const cameraModal = document.querySelector('.modal');
+            if (cameraModal && cameraModal.parentNode) {
+                cameraModal.parentNode.removeChild(cameraModal);
+            }
+            
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+        }
+
+        // Fungsi untuk capture foto dari kamera
+        function capturePhoto(inputId, videoElement) {
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = videoElement.videoWidth;
+                canvas.height = videoElement.videoHeight;
+                
+                const context = canvas.getContext('2d');
+                context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+                
+                // Konversi canvas ke blob
+                canvas.toBlob(function(blob) {
+                    const file = new File([blob], `camera_${Date.now()}.jpg`, { 
+                        type: 'image/jpeg',
+                        lastModified: Date.now()
+                    });
+                    
+                    // Buat DataTransfer untuk simulasi file input
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    
+                    // Set file ke input yang sesuai
+                    const fileInput = document.getElementById(inputId);
+                    fileInput.files = dataTransfer.files;
+                    
+                    // Trigger change event untuk preview
+                    const event = new Event('change', { bubbles: true });
+                    fileInput.dispatchEvent(event);
+                    
+                    // Tutup modal kamera
+                    closeCameraModal();
+                    
+                    showToast('Foto berhasil diambil', 'success');
+                    
+                }, 'image/jpeg', 0.9);
+                
+            } catch (error) {
+                console.error('Error capturing photo:', error);
+                showToast('Gagal mengambil foto', 'error');
+                closeCameraModal();
             }
         }
 
@@ -4339,19 +5078,36 @@
             const plant = plants.find(p => p.id === plantId);
             const progress = document.getElementById('progressingDetail');
 
+            if (!plant) {
+                progress.innerHTML = '<p>Tanaman tidak ditemukan</p>';
+                return;
+            }
+
             let plantImage = 'https://via.placeholder.com/300x200/4CAF50/FFFFFF?text=Tanaman';
             if (plant.plantImage) {
-                plantImage = await getImageFromIndexedDB(plant.plantImage);
+                try {
+                    plantImage = await getImageFromIndexedDB(plant.plantImage);
+                } catch (error) {
+                    console.error('Error loading plant image:', error);
+                }
             }
 
             let wateringImage = 'https://via.placeholder.com/300x200/2196F3/FFFFFF?text=Belum+Ada';
             if (plant.wateringProofId) {
-                wateringImage = await getImageFromIndexedDB(plant.wateringProofId);
+                try {
+                    wateringImage = await getImageFromIndexedDB(plant.wateringProofId);
+                } catch (error) {
+                    console.error('Error loading watering image:', error);
+                }
             }
 
             let fertilizingImage = 'https://via.placeholder.com/300x200/795548/FFFFFF?text=Belum+Ada';
             if (plant.fertilizingProofId) {
-                fertilizingImage = await getImageFromIndexedDB(plant.fertilizingProofId);
+                try {
+                    fertilizingImage = await getImageFromIndexedDB(plant.fertilizingProofId);
+                } catch (error) {
+                    console.error('Error loading fertilizing image:', error);
+                }
             }
 
             const today = new Intl.DateTimeFormat('en-CA').format(new Date());
@@ -4364,16 +5120,16 @@
                         <h2 class="progress-plant-name">
                             <i class="fas fa-leaf"></i> ${plant.name}
                         </h2>
-                        <span class="progress-plant-type">${plant.type}</span>
+                        <span class="progress-plant-type">${plant.type || 'Tanaman'}</span>
                     </div>
 
                     <div class="plant-progress">
                         <div class="progress-info">
                             <span class="progress-label">Progress Tumbuh</span>
-                            <span class="progress-value">${plant.progress}%</span>
+                            <span class="progress-value">${plant.progress || 0}%</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${plant.progress}%"></div>
+                            <div class="progress-fill" style="width: ${plant.progress || 0}%"></div>
                         </div>
                     </div>
 
@@ -4383,7 +5139,7 @@
                                 <div class="progress-info-label">
                                     <i class="fas fa-map-marker-alt"></i> Lokasi
                                 </div>
-                                <div class="progress-info-value">${plant.location}</div>
+                                <div class="progress-info-value">${plant.location || 'Belum ditentukan'}</div>
                             </div>
                             <div class="progress-info-item">
                                 <div class="progress-info-label">
@@ -4422,7 +5178,7 @@
                                 <div class="progress-info-label">
                                     <i class="fas fa-hashtag"></i> Jumlah Tanaman
                                 </div>
-                                <div class="progress-info-value">${plant.quantity}</div>
+                                <div class="progress-info-value">${plant.quantity || 1}</div>
                             </div>
                             <div class="progress-info-item">
                                 <div class="progress-info-label">
@@ -4480,19 +5236,19 @@
                                 <div class="progress-image-title">
                                     <i class="fas fa-camera"></i> Foto Tanaman
                                 </div>
-                                <img class="progress-image" src="${plantImage}" alt="Foto Tanaman ${plant.name}">
+                                <img class="progress-image" src="${plantImage}" alt="Foto Tanaman ${plant.name}" onerror="this.src='https://via.placeholder.com/300x200/4CAF50/FFFFFF?text=Tanaman'">
                             </div>
                             <div class="progress-image-box">
                                 <div class="progress-image-title">
                                     <i class="fas fa-tint"></i> Bukti Penyiraman
                                 </div>
-                                <img class="progress-image" src="${wateringImage}" alt="Bukti Penyiraman ${plant.name}">
+                                <img class="progress-image" src="${wateringImage}" alt="Bukti Penyiraman ${plant.name}" onerror="this.src='https://via.placeholder.com/300x200/2196F3/FFFFFF?text=Belum+Ada'">
                             </div>
                             <div class="progress-image-box">
                                 <div class="progress-image-title">
                                     <i class="fas fa-seedling"></i> Bukti Pemupukan
                                 </div>
-                                <img class="progress-image" src="${fertilizingImage}" alt="Bukti Pemupukan ${plant.name}">
+                                <img class="progress-image" src="${fertilizingImage}" alt="Bukti Pemupukan ${plant.name}" onerror="this.src='https://via.placeholder.com/300x200/795548/FFFFFF?text=Belum+Ada'">
                             </div>
                         </div>
                     </div>
@@ -4509,14 +5265,14 @@
             `;
         }
 
-        // Handle plant form submission
+        // Handle plant form submission - DIPERBAIKI
         async function handlePlantFormSubmit(e) {
             e.preventDefault();
             
-            const plantName = document.getElementById('plantName').value;
+            const plantName = document.getElementById('plantName').value.trim();
             let plantType = document.getElementById('plantType').value;
-            const customPlantType = document.getElementById('customPlantTypeInput').value;
-            const plantLocation = document.getElementById('plantLocation').value;
+            const customPlantType = document.getElementById('customPlantTypeInput').value.trim();
+            const plantLocation = document.getElementById('plantLocation').value.trim();
             const startDate = document.getElementById('startDate').value;
             const harvestDate = document.getElementById('harvestDate').value;
             let waterSchedule = document.getElementById('waterSchedule').value;
@@ -4525,55 +5281,65 @@
             let fertilizerSchedule = document.getElementById('fertilizerSchedule').value;
             const customFertilizerSchedule = document.getElementById('customFertilizerScheduleInput').value;
             const fertilizerTime = document.getElementById('fertilizerTime').value;
-            const quantity = parseInt(document.getElementById('quantity').value);
+            const quantity = parseInt(document.getElementById('quantity').value) || 1;
+
+            // Validasi input
+            if (!plantName || !plantLocation || !startDate || !harvestDate) {
+                showToast('Harap isi semua field yang diperlukan', 'error');
+                return;
+            }
+
+            // Validasi tanggal
+            const start = new Date(startDate);
+            const harvest = new Date(harvestDate);
+            if (harvest <= start) {
+                showToast('Tanggal panen harus setelah tanggal mulai', 'error');
+                return;
+            }
 
             // Use custom plant type if selected
             if (plantType === 'custom') {
-                if (!customPlantType.trim()) {
-                    alert('Silakan isi jenis tanaman');
+                if (!customPlantType) {
+                    showToast('Silakan isi jenis tanaman', 'error');
                     return;
                 }
                 plantType = customPlantType;
+            } else if (!plantType) {
+                showToast('Silakan pilih jenis tanaman', 'error');
+                return;
             }
 
             // Use custom water schedule if selected
             if (waterSchedule === 'custom') {
                 if (!customWaterSchedule || customWaterSchedule < 1) {
-                    alert('Silakan isi jadwal penyiraman yang valid');
+                    showToast('Silakan isi jadwal penyiraman yang valid', 'error');
                     return;
                 }
                 waterSchedule = `custom-${customWaterSchedule}`;
+            } else if (!waterSchedule) {
+                showToast('Silakan pilih jadwal penyiraman', 'error');
+                return;
             }
 
             // Use custom fertilizer schedule if selected
             if (fertilizerSchedule === 'custom') {
                 if (!customFertilizerSchedule || customFertilizerSchedule < 1) {
-                    alert('Silakan isi jadwal pemupukan yang valid');
+                    showToast('Silakan isi jadwal pemupukan yang valid', 'error');
                     return;
                 }
                 fertilizerSchedule = `custom-${customFertilizerSchedule}`;
-            }
-
-            // Validate water time
-            if (!waterTime) {
-                alert('Silakan pilih waktu penyiraman');
-                return;
-            }
-
-            // Validate fertilizer time
-            if (!fertilizerTime) {
-                alert('Silakan pilih waktu pemupukan');
+            } else if (!fertilizerSchedule) {
+                showToast('Silakan pilih jadwal pemupukan', 'error');
                 return;
             }
 
             const plantImage = document.getElementById('plantImage');
             if (!plantImage.files[0]) {
-                alert('Silakan unggah foto tanaman');
+                showToast('Silakan unggah foto tanaman', 'error');
                 return;
             }
 
             let selectedFile = plantImage.files[0];
-
             let imageId = null;
 
             try {
@@ -4582,21 +5348,27 @@
                 console.log("Gambar disimpan di IndexedDB dengan ID:", imageId);
             } catch (error) {
                 console.error(error);
-                alert("Gagal menyimpan gambar ke database lokal");
+                showToast("Gagal menyimpan gambar ke database lokal", 'error');
                 return;
             }
 
+            // Buat ID user yang konsisten
+            const currentUserId = currentUser ? currentUser.id.toString() : '0';
+            
+            // Generate plant ID unik
+            const plantId = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+
             const newPlant = {
-                id: Date.now().toString(),
+                id: plantId,
                 name: plantName,
                 type: plantType,
                 location: plantLocation,
                 startDate: startDate,
                 harvestDate: harvestDate,
                 waterSchedule: waterSchedule,
-                waterTime: waterTime,
+                waterTime: waterTime || '08:00',
                 fertilizerSchedule: fertilizerSchedule,
-                fertilizerTime: fertilizerTime,
+                fertilizerTime: fertilizerTime || '09:00',
                 quantity: quantity,
                 progress: 0,
                 lastWatered: null,
@@ -4605,30 +5377,50 @@
                 nextFertilizing: startDate,
                 status: 'active',
                 plantImage: imageId,
-                userId: currentUser.id,
-                createdAt: new Date().toISOString()  // Menambahkan timestamp pembuatan
+                userId: currentUserId,
+                createdAt: new Date().toISOString(),
+                wateringProofId: null,
+                fertilizingProofId: null
             };
+
+            console.log('New plant to save:', newPlant);
 
             // Save to localStorage
             const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
             allPlants.push(newPlant);
             localStorage.setItem('plants', JSON.stringify(allPlants));
             
+            // Debug: Tampilkan data yang disimpan
+            console.log('Saved to localStorage. Total plants:', allPlants.length);
+            console.log('Last saved plant:', allPlants[allPlants.length - 1]);
+            
             // Create notification
             createNotification('Tanaman Baru', `Tanaman ${plantName} berhasil ditambahkan`, 'success', newPlant.id);
 
+            // Periksa apakah perlu notifikasi jadwal hari ini
             const today = new Intl.DateTimeFormat('en-CA').format(new Date());
             if (newPlant.startDate === today) {
                 createNotification('Jadwal Penyiraman', `Tanaman ${newPlant.name} perlu disiram hari ini`, 'info', newPlant.id);
                 createNotification('Jadwal Pemupukan', `Tanaman ${newPlant.name} perlu dipupuk hari ini`, 'info', newPlant.id);
             }
             
-            // Reload plants and update display
-            loadUserPlants();
-            updatePlantsPage();
-            closePlantingModal();
+            // Reload dan update dengan benar
+            loadUserPlants(); // Ini penting untuk memuat ulang data
+            updatePlantsPage(); // Ini akan merender ulang
+            
+            // Reset form dan tutup modal
+            document.getElementById('plantForm').reset();
+            resetImagePreview();
+            document.getElementById('plantingModal').style.display = 'none';
             
             showToast('Tanaman berhasil ditambahkan!', 'success');
+            
+            // Debug: Tampilkan data di console untuk verifikasi
+            console.log('=== DEBUG INFO ===');
+            console.log('Current User ID:', currentUserId);
+            console.log('New Plant User ID:', newPlant.userId);
+            console.log('All plants after save:', JSON.parse(localStorage.getItem('plants')));
+            console.log('Filtered plants:', plants);
         }
 
         // Handle watering form submission
@@ -4670,7 +5462,7 @@
                     nextWatering.setDate(nextWatering.getDate() + waterScheduleDays);
                     plant.nextWatering = new Intl.DateTimeFormat('en-CA').format(nextWatering);
                     plant.lastWatered = new Intl.DateTimeFormat('en-CA').format(new Date());
-                    plant.progress = Math.min(plant.progress + 10, 100);
+                    plant.progress = Math.min((plant.progress || 0) + 10, 100);
                     plant.wateringProofId = imageId;
                     
                     // Add activity to history
@@ -4690,8 +5482,11 @@
                     
                     // Update plants in localStorage
                     const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
-                    allPlants[allPlants.findIndex(p => p.id === plantId)] = plant;
-                    localStorage.setItem('plants', JSON.stringify(allPlants));
+                    const allPlantIndex = allPlants.findIndex(p => p.id === plantId);
+                    if (allPlantIndex !== -1) {
+                        allPlants[allPlantIndex] = plant;
+                        localStorage.setItem('plants', JSON.stringify(allPlants));
+                    }
                     
                     // Create notification
                     createNotification('Penyiraman dikonfirmasi', `Penyiraman tanaman ${plant.name} telah dikonfirmasi`, 'success', plantId);
@@ -4703,6 +5498,8 @@
                     
                     showToast('Penyiraman berhasil dikonfirmasi!', 'success');
                     closeWateringModal();
+                } else {
+                    showToast('Tanaman tidak ditemukan', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -4753,7 +5550,7 @@
                     nextFertilizing.setDate(nextFertilizing.getDate() + fertilizerScheduleDays);
                     plant.nextFertilizing = new Intl.DateTimeFormat('en-CA').format(nextFertilizing);
                     plant.lastFertilized = new Intl.DateTimeFormat('en-CA').format(new Date());
-                    plant.progress = Math.min(plant.progress + 5, 100);
+                    plant.progress = Math.min((plant.progress || 0) + 5, 100);
                     plant.fertilizingProofId = imageId;
                     
                     // Add activity to history
@@ -4773,8 +5570,11 @@
                     
                     // Update plants in localStorage
                     const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
-                    allPlants[allPlants.findIndex(p => p.id === plantId)] = plant;
-                    localStorage.setItem('plants', JSON.stringify(allPlants));
+                    const allPlantIndex = allPlants.findIndex(p => p.id === plantId);
+                    if (allPlantIndex !== -1) {
+                        allPlants[allPlantIndex] = plant;
+                        localStorage.setItem('plants', JSON.stringify(allPlants));
+                    }
                     
                     // Create notification
                     createNotification('Pemupukan dikonfirmasi', `Pemupukan tanaman ${plant.name} telah dikonfirmasi`, 'success', plantId);
@@ -4786,6 +5586,8 @@
                     
                     showToast('Pemupukan berhasil dikonfirmasi!', 'success');
                     closeFertilizingModal();
+                } else {
+                    showToast('Tanaman tidak ditemukan', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -4810,7 +5612,7 @@
             const location = document.getElementById('editPlantLocation').value.trim();
             const startDate = document.getElementById('editStartDate').value;
             const harvestDate = document.getElementById('editHarvestDate').value;
-            const quantity = parseInt(document.getElementById('editQuantity').value);
+            const quantity = parseInt(document.getElementById('editQuantity').value) || 1;
             const waterScheduleSelect = document.getElementById('editWaterSchedule').value;
             const fertilizerScheduleSelect = document.getElementById('editFertilizerSchedule').value;
 
@@ -4840,6 +5642,14 @@
             // Validasi
             if (!name || !type || !location || !startDate || !harvestDate || !waterSchedule || !fertilizerSchedule) {
                 showToast('Harap isi semua field yang diperlukan', 'warning');
+                return;
+            }
+
+            // Validasi tanggal
+            const start = new Date(startDate);
+            const harvest = new Date(harvestDate);
+            if (harvest <= start) {
+                showToast('Tanggal panen harus setelah tanggal mulai', 'error');
                 return;
             }
 
@@ -4878,14 +5688,11 @@
 
         // Delete plant
         async function deletePlant(plantId) {
-            // Konfirmasi dulu
             const confirmDelete = confirm("Apakah Anda yakin ingin menghapus tanaman ini?");
             if (!confirmDelete) return;
 
-            // Ambil semua tanaman dari localStorage
             let allPlants = JSON.parse(localStorage.getItem('plants')) || [];
 
-            // Cari indeks tanaman berdasarkan ID
             const index = allPlants.findIndex(p => p.id === plantId);
             if (index === -1) {
                 showToast('Tanaman tidak ditemukan!', 'error');
@@ -4895,32 +5702,18 @@
             const plantToDelete = allPlants[index];
 
             // Hapus gambar dari IndexedDB jika ada
-            if (plantToDelete.plantImage) {
-                try {
-                    await deleteImageFromIndexedDB(plantToDelete.plantImage);
-                    console.log("Gambar tanaman dihapus dari IndexedDB:", plantToDelete.plantImage);
-                } catch (err) {
-                    console.error("Gagal menghapus gambar tanaman dari IndexedDB:", err);
-                }
-            }
+            const imageIds = [
+                plantToDelete.plantImage,
+                plantToDelete.wateringProofId,
+                plantToDelete.fertilizingProofId
+            ].filter(id => id);
 
-            // Hapus gambar bukti penyiraman jika ada
-            if (plantToDelete.wateringProofId) {
+            for (const imageId of imageIds) {
                 try {
-                    await deleteImageFromIndexedDB(plantToDelete.wateringProofId);
-                    console.log("Gambar bukti penyiraman dihapus dari IndexedDB:", plantToDelete.wateringProofId);
+                    await deleteImageFromIndexedDB(imageId);
+                    console.log("Gambar dihapus dari IndexedDB:", imageId);
                 } catch (err) {
-                    console.error("Gagal menghapus gambar bukti penyiraman dari IndexedDB:", err);
-                }
-            }
-
-            // Hapus gambar bukti pemupukan jika ada
-            if (plantToDelete.fertilizingProofId) {
-                try {
-                    await deleteImageFromIndexedDB(plantToDelete.fertilizingProofId);
-                    console.log("Gambar bukti pemupukan dihapus dari IndexedDB:", plantToDelete.fertilizingProofId);
-                } catch (err) {
-                    console.error("Gagal menghapus gambar bukti pemupukan dari IndexedDB:", err);
+                    console.error("Gagal menghapus gambar dari IndexedDB:", err);
                 }
             }
 
@@ -4956,6 +5749,9 @@
                 };
                 notifications.push(newNotification);
                 localStorage.setItem('notifications', JSON.stringify(notifications));
+                
+                // Update notification badge
+                updateNotifications();
                 
                 return newNotification;
             } catch (error) {
@@ -5009,13 +5805,13 @@
             }
         }
 
-        // PERBAIKAN: Fungsi openCamera - konsisten dengan dashboard
-        function openCamera(inputId) {
-            showToast('Fitur kamera akan diakses pada perangkat yang mendukung', 'info');
-        }
-
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', initPlantsPage);
+
+        // Export fungsi closeCameraModal agar bisa diakses dari inline onclick
+        window.closeCameraModal = closeCameraModal;
+        window.openCamera = openCamera;
+        window.capturePhoto = capturePhoto;
     </script>
 </body>
 </html>
