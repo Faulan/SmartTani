@@ -838,7 +838,6 @@
     }
 
     /* ==================== SEARCH FILTER SECTION (BARU) ==================== */
-    /* Disesuaikan seperti di history.html */
     .search-filter-section {
         background: white;
         border-radius: var(--border-radius);
@@ -985,7 +984,6 @@
     }
 
     /* ==================== CATEGORY FILTER SECTION ==================== */
-    /* Disesuaikan seperti di history.html */
     .category-filter-section {
         background: white;
         border-radius: var(--border-radius);
@@ -1032,7 +1030,6 @@
         box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
     }
 
-    /* Bagian filter dengan keterangan "Total Tanaman" di pojok kanan */
     .category-filter-info {
         display: flex;
         align-items: center;
@@ -1094,10 +1091,9 @@
     }
 
     /* ==================== TANAM BARU BUTTON SECTION ==================== */
-    /* PERUBAHAN: Posisi button di kanan */
     .tanam-baru-section {
         display: flex;
-        justify-content: flex-end; /* Pindah ke kanan */
+        justify-content: flex-end;
         margin-bottom: 30px;
         animation: fadeIn 0.6s ease;
         width: 100%;
@@ -1140,7 +1136,6 @@
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    /* Tombol Hapus Filter - Sama seperti di history.html */
     .btn-clear-filter {
         padding: 16px 32px;
         background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
@@ -1180,7 +1175,6 @@
     }
 
     /* ==================== PLANTS LIST SECTION ==================== */
-    /* Disesuaikan seperti di history.html */
     .plants-list-section {
         background: white;
         border-radius: var(--border-radius);
@@ -1238,7 +1232,6 @@
         box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
     }
 
-    /* Plants Grid - KONSISTEN dengan history.html */
     .plants-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -1252,7 +1245,6 @@
         }
     }
 
-    /* Plant Card - KONSISTEN dengan history.html */
     .plant-card {
         background: white;
         border-radius: var(--card-radius);
@@ -1286,7 +1278,6 @@
         100% { border-color: var(--primary-color); }
     }
 
-    /* Status card variants */
     .plant-card.urgent::before {
         content: '';
         position: absolute;
@@ -1528,7 +1519,6 @@
         100% { background-position: 25px 25px; }
     }
 
-    /* Plant Actions */
     .plant-actions {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1675,7 +1665,6 @@
         transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
 
-    /* Empty State */
     .empty-state {
         text-align: center;
         padding: 60px 20px;
@@ -1968,18 +1957,11 @@
         font-weight: 500;
     }
 
-    /* PERUBAHAN: Hapus ikon jam di sebelah kanan */
     .time-input-wrapper {
         position: relative;
         width: 100%;
     }
 
-    /* Hapus ikon jam di sebelah kanan */
-    .time-input-wrapper::after {
-        display: none;
-    }
-
-    /* Styling khusus untuk input time di mobile */
     .input-with-icon input[type="time"] {
         padding: 14px 15px 14px 45px;
         font-family: 'Poppins', sans-serif;
@@ -1988,20 +1970,6 @@
         font-weight: 500;
     }
 
-    /* Custom styling untuk input time di Chrome/Edge */
-    .input-with-icon input[type="time"]::-webkit-calendar-picker-indicator {
-        background: transparent;
-        color: transparent;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        cursor: pointer;
-        opacity: 0;
-    }
-
-    /* Styling untuk tampilan input time di mobile */
     @media (max-width: 768px) {
         .input-with-icon input[type="time"] {
             padding-right: 15px;
@@ -2192,7 +2160,6 @@
         box-shadow: 0 8px 24px rgba(0,0,0,0.15);
     }
 
-    /* Button Mulai Menanam di modal */
     .btn-primary {
         flex: 1;
         padding: 16px 24px;
@@ -2256,7 +2223,6 @@
         opacity: 0.5;
     }
 
-    /* Efek ripple saat diklik */
     .btn-primary::after {
         content: '';
         position: absolute;
@@ -2267,7 +2233,7 @@
         background: rgba(255, 255, 255, 0.4);
         opacity: 0;
         border-radius: 100%;
-        transform: scale(1, 1) translate(-50%, -50%);
+        transform: scale(0, 0) translate(-50%, -50%);
         transform-origin: 50% 50%;
     }
 
@@ -2286,7 +2252,6 @@
         }
     }
 
-    /* Custom Input Fields */
     .custom-input,
     .custom-water-schedule,
     .custom-fertilizer-schedule {
@@ -2581,7 +2546,6 @@
         box-shadow: 0 16px 40px rgba(244, 67, 54, 0.4);
     }
 
-    /* ==================== RESPONSIVE FORM IMPROVEMENTS ==================== */
     @media (max-width: 480px) {
         .modal-body {
             padding: 20px;
@@ -2949,7 +2913,6 @@
             min-width: 130px;
         }
         
-        /* Layout mobile untuk search filter */
         .search-filter-row {
             flex-direction: column;
             align-items: stretch;
@@ -3282,7 +3245,7 @@
                             <span>Cari</span>
                         </button>
                         <button class="btn-clear-search" id="clearSearchBtn">
-                            <i class="fas fa-times" style="color: #333;"></i> <!-- PERUBAHAN: Ikon X berwarna hitam -->
+                            <i class="fas fa-times" style="color: #333;"></i>
                             <span>Hapus Pencarian</span>
                         </button>
                     </div>
@@ -3493,7 +3456,7 @@
                     <div class="form-group">
                         <label>Pilih Metode Unggah Foto</label>
                         <div class="camera-options">
-                            <button type="button" class="camera-btn" onclick="openCamera('plantImage')">
+                            <button type="button" class="camera-btn" onclick="capturePhotoDirect('plantImage')">
                                 <i class="fas fa-camera"></i> Ambil Foto Langsung
                             </button>
                             <button type="button" class="camera-btn secondary" onclick="document.getElementById('plantImage').click()">
@@ -3540,7 +3503,7 @@
                     <div class="form-group">
                         <label>Pilih Metode Unggah Foto</label>
                         <div class="camera-options">
-                            <button type="button" class="camera-btn" onclick="openCamera('wateringProof')">
+                            <button type="button" class="camera-btn" onclick="capturePhotoDirect('wateringProof')">
                                 <i class="fas fa-camera"></i> Ambil Foto Langsung
                             </button>
                             <button type="button" class="camera-btn secondary" onclick="document.getElementById('wateringProof').click()">
@@ -3592,7 +3555,7 @@
                     <div class="form-group">
                         <label>Pilih Metode Unggah Foto</label>
                         <div class="camera-options">
-                            <button type="button" class="camera-btn" onclick="openCamera('fertilizingProof')">
+                            <button type="button" class="camera-btn" onclick="capturePhotoDirect('fertilizingProof')">
                                 <i class="fas fa-camera"></i> Ambil Foto Langsung
                             </button>
                             <button type="button" class="camera-btn secondary" onclick="document.getElementById('fertilizingProof').click()">
@@ -3800,7 +3763,6 @@
         let sidebarOpen = false;
         let currentFilter = 'all';
         let currentSearchQuery = '';
-        let cameraStream = null;
         
         // Initialize IndexedDB
         async function initDB() {
@@ -3991,22 +3953,20 @@
                 }
             });
             
-            // Debug: Tampilkan data di console
             console.log('Plants page initialized successfully');
             console.log('Current User:', currentUser);
             console.log('Plants loaded:', plants);
         }
 
-        // Load user's plants - DIPERBAIKI
+        // Load user's plants
         function loadUserPlants() {
             try {
                 const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
                 console.log('All plants from localStorage:', allPlants);
                 console.log('Current User ID:', currentUser.id);
                 
-                // Pastikan kita membandingkan dengan string yang sama
                 plants = allPlants.filter(plant => {
-                    const userIdMatch = plant.userId == currentUser.id; // Gunakan == untuk kompatibilitas
+                    const userIdMatch = plant.userId == currentUser.id;
                     console.log(`Plant ${plant.id}: userId=${plant.userId}, match=${userIdMatch}`);
                     return userIdMatch;
                 });
@@ -4193,7 +4153,7 @@
             updateCounter();
         }
 
-        // Render plants based on filter and search - DIPERBAIKI
+        // Render plants based on filter and search
         async function renderPlants() {
             const grid = document.getElementById('plantsGrid');
             let filteredPlants = getFilteredPlants();
@@ -4222,7 +4182,7 @@
             
             const today = new Intl.DateTimeFormat('en-CA').format(new Date());
             
-            // Urutkan tanaman: yang butuh perhatian duluan
+            // Urutkan tanaman
             filteredPlants.sort((a, b) => {
                 const aHasScheduleToday = (a.nextWatering === today || a.nextFertilizing === today) && a.progress < 100;
                 const bHasScheduleToday = (b.nextWatering === today || b.nextFertilizing === today) && b.progress < 100;
@@ -4533,11 +4493,6 @@
             document.querySelectorAll('.close-modal').forEach(btn => {
                 btn.addEventListener('click', function() {
                     this.closest('.modal').style.display = 'none';
-                    // Stop camera jika sedang berjalan
-                    if (cameraStream) {
-                        cameraStream.getTracks().forEach(track => track.stop());
-                        cameraStream = null;
-                    }
                 });
             });
             
@@ -4545,11 +4500,6 @@
             window.addEventListener('click', function(e) {
                 if (e.target.classList.contains('modal')) {
                     e.target.style.display = 'none';
-                    // Stop camera jika sedang berjalan
-                    if (cameraStream) {
-                        cameraStream.getTracks().forEach(track => track.stop());
-                        cameraStream = null;
-                    }
                 }
             });
             
@@ -4740,7 +4690,6 @@
             document.getElementById('waterTime').value = '08:00';
             document.getElementById('fertilizerTime').value = '09:00';
             
-            // Debug: Log modal dibuka
             console.log('Planting modal opened');
         }
 
@@ -4748,11 +4697,6 @@
             document.getElementById('plantForm').reset();
             resetImagePreview();
             document.getElementById('plantingModal').style.display = 'none';
-            // Stop camera jika sedang berjalan
-            if (cameraStream) {
-                cameraStream.getTracks().forEach(track => track.stop());
-                cameraStream = null;
-            }
         }
 
         function openWateringModal(plantId) {
@@ -4765,11 +4709,6 @@
         function closeWateringModal() {
             resetForm('wateringForm', 'imagePreviewWateringProof', 'fileNameWateringProof', 'wateringProof');
             document.getElementById('wateringModal').style.display = 'none';
-            // Stop camera jika sedang berjalan
-            if (cameraStream) {
-                cameraStream.getTracks().forEach(track => track.stop());
-                cameraStream = null;
-            }
         }
 
         function openFertilizingModal(plantId) {
@@ -4782,11 +4721,6 @@
         function closeFertilizingModal() {
             resetForm('fertilizingForm', 'imagePreviewFertilizingProof', 'fileNameFertilizingProof', 'fertilizingProof');
             document.getElementById('fertilizingModal').style.display = 'none';
-            // Stop camera jika sedang berjalan
-            if (cameraStream) {
-                cameraStream.getTracks().forEach(track => track.stop());
-                cameraStream = null;
-            }
         }
 
         function openProgressingModal(plantId) {
@@ -4934,143 +4868,42 @@
             }
         }
 
-        // PERBAIKAN BESAR: Fungsi openCamera yang benar-benar bekerja
-        async function openCamera(inputId) {
-            try {
-                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                    showToast('Kamera tidak didukung di perangkat ini', 'error');
-                    document.getElementById(inputId).click();
-                    return;
-                }
-
-                // Stop camera sebelumnya jika ada
-                if (cameraStream) {
-                    cameraStream.getTracks().forEach(track => track.stop());
-                    cameraStream = null;
-                }
-
-                // Akses kamera
-                cameraStream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
-                        facingMode: 'environment',
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    },
-                    audio: false 
-                });
-
-                // Buat modal kamera
-                const cameraModal = document.createElement('div');
-                cameraModal.className = 'modal';
-                cameraModal.style.display = 'block';
-                
-                cameraModal.innerHTML = `
-                    <div class="modal-content" style="max-width: 500px;">
-                        <div class="modal-header">
-                            <h3><i class="fas fa-camera"></i> Ambil Foto</h3>
-                            <button class="close-modal" onclick="closeCameraModal()">&times;</button>
-                        </div>
-                        <div class="modal-body" style="padding: 20px; text-align: center;">
-                            <video id="cameraPreview" autoplay playsinline style="width: 100%; max-width: 450px; border-radius: 8px;"></video>
-                            <div style="margin-top: 20px; display: flex; gap: 15px; justify-content: center;">
-                                <button id="captureBtn" class="btn-primary" style="padding: 12px 24px;">
-                                    <i class="fas fa-camera"></i> Ambil Foto
-                                </button>
-                                <button onclick="closeCameraModal()" class="btn-secondary" style="padding: 12px 24px;">
-                                    <i class="fas fa-times"></i> Batal
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                document.body.appendChild(cameraModal);
-                
-                // Tampilkan preview kamera
-                const video = document.getElementById('cameraPreview');
-                video.srcObject = cameraStream;
-                
-                // Setup tombol capture
-                document.getElementById('captureBtn').onclick = function() {
-                    capturePhoto(inputId, video);
-                };
-                
-                // Tutup modal saat klik di luar
-                cameraModal.onclick = function(e) {
-                    if (e.target === cameraModal) {
-                        closeCameraModal();
-                    }
-                };
-                
-            } catch (error) {
-                console.error('Error accessing camera:', error);
-                showToast('Tidak dapat mengakses kamera. Menggunakan file picker.', 'warning');
-                document.getElementById(inputId).click();
-                
-                if (error.name === 'NotAllowedError') {
-                    showToast('Izin kamera ditolak. Silakan izinkan akses kamera di pengaturan browser.', 'error');
-                } else if (error.name === 'NotFoundError') {
-                    showToast('Kamera tidak ditemukan di perangkat ini.', 'error');
-                } else if (error.name === 'NotReadableError') {
-                    showToast('Kamera sedang digunakan oleh aplikasi lain.', 'error');
-                }
-            }
-        }
-
-        // Fungsi untuk menutup modal kamera
-        function closeCameraModal() {
-            const cameraModal = document.querySelector('.modal');
-            if (cameraModal && cameraModal.parentNode) {
-                cameraModal.parentNode.removeChild(cameraModal);
-            }
+        // PERBAIKAN UTAMA: Fungsi capturePhotoDirect yang langsung membuka kamera
+        function capturePhotoDirect(inputId) {
+            // Buat input file tersembunyi untuk kamera
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.capture = 'environment'; // Gunakan kamera belakang jika tersedia
+            fileInput.style.display = 'none';
             
-            if (cameraStream) {
-                cameraStream.getTracks().forEach(track => track.stop());
-                cameraStream = null;
-            }
-        }
-
-        // Fungsi untuk capture foto dari kamera
-        function capturePhoto(inputId, videoElement) {
-            try {
-                const canvas = document.createElement('canvas');
-                canvas.width = videoElement.videoWidth;
-                canvas.height = videoElement.videoHeight;
+            fileInput.onchange = function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
+                    
+                    // Dapatkan elemen input asli berdasarkan ID
+                    const originalInput = document.getElementById(inputId);
+                    if (originalInput) {
+                        // Buat DataTransfer untuk menyalin file
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
+                        originalInput.files = dataTransfer.files;
+                        
+                        // Trigger change event untuk preview
+                        const event = new Event('change', { bubbles: true });
+                        originalInput.dispatchEvent(event);
+                        
+                        showToast('Foto berhasil diambil', 'success');
+                    }
+                }
                 
-                const context = canvas.getContext('2d');
-                context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-                
-                // Konversi canvas ke blob
-                canvas.toBlob(function(blob) {
-                    const file = new File([blob], `camera_${Date.now()}.jpg`, { 
-                        type: 'image/jpeg',
-                        lastModified: Date.now()
-                    });
-                    
-                    // Buat DataTransfer untuk simulasi file input
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(file);
-                    
-                    // Set file ke input yang sesuai
-                    const fileInput = document.getElementById(inputId);
-                    fileInput.files = dataTransfer.files;
-                    
-                    // Trigger change event untuk preview
-                    const event = new Event('change', { bubbles: true });
-                    fileInput.dispatchEvent(event);
-                    
-                    // Tutup modal kamera
-                    closeCameraModal();
-                    
-                    showToast('Foto berhasil diambil', 'success');
-                    
-                }, 'image/jpeg', 0.9);
-                
-            } catch (error) {
-                console.error('Error capturing photo:', error);
-                showToast('Gagal mengambil foto', 'error');
-                closeCameraModal();
-            }
+                // Hapus elemen input sementara
+                document.body.removeChild(fileInput);
+            };
+            
+            // Tambahkan ke body dan trigger klik
+            document.body.appendChild(fileInput);
+            fileInput.click();
         }
 
         // Load progress detail
@@ -5265,7 +5098,7 @@
             `;
         }
 
-        // Handle plant form submission - DIPERBAIKI
+        // Handle plant form submission
         async function handlePlantFormSubmit(e) {
             e.preventDefault();
             
@@ -5390,7 +5223,6 @@
             allPlants.push(newPlant);
             localStorage.setItem('plants', JSON.stringify(allPlants));
             
-            // Debug: Tampilkan data yang disimpan
             console.log('Saved to localStorage. Total plants:', allPlants.length);
             console.log('Last saved plant:', allPlants[allPlants.length - 1]);
             
@@ -5405,8 +5237,8 @@
             }
             
             // Reload dan update dengan benar
-            loadUserPlants(); // Ini penting untuk memuat ulang data
-            updatePlantsPage(); // Ini akan merender ulang
+            loadUserPlants();
+            updatePlantsPage();
             
             // Reset form dan tutup modal
             document.getElementById('plantForm').reset();
@@ -5415,7 +5247,6 @@
             
             showToast('Tanaman berhasil ditambahkan!', 'success');
             
-            // Debug: Tampilkan data di console untuk verifikasi
             console.log('=== DEBUG INFO ===');
             console.log('Current User ID:', currentUserId);
             console.log('New Plant User ID:', newPlant.userId);
@@ -5808,10 +5639,9 @@
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', initPlantsPage);
 
-        // Export fungsi closeCameraModal agar bisa diakses dari inline onclick
-        window.closeCameraModal = closeCameraModal;
-        window.openCamera = openCamera;
-        window.capturePhoto = capturePhoto;
+        // Export fungsi ke window object
+        window.capturePhotoDirect = capturePhotoDirect;
+        window.openCamera = capturePhotoDirect; // Untuk kompatibilitas
     </script>
 </body>
 </html>
