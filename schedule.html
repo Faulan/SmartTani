@@ -901,7 +901,6 @@
         box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.15);
     }
 
-    /* PERBAIKAN: Tombol filter dengan ukuran tetap */
     .date-filter-actions {
         display: flex;
         gap: 10px;
@@ -989,7 +988,7 @@
         border-color: var(--primary-light);
     }
 
-    /* Filter Header - BARU DITAMBAHKAN */
+    /* Filter Header */
     .filter-header {
         display: flex;
         justify-content: space-between;
@@ -1127,7 +1126,7 @@
         box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
     }
 
-    /* PERBAIKAN UTAMA: Button Lihat Semua yang lebih stabil dan konsisten */
+    /* PERBAIKAN: Button Lihat Semua yang stabil */
     .view-all {
         color: var(--primary-color);
         text-decoration: none;
@@ -1204,13 +1203,12 @@
         border-color: var(--warning);
     }
 
-    /* Plant Card - PERBAIKAN: Mengubah warna border untuk panen */
     .plant-card.info {
-        border-color: var(--info); /* Ini yang membuat border biru */
+        border-color: var(--info);
     }
 
     .plant-card.harvest {
-        border-color: var(--warning); /* Ganti dengan warna orange/kuning */
+        border-color: var(--warning);
     }
 
     .plant-card.fertilizer {
@@ -1446,7 +1444,7 @@
         box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
     }
 
-    /* Empty State */
+    /* Empty State - DIPERBAIKI */
     .empty-state {
         text-align: center;
         padding: 60px 20px;
@@ -1459,6 +1457,14 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        min-height: 300px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .empty-state.loading {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+        backdrop-filter: blur(10px);
     }
 
     .empty-state i {
@@ -1816,6 +1822,7 @@
         }
     }
 
+    /* PERBAIKAN: Camera button dengan capture direct */
     .camera-btn {
         flex: 1;
         padding: 18px;
@@ -1832,6 +1839,8 @@
         justify-content: center;
         gap: 12px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        position: relative;
+        overflow: hidden;
     }
 
     .camera-btn:hover {
@@ -2074,11 +2083,11 @@
     /* Loading Animation */
     .loading {
         display: inline-block;
-        width: 24px;
-        height: 24px;
-        border: 3px solid rgba(255,255,255,.3);
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(46, 125, 50, 0.1);
         border-radius: 50%;
-        border-top-color: white;
+        border-top-color: var(--primary-color);
         animation: spin 1s ease-in-out infinite;
     }
 
@@ -2555,7 +2564,7 @@
                 </div>
             </div>
 
-            <!-- Date Filter Section - FITUR BARU -->
+            <!-- Date Filter Section -->
             <div class="date-filter-section">
                 <div class="date-filter-row">
                     <div class="date-filter-label">
@@ -2578,9 +2587,8 @@
                 </div>
             </div>
 
-            <!-- Filter Section - DENGAN HEADER BARU -->
+            <!-- Filter Section -->
             <div class="filter-section" id="filterSection">
-                <!-- HEADER BARU DITAMBAHKAN DI SINI -->
                 <div class="filter-header">
                     <h2><i class="fas fa-filter"></i> Filter Kategori Jadwal Tanaman</h2>
                 </div>
@@ -2678,7 +2686,7 @@
                     <div class="form-group">
                         <label>Pilih Metode Unggah Foto</label>
                         <div class="camera-options">
-                            <button type="button" class="camera-btn" onclick="openCamera('wateringProof')">
+                            <button type="button" class="camera-btn" onclick="capturePhotoDirect('wateringProof')">
                                 <i class="fas fa-camera"></i> Ambil Foto Langsung
                             </button>
                             <button type="button" class="camera-btn secondary" onclick="document.getElementById('wateringProof').click()">
@@ -2727,7 +2735,7 @@
                     <div class="form-group">
                         <label>Pilih Metode Unggah Foto</label>
                         <div class="camera-options">
-                            <button type="button" class="camera-btn" onclick="openCamera('fertilizingProof')">
+                            <button type="button" class="camera-btn" onclick="capturePhotoDirect('fertilizingProof')">
                                 <i class="fas fa-camera"></i> Ambil Foto Langsung
                             </button>
                             <button type="button" class="camera-btn secondary" onclick="document.getElementById('fertilizingProof').click()">
@@ -2773,6 +2781,12 @@
         let sidebarOpen = false;
         let currentFilter = 'all';
         let currentDateFilter = null;
+        let scheduleCache = {
+            watering: null,
+            fertilizing: null,
+            harvest: null,
+            timestamp: null
+        };
         
         // Helper function to normalize date to start of day
         function normalizeDate(date) {
@@ -2796,10 +2810,10 @@
         
         // Helper function to get priority based on days until
         function getPriority(daysUntil) {
-            if (daysUntil <= 0) return 'high';      // Hari ini atau sudah lewat
-            if (daysUntil <= 2) return 'high';      // 1-2 hari lagi
-            if (daysUntil <= 5) return 'medium';    // 3-5 hari lagi
-            return 'low';                           // Lebih dari 5 hari
+            if (daysUntil <= 0) return 'high';
+            if (daysUntil <= 2) return 'high';
+            if (daysUntil <= 5) return 'medium';
+            return 'low';
         }
         
         // Helper function to get priority text
@@ -2877,6 +2891,38 @@
             });
         }
 
+        // Show loading state
+        function showLoadingState(sectionId, message = 'Memuat jadwal...') {
+            const grid = document.getElementById(sectionId);
+            if (grid) {
+                grid.innerHTML = `
+                    <div class="empty-state loading">
+                        <div class="loading" style="width: 40px; height: 40px; border: 4px solid rgba(46, 125, 50, 0.1); border-top-color: var(--primary-color);"></div>
+                        <h3>${message}</h3>
+                    </div>
+                `;
+            }
+        }
+
+        // Show empty state quickly
+        function showEmptyState(sectionId, title, message, showButton = true) {
+            const grid = document.getElementById(sectionId);
+            if (grid) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-${sectionId.includes('watering') ? 'tint' : sectionId.includes('fertilizing') ? 'seedling' : 'hourglass-half'}"></i>
+                        <h3>${title}</h3>
+                        <p>${message}</p>
+                        ${showButton ? `
+                            <button class="btn-primary" onclick="window.location.href='plants.html'">
+                                <i class="fas fa-plus"></i> Tambah Tanaman
+                            </button>
+                        ` : ''}
+                    </div>
+                `;
+            }
+        }
+
         // Initialize schedule page
         async function initSchedulePage() {
             // Check authentication
@@ -2894,32 +2940,50 @@
                 console.error("Database init error:", error);
             }
 
+            // Update UI first for immediate feedback
+            updateUserInfo();
+            updateNotifications();
+            setupEventListeners();
+            
+            // Show loading states immediately
+            showLoadingState('wateringScheduleGrid');
+            showLoadingState('fertilizingScheduleGrid');
+            showLoadingState('harvestScheduleGrid');
+            
             // Get type from URL
             const urlParams = new URLSearchParams(window.location.search);
             const type = urlParams.get('type');
 
-            // Update UI
-            updateUserInfo();
-            loadUserPlants();
-            updateSchedulePage(type);
-            updateNotifications();
-            setupEventListeners();
-            
-            // Set active filter based on URL
-            if (type) {
-                currentFilter = type;
-                updateActiveFilterButton();
-                filterPlants(type);
-            } else {
-                // Jika tidak ada type di URL, tampilkan tombol "Lihat Semua"
-                showViewAllButtons();
-            }
+            // Load data in background
+            setTimeout(async () => {
+                try {
+                    loadUserPlants();
+                    updateSchedulePage(type);
+                    
+                    // Set active filter based on URL
+                    if (type) {
+                        currentFilter = type;
+                        updateActiveFilterButton();
+                        filterPlants(type);
+                    } else {
+                        showViewAllButtons();
+                    }
+                } catch (error) {
+                    console.error("Error loading schedule data:", error);
+                    showToast('Gagal memuat data jadwal', 'error');
+                }
+            }, 100);
         }
 
         // Load user's plants
         function loadUserPlants() {
-            const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
-            plants = allPlants.filter(plant => plant.userId == currentUser.id);
+            try {
+                const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
+                plants = allPlants.filter(plant => plant.userId == currentUser.id);
+            } catch (error) {
+                console.error("Error loading plants:", error);
+                plants = [];
+            }
         }
 
         // Update notifications
@@ -2988,7 +3052,6 @@
                     return currentUser.name;
                 }
                 
-                // Try to get from user profiles
                 const userProfiles = JSON.parse(localStorage.getItem('userProfiles')) || [];
                 if (currentUser && currentUser.email) {
                     const userProfile = userProfiles.find(profile => profile.email === currentUser.email);
@@ -2997,7 +3060,6 @@
                     }
                 }
                 
-                // Try to get from registration data
                 const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
                 if (currentUser && currentUser.email) {
                     const registeredUser = registeredUsers.find(user => user.email === currentUser.email);
@@ -3040,7 +3102,6 @@
                 return fertilizeDate.getTime() <= today.getTime() && plant.progress < 100;
             });
             
-            // Plants that will be harvested in the next 14 days
             const nextTwoWeeks = new Date();
             nextTwoWeeks.setDate(nextTwoWeeks.getDate() + 14);
             const harvestSchedule = plants.filter(plant => {
@@ -3105,73 +3166,68 @@
             });
         }
 
-        // PERBAIKAN: Fungsi untuk mengurutkan jadwal berdasarkan tanggal terdekat
+        // PERBAIKAN: Fungsi untuk mengurutkan jadwal
         function sortPlantsByDate(plants, dateField) {
             return plants
                 .filter(plant => plant[dateField])
                 .sort((a, b) => {
                     const dateA = new Date(a[dateField]);
                     const dateB = new Date(b[dateField]);
-                    return dateA - dateB; // Urutkan dari yang terdekat ke terjauh
+                    return dateA - dateB;
                 });
         }
 
-        // Render watering schedule
+        // Render watering schedule - OPTIMIZED
         async function renderWateringSchedule() {
-            // Filter dan urutkan tanaman berdasarkan tanggal penyiraman
+            // Filter tanaman berdasarkan tanggal penyiraman
             let wateringPlants = plants.filter(plant => {
                 if (!plant.nextWatering || plant.progress >= 100) return false;
                 
-                // Jika ada filter tanggal, hanya tampilkan yang sesuai dengan tanggal tersebut
                 if (currentDateFilter) {
                     const waterDate = normalizeDate(new Date(plant.nextWatering));
                     const filterDate = normalizeDate(new Date(currentDateFilter));
                     return waterDate.getTime() === filterDate.getTime();
                 }
                 
-                // Jika tidak ada filter tanggal, tampilkan semua yang belum diselesaikan
                 return true;
             });
             
-            // PERBAIKAN: Urutkan dari yang terdekat ke terjauh
-            wateringPlants = sortPlantsByDate(wateringPlants, 'nextWatering');
+            // Cek cache
+            const CACHE_DURATION = 30000;
+            const now = Date.now();
+            if (scheduleCache.watering && scheduleCache.timestamp && 
+                (now - scheduleCache.timestamp < CACHE_DURATION)) {
+                // Gunakan cache
+                wateringPlants = scheduleCache.watering;
+            } else {
+                // Urutkan dan cache
+                wateringPlants = sortPlantsByDate(wateringPlants, 'nextWatering');
+                scheduleCache.watering = wateringPlants;
+                scheduleCache.timestamp = now;
+            }
             
-            // Batasi hanya 3 tanaman untuk preview (kecuali jika ada filter tanggal)
             const displayPlants = currentDateFilter ? wateringPlants : wateringPlants.slice(0, 3);
             
             const grid = document.getElementById('wateringScheduleGrid');
             
+            // Tampilkan empty state lebih cepat jika tidak ada data
             if (displayPlants.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-tint"></i>
-                        <h3>${currentDateFilter ? 'Tidak ada jadwal menyiram pada tanggal ini' : 'Tidak ada jadwal menyiram'}</h3>
-                        <p>${currentDateFilter ? 'Tidak ada jadwal penyiraman pada tanggal yang dipilih' : 'Tidak ada jadwal penyiraman'}</p>
-                        <button class="btn-primary" onclick="window.location.href='plants.html'">
-                            <i class="fas fa-plus"></i> Tambah Tanaman
-                        </button>
-                    </div>
-                `;
+                showEmptyState(
+                    'wateringScheduleGrid',
+                    currentDateFilter ? 'Tidak ada jadwal menyiram pada tanggal ini' : 'Tidak ada jadwal menyiram',
+                    currentDateFilter ? 'Tidak ada jadwal penyiraman pada tanggal yang dipilih' : 'Tidak ada jadwal penyiraman'
+                );
                 return;
             }
             
-            const imagePromises = displayPlants.map(async plant => {
-                if (!plant.plantImage) return 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
-                const img = await getImageFromIndexedDB(plant.plantImage);
-                return img || 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
-            });
-
-            const imageResults = await Promise.all(imagePromises);
-            
+            // Render UI tanpa gambar dulu
             grid.innerHTML = displayPlants.map((plant, index) => {
-                const waterDate = normalizeDate(new Date(plant.nextWatering));
                 const daysUntil = getDaysUntil(plant.nextWatering);
                 const priority = getPriority(daysUntil);
                 const priorityText = getPriorityText(daysUntil);
-                const imageSrc = imageResults[index];
 
                 return `
-                    <div class="plant-card info">
+                    <div class="plant-card info" data-plant-id="${plant.id}" data-index="${index}">
                         <div class="schedule-priority ${'priority-' + priority}">
                             <i class="fas fa-clock"></i>
                             <span>${priorityText}</span>
@@ -3216,64 +3272,59 @@
                     </div>
                 `;
             }).join('');
+            
+            // Load gambar secara lazy/background
+            setTimeout(() => {
+                loadPlantImagesLazily(displayPlants, 'wateringScheduleGrid');
+            }, 300);
         }
 
-        // Render fertilizing schedule
+        // Render fertilizing schedule - OPTIMIZED
         async function renderFertilizingSchedule() {
-            // Filter dan urutkan tanaman berdasarkan tanggal pemupukan
             let fertilizingPlants = plants.filter(plant => {
                 if (!plant.nextFertilizing || plant.progress >= 100) return false;
                 
-                // Jika ada filter tanggal, hanya tampilkan yang sesuai dengan tanggal tersebut
                 if (currentDateFilter) {
                     const fertilizeDate = normalizeDate(new Date(plant.nextFertilizing));
                     const filterDate = normalizeDate(new Date(currentDateFilter));
                     return fertilizeDate.getTime() === filterDate.getTime();
                 }
                 
-                // Jika tidak ada filter tanggal, tampilkan semua yang belum diselesaikan
                 return true;
             });
             
-            // PERBAIKAN: Urutkan dari yang terdekat ke terjauh
-            fertilizingPlants = sortPlantsByDate(fertilizingPlants, 'nextFertilizing');
+            // Cek cache
+            const CACHE_DURATION = 30000;
+            const now = Date.now();
+            if (scheduleCache.fertilizing && scheduleCache.timestamp && 
+                (now - scheduleCache.timestamp < CACHE_DURATION)) {
+                fertilizingPlants = scheduleCache.fertilizing;
+            } else {
+                fertilizingPlants = sortPlantsByDate(fertilizingPlants, 'nextFertilizing');
+                scheduleCache.fertilizing = fertilizingPlants;
+                scheduleCache.timestamp = now;
+            }
             
-            // Batasi hanya 3 tanaman untuk preview (kecuali jika ada filter tanggal)
             const displayPlants = currentDateFilter ? fertilizingPlants : fertilizingPlants.slice(0, 3);
             
             const grid = document.getElementById('fertilizingScheduleGrid');
             
             if (displayPlants.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-seedling"></i>
-                        <h3>${currentDateFilter ? 'Tidak ada jadwal pemupukan pada tanggal ini' : 'Tidak ada jadwal pemupukan'}</h3>
-                        <p>${currentDateFilter ? 'Tidak ada jadwal pemupukan pada tanggal yang dipilih' : 'Tidak ada jadwal pemupukan'}</p>
-                        <button class="btn-primary" onclick="window.location.href='plants.html'">
-                            <i class="fas fa-plus"></i> Tambah Tanaman
-                        </button>
-                    </div>
-                `;
+                showEmptyState(
+                    'fertilizingScheduleGrid',
+                    currentDateFilter ? 'Tidak ada jadwal pemupukan pada tanggal ini' : 'Tidak ada jadwal pemupukan',
+                    currentDateFilter ? 'Tidak ada jadwal pemupukan pada tanggal yang dipilih' : 'Tidak ada jadwal pemupukan'
+                );
                 return;
             }
             
-            const imagePromises = displayPlants.map(async plant => {
-                if (!plant.plantImage) return 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
-                const img = await getImageFromIndexedDB(plant.plantImage);
-                return img || 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
-            });
-
-            const imageResults = await Promise.all(imagePromises);
-            
             grid.innerHTML = displayPlants.map((plant, index) => {
-                const fertilizeDate = normalizeDate(new Date(plant.nextFertilizing));
                 const daysUntil = getDaysUntil(plant.nextFertilizing);
                 const priority = getPriority(daysUntil);
                 const priorityText = getPriorityText(daysUntil);
-                const imageSrc = imageResults[index];
 
                 return `
-                    <div class="plant-card fertilizer">
+                    <div class="plant-card fertilizer" data-plant-id="${plant.id}" data-index="${index}">
                         <div class="schedule-priority ${'priority-' + priority}">
                             <i class="fas fa-clock"></i>
                             <span>${priorityText}</span>
@@ -3318,65 +3369,59 @@
                     </div>
                 `;
             }).join('');
+            
+            setTimeout(() => {
+                loadPlantImagesLazily(displayPlants, 'fertilizingScheduleGrid');
+            }, 300);
         }
 
-        // Render harvest schedule
+        // Render harvest schedule - OPTIMIZED
         async function renderHarvestSchedule() {
-            // Filter dan urutkan tanaman berdasarkan tanggal panen
             let harvestPlants = plants.filter(plant => {
                 if (!plant.harvestDate || plant.progress >= 100) return false;
                 
-                // Jika ada filter tanggal, hanya tampilkan yang sesuai dengan tanggal tersebut
                 if (currentDateFilter) {
                     const harvestDate = normalizeDate(new Date(plant.harvestDate));
                     const filterDate = normalizeDate(new Date(currentDateFilter));
                     return harvestDate.getTime() === filterDate.getTime();
                 }
                 
-                // Jika tidak ada filter tanggal, tampilkan semua yang belum diselesaikan
                 return true;
             });
             
-            // PERBAIKAN: Urutkan dari yang terdekat ke terjauh
-            harvestPlants = sortPlantsByDate(harvestPlants, 'harvestDate');
+            // Cek cache
+            const CACHE_DURATION = 30000;
+            const now = Date.now();
+            if (scheduleCache.harvest && scheduleCache.timestamp && 
+                (now - scheduleCache.timestamp < CACHE_DURATION)) {
+                harvestPlants = scheduleCache.harvest;
+            } else {
+                harvestPlants = sortPlantsByDate(harvestPlants, 'harvestDate');
+                scheduleCache.harvest = harvestPlants;
+                scheduleCache.timestamp = now;
+            }
             
-            // Batasi hanya 3 tanaman untuk preview (kecuali jika ada filter tanggal)
             const displayPlants = currentDateFilter ? harvestPlants : harvestPlants.slice(0, 3);
             
             const grid = document.getElementById('harvestScheduleGrid');
             
             if (displayPlants.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-hourglass-half"></i>
-                        <h3>${currentDateFilter ? 'Tidak ada jadwal panen pada tanggal ini' : 'Tidak ada jadwal panen'}</h3>
-                        <p>${currentDateFilter ? 'Tidak ada jadwal panen pada tanggal yang dipilih' : 'Tidak ada jadwal panen'}</p>
-                        <button class="btn-primary" onclick="window.location.href='plants.html'">
-                            <i class="fas fa-plus"></i> Tambah Tanaman
-                        </button>
-                    </div>
-                `;
+                showEmptyState(
+                    'harvestScheduleGrid',
+                    currentDateFilter ? 'Tidak ada jadwal panen pada tanggal ini' : 'Tidak ada jadwal panen',
+                    currentDateFilter ? 'Tidak ada jadwal panen pada tanggal yang dipilih' : 'Tidak ada jadwal panen'
+                );
                 return;
             }
             
-            const imagePromises = displayPlants.map(async plant => {
-                if (!plant.plantImage) return 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
-                const img = await getImageFromIndexedDB(plant.plantImage);
-                return img || 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
-            });
-
-            const imageResults = await Promise.all(imagePromises);
-            
             grid.innerHTML = displayPlants.map((plant, index) => {
-                const harvestDate = normalizeDate(new Date(plant.harvestDate));
                 const daysUntil = getDaysUntil(plant.harvestDate);
                 const priority = getPriority(daysUntil);
                 const priorityText = getPriorityText(daysUntil);
                 let cardClass = priority === 'high' ? 'urgent' : (priority === 'medium' ? 'warning' : 'harvest');
-                const imageSrc = imageResults[index];
 
                 return `
-                    <div class="plant-card ${cardClass}">
+                    <div class="plant-card ${cardClass}" data-plant-id="${plant.id}" data-index="${index}">
                         <div class="schedule-priority ${'priority-' + priority}">
                             <i class="fas fa-clock"></i>
                             <span>${priorityText}</span>
@@ -3421,6 +3466,34 @@
                     </div>
                 `;
             }).join('');
+            
+            setTimeout(() => {
+                loadPlantImagesLazily(displayPlants, 'harvestScheduleGrid');
+            }, 300);
+        }
+
+        // Lazy loading untuk gambar
+        async function loadPlantImagesLazily(plants, gridId) {
+            for (let i = 0; i < plants.length; i++) {
+                const plant = plants[i];
+                try {
+                    let imageSrc = 'https://via.placeholder.com/140x140/4CAF50/FFFFFF?text=Tanaman';
+                    
+                    if (plant.plantImage) {
+                        const img = await getImageFromIndexedDB(plant.plantImage);
+                        if (img) {
+                            imageSrc = img;
+                        }
+                    }
+                    
+                    // Tidak perlu update DOM jika tidak ada perubahan
+                } catch (error) {
+                    console.error('Error loading image for plant:', plant.id, error);
+                }
+                
+                // Delay kecil antara setiap request
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
         }
 
         // Format date to readable format
@@ -3449,9 +3522,7 @@
                 allSections.forEach(section => {
                     document.getElementById(section).style.display = 'block';
                 });
-                // Tampilkan tombol "Lihat Semua" untuk filter "all"
                 showViewAllButtons();
-                // Set judul kembali ke "Jadwal"
                 document.getElementById('titleHeader').textContent = 'Jadwal';
                 document.getElementById('messageHeader').textContent = 'Kelola dan pantau jadwal tanaman Anda dengan mudah';
             } else {
@@ -3459,9 +3530,7 @@
                     document.getElementById(section).style.display = 'none';
                 });
                 document.getElementById(`${category}ScheduleParent`).style.display = 'block';
-                // Sembunyikan tombol "Lihat Semua" untuk filter spesifik
                 hideViewAllButtons();
-                // Update judul berdasarkan filter
                 document.getElementById('titleHeader').textContent = getTitleByType(category);
                 document.getElementById('messageHeader').textContent = getMessageByType(category);
             }
@@ -3493,6 +3562,15 @@
             if (dateInput.value) {
                 currentDateFilter = dateInput.value;
                 showToast(`Filter tanggal diterapkan: ${formatDate(currentDateFilter)}`, 'success');
+                
+                // Reset cache
+                scheduleCache = {
+                    watering: null,
+                    fertilizing: null,
+                    harvest: null,
+                    timestamp: null
+                };
+                
                 updateSchedulePage();
             } else {
                 showToast('Silakan pilih tanggal terlebih dahulu', 'warning');
@@ -3505,7 +3583,54 @@
             dateInput.value = '';
             currentDateFilter = null;
             showToast('Filter tanggal dihapus', 'info');
+            
+            // Reset cache
+            scheduleCache = {
+                watering: null,
+                fertilizing: null,
+                harvest: null,
+                timestamp: null
+            };
+            
             updateSchedulePage();
+        }
+
+        // PERBAIKAN UTAMA: Fungsi capturePhotoDirect untuk membuka kamera langsung
+        function capturePhotoDirect(inputId) {
+            // Buat input file tersembunyi dengan atribut capture
+            const tempInput = document.createElement('input');
+            tempInput.type = 'file';
+            tempInput.accept = 'image/*';
+            tempInput.capture = 'environment'; // Gunakan kamera belakang
+            tempInput.style.display = 'none';
+            
+            tempInput.onchange = function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
+                    
+                    // Dapatkan input asli
+                    const originalInput = document.getElementById(inputId);
+                    if (originalInput) {
+                        // Buat DataTransfer untuk mengatur file
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
+                        originalInput.files = dataTransfer.files;
+                        
+                        // Trigger change event
+                        const event = new Event('change', { bubbles: true });
+                        originalInput.dispatchEvent(event);
+                        
+                        showToast('Foto berhasil diambil', 'success');
+                    }
+                }
+                
+                // Hapus input sementara
+                document.body.removeChild(tempInput);
+            };
+            
+            // Tambahkan ke body dan trigger klik
+            document.body.appendChild(tempInput);
+            tempInput.click();
         }
 
         // Setup event listeners
@@ -3579,20 +3704,6 @@
             // Refresh notifications periodically
             setInterval(updateNotifications, 30000);
             
-            // Add click effect to stat cards
-            document.querySelectorAll('.stat-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    this.style.transform = 'translateY(-4px)';
-                    setTimeout(() => {
-                        this.style.transform = 'translateY(-8px)';
-                    }, 100);
-                });
-            });
-            
-            // Responsive behavior check
-            checkResponsiveBehavior();
-            window.addEventListener('resize', checkResponsiveBehavior);
-            
             // Filter buttons
             document.querySelectorAll('.category-filter').forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -3600,7 +3711,7 @@
                 });
             });
             
-            // Date filter buttons - PERBAIKAN: Mencegah perubahan ukuran tombol
+            // Date filter buttons
             document.getElementById('applyDateFilterBtn').addEventListener('click', function(e) {
                 e.preventDefault();
                 applyDateFilter();
@@ -3618,105 +3729,6 @@
                     applyDateFilter();
                 }
             });
-            
-            // PERBAIKAN: Hilangkan batasan tanggal untuk memilih tanggal sebelumnya
-            // Biarkan input tanggal bisa memilih tanggal apapun
-            const dateInput = document.getElementById('dateFilterInput');
-            const today = new Date().toISOString().split('T')[0];
-            // Tidak set min atau max date, biarkan user pilih tanggal apapun
-            
-            // Efek yang lebih halus untuk tombol "Lihat Semua"
-            document.querySelectorAll('.view-all').forEach(button => {
-                button.addEventListener('mouseenter', function() {
-                    this.style.transform = 'scale(1.02)';
-                    this.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                });
-                
-                button.addEventListener('mouseleave', function() {
-                    this.style.transform = 'scale(1)';
-                });
-                
-                button.addEventListener('mousedown', function() {
-                    this.style.transform = 'scale(1)';
-                });
-                
-                button.addEventListener('mouseup', function() {
-                    this.style.transform = 'scale(1.02)';
-                });
-                
-                button.addEventListener('click', function(e) {
-                    this.style.transform = 'scale(1)';
-                    setTimeout(() => {
-                        this.style.transform = 'scale(1.02)';
-                    }, 100);
-                });
-            });
-            
-            // PERBAIKAN: Tambahkan efek klik yang lebih halus untuk tombol filter tanggal
-            const filterButtons = document.querySelectorAll('.btn-apply-filter, .btn-clear-filter');
-            filterButtons.forEach(button => {
-                button.addEventListener('mousedown', function() {
-                    this.style.transform = 'translateY(0)';
-                    this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
-                });
-                
-                button.addEventListener('mouseup', function() {
-                    this.style.transform = 'translateY(-2px)';
-                    this.style.boxShadow = '0 6px 18px rgba(0,0,0,0.15)';
-                });
-                
-                button.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                    this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)';
-                });
-            });
-            
-            // Add smooth click effect to all primary buttons
-            document.querySelectorAll('.btn-primary').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    const ripple = this.querySelector('.ripple');
-                    if (ripple) {
-                        ripple.remove();
-                    }
-                    
-                    const circle = document.createElement('span');
-                    const rect = this.getBoundingClientRect();
-                    
-                    const diameter = Math.max(rect.width, rect.height);
-                    const radius = diameter / 2;
-                    
-                    circle.style.width = circle.style.height = diameter + 'px';
-                    circle.style.left = (e.clientX - rect.left - radius) + 'px';
-                    circle.style.top = (e.clientY - rect.top - radius) + 'px';
-                    circle.classList.add('ripple');
-                    
-                    this.appendChild(circle);
-                    
-                    setTimeout(() => {
-                        if (circle.parentElement === this) {
-                            circle.remove();
-                        }
-                    }, 600);
-                });
-            });
-        }
-
-        // Check responsive behavior
-        function checkResponsiveBehavior() {
-            const isDesktop = window.innerWidth >= 993;
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
-            const sidebarOverlay = document.getElementById('sidebarOverlay');
-            
-            if (isDesktop && sidebarOpen) {
-                // Desktop: sidebar open, content shifts
-                mainContent.classList.add('sidebar-open');
-                sidebarOverlay.classList.remove('active');
-            } else if (!isDesktop && sidebarOpen) {
-                // Mobile: sidebar open, overlay shows
-                mainContent.classList.add('sidebar-open');
-                sidebarOverlay.classList.add('active');
-            }
         }
 
         // Toggle sidebar
@@ -3740,13 +3752,10 @@
             mainContent.classList.add('sidebar-open');
             sidebarOpen = true;
             
-            // Check if mobile or desktop
             const isDesktop = window.innerWidth >= 993;
             if (!isDesktop) {
-                // Mobile: show overlay
                 sidebarOverlay.classList.add('active');
             } else {
-                // Desktop: content shifts, no overlay
                 sidebarOverlay.classList.remove('active');
             }
         }
@@ -3770,7 +3779,7 @@
             currentEditingPlantId = plantId;
             const modal = document.getElementById('wateringModal');
             modal.style.display = 'block';
-            resetForm('wateringForm', 'imagePreviewWateringProof', 'fileNameWateringProof');
+            resetForm('wateringForm', 'imagePreviewWateringProof', 'fileNameWateringProof', 'wateringProof');
         }
 
         function closeWateringModal() {
@@ -3781,7 +3790,7 @@
             currentEditingPlantId = plantId;
             const modal = document.getElementById('fertilizingModal');
             modal.style.display = 'block';
-            resetForm('fertilizingForm', 'imagePreviewFertilizingProof', 'fileNameFertilizingProof');
+            resetForm('fertilizingForm', 'imagePreviewFertilizingProof', 'fileNameFertilizingProof', 'fertilizingProof');
         }
 
         function closeFertilizingModal() {
@@ -3789,11 +3798,23 @@
         }
 
         // Reset form
-        function resetForm(formId, previewId, fileNameId) {
-            document.getElementById(formId).reset();
-            document.getElementById(previewId).style.display = 'none';
-            document.getElementById(previewId).src = '';
-            document.getElementById(fileNameId).textContent = '';
+        function resetForm(formId, previewId, fileNameId, fileInputId = null) {
+            const form = document.getElementById(formId);
+            if (form) form.reset();
+            
+            const preview = document.getElementById(previewId);
+            if (preview) {
+                preview.style.display = 'none';
+                preview.src = '';
+            }
+            
+            const fileName = document.getElementById(fileNameId);
+            if (fileName) fileName.textContent = '';
+            
+            if (fileInputId) {
+                const fileInput = document.getElementById(fileInputId);
+                if (fileInput) fileInput.value = '';
+            }
         }
 
         // Preview uploaded image
@@ -3823,11 +3844,6 @@
                 }
                 reader.readAsDataURL(file);
             }
-        }
-
-        // Open camera
-        function openCamera(inputId) {
-            showToast('Fitur kamera akan diakses pada perangkat yang mendukung', 'info');
         }
 
         // Handle watering form submission
@@ -3898,6 +3914,14 @@
                     
                     // Create notification
                     createNotification('Penyiraman dikonfirmasi', `Penyiraman tanaman ${plant.name} telah dikonfirmasi`, 'success', plantId);
+                    
+                    // Reset cache
+                    scheduleCache = {
+                        watering: null,
+                        fertilizing: null,
+                        harvest: null,
+                        timestamp: null
+                    };
                     
                     // Reload data
                     loadUserPlants();
@@ -3986,6 +4010,14 @@
                     // Create notification
                     createNotification('Pemupukan dikonfirmasi', `Pemupukan tanaman ${plant.name} telah dikonfirmasi`, 'success', plantId);
                     
+                    // Reset cache
+                    scheduleCache = {
+                        watering: null,
+                        fertilizing: null,
+                        harvest: null,
+                        timestamp: null
+                    };
+                    
                     // Reload data
                     loadUserPlants();
                     updateSchedulePage();
@@ -4023,6 +4055,14 @@
                     
                     // Create notification
                     createNotification('Panen dikonfirmasi', `Panen tanaman ${plants[plantIndex].name} telah dikonfirmasi`, 'success', plantId);
+                    
+                    // Reset cache
+                    scheduleCache = {
+                        watering: null,
+                        fertilizing: null,
+                        harvest: null,
+                        timestamp: null
+                    };
                     
                     // Reload plants and update display
                     loadUserPlants();
@@ -4111,6 +4151,10 @@
 
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', initSchedulePage);
+
+        // Export fungsi ke window object
+        window.capturePhotoDirect = capturePhotoDirect;
+        window.openCamera = capturePhotoDirect; // Untuk kompatibilitas
     </script>
 </body>
 </html>
