@@ -584,7 +584,7 @@
         font-family: 'Poppins', sans-serif;
         font-size: 15px;
         font-weight: 700;
-        cursor: button;
+        cursor: pointer;
         transition: var(--transition);
         box-shadow: 0 4px 20px rgba(244, 67, 54, 0.3);
         border: 1px solid rgba(255, 255, 255, 0.2);
@@ -609,6 +609,8 @@
         position: relative;
         z-index: 1;
         margin-left: 0;
+        display: flex;
+        flex-direction: column;
     }
 
     @media (min-width: 993px) {
@@ -709,9 +711,9 @@
         opacity: 0.9;
     }
 
-    /* Welcome Section */
+    /* Welcome Section - PERBAIKAN: MARGIN DIPERKECIL */
     .welcome-section-wrapper {
-        margin-bottom: 30px;
+        margin-bottom: 5px; /* Diperkecil dari 30px */
         animation: fadeIn 0.6s ease 0.2s both;
     }
 
@@ -1045,31 +1047,47 @@
         transform: scale(1.05);
     }
 
-    /* Stats Section */
     .stats-section {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 20px;
-        margin: 30px 0;
+        gap: 15px;
+        margin-bottom: 35px; /* HANYA margin-bottom saja, NO margin-top */
         animation: fadeIn 0.6s ease 0.4s both;
         width: 100%;
     }
 
+    /* Hapus margin-top dari stats card jika ada */
     .stat-card {
+        margin-top: 0 !important;
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
         border-radius: var(--card-radius);
-        padding: 25px;
+        padding: 20px;
         box-shadow: var(--shadow-heavy);
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 15px;
         border: 3px solid var(--primary-light);
         transition: var(--transition);
         position: relative;
         overflow: hidden;
         backdrop-filter: blur(20px);
         cursor: pointer;
-        height: 120px;
+        height: 110px;
+    }
+
+    /* Pastikan page-header tidak memberikan margin besar */
+    .page-header {
+        margin-bottom: 25px; /* Kurangi dari default */
+        animation: fadeIn 0.5s ease;
+        background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(27, 94, 32, 0.05));
+        padding: 25px 30px; /* Kurangi padding */
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-heavy);
+        border: 3px solid var(--primary-color);
+        width: 100%;
+        backdrop-filter: blur(20px);
+        position: relative;
+        overflow: hidden;
     }
 
     .stat-card::before {
@@ -1184,6 +1202,7 @@
         position: relative;
         overflow: hidden;
         transition: var(--transition);
+        flex: 1;
     }
 
     .schedule-section:hover {
@@ -1267,11 +1286,12 @@
         transition: transform 0.1s ease;
     }
 
-    /* Plants Grid */
+    /* Plants Grid - PERBAIKAN: Padding dan alignment */
     .plants-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
         gap: 30px;
+        padding: 0;
     }
 
     @media (max-width: 768px) {
@@ -1289,6 +1309,7 @@
         transition: var(--transition);
         position: relative;
         overflow: hidden;
+        width: 100%;
     }
 
     .plant-card:hover {
@@ -1573,7 +1594,7 @@
         font-family: 'Poppins', sans-serif;
         font-size: 16px;
         font-weight: 700;
-        cursor: button;
+        cursor: pointer;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         display: inline-flex;
         align-items: center;
@@ -1684,7 +1705,7 @@
     }
 
     /* ==================== FOOTER ==================== */
-    /* PERBAIKAN: Footer tetap di bawah */
+    /* PERBAIKAN: Footer tetap di bawah dan tidak mempengaruhi konten */
     .footer {
         background: white;
         border-top: 1px solid rgba(0, 0, 0, 0.05);
@@ -1695,6 +1716,7 @@
         border: 3px solid var(--primary-extra-light);
         box-shadow: var(--shadow);
         margin-top: auto;
+        flex-shrink: 0;
     }
 
     .footer-content {
@@ -1870,6 +1892,7 @@
     }
 
     /* ==================== FORM IMPROVEMENTS ==================== */
+    /* PERBAIKAN: Form input styling yang konsisten dengan schedule.html */
     .form-group {
         margin-bottom: 25px;
     }
@@ -1880,6 +1903,58 @@
         font-weight: 700;
         color: var(--text-color);
         font-size: 17px;
+    }
+
+    /* PERBAIKAN: Input with icon styling yang sama dengan schedule.html */
+    .input-with-icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .input-with-icon i {
+        position: absolute;
+        left: 15px;
+        color: var(--text-light);
+        z-index: 1;
+        font-size: 16px;
+    }
+
+    .input-with-icon input,
+    .input-with-icon textarea {
+        font-family: 'Poppins', sans-serif;
+        width: 100%;
+        padding: 14px 15px 14px 45px;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        background: white;
+        box-sizing: border-box;
+        color: var(--text-color);
+        font-weight: 500;
+    }
+
+    .input-with-icon input::placeholder,
+    .input-with-icon textarea::placeholder {
+        color: var(--text-light);
+        font-weight: 400;
+        opacity: 0.8;
+    }
+
+    .input-with-icon input:focus,
+    .input-with-icon textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+    }
+
+    .input-with-icon textarea {
+        min-height: 120px;
+        resize: vertical;
+        line-height: 1.5;
+        font-weight: 500;
     }
 
     .camera-options {
@@ -1894,7 +1969,7 @@
         }
     }
 
-    /* PERBAIKAN: Camera button dengan capture direct */
+    /* PERBAIKAN: Camera button dengan capture direct yang konsisten */
     .camera-btn {
         flex: 1;
         padding: 18px;
@@ -1904,7 +1979,7 @@
         color: var(--text-color);
         font-size: 16px;
         font-weight: 600;
-        cursor: button;
+        cursor: pointer;
         transition: var(--transition);
         display: flex;
         align-items: center;
@@ -1939,7 +2014,7 @@
         border-radius: var(--border-radius);
         padding: 30px;
         text-align: center;
-        cursor: button;
+        cursor: pointer;
         transition: var(--transition);
         margin-bottom: 25px;
         background: linear-gradient(135deg, var(--primary-extra-light), rgba(255,255,255,0.8));
@@ -1969,6 +2044,12 @@
         margin: 8px 0;
         color: var(--text-light);
         font-size: 16px;
+    }
+
+    .file-upload .file-info {
+        font-size: 14px;
+        color: var(--text-light);
+        margin-top: 10px;
     }
 
     .file-input {
@@ -2005,11 +2086,12 @@
         font-weight: 500;
     }
 
+    /* PERBAIKAN: Textarea styling yang konsisten */
     textarea {
         width: 100%;
-        padding: 18px;
+        padding: 14px 15px;
         border: 2px solid var(--border-color);
-        border-radius: 14px;
+        border-radius: 8px;
         font-family: 'Poppins', sans-serif;
         font-size: 15px;
         resize: vertical;
@@ -2023,8 +2105,7 @@
     textarea:focus {
         outline: none;
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.15);
-        transform: translateY(-2px);
+        box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
     }
 
     .form-actions {
@@ -2051,7 +2132,7 @@
         border-radius: 14px;
         font-size: 16px;
         font-weight: 700;
-        cursor: button;
+        cursor: pointer;
         transition: var(--transition);
         display: flex;
         align-items: center;
@@ -2129,7 +2210,7 @@
         border: none;
         color: var(--text-light);
         font-size: 24px;
-        cursor: button;
+        cursor: pointer;
         padding: 0;
         width: 28px;
         height: 28px;
@@ -2256,6 +2337,22 @@
     @media (max-width: 1200px) {
         .stats-section {
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        .welcome-section-wrapper {
+            margin-bottom: 2px; /* Lebih kecil di mobile */
+        }
+        
+        .stats-section {
+            gap: 10px; /* Lebih rapat di mobile */
+            margin-bottom: 15px;
+        }
+        
+        .page-header {
+            margin-bottom: 20px;
+            padding: 20px 25px;
         }
     }
 
@@ -2750,6 +2847,21 @@
             left: 20px;
             max-width: none;
         }
+
+        /* Di bagian .main class */
+        .main {
+            flex: 1;
+            padding: 20px 30px; /* Kurangi padding jika perlu */
+            transition: var(--transition);
+            width: 100%;
+            background: transparent;
+            position: relative;
+            z-index: 1;
+            margin-left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Tambahkan gap yang kecil antar section */
+        }
     }
     </style>
 </head>
@@ -2981,7 +3093,7 @@
         <button class="toast-close" onclick="hideToast()">&times;</button>
     </div>
 
-    <!-- Watering Modal -->
+    <!-- Watering Modal - DIPERBAIKI dengan form styling yang konsisten -->
     <div id="wateringModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -3015,7 +3127,10 @@
                     </div>
                     <div class="form-group">
                         <label for="wateringNotes">Catatan Penyiraman (Opsional)</label>
-                        <textarea id="wateringNotes" placeholder="Tambahkan catatan tentang kondisi tanaman, volume air yang digunakan, atau hal penting lainnya..." rows="4"></textarea>
+                        <div class="input-with-icon">
+                            <i class="fas fa-sticky-note"></i>
+                            <textarea id="wateringNotes" placeholder="Tambahkan catatan tentang kondisi tanaman, volume air yang digunakan, atau hal penting lainnya..." rows="4"></textarea>
+                        </div>
                     </div>
                     <div class="form-actions">
                         <button type="button" class="btn-secondary" onclick="closeWateringModal()">
@@ -3030,7 +3145,7 @@
         </div>
     </div>
 
-    <!-- Fertilizing Modal -->
+    <!-- Fertilizing Modal - DIPERBAIKI dengan form styling yang konsisten -->
     <div id="fertilizingModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -3064,7 +3179,10 @@
                     </div>
                     <div class="form-group">
                         <label for="fertilizingNotes">Catatan Pemupukan (Opsional)</label>
-                        <textarea id="fertilizingNotes" placeholder="Tambahkan catatan tentang jenis pupuk, dosis, kondisi tanaman, atau hal penting lainnya..." rows="4"></textarea>
+                        <div class="input-with-icon">
+                            <i class="fas fa-sticky-note"></i>
+                            <textarea id="fertilizingNotes" placeholder="Tambahkan catatan tentang jenis pupuk, dosis, kondisi tanaman, atau hal penting lainnya..." rows="4"></textarea>
+                        </div>
                     </div>
                     <div class="form-actions">
                         <button type="button" class="btn-secondary" onclick="closeFertilizingModal()">
@@ -3072,6 +3190,65 @@
                         </button>
                         <button type="submit" class="btn-primary" id="confirmFertilizingBtn" style="background: linear-gradient(135deg, var(--fertilizer), #5D4037);">
                             <i class="fas fa-seedling"></i> Konfirmasi Pemupukan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Harvest Modal (BARU) -->
+    <div id="harvestModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-hourglass-half"></i> Konfirmasi Panen</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Silakan unggah bukti foto panen tanaman untuk melacak hasil panen.</p>
+                <form id="harvestForm" class="plant-form">
+                    <div class="form-group">
+                        <label>Pilih Metode Unggah Foto</label>
+                        <div class="camera-options">
+                            <button type="button" class="camera-btn" onclick="capturePhotoDirect('harvestProof')">
+                                <i class="fas fa-camera"></i> Ambil Foto Langsung
+                            </button>
+                            <button type="button" class="camera-btn secondary" onclick="document.getElementById('harvestProof').click()">
+                                <i class="fas fa-images"></i> Pilih dari Galeri
+                            </button>
+                        </div>
+                        <div class="file-upload" onclick="document.getElementById('harvestProof').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p><strong>Klik untuk mengunggah foto</strong></p>
+                            <p>Seret dan lepas file ke sini atau klik untuk memilih</p>
+                            <p class="file-info">Format: JPG, PNG (Maks. 5MB)</p>
+                            <input type="file" id="harvestProof" class="file-input" accept="image/*" onchange="previewImage(this, 'imagePreviewHarvestProof', 'fileNameHarvestProof')">
+                        </div>
+                        <div class="file-preview">
+                            <img id="imagePreviewHarvestProof" src="" alt="Preview Foto Panen">
+                            <div class="file-name" id="fileNameHarvestProof"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="harvestNotes">Catatan Panen (Opsional)</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-sticky-note"></i>
+                            <textarea id="harvestNotes" placeholder="Tambahkan catatan tentang jumlah hasil panen, kondisi tanaman, atau hal penting lainnya..." rows="4"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="harvestQuantity">Jumlah Hasil Panen</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-hashtag"></i>
+                            <input type="number" id="harvestQuantity" name="harvestQuantity" placeholder="Contoh: 50 kg" min="1" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeHarvestModal()">
+                            <i class="fas fa-times"></i> Batal
+                        </button>
+                        <button type="submit" class="btn-primary" id="confirmHarvestBtn" style="background: linear-gradient(135deg, var(--harvest), #D84315);">
+                            <i class="fas fa-check-circle"></i> Konfirmasi Panen
                         </button>
                     </div>
                 </form>
@@ -3091,6 +3268,10 @@
         let userCoordinates = null;
         const WEATHER_API_KEY = '6e7e8c91f7e646aa91e194852250112';
         
+        // PERBAIKAN: Tidak perlu state file, gunakan langsung dari input file
+        let currentWateringFile = null;
+        let currentFertilizingFile = null;
+        
         // Cache untuk lokasi
         const locationCache = new Map();
 
@@ -3104,7 +3285,7 @@
         // Initialize IndexedDB
         async function initDB() {
             return new Promise((resolve, reject) => {
-                const request = indexedDB.open("SmartTaniDB", 1);
+                const request = indexedDB.open("SmartTaniDB", 2);
                 
                 request.onupgradeneeded = function(event) {
                     db = event.target.result;
@@ -3124,9 +3305,14 @@
             });
         }
 
-        // Save image to IndexedDB
+        // Save image to IndexedDB - DIPERBAIKI
         function saveImageToIndexedDB(file) {
             return new Promise((resolve, reject) => {
+                if (!file) {
+                    reject("File tidak ditemukan");
+                    return;
+                }
+                
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     const data = event.target.result;
@@ -3136,7 +3322,8 @@
                         imageData: data, 
                         createdAt: new Date().toISOString(),
                         fileName: file.name,
-                        fileType: file.type
+                        fileType: file.type,
+                        size: file.size
                     });
 
                     request.onsuccess = function() {
@@ -3146,39 +3333,24 @@
                         reject("Gagal menyimpan gambar ke database");
                     };
                 };
+                reader.onerror = function() {
+                    reject("Gagal membaca file");
+                };
                 reader.readAsDataURL(file);
             });
         }
 
-        // Get image from IndexedDB with caching
-        async function getImageFromIndexedDB(imageId) {
-            if (!imageId) return null;
-            
-            // Cek cache
-            if (imageCache && imageCache.has(imageId)) {
-                return imageCache.get(imageId);
-            }
-            
-            try {
-                const imageData = await getImageFromIndexedDBNocache(imageId);
-                return imageData;
-            } catch (error) {
-                console.error("Error loading image from IndexedDB:", error);
-                return null;
-            }
-        }
-        
-        // Get image from IndexedDB tanpa cache
-        function getImageFromIndexedDBNocache(imageId) {
+        // Get image from IndexedDB
+        function getImageFromIndexedDB(imageId) {
             return new Promise((resolve, reject) => {
-                if (!db) {
+                if (!imageId) {
                     resolve(null);
                     return;
                 }
                 
                 const transaction = db.transaction("images", "readonly");
                 const store = transaction.objectStore("images");
-                const request = store.get(imageId);
+                const request = store.get(parseInt(imageId));
 
                 request.onsuccess = function(event) {
                     resolve(event.target.result ? event.target.result.imageData : null);
@@ -3189,28 +3361,28 @@
             });
         }
 
-        // Fungsi capturePhotoDirect untuk membuka kamera langsung
+        // PERBAIKAN UTAMA: Fungsi capturePhotoDirect yang sama dengan schedule.html
         function capturePhotoDirect(inputId) {
-            // Buat input file tersembunyi dengan atribut capture
-            const tempInput = document.createElement('input');
-            tempInput.type = 'file';
-            tempInput.accept = 'image/*';
-            tempInput.capture = 'environment'; // Gunakan kamera belakang
-            tempInput.style.display = 'none';
+            // Buat input file tersembunyi untuk kamera
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.capture = 'environment'; // Gunakan kamera belakang jika tersedia
+            fileInput.style.display = 'none';
             
-            tempInput.onchange = function(e) {
+            fileInput.onchange = function(e) {
                 if (e.target.files && e.target.files[0]) {
                     const file = e.target.files[0];
                     
-                    // Dapatkan input asli
+                    // Dapatkan elemen input asli berdasarkan ID
                     const originalInput = document.getElementById(inputId);
                     if (originalInput) {
-                        // Buat DataTransfer untuk mengatur file
+                        // Buat DataTransfer untuk menyalin file
                         const dataTransfer = new DataTransfer();
                         dataTransfer.items.add(file);
                         originalInput.files = dataTransfer.files;
                         
-                        // Trigger change event
+                        // Trigger change event untuk preview
                         const event = new Event('change', { bubbles: true });
                         originalInput.dispatchEvent(event);
                         
@@ -3218,13 +3390,49 @@
                     }
                 }
                 
-                // Hapus input sementara
-                document.body.removeChild(tempInput);
+                // Hapus elemen input sementara
+                document.body.removeChild(fileInput);
             };
             
             // Tambahkan ke body dan trigger klik
-            document.body.appendChild(tempInput);
-            tempInput.click();
+            document.body.appendChild(fileInput);
+            fileInput.click();
+        }
+
+        // PERBAIKAN: Fungsi previewImage yang konsisten
+        function previewImage(input, previewId, fileNameId) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const preview = document.getElementById(previewId);
+                const fileName = document.getElementById(fileNameId);
+                
+                // Check file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
+                    // Reset input
+                    input.value = '';
+                    return;
+                }
+                
+                // Check file type
+                if (!file.type.match('image.*')) {
+                    showToast('Hanya file gambar yang diizinkan.', 'error');
+                    // Reset input
+                    input.value = '';
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    fileName.textContent = file.name;
+                }
+                reader.onerror = function() {
+                    showToast('Gagal membaca file', 'error');
+                }
+                reader.readAsDataURL(file);
+            }
         }
 
         // Initialize dashboard dengan optimasi
@@ -3500,7 +3708,7 @@
                                 <button class="btn-fertilize" onclick="openFertilizingModal('${plant.id}')">
                                     <i class="fas fa-seedling"></i> Konfirmasi Pupuk
                                 </button>
-                                <button class="btn-harvest" onclick="confirmHarvest('${plant.id}')">
+                                <button class="btn-harvest" onclick="openHarvestModal('${plant.id}')">
                                     <i class="fas fa-check-circle"></i> Konfirmasi Panen
                                 </button>
                                 <button class="btn-details" onclick="viewPlantDetails('${plant.id}')">
@@ -3553,7 +3761,7 @@
                         scheduleInfo = 'Panen hari ini';
                         buttonsHTML = `
                             <div class="plant-actions double-button">
-                                <button class="btn-harvest" onclick="confirmHarvest('${plant.id}')">
+                                <button class="btn-harvest" onclick="openHarvestModal('${plant.id}')">
                                     <i class="fas fa-check-circle"></i> Konfirmasi Panen
                                 </button>
                                 <button class="btn-details" onclick="viewPlantDetails('${plant.id}')">
@@ -4139,7 +4347,7 @@
             setTimeout(updateDateTime, 60000);
         }
 
-        // Setup event listeners
+        // Setup event listeners - DIPERBAIKI
         function setupEventListeners() {
             // Hamburger menu toggle
             const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -4184,14 +4392,22 @@
                 }
             });
             
-            // Form submissions
-            document.getElementById('wateringForm').addEventListener('submit', handleWateringSubmit);
-            document.getElementById('fertilizingForm').addEventListener('submit', handleFertilizingSubmit);
+            // PERBAIKAN: Form submissions yang sama dengan schedule.html
+            const wateringForm = document.getElementById('wateringForm');
+            const fertilizingForm = document.getElementById('fertilizingForm');
+            const harvestForm = document.getElementById('harvestForm');
             
-            // Prevent form default behavior
-            document.querySelectorAll('form').forEach(form => {
-                form.addEventListener('submit', e => e.preventDefault());
-            });
+            if (wateringForm) {
+                wateringForm.addEventListener('submit', handleWateringSubmit);
+            }
+            
+            if (fertilizingForm) {
+                fertilizingForm.addEventListener('submit', handleFertilizingSubmit);
+            }
+            
+            if (harvestForm) {
+                harvestForm.addEventListener('submit', handleHarvestSubmit);
+            }
             
             // Close sidebar when clicking on menu item
             document.querySelectorAll('.sidebar-menu a').forEach(link => {
@@ -4287,65 +4503,67 @@
             sidebarOpen = false;
         }
 
-        // Modal functions
+        // ==================== FUNGSI UNTUK MODAL DAN INPUT FOTO ====================
+        
+        // Modal functions - DIPERBAIKI
         function openWateringModal(plantId) {
             currentEditingPlantId = plantId;
             const modal = document.getElementById('wateringModal');
             modal.style.display = 'block';
-            resetForm('wateringForm', 'imagePreviewWateringProof', 'fileNameWateringProof');
+            resetForm('wateringForm', 'imagePreviewWateringProof', 'fileNameWateringProof', 'wateringProof');
         }
 
         function closeWateringModal() {
             document.getElementById('wateringModal').style.display = 'none';
+            resetForm('wateringForm', 'imagePreviewWateringProof', 'fileNameWateringProof', 'wateringProof');
         }
 
         function openFertilizingModal(plantId) {
             currentEditingPlantId = plantId;
             const modal = document.getElementById('fertilizingModal');
             modal.style.display = 'block';
-            resetForm('fertilizingForm', 'imagePreviewFertilizingProof', 'fileNameFertilizingProof');
+            resetForm('fertilizingForm', 'imagePreviewFertilizingProof', 'fileNameFertilizingProof', 'fertilizingProof');
         }
 
         function closeFertilizingModal() {
             document.getElementById('fertilizingModal').style.display = 'none';
+            resetForm('fertilizingForm', 'imagePreviewFertilizingProof', 'fileNameFertilizingProof', 'fertilizingProof');
         }
 
-        // Reset form
-        function resetForm(formId, previewId, fileNameId) {
-            document.getElementById(formId).reset();
-            document.getElementById(previewId).style.display = 'none';
-            document.getElementById(previewId).src = '';
-            document.getElementById(fileNameId).textContent = '';
+        // PERBAIKAN: Fungsi untuk modal panen
+        function openHarvestModal(plantId) {
+            currentEditingPlantId = plantId;
+            const modal = document.getElementById('harvestModal');
+            modal.style.display = 'block';
+            resetForm('harvestForm', 'imagePreviewHarvestProof', 'fileNameHarvestProof', 'harvestProof');
         }
 
-        // Preview uploaded image
-        function previewImage(input, previewId, fileNameId) {
-            if (input.files && input.files[0]) {
-                const file = input.files[0];
-                const preview = document.getElementById(previewId);
-                const fileName = document.getElementById(fileNameId);
-                
-                if (file.size > 5 * 1024 * 1024) {
-                    showToast('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
-                    return;
-                }
-                
-                if (!file.type.match('image.*')) {
-                    showToast('Hanya file gambar yang diizinkan.', 'error');
-                    return;
-                }
-                
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                    fileName.textContent = file.name;
-                }
-                reader.readAsDataURL(file);
+        function closeHarvestModal() {
+            document.getElementById('harvestModal').style.display = 'none';
+            resetForm('harvestForm', 'imagePreviewHarvestProof', 'fileNameHarvestProof', 'harvestProof');
+        }
+
+        // Reset form - DIPERBAIKI
+        function resetForm(formId, previewId, fileNameId, fileInputId = null) {
+            const form = document.getElementById(formId);
+            if (form) form.reset();
+            
+            const preview = document.getElementById(previewId);
+            if (preview) {
+                preview.style.display = 'none';
+                preview.src = '';
+            }
+            
+            const fileName = document.getElementById(fileNameId);
+            if (fileName) fileName.textContent = '';
+            
+            if (fileInputId) {
+                const fileInput = document.getElementById(fileInputId);
+                if (fileInput) fileInput.value = '';
             }
         }
 
-        // Handle watering form submission
+        // PERBAIKAN UTAMA: Handle watering form submission - SAMA DENGAN schedule.html
         async function handleWateringSubmit(e) {
             e.preventDefault();
             const plantId = currentEditingPlantId;
@@ -4353,22 +4571,41 @@
             const notes = document.getElementById('wateringNotes').value;
             const submitBtn = document.getElementById('confirmWateringBtn');
             
-            if (!fileInput.files[0]) {
+            // Validasi file
+            if (!fileInput || !fileInput.files[0]) {
                 showToast('Silakan unggah foto bukti penyiraman', 'warning');
                 return;
             }
             
+            const file = fileInput.files[0];
+            
+            // Validasi ukuran file
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
+                return;
+            }
+            
+            // Validasi tipe file
+            if (!file.type.match('image.*')) {
+                showToast('Hanya file gambar yang diizinkan.', 'error');
+                return;
+            }
+            
+            // Show loading state
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<div class="loading"></div> Memproses...';
             submitBtn.disabled = true;
             
             try {
-                const imageId = await saveImageToIndexedDB(fileInput.files[0]);
+                // Save image to database
+                const imageId = await saveImageToIndexedDB(file);
                 
+                // Update plant data
                 const plantIndex = plants.findIndex(p => p.id === plantId);
                 if (plantIndex !== -1) {
                     const plant = plants[plantIndex];
                     
+                    // Update next watering date
                     let waterScheduleDays = plant.waterSchedule;
                     if (typeof waterScheduleDays === 'string' && waterScheduleDays.startsWith('custom-')) {
                         waterScheduleDays = parseInt(waterScheduleDays.split('-')[1]);
@@ -4384,6 +4621,7 @@
                     plant.progress = Math.min(plant.progress + 10, 100);
                     plant.wateringProofId = imageId;
                     
+                    // Add activity to history
                     const history = JSON.parse(localStorage.getItem('plantHistory')) || [];
                     history.push({
                         id: Date.now().toString(),
@@ -4398,6 +4636,7 @@
                     });
                     localStorage.setItem('plantHistory', JSON.stringify(history));
                     
+                    // Update plants in localStorage
                     const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
                     const globalPlantIndex = allPlants.findIndex(p => p.id === plantId);
                     if (globalPlantIndex !== -1) {
@@ -4405,25 +4644,30 @@
                         localStorage.setItem('plants', JSON.stringify(allPlants));
                     }
                     
+                    // Create notification
                     createNotification('Penyiraman dikonfirmasi', `Penyiraman tanaman ${plant.name} telah dikonfirmasi`, 'success', plantId);
                     
+                    // Reload data
                     loadUserPlants();
                     updateDashboard();
                     updateNotifications();
                     
                     showToast('Penyiraman berhasil dikonfirmasi! Progress tanaman bertambah.', 'success');
                     closeWateringModal();
+                } else {
+                    showToast('Tanaman tidak ditemukan', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
                 showToast('Gagal menyimpan data. Silakan coba lagi.', 'error');
             } finally {
+                // Reset button state
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
         }
 
-        // Handle fertilizing form submission
+        // PERBAIKAN: Handle fertilizing form submission - SAMA DENGAN schedule.html
         async function handleFertilizingSubmit(e) {
             e.preventDefault();
             const plantId = currentEditingPlantId;
@@ -4431,22 +4675,41 @@
             const notes = document.getElementById('fertilizingNotes').value;
             const submitBtn = document.getElementById('confirmFertilizingBtn');
             
-            if (!fileInput.files[0]) {
+            // Validasi file
+            if (!fileInput || !fileInput.files[0]) {
                 showToast('Silakan unggah foto bukti pemupukan', 'warning');
                 return;
             }
             
+            const file = fileInput.files[0];
+            
+            // Validasi ukuran file
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
+                return;
+            }
+            
+            // Validasi tipe file
+            if (!file.type.match('image.*')) {
+                showToast('Hanya file gambar yang diizinkan.', 'error');
+                return;
+            }
+            
+            // Show loading state
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<div class="loading"></div> Memproses...';
             submitBtn.disabled = true;
             
             try {
-                const imageId = await saveImageToIndexedDB(fileInput.files[0]);
+                // Save image to database
+                const imageId = await saveImageToIndexedDB(file);
                 
+                // Update plant data
                 const plantIndex = plants.findIndex(p => p.id === plantId);
                 if (plantIndex !== -1) {
                     const plant = plants[plantIndex];
                     
+                    // Update next fertilizing date
                     let fertilizerScheduleDays = plant.fertilizerSchedule;
                     if (typeof fertilizerScheduleDays === 'string' && fertilizerScheduleDays.startsWith('custom-')) {
                         fertilizerScheduleDays = parseInt(fertilizerScheduleDays.split('-')[1]);
@@ -4462,6 +4725,7 @@
                     plant.progress = Math.min(plant.progress + 5, 100);
                     plant.fertilizingProofId = imageId;
                     
+                    // Add activity to history
                     const history = JSON.parse(localStorage.getItem('plantHistory')) || [];
                     history.push({
                         id: Date.now().toString(),
@@ -4476,6 +4740,7 @@
                     });
                     localStorage.setItem('plantHistory', JSON.stringify(history));
                     
+                    // Update plants in localStorage
                     const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
                     const globalPlantIndex = allPlants.findIndex(p => p.id === plantId);
                     if (globalPlantIndex !== -1) {
@@ -4483,48 +4748,129 @@
                         localStorage.setItem('plants', JSON.stringify(allPlants));
                     }
                     
+                    // Create notification
                     createNotification('Pemupukan dikonfirmasi', `Pemupukan tanaman ${plant.name} telah dikonfirmasi`, 'success', plantId);
                     
+                    // Reload data
                     loadUserPlants();
                     updateDashboard();
                     updateNotifications();
                     
                     showToast('Pemupukan berhasil dikonfirmasi! Progress tanaman bertambah.', 'success');
                     closeFertilizingModal();
+                } else {
+                    showToast('Tanaman tidak ditemukan', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
                 showToast('Gagal menyimpan data. Silakan coba lagi.', 'error');
             } finally {
+                // Reset button state
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
         }
 
-        // Confirm harvest
-        function confirmHarvest(plantId) {
-            if (confirm('Apakah Anda yakin ingin mengonfirmasi panen?')) {
+        // PERBAIKAN: Handle harvest form submission - SAMA DENGAN schedule.html
+        async function handleHarvestSubmit(e) {
+            e.preventDefault();
+            const plantId = currentEditingPlantId;
+            const fileInput = document.getElementById('harvestProof');
+            const notes = document.getElementById('harvestNotes').value;
+            const quantity = document.getElementById('harvestQuantity').value;
+            const submitBtn = document.getElementById('confirmHarvestBtn');
+            
+            // Validasi file
+            if (!fileInput || !fileInput.files[0]) {
+                showToast('Silakan unggah foto bukti panen', 'warning');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            
+            // Validasi ukuran file
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
+                return;
+            }
+            
+            // Validasi tipe file
+            if (!file.type.match('image.*')) {
+                showToast('Hanya file gambar yang diizinkan.', 'error');
+                return;
+            }
+            
+            // Validasi jumlah hasil panen
+            if (!quantity || quantity < 1) {
+                showToast('Silakan masukkan jumlah hasil panen yang valid', 'warning');
+                return;
+            }
+            
+            // Show loading state
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<div class="loading"></div> Memproses...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Save image to database
+                const imageId = await saveImageToIndexedDB(file);
+                
+                // Update plant data
                 const plantIndex = plants.findIndex(p => p.id === plantId);
                 if (plantIndex !== -1) {
-                    plants[plantIndex].status = 'harvested';
-                    plants[plantIndex].progress = 100;
-                    plants[plantIndex].harvestedDate = new Intl.DateTimeFormat('en-CA').format(new Date());
+                    const plant = plants[plantIndex];
                     
+                    // Update plant status to harvested
+                    plant.status = 'harvested';
+                    plant.progress = 100;
+                    plant.harvestedDate = new Intl.DateTimeFormat('en-CA').format(new Date());
+                    plant.harvestProofId = imageId;
+                    plant.harvestQuantity = quantity;
+                    
+                    // Add activity to history
+                    const history = JSON.parse(localStorage.getItem('plantHistory')) || [];
+                    history.push({
+                        id: Date.now().toString(),
+                        plantId: plantId,
+                        plantName: plant.name,
+                        type: 'harvest',
+                        date: new Intl.DateTimeFormat('en-CA').format(new Date()),
+                        time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
+                        imageId: imageId,
+                        notes: notes,
+                        quantity: quantity,
+                        userId: currentUser.id
+                    });
+                    localStorage.setItem('plantHistory', JSON.stringify(history));
+                    
+                    // Update plants in localStorage
                     const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
                     const globalPlantIndex = allPlants.findIndex(p => p.id === plantId);
                     if (globalPlantIndex !== -1) {
-                        allPlants[globalPlantIndex] = plants[plantIndex];
+                        allPlants[globalPlantIndex] = plant;
                         localStorage.setItem('plants', JSON.stringify(allPlants));
                     }
                     
-                    createNotification('Panen dikonfirmasi', `Panen tanaman ${plants[plantIndex].name} telah dikonfirmasi`, 'success', plantId);
+                    // Create notification
+                    createNotification('Panen dikonfirmasi', `Panen tanaman ${plant.name} telah dikonfirmasi (${quantity})`, 'success', plantId);
                     
+                    // Reload data
                     loadUserPlants();
                     updateDashboard();
                     updateNotifications();
                     
-                    showToast('Panen berhasil dikonfirmasi!', 'success');
+                    showToast('Panen berhasil dikonfirmasi! Tanaman telah selesai.', 'success');
+                    closeHarvestModal();
+                } else {
+                    showToast('Tanaman tidak ditemukan', 'error');
                 }
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Gagal menyimpan data. Silakan coba lagi.', 'error');
+            } finally {
+                // Reset button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
             }
         }
 
@@ -4559,8 +4905,10 @@
             const toastMessage = document.getElementById('toastMessage');
             const toastIcon = toast.querySelector('i');
             
+            // Set message and icon
             toastMessage.textContent = message;
             
+            // Set icon based on type
             toastIcon.className = 'fas ' + (
                 type === 'success' ? 'fa-check-circle' :
                 type === 'error' ? 'fa-exclamation-circle' :
@@ -4568,9 +4916,13 @@
                 'fa-info-circle'
             );
             
+            // Set toast class
             toast.className = 'toast ' + type;
+            
+            // Show toast
             toast.classList.add('show');
             
+            // Auto hide after 5 seconds
             setTimeout(() => {
                 hideToast();
             }, 5000);
@@ -4605,6 +4957,11 @@
         // Export fungsi ke window object
         window.capturePhotoDirect = capturePhotoDirect;
         window.openCamera = capturePhotoDirect;
+        window.openWateringModal = openWateringModal;
+        window.openFertilizingModal = openFertilizingModal;
+        window.openHarvestModal = openHarvestModal;
+        window.viewPlantDetails = viewPlantDetails;
+        window.logout = logout;
     </script>
 </body>
 </html>
