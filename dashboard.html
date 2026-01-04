@@ -1188,6 +1188,9 @@
         overflow: hidden;
         transition: var(--transition);
         flex: 1;
+        min-height: 400px; /* Menambahkan min-height untuk konsistensi */
+        display: flex;
+        flex-direction: column;
     }
 
     .schedule-section:hover {
@@ -1213,6 +1216,7 @@
         padding-bottom: 20px;
         border-bottom: 2px solid rgba(0, 0, 0, 0.05);
         position: relative;
+        flex-shrink: 0;
     }
 
     .section-header h2 {
@@ -1277,6 +1281,7 @@
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
         gap: 30px;
         padding: 0;
+        flex: 1;
     }
 
     @media (max-width: 768px) {
@@ -1530,13 +1535,13 @@
         box-shadow: 0 8px 24px rgba(46, 125, 50, 0.4);
     }
 
-    /* Empty State */
+    /* Empty State - DIPERBAIKI: Menyesuaikan dengan layout schedule-section */
     .empty-state {
         text-align: center;
         padding: 60px 20px;
         color: var(--text-color);
         grid-column: 1 / -1;
-        background: white;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
         border-radius: var(--border-radius);
         border: 3px dashed var(--primary-light);
         display: flex;
@@ -1546,6 +1551,18 @@
         min-height: 300px;
         position: relative;
         overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        margin: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .empty-state:hover {
+        border-color: var(--primary-color);
+        box-shadow: var(--shadow-heavy);
+        transform: translateY(-5px);
+        background: linear-gradient(135deg, var(--primary-extra-light), rgba(255, 255, 255, 0.9));
     }
 
     .empty-state i {
@@ -1553,6 +1570,12 @@
         margin-bottom: 25px;
         color: var(--primary-color);
         opacity: 0.7;
+        transition: var(--transition);
+    }
+
+    .empty-state:hover i {
+        opacity: 1;
+        transform: scale(1.1);
     }
 
     .empty-state h3 {
@@ -1570,6 +1593,7 @@
         text-align: center;
         opacity: 0.9;
         max-width: 500px;
+        line-height: 1.6;
     }
 
     /* Button Primary */
@@ -2285,6 +2309,9 @@
         border: 3px dashed var(--primary-light);
         min-height: 300px;
         justify-content: center;
+        width: 100%;
+        height: 100%;
+        margin: 0;
     }
 
     .loading-schedule .loading-spinner {
@@ -2476,6 +2503,7 @@
         
         .schedule-section {
             padding: 25px;
+            min-height: 350px;
         }
         
         .modal-content {
@@ -2490,6 +2518,23 @@
         
         .main.sidebar-open {
             margin-left: 0;
+        }
+        
+        .empty-state {
+            min-height: 250px;
+            padding: 40px 20px;
+        }
+        
+        .empty-state i {
+            font-size: 60px;
+        }
+        
+        .empty-state h3 {
+            font-size: 22px;
+        }
+        
+        .empty-state p {
+            font-size: 15px;
         }
     }
 
@@ -2629,6 +2674,7 @@
         
         .schedule-section {
             padding: 20px;
+            min-height: 320px;
         }
         
         .modal-content {
@@ -2651,6 +2697,30 @@
         .btn-primary,
         .btn-secondary {
             width: 100%;
+        }
+        
+        .empty-state {
+            min-height: 220px;
+            padding: 30px 15px;
+        }
+        
+        .empty-state i {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state h3 {
+            font-size: 20px;
+        }
+        
+        .empty-state p {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .btn-primary {
+            min-width: 180px;
+            padding: 14px 28px;
         }
     }
 
@@ -2712,6 +2782,7 @@
         
         .schedule-section {
             padding: 20px;
+            min-height: 300px;
         }
         
         .footer {
@@ -2736,6 +2807,32 @@
             right: 20px;
             left: 20px;
             max-width: none;
+        }
+        
+        .empty-state {
+            min-height: 200px;
+            padding: 25px 15px;
+        }
+        
+        .empty-state i {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .empty-state h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .empty-state p {
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+        
+        .btn-primary {
+            min-width: 160px;
+            padding: 12px 24px;
+            font-size: 15px;
         }
     }
     </style>
