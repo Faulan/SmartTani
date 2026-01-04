@@ -643,7 +643,7 @@
         visibility: visible;
     }
 
-    /* Page Header - JUDUL TETAP "JADWAL" */
+    /* Page Header */
     .page-header {
         margin-bottom: 30px;
         animation: fadeIn 0.5s ease;
@@ -1810,15 +1810,32 @@
         font-size: 17px;
     }
 
-    /* PERBAIKAN: Input with icon styling yang konsisten dengan plants.html */
-    .input-with-icon {
+    /* PERBAIKAN: Input with icon styling yang konsisten dengan dashboard.html */
+    .plant-form {
+        width: 100%;
+    }
+
+    .plant-form .form-group {
+        margin-bottom: 25px;
+    }
+
+    .plant-form .form-group label {
+        display: block;
+        margin-bottom: 12px;
+        font-weight: 600;
+        color: var(--text-color);
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .plant-form .input-with-icon {
         position: relative;
         display: flex;
         align-items: center;
         width: 100%;
     }
 
-    .input-with-icon i {
+    .plant-form .input-with-icon i {
         position: absolute;
         left: 15px;
         color: var(--text-light);
@@ -1826,9 +1843,38 @@
         font-size: 16px;
     }
 
-    .input-with-icon input,
-    .input-with-icon select,
-    .input-with-icon textarea {
+    .plant-form .input-with-icon textarea {
+        font-family: 'Poppins', sans-serif;
+        width: 100%;
+        padding: 14px 15px 14px 45px;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        background: white;
+        box-sizing: border-box;
+        color: var(--text-color);
+        font-weight: 500;
+        min-height: 120px;
+        resize: vertical;
+        line-height: 1.5;
+    }
+
+    .plant-form .input-with-icon textarea::placeholder {
+        color: var(--text-light);
+        font-weight: 400;
+        opacity: 0.8;
+    }
+
+    .plant-form .input-with-icon textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+    }
+
+    /* Input dengan ikon untuk input lain */
+    .plant-form .input-with-icon input,
+    .plant-form .input-with-icon select {
         font-family: 'Poppins', sans-serif;
         width: 100%;
         padding: 14px 15px 14px 45px;
@@ -1842,29 +1888,21 @@
         font-weight: 500;
     }
 
-    .input-with-icon input::placeholder,
-    .input-with-icon select::placeholder,
-    .input-with-icon textarea::placeholder {
+    .plant-form .input-with-icon input::placeholder,
+    .plant-form .input-with-icon select::placeholder {
         color: var(--text-light);
         font-weight: 400;
         opacity: 0.8;
     }
 
-    .input-with-icon input:focus,
-    .input-with-icon select:focus,
-    .input-with-icon textarea:focus {
+    .plant-form .input-with-icon input:focus,
+    .plant-form .input-with-icon select:focus {
         outline: none;
         border-color: var(--primary-color);
         box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
     }
 
-    .input-with-icon textarea {
-        min-height: 120px;
-        resize: vertical;
-        line-height: 1.5;
-        font-weight: 500;
-    }
-
+    /* Camera options styling */
     .camera-options {
         display: flex;
         gap: 20px;
@@ -1994,28 +2032,7 @@
         font-weight: 500;
     }
 
-    /* PERBAIKAN: Textarea styling yang konsisten */
-    textarea {
-        width: 100%;
-        padding: 14px 15px;
-        border: 2px solid var(--border-color);
-        border-radius: 8px;
-        font-family: 'Poppins', sans-serif;
-        font-size: 15px;
-        resize: vertical;
-        min-height: 100px;
-        transition: var(--transition);
-        background: white;
-        line-height: 1.6;
-        margin-bottom: 10px;
-    }
-
-    textarea:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
-    }
-
+    /* Form actions */
     .form-actions {
         display: flex;
         gap: 20px;
@@ -2728,7 +2745,7 @@
         <button class="toast-close" onclick="hideToast()">&times;</button>
     </div>
 
-    <!-- Watering Modal -->
+    <!-- Watering Modal - DIPERBAIKI dengan form styling yang konsisten -->
     <div id="wateringModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -2760,6 +2777,7 @@
                             <div class="file-name" id="fileNameWateringProof"></div>
                         </div>
                     </div>
+                    <!-- PERBAIKAN UTAMA: Textarea catatan dengan styling yang sama dengan dashboard.html -->
                     <div class="form-group">
                         <label for="wateringNotes">Catatan Penyiraman (Opsional)</label>
                         <div class="input-with-icon">
@@ -2780,7 +2798,7 @@
         </div>
     </div>
 
-    <!-- Fertilizing Modal -->
+    <!-- Fertilizing Modal - DIPERBAIKI dengan form styling yang konsisten -->
     <div id="fertilizingModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -2812,6 +2830,7 @@
                             <div class="file-name" id="fileNameFertilizingProof"></div>
                         </div>
                     </div>
+                    <!-- PERBAIKAN UTAMA: Textarea catatan dengan styling yang sama dengan dashboard.html -->
                     <div class="form-group">
                         <label for="fertilizingNotes">Catatan Pemupukan (Opsional)</label>
                         <div class="input-with-icon">
@@ -2832,7 +2851,7 @@
         </div>
     </div>
 
-    <!-- Harvest Modal (BARU) -->
+    <!-- Harvest Modal - DIPERBAIKI dengan form styling yang konsisten -->
     <div id="harvestModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -2864,6 +2883,7 @@
                             <div class="file-name" id="fileNameHarvestProof"></div>
                         </div>
                     </div>
+                    <!-- PERBAIKAN UTAMA: Textarea catatan dengan styling yang sama dengan dashboard.html -->
                     <div class="form-group">
                         <label for="harvestNotes">Catatan Panen (Opsional)</label>
                         <div class="input-with-icon">
@@ -3020,7 +3040,7 @@
             });
         }
 
-        // PERBAIKAN UTAMA: Fungsi capturePhotoDirect yang sama dengan plants.html
+        // PERBAIKAN UTAMA: Fungsi capturePhotoDirect yang sama dengan dashboard.html
         function capturePhotoDirect(inputId) {
             // Buat input file tersembunyi untuk kamera
             const fileInput = document.createElement('input');
@@ -3945,7 +3965,7 @@
             resetForm('fertilizingForm', 'imagePreviewFertilizingProof', 'fileNameFertilizingProof', 'fertilizingProof');
         }
 
-        // PERBAIKAN: Fungsi untuk modal panen
+        // Fungsi untuk modal panen
         function openHarvestModal(plantId) {
             currentEditingPlantId = plantId;
             const modal = document.getElementById('harvestModal');
@@ -4207,7 +4227,7 @@
             }
         }
 
-        // PERBAIKAN: Handle harvest form submission
+        // Handle harvest form submission
         async function handleHarvestSubmit(e) {
             e.preventDefault();
             const plantId = currentEditingPlantId;
@@ -4397,6 +4417,8 @@
         window.openWateringModal = openWateringModal;
         window.openFertilizingModal = openFertilizingModal;
         window.openHarvestModal = openHarvestModal;
+        window.viewPlantDetails = viewPlantDetails;
+        window.logout = logout;
     </script>
 </body>
 </html>

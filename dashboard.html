@@ -647,7 +647,7 @@
         visibility: visible;
     }
 
-    /* Page Header */
+    /* Page Header - DIPERBAIKI: Margin bottom lebih kecil seperti schedule.html */
     .page-header {
         margin-bottom: 30px;
         animation: fadeIn 0.5s ease;
@@ -706,21 +706,21 @@
         color: var(--text-color);
         font-size: 17px;
         max-width: 600px;
-        margin-top: 20px;
+        margin-top: 15px;
         font-weight: 500;
         opacity: 0.9;
     }
 
-    /* Welcome Section - PERBAIKAN: MARGIN DIPERKECIL */
+    /* Welcome Section - DIPERBAIKI: Margin bottom lebih kecil */
     .welcome-section-wrapper {
-        margin-bottom: 5px; /* Diperkecil dari 30px */
+        margin-bottom: 5px;
         animation: fadeIn 0.6s ease 0.2s both;
     }
 
     .welcome-section {
         background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
         color: white;
-        padding: 25px 30px;
+        padding: 30px;
         border-radius: var(--border-radius);
         box-shadow: var(--shadow-heavy);
         position: relative;
@@ -1047,47 +1047,32 @@
         transform: scale(1.05);
     }
 
+    /* Stats Section - DIPERBAIKI: Margin bottom lebih kecil */
     .stats-section {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 15px;
-        margin-bottom: 35px; /* HANYA margin-bottom saja, NO margin-top */
+        gap: 20px;
+        margin-bottom: 30px;
+        margin-top: 0; /* TAMBAHKAN ini untuk pastikan tidak ada margin atas */
         animation: fadeIn 0.6s ease 0.4s both;
         width: 100%;
     }
 
-    /* Hapus margin-top dari stats card jika ada */
     .stat-card {
-        margin-top: 0 !important;
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
         border-radius: var(--card-radius);
-        padding: 20px;
+        padding: 25px;
         box-shadow: var(--shadow-heavy);
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 20px;
         border: 3px solid var(--primary-light);
         transition: var(--transition);
         position: relative;
         overflow: hidden;
         backdrop-filter: blur(20px);
         cursor: pointer;
-        height: 110px;
-    }
-
-    /* Pastikan page-header tidak memberikan margin besar */
-    .page-header {
-        margin-bottom: 25px; /* Kurangi dari default */
-        animation: fadeIn 0.5s ease;
-        background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(27, 94, 32, 0.05));
-        padding: 25px 30px; /* Kurangi padding */
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow-heavy);
-        border: 3px solid var(--primary-color);
-        width: 100%;
-        backdrop-filter: blur(20px);
-        position: relative;
-        overflow: hidden;
+        height: 120px;
     }
 
     .stat-card::before {
@@ -1189,7 +1174,7 @@
         opacity: 0.9;
     }
 
-    /* Schedule Sections */
+    /* Schedule Sections - DIPERBAIKI: Margin bottom konsisten */
     .schedule-section {
         background: white;
         border-radius: var(--border-radius);
@@ -1286,7 +1271,7 @@
         transition: transform 0.1s ease;
     }
 
-    /* Plants Grid - PERBAIKAN: Padding dan alignment */
+    /* Plants Grid - DIPERBAIKI: Gap dan padding konsisten */
     .plants-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -1497,7 +1482,7 @@
         transition: var(--transition);
         text-decoration: none;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        min-height: 48px;
+        min-height: 44px;
         flex: 1;
     }
 
@@ -1558,6 +1543,9 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        min-height: 300px;
+        position: relative;
+        overflow: hidden;
     }
 
     .empty-state i {
@@ -1705,7 +1693,6 @@
     }
 
     /* ==================== FOOTER ==================== */
-    /* PERBAIKAN: Footer tetap di bawah dan tidak mempengaruhi konten */
     .footer {
         background: white;
         border-top: 1px solid rgba(0, 0, 0, 0.05);
@@ -1892,7 +1879,6 @@
     }
 
     /* ==================== FORM IMPROVEMENTS ==================== */
-    /* PERBAIKAN: Form input styling yang konsisten dengan schedule.html */
     .form-group {
         margin-bottom: 25px;
     }
@@ -2086,26 +2072,66 @@
         font-weight: 500;
     }
 
-    /* PERBAIKAN: Textarea styling yang konsisten */
-    textarea {
+    /* PERBAIKAN UTAMA: Form styling untuk catatan seperti di plants.html */
+    .plant-form {
         width: 100%;
-        padding: 14px 15px;
-        border: 2px solid var(--border-color);
-        border-radius: 8px;
-        font-family: 'Poppins', sans-serif;
-        font-size: 15px;
-        resize: vertical;
-        min-height: 100px;
-        transition: var(--transition);
-        background: white;
-        line-height: 1.6;
-        margin-bottom: 10px;
     }
 
-    textarea:focus {
+    .plant-form .form-group {
+        margin-bottom: 25px;
+    }
+
+    .plant-form .form-group label {
+        display: block;
+        margin-bottom: 12px;
+        font-weight: 600;
+        color: var(--text-color);
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .plant-form .input-with-icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .plant-form .input-with-icon i {
+        position: absolute;
+        left: 15px;
+        color: var(--text-light);
+        z-index: 1;
+        font-size: 16px;
+    }
+
+    .plant-form .input-with-icon textarea {
+        font-family: 'Poppins', sans-serif;
+        width: 100%;
+        padding: 14px 15px 14px 45px;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        background: white;
+        box-sizing: border-box;
+        color: var(--text-color);
+        font-weight: 500;
+        min-height: 120px;
+        resize: vertical;
+        line-height: 1.5;
+    }
+
+    .plant-form .input-with-icon textarea::placeholder {
+        color: var(--text-light);
+        font-weight: 400;
+        opacity: 0.8;
+    }
+
+    .plant-form .input-with-icon textarea:focus {
         outline: none;
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
     }
 
     .form-actions {
@@ -2230,11 +2256,11 @@
     /* Loading Animation */
     .loading {
         display: inline-block;
-        width: 24px;
-        height: 24px;
-        border: 3px solid rgba(255,255,255,.3);
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(46, 125, 50, 0.1);
         border-radius: 50%;
-        border-top-color: white;
+        border-top-color: var(--primary-color);
         animation: spin 1s ease-in-out infinite;
     }
 
@@ -2245,7 +2271,7 @@
     /* Loading State untuk Jadwal */
     .loading-schedule {
         text-align: center;
-        padding: 40px 20px;
+        padding: 60px 20px;
         color: var(--text-color);
         font-size: 16px;
         font-weight: 500;
@@ -2254,12 +2280,17 @@
         align-items: center;
         gap: 15px;
         grid-column: 1 / -1;
+        background: white;
+        border-radius: var(--border-radius);
+        border: 3px dashed var(--primary-light);
+        min-height: 300px;
+        justify-content: center;
     }
 
     .loading-schedule .loading-spinner {
         width: 40px;
         height: 40px;
-        border: 3px solid var(--primary-light);
+        border: 4px solid var(--primary-light);
         border-top-color: var(--primary-color);
         border-radius: 50%;
         animation: spin 1s linear infinite;
@@ -2340,22 +2371,6 @@
         }
     }
 
-    @media (max-width: 768px) {
-        .welcome-section-wrapper {
-            margin-bottom: 2px; /* Lebih kecil di mobile */
-        }
-        
-        .stats-section {
-            gap: 10px; /* Lebih rapat di mobile */
-            margin-bottom: 15px;
-        }
-        
-        .page-header {
-            margin-bottom: 20px;
-            padding: 20px 25px;
-        }
-    }
-
     @media (max-width: 992px) {
         .welcome-content {
             flex-wrap: wrap;
@@ -2385,8 +2400,8 @@
         
         .weather-box {
             flex: 1;
-            padding: 15px;
-            min-height: 100px;
+            padding: 20px;
+            min-height: 120px;
         }
         
         .weather-icon {
@@ -2405,8 +2420,8 @@
         
         .datetime-box-inside {
             flex: 1;
-            padding: 15px;
-            min-height: 100px;
+            padding: 20px;
+            min-height: 120px;
         }
         
         .time-display-inside {
@@ -2424,23 +2439,23 @@
         
         .welcome-section {
             min-height: auto;
-            padding: 20px 25px;
+            padding: 25px;
         }
         
         .stats-section {
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 15px;
         }
         
         .stat-card {
-            height: 115px;
+            height: 110px;
             padding: 20px;
         }
         
         .stat-icon {
-            width: 55px;
-            height: 55px;
-            font-size: 22px;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
         }
         
         .stat-info h3 {
@@ -2455,9 +2470,10 @@
             padding: 25px;
         }
         
-        .page-header,
-        .welcome-section,
-        .stats-section,
+        .page-header {
+            padding: 25px;
+        }
+        
         .schedule-section {
             padding: 25px;
         }
@@ -2505,8 +2521,8 @@
         
         .weather-box {
             width: 100%;
-            padding: 12px 15px;
-            min-height: 90px;
+            padding: 18px;
+            min-height: 110px;
         }
         
         .weather-icon {
@@ -2525,8 +2541,8 @@
         
         .datetime-box-inside {
             width: 100%;
-            padding: 12px 15px;
-            min-height: 90px;
+            padding: 18px;
+            min-height: 110px;
         }
         
         .time-display-inside {
@@ -2566,14 +2582,14 @@
         }
         
         .stat-card {
-            height: 110px;
-            padding: 18px;
+            height: 100px;
+            padding: 20px;
         }
         
         .stat-icon {
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
+            width: 45px;
+            height: 45px;
+            font-size: 18px;
         }
         
         .stat-info h3 {
@@ -2586,7 +2602,7 @@
         
         .section-header {
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             align-items: flex-start;
         }
         
@@ -2607,9 +2623,10 @@
             padding: 20px;
         }
         
-        .page-header,
-        .welcome-section,
-        .stats-section,
+        .page-header {
+            padding: 20px;
+        }
+        
         .schedule-section {
             padding: 20px;
         }
@@ -2620,11 +2637,11 @@
         }
         
         .modal-body {
-            padding: 25px;
+            padding: 20px;
         }
         
         .modal-header {
-            padding: 25px;
+            padding: 20px;
         }
         
         .form-actions {
@@ -2637,15 +2654,21 @@
         }
     }
 
-    @media (max-width: 575px) {
-        .welcome-content {
-            flex-direction: column;
-            gap: 15px;
+    @media (max-width: 480px) {
+        .header {
+            padding: 0 15px;
         }
         
-        .welcome-text {
-            width: 100%;
-            text-align: left;
+        .header-title {
+            font-size: 22px;
+        }
+        
+        .page-header h1 {
+            font-size: 28px;
+        }
+        
+        .page-header p {
+            font-size: 15px;
         }
         
         .welcome-section h2 {
@@ -2657,165 +2680,12 @@
         }
         
         .datetime-weather-container {
-            width: 100%;
             flex-direction: column;
-            gap: 10px;
-        }
-        
-        .weather-box {
-            padding: 10px 12px;
-            min-height: 85px;
-        }
-        
-        .weather-icon {
-            font-size: 22px;
-            width: 40px;
-            height: 40px;
-        }
-        
-        .weather-temp {
-            font-size: 22px;
-        }
-        
-        .weather-desc {
-            font-size: 12px;
-        }
-        
-        .datetime-box-inside {
-            padding: 10px 12px;
-            min-height: 85px;
-        }
-        
-        .time-display-inside {
-            font-size: 22px;
-        }
-        
-        .date-display-inside {
-            font-size: 12px;
-        }
-        
-        .day-display-inside {
-            font-size: 10px;
-            padding: 3px 8px;
-        }
-        
-        .header {
-            padding: 0 15px;
-        }
-        
-        .header-title {
-            font-size: 22px;
-        }
-        
-        .page-header h1 {
-            font-size: 30px;
         }
         
         .stat-card {
-            padding: 15px;
-            height: 100px;
-        }
-        
-        .stat-icon {
-            width: 45px;
-            height: 45px;
-            font-size: 18px;
-        }
-        
-        .stat-info h3 {
-            font-size: 22px;
-        }
-        
-        .modal-body {
-            padding: 20px;
-        }
-        
-        .modal-header {
-            padding: 20px;
-        }
-        
-        .sidebar {
-            width: 280px;
-            left: -280px;
-        }
-        
-        .footer {
-            padding: 25px 20px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .welcome-content {
-            gap: 10px;
-        }
-        
-        .welcome-text {
-            width: 100%;
-        }
-        
-        .welcome-section h2 {
-            font-size: 18px;
-        }
-        
-        .welcome-section p {
-            font-size: 12px;
-        }
-        
-        .weather-box {
-            padding: 8px 10px;
-            min-height: 80px;
-        }
-        
-        .weather-icon {
-            font-size: 20px;
-            width: 35px;
-            height: 35px;
-        }
-        
-        .weather-temp {
-            font-size: 20px;
-        }
-        
-        .weather-desc {
-            font-size: 12px;
-        }
-        
-        .datetime-box-inside {
-            padding: 8px 10px;
-            min-height: 80px;
-        }
-        
-        .time-display-inside {
-            font-size: 20px;
-        }
-        
-        .date-display-inside {
-            font-size: 11px;
-        }
-        
-        .day-display-inside {
-            font-size: 9px;
-            padding: 2px 6px;
-        }
-        
-        .header {
-            padding: 0 10px;
-        }
-        
-        .main {
-            padding: 15px;
-        }
-        
-        .page-header,
-        .welcome-section,
-        .stats-section,
-        .schedule-section {
-            padding: 15px;
-        }
-        
-        .stat-card {
-            padding: 12px;
-            height: 95px;
+            padding: 18px;
+            height: 90px;
         }
         
         .stat-icon {
@@ -2825,7 +2695,23 @@
         }
         
         .stat-info h3 {
-            font-size: 20px;
+            font-size: 22px;
+        }
+        
+        .stat-info p {
+            font-size: 13px;
+        }
+        
+        .main {
+            padding: 15px;
+        }
+        
+        .page-header {
+            padding: 20px;
+        }
+        
+        .schedule-section {
+            padding: 20px;
         }
         
         .footer {
@@ -2838,7 +2724,11 @@
         }
         
         .modal-body {
-            max-height: calc(100vh - 150px);
+            padding: 15px;
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
         }
         
         .toast {
@@ -2846,21 +2736,6 @@
             right: 20px;
             left: 20px;
             max-width: none;
-        }
-
-        /* Di bagian .main class */
-        .main {
-            flex: 1;
-            padding: 20px 30px; /* Kurangi padding jika perlu */
-            transition: var(--transition);
-            width: 100%;
-            background: transparent;
-            position: relative;
-            z-index: 1;
-            margin-left: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 10px; /* Tambahkan gap yang kecil antar section */
         }
     }
     </style>
@@ -3125,6 +3000,7 @@
                             <div class="file-name" id="fileNameWateringProof"></div>
                         </div>
                     </div>
+                    <!-- PERBAIKAN UTAMA: Textarea catatan dengan styling yang sama dengan plants.html -->
                     <div class="form-group">
                         <label for="wateringNotes">Catatan Penyiraman (Opsional)</label>
                         <div class="input-with-icon">
@@ -3177,6 +3053,7 @@
                             <div class="file-name" id="fileNameFertilizingProof"></div>
                         </div>
                     </div>
+                    <!-- PERBAIKAN UTAMA: Textarea catatan dengan styling yang sama dengan plants.html -->
                     <div class="form-group">
                         <label for="fertilizingNotes">Catatan Pemupukan (Opsional)</label>
                         <div class="input-with-icon">
@@ -3197,7 +3074,7 @@
         </div>
     </div>
 
-    <!-- Harvest Modal (BARU) -->
+    <!-- Harvest Modal -->
     <div id="harvestModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -3229,6 +3106,7 @@
                             <div class="file-name" id="fileNameHarvestProof"></div>
                         </div>
                     </div>
+                    <!-- PERBAIKAN UTAMA: Textarea catatan dengan styling yang sama dengan plants.html -->
                     <div class="form-group">
                         <label for="harvestNotes">Catatan Panen (Opsional)</label>
                         <div class="input-with-icon">
@@ -3268,10 +3146,6 @@
         let userCoordinates = null;
         const WEATHER_API_KEY = '6e7e8c91f7e646aa91e194852250112';
         
-        // PERBAIKAN: Tidak perlu state file, gunakan langsung dari input file
-        let currentWateringFile = null;
-        let currentFertilizingFile = null;
-        
         // Cache untuk lokasi
         const locationCache = new Map();
 
@@ -3305,7 +3179,7 @@
             });
         }
 
-        // Save image to IndexedDB - DIPERBAIKI
+        // Save image to IndexedDB
         function saveImageToIndexedDB(file) {
             return new Promise((resolve, reject) => {
                 if (!file) {
@@ -3340,49 +3214,24 @@
             });
         }
 
-        // Get image from IndexedDB
-        function getImageFromIndexedDB(imageId) {
-            return new Promise((resolve, reject) => {
-                if (!imageId) {
-                    resolve(null);
-                    return;
-                }
-                
-                const transaction = db.transaction("images", "readonly");
-                const store = transaction.objectStore("images");
-                const request = store.get(parseInt(imageId));
-
-                request.onsuccess = function(event) {
-                    resolve(event.target.result ? event.target.result.imageData : null);
-                };
-                request.onerror = function() {
-                    reject("Gagal mengambil gambar dari database");
-                };
-            });
-        }
-
         // PERBAIKAN UTAMA: Fungsi capturePhotoDirect yang sama dengan schedule.html
         function capturePhotoDirect(inputId) {
-            // Buat input file tersembunyi untuk kamera
             const fileInput = document.createElement('input');
             fileInput.type = 'file';
             fileInput.accept = 'image/*';
-            fileInput.capture = 'environment'; // Gunakan kamera belakang jika tersedia
+            fileInput.capture = 'environment';
             fileInput.style.display = 'none';
             
             fileInput.onchange = function(e) {
                 if (e.target.files && e.target.files[0]) {
                     const file = e.target.files[0];
                     
-                    // Dapatkan elemen input asli berdasarkan ID
                     const originalInput = document.getElementById(inputId);
                     if (originalInput) {
-                        // Buat DataTransfer untuk menyalin file
                         const dataTransfer = new DataTransfer();
                         dataTransfer.items.add(file);
                         originalInput.files = dataTransfer.files;
                         
-                        // Trigger change event untuk preview
                         const event = new Event('change', { bubbles: true });
                         originalInput.dispatchEvent(event);
                         
@@ -3390,34 +3239,28 @@
                     }
                 }
                 
-                // Hapus elemen input sementara
                 document.body.removeChild(fileInput);
             };
             
-            // Tambahkan ke body dan trigger klik
             document.body.appendChild(fileInput);
             fileInput.click();
         }
 
-        // PERBAIKAN: Fungsi previewImage yang konsisten
+        // Preview uploaded image
         function previewImage(input, previewId, fileNameId) {
             if (input.files && input.files[0]) {
                 const file = input.files[0];
                 const preview = document.getElementById(previewId);
                 const fileName = document.getElementById(fileNameId);
                 
-                // Check file size (max 5MB)
                 if (file.size > 5 * 1024 * 1024) {
                     showToast('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
-                    // Reset input
                     input.value = '';
                     return;
                 }
                 
-                // Check file type
                 if (!file.type.match('image.*')) {
                     showToast('Hanya file gambar yang diizinkan.', 'error');
-                    // Reset input
                     input.value = '';
                     return;
                 }
@@ -3437,7 +3280,6 @@
 
         // Initialize dashboard dengan optimasi
         async function initDashboard() {
-            // Check authentication
             currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (!currentUser) {
                 showToast('Silakan login terlebih dahulu', 'error');
@@ -3445,25 +3287,16 @@
                 return;
             }
 
-            // Update UI segera tanpa menunggu database
             updateUserInfo();
             loadUserPlants();
             updateStats();
             updateDateTime();
-            
-            // Tampilkan loading state untuk jadwal hari ini
             renderTodaysScheduleFast();
-            
-            // Setup event listeners dulu
             setupEventListeners();
             
-            // Dapatkan lokasi pengguna DENGAN DETAIL KECAMATAN segera
             await getUserLocation();
-            
-            // Update weather display dengan lokasi pengguna
             await updateWeatherDisplay(true);
             
-            // Load data async di background
             setTimeout(async () => {
                 try {
                     await initDB();
@@ -3471,17 +3304,14 @@
                     console.error("Database init error:", error);
                 }
                 
-                // Update dashboard setelah database siap
                 updateDashboard();
                 updateNotifications();
                 
-                // Show welcome animation
                 setTimeout(() => {
                     document.querySelector('.welcome-section').style.animation = 'fadeIn 0.6s ease';
                 }, 100);
             }, 100);
             
-            // Update weather every 30 minutes
             setInterval(() => updateWeatherDisplay(false), 30 * 60 * 1000);
         }
 
@@ -3502,28 +3332,16 @@
                 const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
                 const userNotifications = notifications.filter(notif => notif.userId === currentUser.id && !notif.read);
                 
-                // Update notification badge di header
                 const notificationBadge = document.getElementById('notificationBadge');
                 if (notificationBadge) {
                     notificationBadge.textContent = userNotifications.length;
-                    
-                    if (userNotifications.length === 0) {
-                        notificationBadge.style.display = 'none';
-                    } else {
-                        notificationBadge.style.display = 'flex';
-                    }
+                    notificationBadge.style.display = userNotifications.length === 0 ? 'none' : 'flex';
                 }
                 
-                // Update notification badge di sidebar
                 const sidebarNotificationBadge = document.getElementById('sidebarNotificationBadge');
                 if (sidebarNotificationBadge) {
                     sidebarNotificationBadge.textContent = userNotifications.length;
-                    
-                    if (userNotifications.length === 0) {
-                        sidebarNotificationBadge.style.display = 'none';
-                    } else {
-                        sidebarNotificationBadge.style.display = 'inline-flex';
-                    }
+                    sidebarNotificationBadge.style.display = userNotifications.length === 0 ? 'none' : 'inline-flex';
                 }
                 
                 return userNotifications.length;
@@ -3540,20 +3358,16 @@
         function updateUserInfo() {
             if (!currentUser) return;
             
-            // Set user name and email
             const userName = getUserName();
             const userEmail = currentUser.email || 'user@email.com';
             
-            // Update sidebar
             document.getElementById('userNameSidebar').textContent = userName;
             document.getElementById('userEmailSidebar').textContent = userEmail;
             document.getElementById('userAvatarSidebar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=2E7D32&color=fff`;
             
-            // Update header
             document.getElementById('userNameHeader').textContent = userName;
             document.getElementById('userAvatarHeader').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=2E7D32&color=fff`;
             
-            // Update welcome message
             updateWelcomeMessage(userName);
         }
 
@@ -3573,24 +3387,20 @@
         function updateStats() {
             const today = normalizeDate(new Date());
             
-            // Tanaman aktif (belum dipanen dan progress < 100)
             const activePlants = plants.filter(plant => plant.status !== 'harvested' && plant.progress < 100);
             
-            // Hanya yang perlu disiram HARI INI
             const needWatering = plants.filter(plant => {
                 if (!plant.nextWatering) return false;
                 const waterDate = normalizeDate(new Date(plant.nextWatering));
                 return waterDate.getTime() === today.getTime() && plant.progress < 100;
             });
             
-            // Hanya yang perlu dipupuk HARI INI
             const needFertilizing = plants.filter(plant => {
                 if (!plant.nextFertilizing) return false;
                 const fertilizeDate = normalizeDate(new Date(plant.nextFertilizing));
                 return fertilizeDate.getTime() === today.getTime() && plant.progress < 100;
             });
             
-            // Hanya yang panen HARI INI
             const harvestSchedule = plants.filter(plant => {
                 if (!plant.harvestDate) return false;
                 const harvestDate = normalizeDate(new Date(plant.harvestDate));
@@ -3600,7 +3410,6 @@
                        plant.progress < 100;
             });
             
-            // Update counters dengan animasi
             animateCounter('activePlantsCount', activePlants.length);
             animateCounter('needWateringCount', needWatering.length);
             animateCounter('needFertilizingCount', needFertilizing.length);
@@ -3634,7 +3443,6 @@
         function renderTodaysScheduleFast() {
             const grid = document.getElementById('todaysScheduledGrid');
             
-            // Tampilkan loading state dulu
             grid.innerHTML = `
                 <div class="loading-schedule">
                     <div class="loading-spinner"></div>
@@ -3642,7 +3450,6 @@
                 </div>
             `;
             
-            // Set timeout untuk memastikan UI responsive
             setTimeout(() => {
                 renderTodaysSchedule();
             }, 100);
@@ -3652,7 +3459,6 @@
         async function renderTodaysSchedule() {
             const today = normalizeDate(new Date());
             
-            // Filter tanaman yang memiliki jadwal HARI INI (siram, pupuk, atau panen)
             const todaysPlants = plants.filter(plant => {
                 if (plant.progress >= 100 || plant.status === 'harvested') return false;
                 
@@ -3663,13 +3469,11 @@
                 const hasHarvestToday = plant.harvestDate ? 
                     normalizeDate(new Date(plant.harvestDate)).getTime() === today.getTime() : false;
                 
-                // Hanya tampilkan jika ada salah satu jadwal hari ini
                 return hasWateringToday || hasFertilizingToday || hasHarvestToday;
             });
             
             const grid = document.getElementById('todaysScheduledGrid');
             
-            // TAMPILKAN TAMPILAN KOSONG DULU JIKA TIDAK ADA JADWAL
             if (todaysPlants.length === 0) {
                 grid.innerHTML = `
                     <div class="empty-state">
@@ -3685,7 +3489,6 @@
             }
             
             try {
-                // Render template
                 const plantCardsHTML = todaysPlants.map((plant) => {
                     const hasWateringToday = plant.nextWatering ? 
                         normalizeDate(new Date(plant.nextWatering)).getTime() === today.getTime() : false;
@@ -3697,7 +3500,6 @@
                     let scheduleInfo = '';
                     let buttonsHTML = '';
                     
-                    // Logika button berdasarkan kombinasi jadwal HARI INI
                     if (hasWateringToday && hasFertilizingToday && hasHarvestToday) {
                         scheduleInfo = `Siram: ${plant.waterTime} • Pupuk: ${plant.fertilizerTime} • Panen: Hari ini`;
                         buttonsHTML = `
@@ -3820,13 +3622,6 @@
             }
         }
 
-        // Format date to readable format
-        function formatDate(dateString) {
-            if (!dateString) return '-';
-            const options = { day: 'numeric', month: 'short', year: 'numeric' };
-            return new Date(dateString).toLocaleDateString('id-ID', options);
-        }
-
         // Get user name for greeting
         function getUserName() {
             try {
@@ -3835,7 +3630,6 @@
                     return currentUser.name;
                 }
                 
-                // Try to get from user profiles
                 const userProfiles = JSON.parse(localStorage.getItem('userProfiles')) || [];
                 if (currentUser && currentUser.email) {
                     const userProfile = userProfiles.find(profile => profile.email === currentUser.email);
@@ -3844,7 +3638,6 @@
                     }
                 }
                 
-                // Try to get from registration data
                 const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
                 if (currentUser && currentUser.email) {
                     const registeredUser = registeredUsers.find(user => user.email === currentUser.email);
@@ -3861,112 +3654,9 @@
             }
         }
 
-        // ==================== FUNGSI LOKASI DENGAN KECAMATAN ====================
-
-        // Get location name from coordinates dengan detail kecamatan
-        async function getLocationNameFromCoordinates(coordinates) {
-            const cacheKey = `${coordinates.lat.toFixed(4)},${coordinates.lon.toFixed(4)}`;
-            
-            // Cek cache dulu
-            if (locationCache.has(cacheKey)) {
-                return locationCache.get(cacheKey);
-            }
-            
-            try {
-                // Gunakan OpenStreetMap Nominatim untuk detail alamat lengkap
-                const response = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coordinates.lat}&lon=${coordinates.lon}&zoom=18&addressdetails=1`
-                );
-                
-                if (!response.ok) {
-                    throw new Error('Gagal mendapatkan nama lokasi');
-                }
-                
-                const data = await response.json();
-                const address = data.address;
-                
-                // PRIORITAS: Kecamatan (suburb, county, district, village)
-                let locationName = '';
-                
-                // Coba dapatkan nama kecamatan (berbagai kemungkinan field)
-                if (address.suburb) {
-                    locationName = `Kec. ${address.suburb}`;
-                } else if (address.village) {
-                    locationName = `Desa ${address.village}`;
-                } else if (address.county) {
-                    locationName = `Kec. ${address.county}`;
-                } else if (address.town) {
-                    locationName = `Kec. ${address.town}`;
-                } else if (address.city_district) {
-                    locationName = `Kec. ${address.city_district}`;
-                }
-                
-                // Tambahkan kota/kabupaten jika tersedia
-                if (address.city || address.town || address.municipality) {
-                    const city = address.city || address.town || address.municipality;
-                    if (locationName) {
-                        locationName += `, ${city}`;
-                    } else {
-                        locationName = city;
-                    }
-                }
-                
-                // Tambahkan provinsi jika masih kosong
-                if (!locationName && address.state) {
-                    locationName = address.state;
-                }
-                
-                // Fallback ke koordinat jika tidak ada nama
-                if (!locationName) {
-                    locationName = `Lokasi (${coordinates.lat.toFixed(4)}, ${coordinates.lon.toFixed(4)})`;
-                }
-                
-                // Simpan ke cache
-                locationCache.set(cacheKey, locationName);
-                
-                return locationName;
-                
-            } catch (error) {
-                console.error("Error getting location name:", error);
-                // Fallback berdasarkan koordinat
-                const fallbackName = getLocationNameByCoordinatesFallback(coordinates);
-                locationCache.set(cacheKey, fallbackName);
-                return fallbackName;
-            }
-        }
-
-        // Fallback function untuk menentukan lokasi berdasarkan koordinat
-        function getLocationNameByCoordinatesFallback(coordinates) {
-            // Database sederhana koordinat-kecamatan untuk wilayah umum di Indonesia
-            const locationDatabase = [
-                // Jawa Barat - Indramayu
-                { latMin: -6.7, latMax: -6.6, lonMin: 108.4, lonMax: 108.5, name: "Indramayu, Jawa Barat" },
-                // Jakarta
-                { latMin: -6.4, latMax: -6.1, lonMin: 106.7, lonMax: 106.9, name: "Jakarta" },
-                // Bandung
-                { latMin: -7.0, latMax: -6.8, lonMin: 107.5, lonMax: 107.7, name: "Bandung, Jawa Barat" },
-                // Surabaya
-                { latMin: -7.4, latMax: -7.2, lonMin: 112.6, lonMax: 112.8, name: "Surabaya, Jawa Timur" },
-                // Yogyakarta
-                { latMin: -7.9, latMax: -7.7, lonMin: 110.3, lonMax: 110.4, name: "Yogyakarta" },
-                // Bali
-                { latMin: -8.8, latMax: -8.4, lonMin: 115.1, lonMax: 115.3, name: "Bali" },
-            ];
-            
-            for (const loc of locationDatabase) {
-                if (coordinates.lat >= loc.latMin && coordinates.lat <= loc.latMax &&
-                    coordinates.lon >= loc.lonMin && coordinates.lon <= loc.lonMax) {
-                    return loc.name;
-                }
-            }
-            
-            return `Lokasi (${coordinates.lat.toFixed(4)}, ${coordinates.lon.toFixed(4)})`;
-        }
-
-        // Get user location dengan detail kecamatan
+        // Get user location
         async function getUserLocation() {
             return new Promise((resolve, reject) => {
-                // Coba ambil dari cache dulu
                 const savedLocation = localStorage.getItem('userGeolocationDetail');
                 if (savedLocation) {
                     const locationData = JSON.parse(savedLocation);
@@ -3980,7 +3670,7 @@
                 if (navigator.geolocation) {
                     const options = {
                         enableHighAccuracy: true,
-                        timeout: 20000, // Timeout lebih lama untuk akurasi tinggi
+                        timeout: 20000,
                         maximumAge: 0
                     };
                     
@@ -3994,7 +3684,6 @@
                             userCoordinates = coordinates;
                             
                             try {
-                                // Dapatkan nama lokasi DETAIL dengan kecamatan
                                 const locationName = await getLocationNameFromCoordinates(coordinates);
                                 const locationData = {
                                     coordinates: coordinates,
@@ -4007,7 +3696,6 @@
                                 resolve(locationData);
                             } catch (error) {
                                 console.error("Error getting detailed location:", error);
-                                // Gunakan fallback
                                 const fallbackName = getLocationNameByCoordinatesFallback(coordinates);
                                 const locationData = {
                                     coordinates: coordinates,
@@ -4021,81 +3709,128 @@
                         },
                         (error) => {
                             console.warn("Geolocation error:", error);
-                            // Fallback ke IP-based location
-                            getLocationFromIP().then(locationData => {
-                                localStorage.setItem('userGeolocationDetail', JSON.stringify(locationData));
-                                resolve(locationData);
-                            }).catch(ipError => {
-                                console.error("IP location error:", ipError);
-                                // Default location
-                                const locationData = {
-                                    coordinates: null,
-                                    detailedName: 'Lokasi tidak terdeteksi',
-                                    timestamp: Date.now(),
-                                    accuracy: null
-                                };
-                                localStorage.setItem('userGeolocationDetail', JSON.stringify(locationData));
-                                resolve(locationData);
-                            });
+                            const locationData = {
+                                coordinates: null,
+                                detailedName: 'Lokasi tidak terdeteksi',
+                                timestamp: Date.now(),
+                                accuracy: null
+                            };
+                            localStorage.setItem('userGeolocationDetail', JSON.stringify(locationData));
+                            resolve(locationData);
                         },
                         options
                     );
                 } else {
-                    // Geolocation tidak didukung
-                    getLocationFromIP().then(locationData => {
-                        localStorage.setItem('userGeolocationDetail', JSON.stringify(locationData));
-                        resolve(locationData);
-                    }).catch(error => {
-                        console.error("IP location error:", error);
-                        const locationData = {
-                            coordinates: null,
-                            detailedName: 'Geolocation tidak didukung',
-                            timestamp: Date.now(),
-                            accuracy: null
-                        };
-                        localStorage.setItem('userGeolocationDetail', JSON.stringify(locationData));
-                        resolve(locationData);
-                    });
+                    const locationData = {
+                        coordinates: null,
+                        detailedName: 'Geolocation tidak didukung',
+                        timestamp: Date.now(),
+                        accuracy: null
+                    };
+                    localStorage.setItem('userGeolocationDetail', JSON.stringify(locationData));
+                    resolve(locationData);
                 }
             });
         }
 
-        // Get location from IP address (fallback)
-        async function getLocationFromIP() {
+        // Get location name from coordinates
+        async function getLocationNameFromCoordinates(coordinates) {
+            const cacheKey = `${coordinates.lat.toFixed(4)},${coordinates.lon.toFixed(4)}`;
+            
+            if (locationCache.has(cacheKey)) {
+                return locationCache.get(cacheKey);
+            }
+            
             try {
-                const response = await fetch('https://ipapi.co/json/');
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coordinates.lat}&lon=${coordinates.lon}&zoom=18&addressdetails=1`
+                );
+                
                 if (!response.ok) {
-                    throw new Error('Gagal mendapatkan lokasi dari IP');
+                    throw new Error('Gagal mendapatkan nama lokasi');
                 }
+                
                 const data = await response.json();
-                return {
-                    coordinates: null,
-                    detailedName: `${data.city || 'Lokasi'}${data.region ? `, ${data.region}` : ''}`,
-                    timestamp: Date.now(),
-                    accuracy: null
-                };
+                const address = data.address;
+                
+                let locationName = '';
+                
+                if (address.suburb) {
+                    locationName = `Kec. ${address.suburb}`;
+                } else if (address.village) {
+                    locationName = `Desa ${address.village}`;
+                } else if (address.county) {
+                    locationName = `Kec. ${address.county}`;
+                } else if (address.town) {
+                    locationName = `Kec. ${address.town}`;
+                } else if (address.city_district) {
+                    locationName = `Kec. ${address.city_district}`;
+                }
+                
+                if (address.city || address.town || address.municipality) {
+                    const city = address.city || address.town || address.municipality;
+                    if (locationName) {
+                        locationName += `, ${city}`;
+                    } else {
+                        locationName = city;
+                    }
+                }
+                
+                if (!locationName && address.state) {
+                    locationName = address.state;
+                }
+                
+                if (!locationName) {
+                    locationName = `Lokasi (${coordinates.lat.toFixed(4)}, ${coordinates.lon.toFixed(4)})`;
+                }
+                
+                locationCache.set(cacheKey, locationName);
+                
+                return locationName;
+                
             } catch (error) {
-                throw error;
+                console.error("Error getting location name:", error);
+                const fallbackName = getLocationNameByCoordinatesFallback(coordinates);
+                locationCache.set(cacheKey, fallbackName);
+                return fallbackName;
             }
         }
 
-        // Get weather data dengan lokasi detail
+        // Fallback function untuk menentukan lokasi berdasarkan koordinat
+        function getLocationNameByCoordinatesFallback(coordinates) {
+            const locationDatabase = [
+                { latMin: -6.7, latMax: -6.6, lonMin: 108.4, lonMax: 108.5, name: "Indramayu, Jawa Barat" },
+                { latMin: -6.4, latMax: -6.1, lonMin: 106.7, lonMax: 106.9, name: "Jakarta" },
+                { latMin: -7.0, latMax: -6.8, lonMin: 107.5, lonMax: 107.7, name: "Bandung, Jawa Barat" },
+                { latMin: -7.4, latMax: -7.2, lonMin: 112.6, lonMax: 112.8, name: "Surabaya, Jawa Timur" },
+                { latMin: -7.9, latMax: -7.7, lonMin: 110.3, lonMax: 110.4, name: "Yogyakarta" },
+                { latMin: -8.8, latMax: -8.4, lonMin: 115.1, lonMax: 115.3, name: "Bali" },
+            ];
+            
+            for (const loc of locationDatabase) {
+                if (coordinates.lat >= loc.latMin && coordinates.lat <= loc.latMax &&
+                    coordinates.lon >= loc.lonMin && coordinates.lon <= loc.lonMax) {
+                    return loc.name;
+                }
+            }
+            
+            return `Lokasi (${coordinates.lat.toFixed(4)}, ${coordinates.lon.toFixed(4)})`;
+        }
+
+        // Get weather data
         async function getWeatherData(location, useGeoLocation = true) {
             try {
-                let query = 'Jakarta'; // Default
+                let query = 'Jakarta';
                 
-                // Prioritaskan geolocation jika diizinkan dan tersedia
                 if (useGeoLocation && userCoordinates) {
                     query = `${userCoordinates.lat},${userCoordinates.lon}`;
                 } else if (location && location.coordinates) {
                     query = `${location.coordinates.lat},${location.coordinates.lon}`;
                 } else if (location && location.detailedName) {
-                    // Ekstrak kota dari nama detail untuk query cuaca
                     const cityMatch = location.detailedName.match(/, ([^,]+)$/);
                     query = cityMatch ? cityMatch[1].trim() : location.detailedName;
                 }
                 
-                // Gunakan WeatherAPI dengan timeout
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 10000);
                 
@@ -4112,7 +3847,6 @@
                 
                 const data = await response.json();
                 
-                // Data cuaca akurat dari WeatherAPI
                 const weather = {
                     temp: Math.round(data.current.temp_c),
                     description: data.current.condition.text,
@@ -4129,7 +3863,6 @@
                     lastUpdated: data.current.last_updated
                 };
                 
-                // Simpan data cuaca ke localStorage untuk cache
                 localStorage.setItem('weatherCache', JSON.stringify({
                     data: weather,
                     timestamp: Date.now(),
@@ -4141,25 +3874,20 @@
             } catch (error) {
                 console.error("Error fetching weather data:", error);
                 
-                // Coba gunakan cache jika ada
                 const cachedWeather = localStorage.getItem('weatherCache');
                 if (cachedWeather) {
                     const cacheData = JSON.parse(cachedWeather);
-                    // Gunakan cache jika masih segar (kurang dari 1 jam)
                     if (Date.now() - cacheData.timestamp < 3600000) {
                         return cacheData.data;
                     }
                 }
                 
-                // Fallback ke data default
                 const hour = new Date().getHours();
                 const isDay = hour >= 6 && hour < 18;
                 
-                // Dapatkan lokasi pengguna untuk fallback
                 const userLocation = await getUserLocation();
                 const userLocationName = userLocation?.detailedName || 'Lokasi Anda';
                 
-                // Buat suhu realistis berdasarkan waktu
                 let temp = 28;
                 if (hour >= 0 && hour < 6) temp = 23;
                 else if (hour >= 6 && hour < 12) temp = 26;
@@ -4182,9 +3910,8 @@
             }
         }
 
-        // Helper untuk mendapatkan ikon cuaca berdasarkan kode kondisi
+        // Helper untuk mendapatkan ikon cuaca
         function getWeatherIcon(conditionCode, isDay) {
-            // Kode kondisi dari WeatherAPI
             if (conditionCode === 1000) {
                 return isDay ? 'fa-sun' : 'fa-moon';
             } else if (conditionCode === 1003) {
@@ -4212,45 +3939,35 @@
             }
         }
 
-        // Update weather display dengan lokasi detail
+        // Update weather display
         async function updateWeatherDisplay(forceUpdate = false) {
             try {
-                // Tampilkan loading state
                 document.getElementById('weatherTemp').textContent = '--°C';
                 document.getElementById('weatherDesc').textContent = 'Memuat cuaca...';
                 document.getElementById('weatherLocation').textContent = 'Mendeteksi lokasi...';
                 
-                // Dapatkan lokasi pengguna dengan detail kecamatan
                 const userLocation = await getUserLocation();
                 
-                // Update lokasi di UI segera (tanpa menunggu cuaca)
                 if (userLocation && userLocation.detailedName) {
                     document.getElementById('weatherLocation').textContent = userLocation.detailedName;
                 }
                 
-                // Dapatkan data cuaca
                 const weather = await getWeatherData(userLocation, true);
                 
-                // Update UI dengan data cuaca
                 document.getElementById('weatherTemp').textContent = `${weather.temp}°C`;
                 document.getElementById('weatherDesc').textContent = weather.description;
                 
-                // Pastikan lokasi tetap menampilkan nama detail
                 if (!document.getElementById('weatherLocation').textContent.includes('Lokasi') && 
                     !document.getElementById('weatherLocation').textContent.includes('Mendeteksi')) {
-                    // Lokasi sudah di-set dari userLocation, biarkan seperti itu
                 } else {
                     document.getElementById('weatherLocation').textContent = weather.location || userLocation?.detailedName || 'Lokasi Anda';
                 }
                 
-                // Update ikon cuaca
                 const weatherIcon = document.getElementById('weatherIcon');
                 weatherIcon.innerHTML = `<i class="fas ${weather.icon}"></i>`;
                 
-                // Update warna background cuaca
                 updateWeatherBoxThemeFixed(weather);
                 
-                // Tambahkan tooltip dengan info lengkap
                 const weatherBox = document.getElementById('weatherBox');
                 const accuracyInfo = userLocation?.accuracy ? `Akurasi: ±${Math.round(userLocation.accuracy)}m` : '';
                 weatherBox.title = `Lokasi: ${userLocation?.detailedName || weather.location}\n${accuracyInfo}\nSuhu: ${weather.temp}°C | Terasa: ${weather.feelsLike}°C\nKelembaban: ${weather.humidity}% | Angin: ${weather.windSpeed} km/jam\nTerakhir diperbarui: ${new Date().toLocaleTimeString('id-ID')}`;
@@ -4261,10 +3978,8 @@
                 console.error("Error updating weather display:", error);
                 document.getElementById('weatherTemp').textContent = '--°C';
                 document.getElementById('weatherDesc').textContent = 'Gagal memuat cuaca';
-                // Tetap tampilkan lokasi jika sudah didapatkan
                 if (!document.getElementById('weatherLocation').textContent.includes('Mendeteksi') &&
                     !document.getElementById('weatherLocation').textContent.includes('Gagal')) {
-                    // Lokasi sudah ada, biarkan
                 } else {
                     document.getElementById('weatherLocation').textContent = 'Periksa koneksi internet';
                 }
@@ -4277,44 +3992,35 @@
             const weatherIcon = document.getElementById('weatherIcon');
             const iconClass = weather.icon;
             
-            // Default: kuning cerah
             weatherBox.style.background = 'linear-gradient(135deg, #FFFBEB, #FFF3CD)';
             weatherBox.style.borderColor = '#FFD43B';
             weatherIcon.style.background = 'linear-gradient(135deg, #FFC107, #FF9800)';
             
-            // Sesuaikan dengan kondisi cuaca
             if (iconClass.includes('sun') && !iconClass.includes('cloud')) {
-                // Cerah: kuning cerah
                 weatherBox.style.background = 'linear-gradient(135deg, #FFFBEB, #FFF3CD)';
                 weatherBox.style.borderColor = '#FFD43B';
                 weatherIcon.style.background = 'linear-gradient(135deg, #FFC107, #FF9800)';
             } else if (iconClass.includes('moon') && !iconClass.includes('cloud')) {
-                // Malam cerah: biru muda
                 weatherBox.style.background = 'linear-gradient(135deg, #E3F2FD, #BBDEFB)';
                 weatherBox.style.borderColor = '#64B5F6';
                 weatherIcon.style.background = 'linear-gradient(135deg, #2196F3, #1976D2)';
             } else if (iconClass.includes('cloud-sun') || iconClass.includes('cloud-moon')) {
-                // Berawan: biru muda dengan sedikit kuning
                 weatherBox.style.background = 'linear-gradient(135deg, #FFF3E0, #FFE0B2)';
                 weatherBox.style.borderColor = '#FFB74D';
                 weatherIcon.style.background = 'linear-gradient(135deg, #FFB300, #FF8F00)';
             } else if (iconClass.includes('cloud') && !iconClass.includes('rain')) {
-                // Mendung: abu-abu terang
                 weatherBox.style.background = 'linear-gradient(135deg, #F5F5F5, #E0E0E0)';
                 weatherBox.style.borderColor = '#9E9E9E';
                 weatherIcon.style.background = 'linear-gradient(135deg, #757575, #616161)';
             } else if (iconClass.includes('rain') || iconClass.includes('showers')) {
-                // Hujan: biru
                 weatherBox.style.background = 'linear-gradient(135deg, #E3F2FD, #BBDEFB)';
                 weatherBox.style.borderColor = '#64B5F6';
                 weatherIcon.style.background = 'linear-gradient(135deg, #2196F3, #1976D2)';
             } else if (iconClass.includes('storm') || iconClass.includes('bolt')) {
-                // Badai: ungu
                 weatherBox.style.background = 'linear-gradient(135deg, #311B92, #4527A0)';
                 weatherBox.style.borderColor = '#7E57C2';
                 weatherIcon.style.background = 'linear-gradient(135deg, #7B1FA2, #6A1B9A)';
             } else if (iconClass.includes('snow')) {
-                // Salju: biru muda
                 weatherBox.style.background = 'linear-gradient(135deg, #E3F2FD, #B3E5FC)';
                 weatherBox.style.borderColor = '#4FC3F7';
                 weatherIcon.style.background = 'linear-gradient(135deg, #29B6F6, #0288D1)';
@@ -4347,20 +4053,15 @@
             setTimeout(updateDateTime, 60000);
         }
 
-        // Setup event listeners - DIPERBAIKI
+        // Setup event listeners
         function setupEventListeners() {
-            // Hamburger menu toggle
             const hamburgerBtn = document.getElementById('hamburgerBtn');
             const sidebarOverlay = document.getElementById('sidebarOverlay');
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
+            const userProfileBtn = document.getElementById('userProfileBtn');
+            const userDropdown = document.getElementById('userDropdown');
             
             hamburgerBtn.addEventListener('click', toggleSidebar);
             sidebarOverlay.addEventListener('click', closeSidebar);
-            
-            // Profile button click
-            const userProfileBtn = document.getElementById('userProfileBtn');
-            const userDropdown = document.getElementById('userDropdown');
             
             userProfileBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -4369,7 +4070,6 @@
                 userDropdownOpen = !userDropdownOpen;
             });
             
-            // Close dropdown when clicking outside
             document.addEventListener('click', function(e) {
                 if (userDropdownOpen && !userProfileBtn.contains(e.target) && !userDropdown.contains(e.target)) {
                     userDropdown.classList.remove('show');
@@ -4378,21 +4078,18 @@
                 }
             });
             
-            // Modal close events
             document.querySelectorAll('.close-modal').forEach(btn => {
                 btn.addEventListener('click', function() {
                     this.closest('.modal').style.display = 'none';
                 });
             });
             
-            // Close modal when clicking outside
             window.addEventListener('click', function(e) {
                 if (e.target.classList.contains('modal')) {
                     e.target.style.display = 'none';
                 }
             });
             
-            // PERBAIKAN: Form submissions yang sama dengan schedule.html
             const wateringForm = document.getElementById('wateringForm');
             const fertilizingForm = document.getElementById('fertilizingForm');
             const harvestForm = document.getElementById('harvestForm');
@@ -4409,27 +4106,21 @@
                 harvestForm.addEventListener('submit', handleHarvestSubmit);
             }
             
-            // Close sidebar when clicking on menu item
             document.querySelectorAll('.sidebar-menu a').forEach(link => {
                 link.addEventListener('click', function() {
                     closeSidebar();
                 });
             });
             
-            // Close sidebar with Escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && sidebarOpen) {
                     closeSidebar();
                 }
             });
             
-            // Refresh notifications periodically
             setInterval(updateNotifications, 30000);
-            
-            // Refresh weather secara periodik (setiap 15 menit)
             setInterval(() => updateWeatherDisplay(false), 15 * 60 * 1000);
             
-            // Add click effect to stat cards
             document.querySelectorAll('.stat-card').forEach(card => {
                 card.addEventListener('click', function() {
                     this.style.transform = 'translateY(-4px)';
@@ -4439,7 +4130,6 @@
                 });
             });
             
-            // Responsive behavior check
             checkResponsiveBehavior();
             window.addEventListener('resize', checkResponsiveBehavior);
         }
@@ -4447,7 +4137,6 @@
         // Check responsive behavior
         function checkResponsiveBehavior() {
             const isDesktop = window.innerWidth >= 993;
-            const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('mainContent');
             const sidebarOverlay = document.getElementById('sidebarOverlay');
             
@@ -4503,9 +4192,7 @@
             sidebarOpen = false;
         }
 
-        // ==================== FUNGSI UNTUK MODAL DAN INPUT FOTO ====================
-        
-        // Modal functions - DIPERBAIKI
+        // Modal functions
         function openWateringModal(plantId) {
             currentEditingPlantId = plantId;
             const modal = document.getElementById('wateringModal');
@@ -4530,7 +4217,6 @@
             resetForm('fertilizingForm', 'imagePreviewFertilizingProof', 'fileNameFertilizingProof', 'fertilizingProof');
         }
 
-        // PERBAIKAN: Fungsi untuk modal panen
         function openHarvestModal(plantId) {
             currentEditingPlantId = plantId;
             const modal = document.getElementById('harvestModal');
@@ -4543,7 +4229,7 @@
             resetForm('harvestForm', 'imagePreviewHarvestProof', 'fileNameHarvestProof', 'harvestProof');
         }
 
-        // Reset form - DIPERBAIKI
+        // Reset form
         function resetForm(formId, previewId, fileNameId, fileInputId = null) {
             const form = document.getElementById(formId);
             if (form) form.reset();
@@ -4563,7 +4249,7 @@
             }
         }
 
-        // PERBAIKAN UTAMA: Handle watering form submission - SAMA DENGAN schedule.html
+        // Handle watering form submission
         async function handleWateringSubmit(e) {
             e.preventDefault();
             const plantId = currentEditingPlantId;
@@ -4571,7 +4257,6 @@
             const notes = document.getElementById('wateringNotes').value;
             const submitBtn = document.getElementById('confirmWateringBtn');
             
-            // Validasi file
             if (!fileInput || !fileInput.files[0]) {
                 showToast('Silakan unggah foto bukti penyiraman', 'warning');
                 return;
@@ -4579,33 +4264,27 @@
             
             const file = fileInput.files[0];
             
-            // Validasi ukuran file
             if (file.size > 5 * 1024 * 1024) {
                 showToast('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
                 return;
             }
             
-            // Validasi tipe file
             if (!file.type.match('image.*')) {
                 showToast('Hanya file gambar yang diizinkan.', 'error');
                 return;
             }
             
-            // Show loading state
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<div class="loading"></div> Memproses...';
             submitBtn.disabled = true;
             
             try {
-                // Save image to database
                 const imageId = await saveImageToIndexedDB(file);
                 
-                // Update plant data
                 const plantIndex = plants.findIndex(p => p.id === plantId);
                 if (plantIndex !== -1) {
                     const plant = plants[plantIndex];
                     
-                    // Update next watering date
                     let waterScheduleDays = plant.waterSchedule;
                     if (typeof waterScheduleDays === 'string' && waterScheduleDays.startsWith('custom-')) {
                         waterScheduleDays = parseInt(waterScheduleDays.split('-')[1]);
@@ -4621,7 +4300,6 @@
                     plant.progress = Math.min(plant.progress + 10, 100);
                     plant.wateringProofId = imageId;
                     
-                    // Add activity to history
                     const history = JSON.parse(localStorage.getItem('plantHistory')) || [];
                     history.push({
                         id: Date.now().toString(),
@@ -4636,7 +4314,6 @@
                     });
                     localStorage.setItem('plantHistory', JSON.stringify(history));
                     
-                    // Update plants in localStorage
                     const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
                     const globalPlantIndex = allPlants.findIndex(p => p.id === plantId);
                     if (globalPlantIndex !== -1) {
@@ -4644,10 +4321,8 @@
                         localStorage.setItem('plants', JSON.stringify(allPlants));
                     }
                     
-                    // Create notification
                     createNotification('Penyiraman dikonfirmasi', `Penyiraman tanaman ${plant.name} telah dikonfirmasi`, 'success', plantId);
                     
-                    // Reload data
                     loadUserPlants();
                     updateDashboard();
                     updateNotifications();
@@ -4661,13 +4336,12 @@
                 console.error('Error:', error);
                 showToast('Gagal menyimpan data. Silakan coba lagi.', 'error');
             } finally {
-                // Reset button state
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
         }
 
-        // PERBAIKAN: Handle fertilizing form submission - SAMA DENGAN schedule.html
+        // Handle fertilizing form submission
         async function handleFertilizingSubmit(e) {
             e.preventDefault();
             const plantId = currentEditingPlantId;
@@ -4675,7 +4349,6 @@
             const notes = document.getElementById('fertilizingNotes').value;
             const submitBtn = document.getElementById('confirmFertilizingBtn');
             
-            // Validasi file
             if (!fileInput || !fileInput.files[0]) {
                 showToast('Silakan unggah foto bukti pemupukan', 'warning');
                 return;
@@ -4683,33 +4356,27 @@
             
             const file = fileInput.files[0];
             
-            // Validasi ukuran file
             if (file.size > 5 * 1024 * 1024) {
                 showToast('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
                 return;
             }
             
-            // Validasi tipe file
             if (!file.type.match('image.*')) {
                 showToast('Hanya file gambar yang diizinkan.', 'error');
                 return;
             }
             
-            // Show loading state
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<div class="loading"></div> Memproses...';
             submitBtn.disabled = true;
             
             try {
-                // Save image to database
                 const imageId = await saveImageToIndexedDB(file);
                 
-                // Update plant data
                 const plantIndex = plants.findIndex(p => p.id === plantId);
                 if (plantIndex !== -1) {
                     const plant = plants[plantIndex];
                     
-                    // Update next fertilizing date
                     let fertilizerScheduleDays = plant.fertilizerSchedule;
                     if (typeof fertilizerScheduleDays === 'string' && fertilizerScheduleDays.startsWith('custom-')) {
                         fertilizerScheduleDays = parseInt(fertilizerScheduleDays.split('-')[1]);
@@ -4725,7 +4392,6 @@
                     plant.progress = Math.min(plant.progress + 5, 100);
                     plant.fertilizingProofId = imageId;
                     
-                    // Add activity to history
                     const history = JSON.parse(localStorage.getItem('plantHistory')) || [];
                     history.push({
                         id: Date.now().toString(),
@@ -4740,7 +4406,6 @@
                     });
                     localStorage.setItem('plantHistory', JSON.stringify(history));
                     
-                    // Update plants in localStorage
                     const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
                     const globalPlantIndex = allPlants.findIndex(p => p.id === plantId);
                     if (globalPlantIndex !== -1) {
@@ -4748,10 +4413,8 @@
                         localStorage.setItem('plants', JSON.stringify(allPlants));
                     }
                     
-                    // Create notification
                     createNotification('Pemupukan dikonfirmasi', `Pemupukan tanaman ${plant.name} telah dikonfirmasi`, 'success', plantId);
                     
-                    // Reload data
                     loadUserPlants();
                     updateDashboard();
                     updateNotifications();
@@ -4765,13 +4428,12 @@
                 console.error('Error:', error);
                 showToast('Gagal menyimpan data. Silakan coba lagi.', 'error');
             } finally {
-                // Reset button state
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
         }
 
-        // PERBAIKAN: Handle harvest form submission - SAMA DENGAN schedule.html
+        // Handle harvest form submission
         async function handleHarvestSubmit(e) {
             e.preventDefault();
             const plantId = currentEditingPlantId;
@@ -4780,7 +4442,6 @@
             const quantity = document.getElementById('harvestQuantity').value;
             const submitBtn = document.getElementById('confirmHarvestBtn');
             
-            // Validasi file
             if (!fileInput || !fileInput.files[0]) {
                 showToast('Silakan unggah foto bukti panen', 'warning');
                 return;
@@ -4788,46 +4449,38 @@
             
             const file = fileInput.files[0];
             
-            // Validasi ukuran file
             if (file.size > 5 * 1024 * 1024) {
                 showToast('Ukuran file terlalu besar. Maksimal 5MB.', 'error');
                 return;
             }
             
-            // Validasi tipe file
             if (!file.type.match('image.*')) {
                 showToast('Hanya file gambar yang diizinkan.', 'error');
                 return;
             }
             
-            // Validasi jumlah hasil panen
             if (!quantity || quantity < 1) {
                 showToast('Silakan masukkan jumlah hasil panen yang valid', 'warning');
                 return;
             }
             
-            // Show loading state
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<div class="loading"></div> Memproses...';
             submitBtn.disabled = true;
             
             try {
-                // Save image to database
                 const imageId = await saveImageToIndexedDB(file);
                 
-                // Update plant data
                 const plantIndex = plants.findIndex(p => p.id === plantId);
                 if (plantIndex !== -1) {
                     const plant = plants[plantIndex];
                     
-                    // Update plant status to harvested
                     plant.status = 'harvested';
                     plant.progress = 100;
                     plant.harvestedDate = new Intl.DateTimeFormat('en-CA').format(new Date());
                     plant.harvestProofId = imageId;
                     plant.harvestQuantity = quantity;
                     
-                    // Add activity to history
                     const history = JSON.parse(localStorage.getItem('plantHistory')) || [];
                     history.push({
                         id: Date.now().toString(),
@@ -4843,7 +4496,6 @@
                     });
                     localStorage.setItem('plantHistory', JSON.stringify(history));
                     
-                    // Update plants in localStorage
                     const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
                     const globalPlantIndex = allPlants.findIndex(p => p.id === plantId);
                     if (globalPlantIndex !== -1) {
@@ -4851,10 +4503,8 @@
                         localStorage.setItem('plants', JSON.stringify(allPlants));
                     }
                     
-                    // Create notification
                     createNotification('Panen dikonfirmasi', `Panen tanaman ${plant.name} telah dikonfirmasi (${quantity})`, 'success', plantId);
                     
-                    // Reload data
                     loadUserPlants();
                     updateDashboard();
                     updateNotifications();
@@ -4868,7 +4518,6 @@
                 console.error('Error:', error);
                 showToast('Gagal menyimpan data. Silakan coba lagi.', 'error');
             } finally {
-                // Reset button state
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
@@ -4905,10 +4554,8 @@
             const toastMessage = document.getElementById('toastMessage');
             const toastIcon = toast.querySelector('i');
             
-            // Set message and icon
             toastMessage.textContent = message;
             
-            // Set icon based on type
             toastIcon.className = 'fas ' + (
                 type === 'success' ? 'fa-check-circle' :
                 type === 'error' ? 'fa-exclamation-circle' :
@@ -4916,13 +4563,10 @@
                 'fa-info-circle'
             );
             
-            // Set toast class
             toast.className = 'toast ' + type;
             
-            // Show toast
             toast.classList.add('show');
             
-            // Auto hide after 5 seconds
             setTimeout(() => {
                 hideToast();
             }, 5000);
