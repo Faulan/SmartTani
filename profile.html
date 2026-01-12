@@ -2453,6 +2453,28 @@
         let whatsappSchedulerInterval = null;
         let lastWhatsAppCheck = null;
 
+        // Sound URLs - SETIAP SUARA BERBEDA!
+        const SOUND_URLS = {
+            bell: 'https://assets.mixkit.co/sfx/preview/mixkit-bell-notification-933.mp3',
+            chime: 'https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3',
+            ding: 'https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3',
+            alert: 'https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3',
+            positive: 'https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3',
+            message: 'https://assets.mixkit.co/sfx/preview/mixkit-message-pop-alert-2354.mp3',
+            notification: 'https://assets.mixkit.co/sfx/preview/mixkit-retro-game-emergency-alarm-1000.mp3'
+        };
+
+        // Sound names for display
+        const SOUND_NAMES = {
+            bell: 'Bell',
+            chime: 'Chime',
+            ding: 'Ding',
+            alert: 'Alert',
+            positive: 'Positive',
+            message: 'Message',
+            notification: 'Notification'
+        };
+
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             // Pastikan semua modal tersembunyi saat halaman dimuat
@@ -2486,8 +2508,112 @@
                 // Create audio context for better sound control
                 notificationSound = new Audio();
                 notificationSound.volume = 0.7;
+                notificationSound.preload = 'auto';
             } catch (error) {
                 console.error("Error initializing notification sound:", error);
+            }
+        }
+
+        // Play notification sound with specific sound type
+        function playNotificationSound(soundType = 'bell') {
+            if (!notificationSound) {
+                console.error("Notification sound not initialized");
+                return;
+            }
+            
+            try {
+                // Stop any currently playing sound
+                notificationSound.pause();
+                notificationSound.currentTime = 0;
+                
+                // Get the correct sound URL
+                const soundUrl = SOUND_URLS[soundType] || SOUND_URLS.bell;
+                
+                if (!soundUrl) {
+                    console.error("No sound URL found for type:", soundType);
+                    playFallbackSound();
+                    return;
+                }
+                
+                console.log('Playing sound:', soundType, 'name:', SOUND_NAMES[soundType], 'from:', soundUrl);
+                
+                // Play sound
+                notificationSound.src = soundUrl;
+                const playPromise = notificationSound.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => {
+                        console.error("Error playing notification sound:", e);
+                        playFallbackSound(soundType);
+                    });
+                }
+                
+            } catch (error) {
+                console.error("Error with notification sound:", error);
+                playFallbackSound(soundType);
+            }
+        }
+
+        function playFallbackSound(type = 'bell') {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Different frequencies for different sound types
+                let frequency = 800;
+                let duration = 0.5;
+                
+                switch(type) {
+                    case 'chime':
+                        frequency = 600;
+                        duration = 0.8;
+                        break;
+                    case 'ding':
+                        frequency = 1000;
+                        duration = 0.3;
+                        break;
+                    case 'alert':
+                        frequency = 400;
+                        duration = 1.0;
+                        break;
+                    case 'positive':
+                        frequency = 700;
+                        duration = 0.6;
+                        break;
+                    case 'message':
+                        frequency = 900;
+                        duration = 0.4;
+                        break;
+                    case 'notification':
+                        frequency = 300;
+                        duration = 1.2;
+                        break;
+                    default: // bell
+                        frequency = 800;
+                        duration = 0.5;
+                }
+                
+                oscillator.frequency.value = frequency;
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+                
+                console.log('Playing fallback sound for type:', type, 'frequency:', frequency);
+                
+            } catch (error) {
+                console.error("Error with fallback sound:", error);
+                // Last resort - beep using system beep
+                try {
+                    console.log('\x07'); // System beep
+                } catch (e) {}
             }
         }
 
@@ -2888,8 +3014,8 @@
                 harvest: true,
                 whatsapp: false,
                 sound: true,
-                time: '08:00', // DEFAULT, TAPI BISA DIUBAH!
-                soundType: 'default',
+                time: '08:00',
+                soundType: 'bell',
                 whatsappNumber: ''
             };
             
@@ -2898,8 +3024,8 @@
             document.getElementById('notifHarvest').checked = settings.harvest;
             document.getElementById('notifWhatsApp').checked = settings.whatsapp;
             document.getElementById('soundNotification').checked = settings.sound;
-            document.getElementById('notificationTime').value = settings.time; // INI YANG BACA DARI SETTING
-            document.getElementById('notificationSound').value = settings.soundType || 'default';
+            document.getElementById('notificationTime').value = settings.time;
+            document.getElementById('notificationSound').value = settings.soundType || 'bell';
             
             // Update WhatsApp number display
             const whatsappNumberDisplay = document.getElementById('whatsappNumberValue');
@@ -3145,7 +3271,7 @@
             // Play sound if enabled
             const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
             if (settings.sound && notificationSound) {
-                playNotificationSound(settings.soundType);
+                playNotificationSound(settings.soundType || 'bell');
             }
             
             // Update logs display if on notifications tab
@@ -3208,101 +3334,60 @@
             }
         }
 
-        // Notification Sound Functions
-        function playNotificationSound(soundType = 'default') {
-            if (!notificationSound) return;
-            
-            try {
-                // Stop any currently playing sound
-                notificationSound.pause();
-                notificationSound.currentTime = 0;
-                
-                // Set sound based on type
-                let soundFile = '';
-                switch(soundType) {
-                    case 'chime':
-                        soundFile = 'https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3';
-                        break;
-                    case 'ding':
-                        soundFile = 'https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3';
-                        break;
-                    case 'alert':
-                        soundFile = 'https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3';
-                        break;
-                    default: // default (bell)
-                        soundFile = 'https://assets.mixkit.co/sfx/preview/mixkit-bell-notification-933.mp3';
-                }
-                
-                // Play sound
-                notificationSound.src = soundFile;
-                notificationSound.play().catch(e => {
-                    console.error("Error playing notification sound:", e);
-                    // Fallback to simple beep
-                    playFallbackSound();
-                });
-                
-            } catch (error) {
-                console.error("Error with notification sound:", error);
-                playFallbackSound();
-            }
-        }
-
-        function playFallbackSound() {
-            try {
-                // Simple fallback using Web Audio API
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.value = 800;
-                oscillator.type = 'sine';
-                
-                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-                
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.5);
-                
-            } catch (error) {
-                console.error("Error with fallback sound:", error);
-            }
-        }
-
+        // Notification Sound Functions - UPDATED DENGAN SUARA BERBEDA-BEDA
         function testNotificationSound() {
             const soundType = document.getElementById('notificationSound').value;
+            const soundName = SOUND_NAMES[soundType] || soundType;
+            console.log('Testing notification sound:', soundType, '(', soundName, ')');
             playNotificationSound(soundType);
-            showToast('Menguji suara notifikasi...', 'info');
+            showToast(`Menguji suara: ${soundName}`, 'info');
         }
 
         function testNotificationPopup() {
+            console.log('Testing notification popup...');
+            
+            // Get current sound settings
+            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
+            const soundEnabled = settings.sound || document.getElementById('soundNotification').checked;
+            const soundType = settings.soundType || document.getElementById('notificationSound').value;
+            const soundName = SOUND_NAMES[soundType] || soundType;
+            
             // Create test notification
             const notification = {
                 title: '🔔 SmartTani - Notifikasi Percobaan',
                 message: 'Ini adalah notifikasi percobaan dari SmartTani.',
                 type: 'info',
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                sound: soundEnabled ? `Suara: ${soundName}` : 'Tidak ada suara'
             };
             
             // Show browser notification if supported
             if ('Notification' in window && Notification.permission === 'granted') {
                 new Notification(notification.title, {
-                    body: notification.message,
+                    body: `${notification.message}\n${notification.sound}`,
                     icon: 'https://ui-avatars.com/api/?name=SmartTani&background=2E7D32&color=fff'
+                });
+            } else if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        new Notification(notification.title, {
+                            body: `${notification.message}\n${notification.sound}`,
+                            icon: 'https://ui-avatars.com/api/?name=SmartTani&background=2E7D32&color=fff'
+                        });
+                    }
                 });
             }
             
-            // Play sound
-            const soundEnabled = document.getElementById('soundNotification').checked;
-            if (soundEnabled) {
-                const soundType = document.getElementById('notificationSound').value;
+            // Play sound if enabled - INI YANG DIPERBAIKI!
+            if (soundEnabled && notificationSound) {
+                console.log('Playing sound for popup:', soundType, '(', soundName, ')');
                 playNotificationSound(soundType);
+            } else {
+                console.log('Sound disabled or notificationSound not available');
             }
             
             // Show toast
-            showToast('Notifikasi percobaan ditampilkan', 'success');
+            showToast(`Notifikasi popup ditampilkan ${soundEnabled ? 'dengan suara ' + soundName : 'tanpa suara'}`, 'success');
         }
 
         function testWhatsAppNotification() {
@@ -3377,13 +3462,13 @@
                         </td>
                         <td style="padding: 12px;">
                             <span style="padding: 4px 8px; background: ${typeColor === 'var(--warning)' ? 'rgba(255, 152, 0, 0.1)' : 'var(--primary-light)'}; 
-                                 color: ${typeColor}; border-radius: 4px; font-size: 12px; font-weight: 600;">
+                                color: ${typeColor}; border-radius: 4px; font-size: 12px; font-weight: 600;">
                                 ${typeText}
                             </span>
                         </td>
                         <td style="padding: 12px;">
                             <span style="padding: 4px 8px; background: ${statusBg}; 
-                                 color: ${statusColor}; border-radius: 4px; font-size: 12px; font-weight: 600;">
+                                color: ${statusColor}; border-radius: 4px; font-size: 12px; font-weight: 600;">
                                 ${log.status === 'test_sent' ? 'Percobaan' : 'Terkirim'}
                             </span>
                         </td>
