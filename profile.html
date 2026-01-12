@@ -2521,6 +2521,11 @@
                 return;
             }
             
+            // Get the sound type from dropdown if not provided
+            if (!soundType || soundType === 'default') {
+                soundType = document.getElementById('notificationSound').value || 'bell';
+            }
+            
             try {
                 // Stop any currently playing sound
                 notificationSound.pause();
@@ -2531,7 +2536,7 @@
                 
                 if (!soundUrl) {
                     console.error("No sound URL found for type:", soundType);
-                    playFallbackSound();
+                    playFallbackSound(soundType);
                     return;
                 }
                 
@@ -2610,10 +2615,6 @@
                 
             } catch (error) {
                 console.error("Error with fallback sound:", error);
-                // Last resort - beep using system beep
-                try {
-                    console.log('\x07'); // System beep
-                } catch (e) {}
             }
         }
 
@@ -3268,10 +3269,11 @@
                 });
             }
             
-            // Play sound if enabled
-            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
-            if (settings.sound && notificationSound) {
-                playNotificationSound(settings.soundType || 'bell');
+            // Play sound if enabled - DIUBAH: ambil dari dropdown langsung
+            const soundEnabled = document.getElementById('soundNotification').checked;
+            if (soundEnabled && notificationSound) {
+                const soundType = document.getElementById('notificationSound').value || 'bell';
+                playNotificationSound(soundType);
             }
             
             // Update logs display if on notifications tab
@@ -3334,60 +3336,72 @@
             }
         }
 
-        // Notification Sound Functions - UPDATED DENGAN SUARA BERBEDA-BEDA
+        // PERBAIKAN BESAR: Fungsi testNotificationPopup() yang benar
         function testNotificationSound() {
+            // Ambil langsung dari dropdown
             const soundType = document.getElementById('notificationSound').value;
             const soundName = SOUND_NAMES[soundType] || soundType;
             console.log('Testing notification sound:', soundType, '(', soundName, ')');
+            
+            // Mainkan suara
             playNotificationSound(soundType);
+            
+            // Tampilkan toast
             showToast(`Menguji suara: ${soundName}`, 'info');
         }
 
         function testNotificationPopup() {
             console.log('Testing notification popup...');
             
-            // Get current sound settings
-            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
-            const soundEnabled = settings.sound || document.getElementById('soundNotification').checked;
-            const soundType = settings.soundType || document.getElementById('notificationSound').value;
+            // 1. Ambil SETTING SAAT INI dari UI (BUKAN dari localStorage)
+            const soundEnabled = document.getElementById('soundNotification').checked;
+            const soundType = document.getElementById('notificationSound').value;
             const soundName = SOUND_NAMES[soundType] || soundType;
             
-            // Create test notification
-            const notification = {
-                title: '🔔 SmartTani - Notifikasi Percobaan',
-                message: 'Ini adalah notifikasi percobaan dari SmartTani.',
-                type: 'info',
-                timestamp: new Date().toISOString(),
-                sound: soundEnabled ? `Suara: ${soundName}` : 'Tidak ada suara'
-            };
+            console.log('Current settings from UI - Sound enabled:', soundEnabled, 'Type:', soundType, 'Name:', soundName);
             
-            // Show browser notification if supported
+            // 2. Buat notifikasi
+            const notificationTitle = '🔔 SmartTani - Notifikasi Percobaan';
+            let notificationMessage = 'Ini adalah notifikasi percobaan dari SmartTani.';
+            
+            if (soundEnabled) {
+                notificationMessage += `\nSuara: ${soundName}`;
+            }
+            
+            // 3. Tampilkan browser notification
             if ('Notification' in window && Notification.permission === 'granted') {
-                new Notification(notification.title, {
-                    body: `${notification.message}\n${notification.sound}`,
+                new Notification(notificationTitle, {
+                    body: notificationMessage,
                     icon: 'https://ui-avatars.com/api/?name=SmartTani&background=2E7D32&color=fff'
                 });
             } else if ('Notification' in window && Notification.permission === 'default') {
                 Notification.requestPermission().then(permission => {
                     if (permission === 'granted') {
-                        new Notification(notification.title, {
-                            body: `${notification.message}\n${notification.sound}`,
+                        new Notification(notificationTitle, {
+                            body: notificationMessage,
                             icon: 'https://ui-avatars.com/api/?name=SmartTani&background=2E7D32&color=fff'
                         });
                     }
                 });
             }
             
-            // Play sound if enabled - INI YANG DIPERBAIKI!
+            // 4. Mainkan suara JIKA diaktifkan
             if (soundEnabled && notificationSound) {
                 console.log('Playing sound for popup:', soundType, '(', soundName, ')');
-                playNotificationSound(soundType);
+                // Mainkan suara dengan delay kecil agar sinkron dengan popup
+                setTimeout(() => {
+                    playNotificationSound(soundType);
+                }, 300);
             } else {
                 console.log('Sound disabled or notificationSound not available');
             }
             
-            // Show toast
-            showToast(`Notifikasi popup ditampilkan ${soundEnabled ? 'dengan suara ' + soundName : 'tanpa suara'}`, 'success');
+            // 5. Tampilkan toast
+            const toastMessage = soundEnabled 
+                ? `Notifikasi popup ditampilkan dengan suara ${soundName}`
+                : 'Notifikasi popup ditampilkan tanpa suara';
+            
+            showToast(toastMessage, 'success');
         }
 
         function testWhatsAppNotification() {
