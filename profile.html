@@ -1372,7 +1372,7 @@
         backdrop-filter: blur(10px);
         animation: fadeIn 0.3s ease;
         overflow-y: auto;
-        padding: 40px 20px; /* DITAMBAHKAN PADDING UNTUK PUSATKAN */
+        padding: 40px 20px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1384,20 +1384,14 @@
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         position: relative;
         width: 95%;
-        max-width: 700px; /* DILEBARIN DAN DI TENGAH */
-        margin: auto; /* DI TENGAH */
+        max-width: 700px;
+        margin: auto;
         animation: modalSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
-        max-height: 85vh; /* DIKURANGI AGAR LEBIH KE TENGAH */
+        max-height: 85vh;
         display: flex;
         flex-direction: column;
         border: 3px solid var(--primary-color);
-    }
-
-    /* Modal untuk Change Password - EXTRA LEBAR */
-    #changePasswordModal .modal-content,
-    #sessionsModal .modal-content {
-        max-width: 700px;
     }
 
     @keyframes modalSlideIn {
@@ -1593,6 +1587,24 @@
     .toast-close:hover {
         color: var(--text-color);
         background: rgba(46, 125, 50, 0.1);
+    }
+
+    /* WhatsApp Indicator */
+    .whatsapp-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 8px;
+        background: rgba(37, 211, 102, 0.1);
+        color: #25D366;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        margin-left: 10px;
+    }
+
+    .whatsapp-status i {
+        font-size: 10px;
     }
 
     /* ==================== RESPONSIVE DESIGN ==================== */
@@ -2068,7 +2080,7 @@
                         </div>
                     </div>
 
-                    <!-- Tab Notifikasi -->
+                    <!-- Tab Notifikasi - YANG SUDAH DIPERBAIKI -->
                     <div class="profile-tab" id="notifications-tab">
                         <div class="section-header">
                             <h2><i class="fas fa-bell"></i> Pengaturan Notifikasi</h2>
@@ -2110,11 +2122,17 @@
                             
                             <div class="notification-item">
                                 <div>
-                                    <h4>Notifikasi Email</h4>
-                                    <p>Kirim notifikasi ke email</p>
+                                    <h4>Notifikasi WhatsApp</h4>
+                                    <p>Kirim notifikasi ke WhatsApp</p>
+                                    <small style="color: var(--text-light); font-size: 12px;" id="whatsappNumberDisplay">
+                                        Nomor: <span id="whatsappNumberValue">-</span>
+                                        <span id="whatsappStatus" class="whatsapp-status" style="display: none;">
+                                            <i class="fas fa-circle"></i> Terhubung
+                                        </span>
+                                    </small>
                                 </div>
                                 <label class="switch">
-                                    <input type="checkbox" id="notifEmail">
+                                    <input type="checkbox" id="notifWhatsApp">
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -2123,9 +2141,12 @@
                                 <div>
                                     <h4>Notifikasi Suara</h4>
                                     <p>Putar suara saat notifikasi muncul</p>
+                                    <small style="color: var(--text-light); font-size: 12px;">
+                                        Akan berbunyi di browser
+                                    </small>
                                 </div>
                                 <label class="switch">
-                                    <input type="checkbox" id="soundNotification">
+                                    <input type="checkbox" id="soundNotification" checked>
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -2141,14 +2162,62 @@
                                 <label for="notificationTime">Waktu Default Notifikasi</label>
                                 <div class="input-with-icon">
                                     <i class="fas fa-clock"></i>
-                                    <input type="time" id="notificationTime" value="08:00">
+                                    <input type="time" id="notificationTime">
                                 </div>
-                                <span style="font-size: 12px; color: var(--text-light);">Notifikasi harian akan dikirim pada waktu ini</span>
+                                <span style="font-size: 12px; color: var(--text-light);">
+                                    Notifikasi harian akan dikirim pada waktu ini
+                                </span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="notificationSound">Suara Notifikasi</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-music"></i>
+                                    <select id="notificationSound">
+                                        <option value="default">Default (Bell)</option>
+                                        <option value="chime">Chime</option>
+                                        <option value="ding">Ding</option>
+                                        <option value="alert">Alert</option>
+                                    </select>
+                                </div>
+                                <span style="font-size: 12px; color: var(--text-light);">
+                                    Pilih suara untuk notifikasi
+                                </span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Uji Notifikasi</label>
+                                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                                    <button class="btn-secondary" onclick="testNotificationSound()">
+                                        <i class="fas fa-volume-up"></i> Uji Suara
+                                    </button>
+                                    <button class="btn-secondary" onclick="testNotificationPopup()">
+                                        <i class="fas fa-bell"></i> Uji Popup
+                                    </button>
+                                    <button class="btn-secondary" onclick="testWhatsAppNotification()">
+                                        <i class="fab fa-whatsapp"></i> Uji WhatsApp
+                                    </button>
+                                </div>
+                                <small style="color: var(--text-light); font-size: 12px;">
+                                    Uji semua fitur notifikasi
+                                </small>
                             </div>
                             
                             <button class="btn-primary" id="saveNotificationBtn" onclick="saveNotificationSettings()">
                                 <i class="fas fa-save"></i> Simpan Pengaturan Notifikasi
                             </button>
+                        </div>
+
+                        <!-- WhatsApp Logs Section -->
+                        <div class="section-header" style="margin-top: 30px;">
+                            <h2><i class="fas fa-history"></i> Riwayat WhatsApp</h2>
+                            <button class="btn-secondary" onclick="clearWhatsAppLogs()">
+                                <i class="fas fa-trash"></i> Hapus Riwayat
+                            </button>
+                        </div>
+
+                        <div class="preferences-card" id="whatsappLogsContainer">
+                            <!-- Logs akan dimuat di sini -->
                         </div>
                     </div>
                 </div>
@@ -2227,7 +2296,7 @@
         </div>
     </div>
 
-    <!-- Change Password Modal - DILEBARIN -->
+    <!-- Change Password Modal -->
     <div id="changePasswordModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -2292,7 +2361,7 @@
         </div>
     </div>
 
-    <!-- Sessions Modal - DILEBARIN -->
+    <!-- Sessions Modal -->
     <div id="sessionsModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -2322,12 +2391,67 @@
         </div>
     </div>
 
+    <!-- WhatsApp Settings Modal -->
+    <div id="whatsappModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>
+                    <i class="fab fa-whatsapp"></i>
+                    Pengaturan WhatsApp
+                </h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="whatsappSettingsForm">
+                    <div class="form-group">
+                        <label for="whatsappNumber">Nomor WhatsApp</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="whatsappNumber" 
+                                   placeholder="Contoh: 6281234567890" 
+                                   required
+                                   pattern="[0-9]{10,15}"
+                                   title="Masukkan nomor WhatsApp dengan kode negara (contoh: 6281234567890)">
+                        </div>
+                        <small style="color: var(--text-light); font-size: 12px;">
+                            Format: 62XXXXXXXXXXX (kode negara + nomor, tanpa spasi atau karakter khusus)
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Uji WhatsApp</label>
+                        <div style="margin-top: 10px;">
+                            <button type="button" class="btn-secondary" onclick="sendTestWhatsAppMessage()">
+                                <i class="fab fa-whatsapp"></i> Uji Kirim Pesan
+                            </button>
+                            <small style="display: block; margin-top: 8px; color: var(--text-light); font-size: 12px;">
+                                Akan membuka WhatsApp dengan pesan percobaan
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeWhatsAppModal()">
+                            Batal
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            Simpan Pengaturan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Profile Management Functions
         let currentUser = null;
         let userPlants = [];
         let sidebarOpen = false;
         let userDropdownOpen = false;
+        let notificationSound = null;
+        let whatsappSchedulerInterval = null;
+        let lastWhatsAppCheck = null;
 
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
@@ -2341,10 +2465,31 @@
             loadNotificationSettings();
             setupEventListeners();
             updateNotifications();
+            loadWhatsAppLogs();
             
             // Pastikan tab informasi pribadi yang aktif pertama kali
             setActiveTab('info');
+            
+            // Initialize notification sound
+            initNotificationSound();
+            
+            // Start WhatsApp scheduler
+            initWhatsAppScheduler();
+            
+            // Check WhatsApp status
+            updateWhatsAppStatus();
         });
+
+        // Initialize notification sound
+        function initNotificationSound() {
+            try {
+                // Create audio context for better sound control
+                notificationSound = new Audio();
+                notificationSound.volume = 0.7;
+            } catch (error) {
+                console.error("Error initializing notification sound:", error);
+            }
+        }
 
         // Set active tab
         function setActiveTab(tabId) {
@@ -2597,12 +2742,22 @@
             // Setup smooth button click for save notification button
             setupSmoothButtonClick();
             
+            // Setup WhatsApp settings
+            setupWhatsAppSettings();
+            
             // Refresh notifications periodically
             setInterval(updateNotifications, 30000);
             
             // Responsive behavior check
             checkResponsiveBehavior();
             window.addEventListener('resize', checkResponsiveBehavior);
+            
+            // Setup page visibility change for WhatsApp scheduler
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) {
+                    checkScheduledWhatsApp();
+                }
+            });
         }
 
         // Profile Tab Functionality
@@ -2614,6 +2769,11 @@
                     
                     const tabId = this.dataset.tab;
                     setActiveTab(tabId);
+                    
+                    // Load logs when notifications tab is opened
+                    if (tabId === 'notifications') {
+                        loadWhatsAppLogs();
+                    }
                 });
             });
         }
@@ -2664,14 +2824,18 @@
             }
         }
 
-        // Notification Settings
+        // Notification Settings Functions
         function setupNotificationToggles() {
-            // Setup all notification toggles
-            const notificationToggles = ['notifWatering', 'notifFertilizing', 'notifHarvest', 'notifEmail', 'soundNotification'];
+            const notificationToggles = ['notifWatering', 'notifFertilizing', 'notifHarvest', 'notifWhatsApp', 'soundNotification'];
             notificationToggles.forEach(toggleId => {
                 const toggle = document.getElementById(toggleId);
                 if (toggle) {
                     toggle.addEventListener('change', function() {
+                        // Special handling for WhatsApp
+                        if (toggleId === 'notifWhatsApp' && this.checked) {
+                            showWhatsAppSettingsModal();
+                        }
+                        
                         // Add smooth feedback
                         this.parentElement.style.transform = 'scale(1.05)';
                         setTimeout(() => {
@@ -2680,6 +2844,11 @@
                         
                         // Save settings
                         saveNotificationSettings();
+                        
+                        // Update WhatsApp status
+                        if (toggleId === 'notifWhatsApp') {
+                            updateWhatsAppStatus();
+                        }
                     });
                 }
             });
@@ -2690,13 +2859,26 @@
                 watering: document.getElementById('notifWatering').checked,
                 fertilizing: document.getElementById('notifFertilizing').checked,
                 harvest: document.getElementById('notifHarvest').checked,
-                email: document.getElementById('notifEmail').checked,
+                whatsapp: document.getElementById('notifWhatsApp').checked,
                 sound: document.getElementById('soundNotification').checked,
-                time: document.getElementById('notificationTime').value
+                time: document.getElementById('notificationTime').value,
+                soundType: document.getElementById('notificationSound').value,
+                whatsappNumber: localStorage.getItem('whatsappNumber') || ''
             };
             
             localStorage.setItem('notificationSettings', JSON.stringify(settings));
             showToast('Pengaturan notifikasi berhasil disimpan', 'success');
+            
+            // Restart WhatsApp scheduler
+            startWhatsAppScheduler();
+            
+            // Update WhatsApp number display
+            if (settings.whatsappNumber) {
+                document.getElementById('whatsappNumberValue').textContent = settings.whatsappNumber;
+            }
+            
+            // Update WhatsApp status
+            updateWhatsAppStatus();
         }
 
         function loadNotificationSettings() {
@@ -2704,17 +2886,529 @@
                 watering: true,
                 fertilizing: true,
                 harvest: true,
-                email: false,
-                sound: false,
-                time: '08:00'
+                whatsapp: false,
+                sound: true,
+                time: '08:00', // DEFAULT, TAPI BISA DIUBAH!
+                soundType: 'default',
+                whatsappNumber: ''
             };
             
             document.getElementById('notifWatering').checked = settings.watering;
             document.getElementById('notifFertilizing').checked = settings.fertilizing;
             document.getElementById('notifHarvest').checked = settings.harvest;
-            document.getElementById('notifEmail').checked = settings.email;
-            document.getElementById('soundNotification').checked = settings.sound || false;
-            document.getElementById('notificationTime').value = settings.time;
+            document.getElementById('notifWhatsApp').checked = settings.whatsapp;
+            document.getElementById('soundNotification').checked = settings.sound;
+            document.getElementById('notificationTime').value = settings.time; // INI YANG BACA DARI SETTING
+            document.getElementById('notificationSound').value = settings.soundType || 'default';
+            
+            // Update WhatsApp number display
+            const whatsappNumberDisplay = document.getElementById('whatsappNumberValue');
+            if (whatsappNumberDisplay) {
+                whatsappNumberDisplay.textContent = settings.whatsappNumber || '-';
+            }
+            
+            // Load WhatsApp number from localStorage if not in settings
+            if (!settings.whatsappNumber) {
+                const savedWhatsApp = localStorage.getItem('whatsappNumber');
+                if (savedWhatsApp) {
+                    settings.whatsappNumber = savedWhatsApp;
+                    whatsappNumberDisplay.textContent = savedWhatsApp;
+                }
+            }
+            
+            // Update WhatsApp status
+            updateWhatsAppStatus();
+        }
+
+        // WhatsApp Functions
+        function setupWhatsAppSettings() {
+            const whatsappForm = document.getElementById('whatsappSettingsForm');
+            if (whatsappForm) {
+                whatsappForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const whatsappNumber = document.getElementById('whatsappNumber').value;
+                    
+                    if (!whatsappNumber || !isValidWhatsAppNumber(whatsappNumber)) {
+                        showToast('Nomor WhatsApp tidak valid. Harus 10-15 digit angka.', 'error');
+                        return;
+                    }
+                    
+                    // Save WhatsApp number
+                    localStorage.setItem('whatsappNumber', whatsappNumber);
+                    
+                    // Update notification settings
+                    const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
+                    settings.whatsappNumber = whatsappNumber;
+                    settings.whatsapp = true; // Auto enable WhatsApp notifications
+                    localStorage.setItem('notificationSettings', JSON.stringify(settings));
+                    
+                    // Update UI
+                    document.getElementById('notifWhatsApp').checked = true;
+                    document.getElementById('whatsappNumberValue').textContent = whatsappNumber;
+                    
+                    showToast('Nomor WhatsApp berhasil disimpan', 'success');
+                    closeWhatsAppModal();
+                    
+                    // Restart scheduler
+                    startWhatsAppScheduler();
+                    
+                    // Update WhatsApp status
+                    updateWhatsAppStatus();
+                });
+            }
+        }
+
+        function showWhatsAppSettingsModal() {
+            const savedNumber = localStorage.getItem('whatsappNumber') || currentUser?.phone || '';
+            const formattedNumber = formatPhoneForWhatsApp(savedNumber);
+            
+            document.getElementById('whatsappNumber').value = formattedNumber || '';
+            document.getElementById('whatsappModal').style.display = 'block';
+        }
+
+        function closeWhatsAppModal() {
+            document.getElementById('whatsappModal').style.display = 'none';
+        }
+
+        function formatPhoneForWhatsApp(phoneNumber) {
+            if (!phoneNumber) return '';
+            
+            // Remove all non-digit characters
+            let cleanNumber = phoneNumber.replace(/\D/g, '');
+            
+            // If number starts with 0, replace with 62 (Indonesia country code)
+            if (cleanNumber.startsWith('0')) {
+                cleanNumber = '62' + cleanNumber.substring(1);
+            }
+            
+            // If number doesn't start with country code, add 62
+            if (!cleanNumber.startsWith('62')) {
+                cleanNumber = '62' + cleanNumber;
+            }
+            
+            return cleanNumber;
+        }
+
+        function isValidWhatsAppNumber(number) {
+            const cleanNumber = number.replace(/\D/g, '');
+            return cleanNumber.length >= 10 && cleanNumber.length <= 15;
+        }
+
+        // WhatsApp Scheduler System
+        function initWhatsAppScheduler() {
+            // Request notification permission
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+            
+            // Start scheduler
+            startWhatsAppScheduler();
+            
+            // Check immediately on load
+            checkScheduledWhatsApp();
+            
+            // Check every minute
+            setInterval(checkScheduledWhatsApp, 60000);
+        }
+
+        function startWhatsAppScheduler() {
+            // Clear existing interval
+            if (whatsappSchedulerInterval) {
+                clearInterval(whatsappSchedulerInterval);
+            }
+            
+            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
+            
+            // Only start if WhatsApp notifications are enabled
+            if (settings.whatsapp && settings.whatsappNumber && settings.time) {
+                console.log('WhatsApp scheduler started for:', settings.time);
+            }
+        }
+
+        function checkScheduledWhatsApp() {
+            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
+            
+            // Check if WhatsApp notifications are enabled
+            if (!settings.whatsapp || !settings.whatsappNumber || !settings.time) {
+                return;
+            }
+            
+            const now = new Date();
+            const [scheduledHour, scheduledMinute] = settings.time.split(':').map(Number);
+            
+            // Get current hour and minute
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            
+            // Check if it's time to send notification
+            if (currentHour === scheduledHour && currentMinute === scheduledMinute) {
+                // Check if we already sent today
+                const lastSentDate = localStorage.getItem('whatsappLastSentDate');
+                const today = now.toDateString();
+                
+                if (lastSentDate !== today) {
+                    sendScheduledWhatsAppNotification();
+                    localStorage.setItem('whatsappLastSentDate', today);
+                    console.log('Scheduled WhatsApp notification sent at', settings.time);
+                }
+            }
+            
+            lastWhatsAppCheck = now;
+        }
+
+        function sendScheduledWhatsAppNotification() {
+            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
+            const phoneNumber = settings.whatsappNumber;
+            
+            if (!phoneNumber) return;
+            
+            const message = createDailyNotificationMessage();
+            sendWhatsAppMessage(phoneNumber, message);
+        }
+
+        function createDailyNotificationMessage() {
+            const now = new Date();
+            const plants = JSON.parse(localStorage.getItem('plants')) || [];
+            const userPlants = plants.filter(p => p.userId === currentUser?.id);
+            
+            // Filter tanaman yang butuh perhatian hari ini
+            const plantsNeedingWater = userPlants.filter(plant => {
+                if (!plant.lastWatered) return false;
+                const lastWatered = new Date(plant.lastWatered);
+                const daysSinceWater = Math.floor((now - lastWatered) / (1000 * 60 * 60 * 24));
+                return daysSinceWater >= (plant.waterSchedule || 3);
+            });
+            
+            const plantsReadyForHarvest = userPlants.filter(plant => {
+                return plant.harvestDate && new Date(plant.harvestDate) <= now;
+            });
+            
+            // Build message
+            let message = `🌱 *SmartTani - Daily Report* 🌱\n`;
+            message += `\n📅 ${now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}\n`;
+            message += `⏰ ${now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}\n`;
+            
+            if (plantsNeedingWater.length > 0) {
+                message += `\n💧 *Tanaman Perlu Disiram:*\n`;
+                plantsNeedingWater.forEach(plant => {
+                    message += `• ${plant.name} (${plant.type})\n`;
+                });
+            }
+            
+            if (plantsReadyForHarvest.length > 0) {
+                message += `\n🎉 *Tanaman Siap Panen:*\n`;
+                plantsReadyForHarvest.forEach(plant => {
+                    message += `• ${plant.name} (${plant.type})\n`;
+                });
+            }
+            
+            if (plantsNeedingWater.length === 0 && plantsReadyForHarvest.length === 0) {
+                message += `\n✅ Semua tanaman dalam kondisi baik!\n`;
+            }
+            
+            message += `\n_SmartTani - Sistem Pertanian Pintar_`;
+            
+            return encodeURIComponent(message);
+        }
+
+        function sendWhatsAppMessage(phoneNumber, message) {
+            const cleanNumber = phoneNumber.replace(/\D/g, '');
+            
+            // Coba buka WhatsApp Web
+            const whatsappUrl = `https://web.whatsapp.com/send?phone=${cleanNumber}&text=${message}`;
+            
+            // Buka di new tab
+            window.open(whatsappUrl, '_blank');
+            
+            // Simpan log
+            const log = {
+                timestamp: new Date().toISOString(),
+                number: cleanNumber,
+                message: decodeURIComponent(message),
+                status: 'opened',
+                type: 'scheduled'
+            };
+            
+            const logs = JSON.parse(localStorage.getItem('whatsappLogs') || '[]');
+            logs.push(log);
+            localStorage.setItem('whatsappLogs', JSON.stringify(logs.slice(-50))); // Simpan 50 log terakhir
+            
+            // Show browser notification
+            if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification('SmartTani - WhatsApp Notification', {
+                    body: 'WhatsApp Web dibuka untuk mengirim notifikasi harian',
+                    icon: 'https://cdn-icons-png.flaticon.com/512/220/220236.png'
+                });
+            }
+            
+            // Play sound if enabled
+            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
+            if (settings.sound && notificationSound) {
+                playNotificationSound(settings.soundType);
+            }
+            
+            // Update logs display if on notifications tab
+            if (document.getElementById('notifications-tab').classList.contains('active')) {
+                loadWhatsAppLogs();
+            }
+            
+            showToast('WhatsApp dibuka untuk mengirim notifikasi harian', 'info');
+        }
+
+        function sendTestWhatsAppMessage() {
+            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
+            const phoneNumber = settings.whatsappNumber;
+            
+            if (!phoneNumber) {
+                showToast('Atur nomor WhatsApp terlebih dahulu', 'warning');
+                return;
+            }
+            
+            const now = new Date();
+            const message = encodeURIComponent(
+                `🔔 *SmartTani - Notifikasi Percobaan*\n\n` +
+                `Halo! Ini adalah pesan percobaan dari SmartTani.\n` +
+                `Notifikasi jadwal tanaman Anda akan dikirim melalui WhatsApp.\n\n` +
+                `*Tanggal:* ${now.toLocaleDateString('id-ID')}\n` +
+                `*Waktu:* ${now.toLocaleTimeString('id-ID')}\n\n` +
+                `Terima kasih telah menggunakan SmartTani! 🌱`
+            );
+            
+            const cleanNumber = phoneNumber.replace(/\D/g, '');
+            const whatsappUrl = `https://web.whatsapp.com/send?phone=${cleanNumber}&text=${message}`;
+            
+            // Buka di new tab
+            window.open(whatsappUrl, '_blank');
+            
+            // Simpan log
+            const log = {
+                timestamp: now.toISOString(),
+                number: cleanNumber,
+                message: decodeURIComponent(message),
+                status: 'test_sent',
+                type: 'test'
+            };
+            
+            const logs = JSON.parse(localStorage.getItem('whatsappLogs') || '[]');
+            logs.push(log);
+            localStorage.setItem('whatsappLogs', JSON.stringify(logs.slice(-50)));
+            
+            showToast('Membuka WhatsApp untuk mengirim pesan percobaan', 'info');
+        }
+
+        function updateWhatsAppStatus() {
+            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
+            const whatsappStatus = document.getElementById('whatsappStatus');
+            
+            if (settings.whatsapp && settings.whatsappNumber) {
+                whatsappStatus.style.display = 'inline-flex';
+            } else {
+                whatsappStatus.style.display = 'none';
+            }
+        }
+
+        // Notification Sound Functions
+        function playNotificationSound(soundType = 'default') {
+            if (!notificationSound) return;
+            
+            try {
+                // Stop any currently playing sound
+                notificationSound.pause();
+                notificationSound.currentTime = 0;
+                
+                // Set sound based on type
+                let soundFile = '';
+                switch(soundType) {
+                    case 'chime':
+                        soundFile = 'https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3';
+                        break;
+                    case 'ding':
+                        soundFile = 'https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3';
+                        break;
+                    case 'alert':
+                        soundFile = 'https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3';
+                        break;
+                    default: // default (bell)
+                        soundFile = 'https://assets.mixkit.co/sfx/preview/mixkit-bell-notification-933.mp3';
+                }
+                
+                // Play sound
+                notificationSound.src = soundFile;
+                notificationSound.play().catch(e => {
+                    console.error("Error playing notification sound:", e);
+                    // Fallback to simple beep
+                    playFallbackSound();
+                });
+                
+            } catch (error) {
+                console.error("Error with notification sound:", error);
+                playFallbackSound();
+            }
+        }
+
+        function playFallbackSound() {
+            try {
+                // Simple fallback using Web Audio API
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.5);
+                
+            } catch (error) {
+                console.error("Error with fallback sound:", error);
+            }
+        }
+
+        function testNotificationSound() {
+            const soundType = document.getElementById('notificationSound').value;
+            playNotificationSound(soundType);
+            showToast('Menguji suara notifikasi...', 'info');
+        }
+
+        function testNotificationPopup() {
+            // Create test notification
+            const notification = {
+                title: '🔔 SmartTani - Notifikasi Percobaan',
+                message: 'Ini adalah notifikasi percobaan dari SmartTani.',
+                type: 'info',
+                timestamp: new Date().toISOString()
+            };
+            
+            // Show browser notification if supported
+            if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification(notification.title, {
+                    body: notification.message,
+                    icon: 'https://ui-avatars.com/api/?name=SmartTani&background=2E7D32&color=fff'
+                });
+            }
+            
+            // Play sound
+            const soundEnabled = document.getElementById('soundNotification').checked;
+            if (soundEnabled) {
+                const soundType = document.getElementById('notificationSound').value;
+                playNotificationSound(soundType);
+            }
+            
+            // Show toast
+            showToast('Notifikasi percobaan ditampilkan', 'success');
+        }
+
+        function testWhatsAppNotification() {
+            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
+            
+            if (!settings.whatsapp || !settings.whatsappNumber) {
+                showToast('Aktifkan dan atur WhatsApp terlebih dahulu', 'warning');
+                return;
+            }
+            
+            sendTestWhatsAppMessage();
+        }
+
+        // WhatsApp Logs Functions
+        function loadWhatsAppLogs() {
+            const logs = JSON.parse(localStorage.getItem('whatsappLogs') || '[]');
+            const container = document.getElementById('whatsappLogsContainer');
+            
+            if (logs.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: var(--text-light);">
+                        <i class="fas fa-history" style="font-size: 48px; margin-bottom: 20px;"></i>
+                        <h3 style="margin-bottom: 10px;">Belum ada riwayat WhatsApp</h3>
+                        <p>Riwayat pengiriman WhatsApp akan muncul di sini</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = `
+                <div style="max-height: 300px; overflow-y: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: var(--primary-extra-light);">
+                                <th style="padding: 12px; text-align: left;">Waktu</th>
+                                <th style="padding: 12px; text-align: left;">Tipe</th>
+                                <th style="padding: 12px; text-align: left;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            logs.reverse().forEach(log => {
+                const date = new Date(log.timestamp);
+                const timeStr = date.toLocaleTimeString('id-ID', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+                const dateStr = date.toLocaleDateString('id-ID');
+                
+                // Determine status color
+                let statusColor = 'var(--primary-color)';
+                let statusBg = 'var(--primary-light)';
+                
+                if (log.status === 'test_sent') {
+                    statusColor = 'var(--info)';
+                    statusBg = 'rgba(33, 150, 243, 0.1)';
+                } else if (log.status === 'opened') {
+                    statusColor = 'var(--success)';
+                    statusBg = 'rgba(76, 175, 80, 0.1)';
+                }
+                
+                // Determine type text
+                let typeText = log.type === 'test' ? 'Percobaan' : 'Terjadwal';
+                let typeColor = log.type === 'test' ? 'var(--warning)' : 'var(--primary-color)';
+                
+                html += `
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 12px;">
+                            <div style="font-weight: 600;">${dateStr}</div>
+                            <div style="font-size: 12px; color: var(--text-light);">${timeStr}</div>
+                        </td>
+                        <td style="padding: 12px;">
+                            <span style="padding: 4px 8px; background: ${typeColor === 'var(--warning)' ? 'rgba(255, 152, 0, 0.1)' : 'var(--primary-light)'}; 
+                                 color: ${typeColor}; border-radius: 4px; font-size: 12px; font-weight: 600;">
+                                ${typeText}
+                            </span>
+                        </td>
+                        <td style="padding: 12px;">
+                            <span style="padding: 4px 8px; background: ${statusBg}; 
+                                 color: ${statusColor}; border-radius: 4px; font-size: 12px; font-weight: 600;">
+                                ${log.status === 'test_sent' ? 'Percobaan' : 'Terkirim'}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+                <div style="margin-top: 15px; text-align: center; color: var(--text-light); font-size: 12px;">
+                    Menampilkan ${logs.length} riwayat terakhir
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        function clearWhatsAppLogs() {
+            if (confirm('Hapus semua riwayat WhatsApp?')) {
+                localStorage.removeItem('whatsappLogs');
+                loadWhatsAppLogs();
+                showToast('Riwayat WhatsApp dihapus', 'success');
+            }
         }
 
         // Security Functions
@@ -2779,6 +3473,19 @@
                     
                     // Update display
                     updateUserProfile(currentUser);
+                    
+                    // Update WhatsApp number if phone changed
+                    const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
+                    if (settings.whatsapp && updatedData.phone) {
+                        const formattedNumber = formatPhoneForWhatsApp(updatedData.phone);
+                        if (formattedNumber) {
+                            localStorage.setItem('whatsappNumber', formattedNumber);
+                            settings.whatsappNumber = formattedNumber;
+                            localStorage.setItem('notificationSettings', JSON.stringify(settings));
+                            document.getElementById('whatsappNumberValue').textContent = formattedNumber;
+                            updateWhatsAppStatus();
+                        }
+                    }
                     
                     showToast('Profil berhasil diperbarui!', 'success');
                     document.getElementById('editProfileModal').style.display = 'none';

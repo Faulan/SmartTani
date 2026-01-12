@@ -1461,25 +1461,6 @@
         color: white;
     }
 
-    /* HAPUS efek ripple putih */
-    /* .btn-primary::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.2);
-        transform: translate(-50%, -50%);
-        transition: width 0.5s, height 0.5s;
-    }
-
-    .btn-primary:active::before {
-        width: 200px;
-        height: 200px;
-    } */
-
     .btn-primary:hover {
         transform: translateY(-3px);
         box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
@@ -1496,25 +1477,6 @@
         color: var(--primary-color);
         border: 2px solid var(--primary-color);
     }
-
-    /* HAPUS efek ripple putih */
-    /* .btn-secondary::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(46, 125, 50, 0.1);
-        transform: translate(-50%, -50%);
-        transition: width 0.5s, height 0.5s;
-    }
-
-    .btn-secondary:active::before {
-        width: 200px;
-        height: 200px;
-    } */
 
     .btn-secondary:hover {
         background: var(--primary-color);
@@ -1558,25 +1520,6 @@
         filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
     }
 
-    /* HAPUS efek ripple putih */
-    /* .btn-plant-again::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        transform: translate(-50%, -50%);
-        transition: width 0.6s, height 0.6s;
-    }
-
-    .btn-plant-again:active::before {
-        width: 300px;
-        height: 300px;
-    } */
-
     .btn-plant-again:hover {
         transform: translateY(-3px);
         box-shadow: 0 8px 24px rgba(46, 125, 50, 0.4);
@@ -1614,25 +1557,6 @@
         font-size: 16px;
         filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
     }
-
-    /* HAPUS efek ripple putih */
-    /* .btn-clear-filter::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        transform: translate(-50%, -50%);
-        transition: width 0.6s, height 0.6s;
-    }
-
-    .btn-clear-filter:active::before {
-        width: 300px;
-        height: 300px;
-    } */
 
     .btn-clear-filter:hover {
         transform: translateY(-3px);
@@ -2194,25 +2118,6 @@
         position: relative;
         overflow: hidden;
     }
-
-    /* HAPUS efek ripple */
-    /* .btn-large::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.2);
-        transform: translate(-50%, -50%);
-        transition: width 0.5s, height 0.5s;
-    }
-
-    .btn-large:active::before {
-        width: 200px;
-        height: 200px;
-    } */
 
     .btn-success {
         background: linear-gradient(135deg, var(--success), #2E7D32);
@@ -3104,33 +3009,74 @@
     </div>
 
     <script>
-        // State management
+        // ==================== DATABASE MANAGEMENT ====================
+        let db = null;
         let currentUser = null;
         let plants = [];
+        let plantHistory = [];
         let currentFilter = 'all';
         let currentSearchQuery = '';
-        let db;
         let userDropdownOpen = false;
         let sidebarOpen = false;
         
-        // Initialize IndexedDB - VERSI YANG SAMA DENGAN plants.html
+        // ==================== DATABASE INITIALIZATION ====================
         async function initDB() {
             return new Promise((resolve, reject) => {
-                const request = indexedDB.open("SmartTaniDB", 2);
+                const request = indexedDB.open("SmartTaniDB", 5);
                 
                 request.onupgradeneeded = function(event) {
                     db = event.target.result;
-                    if (!db.objectStoreNames.contains("images")) {
-                        db.createObjectStore("images", { keyPath: "id", autoIncrement: true });
-                    }
+                    
+                    // Plants store
                     if (!db.objectStoreNames.contains("plants")) {
                         const plantStore = db.createObjectStore("plants", { keyPath: "id" });
                         plantStore.createIndex("userId", "userId", { unique: false });
+                        plantStore.createIndex("nextWatering", "nextWatering", { unique: false });
+                        plantStore.createIndex("nextFertilizing", "nextFertilizing", { unique: false });
+                        plantStore.createIndex("progress", "progress", { unique: false });
+                        plantStore.createIndex("status", "status", { unique: false });
+                    }
+                    
+                    // Images store
+                    if (!db.objectStoreNames.contains("images")) {
+                        db.createObjectStore("images", { keyPath: "id", autoIncrement: true });
+                    }
+                    
+                    // Notifications store
+                    if (!db.objectStoreNames.contains("notifications")) {
+                        const notificationStore = db.createObjectStore("notifications", { keyPath: "id" });
+                        notificationStore.createIndex("userId", "userId", { unique: false });
+                        notificationStore.createIndex("read", "read", { unique: false });
+                        notificationStore.createIndex("type", "type", { unique: false });
+                        notificationStore.createIndex("date", "date", { unique: false });
+                        notificationStore.createIndex("plantId", "plantId", { unique: false });
+                    }
+                    
+                    // Users store
+                    if (!db.objectStoreNames.contains("users")) {
+                        const userStore = db.createObjectStore("users", { keyPath: "id" });
+                        userStore.createIndex("email", "email", { unique: true });
+                    }
+                    
+                    // Plant History store
+                    if (!db.objectStoreNames.contains("plantHistory")) {
+                        const historyStore = db.createObjectStore("plantHistory", { keyPath: "id" });
+                        historyStore.createIndex("plantId", "plantId", { unique: false });
+                        historyStore.createIndex("userId", "userId", { unique: false });
+                        historyStore.createIndex("date", "date", { unique: false });
+                        historyStore.createIndex("type", "type", { unique: false });
+                    }
+                    
+                    // Weather store
+                    if (!db.objectStoreNames.contains("weather")) {
+                        const weatherStore = db.createObjectStore("weather", { keyPath: "id" });
+                        weatherStore.createIndex("userId", "userId", { unique: false });
                     }
                 };
                 
                 request.onsuccess = function(event) {
                     db = event.target.result;
+                    console.log("IndexedDB initialized successfully");
                     resolve(db);
                 };
                 
@@ -3140,246 +3086,205 @@
             });
         }
 
-        // Get image from IndexedDB - VERSI YANG SAMA DENGAN plants.html
-        function getImageFromIndexedDB(imageId) {
+        // ==================== DATABASE OPERATIONS ====================
+        
+        async function getAllPlantsFromDB() {
             return new Promise((resolve, reject) => {
-                if (!imageId || imageId === "null" || imageId === null) {
+                if (!db) {
+                    resolve([]);
+                    return;
+                }
+                
+                const transaction = db.transaction("plants", "readonly");
+                const store = transaction.objectStore("plants");
+                const request = store.getAll();
+                
+                request.onsuccess = function() {
+                    const allPlants = request.result || [];
+                    console.log("All plants from DB:", allPlants);
+                    resolve(allPlants);
+                };
+                
+                request.onerror = function() {
+                    reject("Gagal mengambil tanaman dari database");
+                };
+            });
+        }
+
+        async function getUserPlants() {
+            try {
+                const allPlants = await getAllPlantsFromDB();
+                console.log("Current User ID:", currentUser?.id);
+                console.log("All plants from DB:", allPlants);
+                
+                const userPlants = allPlants.filter(plant => {
+                    return plant.userId == currentUser.id;
+                });
+                
+                console.log("User plants:", userPlants);
+                return userPlants;
+            } catch (error) {
+                console.error("Error getting user plants:", error);
+                return [];
+            }
+        }
+
+        async function getPlantFromDB(plantId) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
                     resolve(null);
                     return;
                 }
                 
-                try {
-                    const numericId = parseInt(imageId);
-                    if (isNaN(numericId)) {
-                        console.warn(`Invalid image ID: ${imageId}`);
-                        resolve(null);
-                        return;
-                    }
+                const transaction = db.transaction("plants", "readonly");
+                const store = transaction.objectStore("plants");
+                const request = store.get(plantId);
+                
+                request.onsuccess = function() {
+                    resolve(request.result);
+                };
+                
+                request.onerror = function() {
+                    reject("Gagal mengambil tanaman");
+                };
+            });
+        }
 
-                    const transaction = db.transaction("images", "readonly");
-                    const store = transaction.objectStore("images");
-                    const request = store.get(numericId);
-
-                    request.onsuccess = function(event) {
-                        const result = event.target.result;
-                        if (result && result.imageData) {
-                            resolve(result.imageData);
-                        } else {
-                            console.warn(`Image not found in IndexedDB with ID: ${imageId}`);
-                            resolve(null);
-                        }
+        async function getPlantHistoryFromDB(plantId = null) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    resolve([]);
+                    return;
+                }
+                
+                const transaction = db.transaction("plantHistory", "readonly");
+                const store = transaction.objectStore("plantHistory");
+                
+                if (plantId) {
+                    const index = store.index("plantId");
+                    const request = index.getAll(plantId);
+                    
+                    request.onsuccess = function() {
+                        resolve(request.result || []);
                     };
                     
                     request.onerror = function() {
-                        console.error("Error getting image from IndexedDB:", request.error);
-                        reject("Gagal mengambil gambar dari database");
+                        reject("Gagal mengambil riwayat tanaman");
                     };
-                } catch (error) {
-                    console.error("Error in getImageFromIndexedDB:", error);
-                    reject(error);
+                } else {
+                    const request = store.getAll();
+                    
+                    request.onsuccess = function() {
+                        const allHistory = request.result || [];
+                        const userHistory = allHistory.filter(history => 
+                            history.userId === currentUser.id
+                        );
+                        
+                        // Sort by date (newest first)
+                        userHistory.sort((a, b) => 
+                            new Date(b.date) - new Date(a.date)
+                        );
+                        
+                        resolve(userHistory);
+                    };
+                    
+                    request.onerror = function() {
+                        reject("Gagal mengambil semua riwayat");
+                    };
                 }
             });
         }
 
-        // Initialize history page
-        async function initHistoryPage() {
-            // Check authentication
-            currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (!currentUser) {
-                showToast('Silakan login terlebih dahulu', 'error');
-                setTimeout(() => window.location.href = 'index.html', 1500);
-                return;
-            }
+        async function getImageFromIndexedDB(imageId) {
+            return new Promise((resolve, reject) => {
+                if (!imageId) {
+                    resolve(null);
+                    return;
+                }
+                
+                if (!db) {
+                    resolve(null);
+                    return;
+                }
+                
+                const transaction = db.transaction("images", "readonly");
+                const store = transaction.objectStore("images");
+                const request = store.get(parseInt(imageId));
 
-            // Initialize database
-            try {
-                await initDB();
-            } catch (error) {
-                console.error("Database init error:", error);
-            }
-
-            // Update UI
-            updateUserInfo();
-            loadUserPlants();
-            updateHistoryPage();
-            updateNotifications();
-            setupEventListeners();
+                request.onsuccess = function(event) {
+                    resolve(event.target.result ? event.target.result.imageData : null);
+                };
+                
+                request.onerror = function() {
+                    reject("Gagal mengambil gambar dari database");
+                };
+            });
         }
 
-        // Load user's plants - VERSI YANG SAMA DENGAN plants.html
-        function loadUserPlants() {
-            try {
-                const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
-                console.log('All plants from localStorage:', allPlants);
-                console.log('Current User ID:', currentUser.id);
+        // ==================== NOTIFICATION FUNCTIONS ====================
+        async function getUserNotifications() {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    resolve([]);
+                    return;
+                }
                 
-                plants = allPlants.filter(plant => {
-                    const userIdMatch = plant.userId == currentUser.id;
-                    console.log(`Plant ${plant.id}: userId=${plant.userId}, match=${userIdMatch}`);
-                    return userIdMatch;
-                });
+                const transaction = db.transaction("notifications", "readonly");
+                const store = transaction.objectStore("notifications");
+                const request = store.getAll();
                 
-                console.log('Filtered plants for current user:', plants);
-            } catch (error) {
-                console.error('Error loading plants:', error);
-                plants = [];
-            }
+                request.onsuccess = function() {
+                    const allNotifications = request.result || [];
+                    const userNotifications = allNotifications.filter(notif => 
+                        notif.userId === currentUser.id
+                    );
+                    
+                    userNotifications.sort((a, b) => 
+                        new Date(b.timestamp) - new Date(a.timestamp)
+                    );
+                    
+                    resolve(userNotifications);
+                };
+                
+                request.onerror = function() {
+                    reject("Gagal mengambil notifikasi");
+                };
+            });
         }
 
-        // Update notifications
-        function updateNotifications() {
+        async function updateNotifications() {
             try {
-                const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
-                const userNotifications = notifications.filter(notif => notif.userId === currentUser.id && !notif.read);
+                if (!db) return 0;
                 
-                // Update notification badge di header
+                const notifications = await getUserNotifications();
+                const unreadNotifications = notifications.filter(notif => !notif.read);
+                
                 const notificationBadge = document.getElementById('notificationBadge');
                 if (notificationBadge) {
-                    notificationBadge.textContent = userNotifications.length;
-                    
-                    if (userNotifications.length === 0) {
-                        notificationBadge.style.display = 'none';
-                    } else {
-                        notificationBadge.style.display = 'flex';
-                    }
+                    notificationBadge.textContent = unreadNotifications.length;
+                    notificationBadge.style.display = unreadNotifications.length === 0 ? 'none' : 'flex';
                 }
                 
-                // Update notification badge di sidebar
                 const sidebarNotificationBadge = document.getElementById('sidebarNotificationBadge');
                 if (sidebarNotificationBadge) {
-                    sidebarNotificationBadge.textContent = userNotifications.length;
-                    
-                    if (userNotifications.length === 0) {
-                        sidebarNotificationBadge.style.display = 'none';
-                    } else {
-                        sidebarNotificationBadge.style.display = 'inline-flex';
-                    }
+                    sidebarNotificationBadge.textContent = unreadNotifications.length;
+                    sidebarNotificationBadge.style.display = unreadNotifications.length === 0 ? 'none' : 'inline-flex';
                 }
                 
-                return userNotifications.length;
+                return unreadNotifications.length;
             } catch (error) {
                 console.error("Error updating notifications:", error);
-                document.getElementById('notificationBadge').textContent = '0';
-                const sidebarBadge = document.getElementById('sidebarNotificationBadge');
-                if (sidebarBadge) sidebarBadge.textContent = '0';
                 return 0;
             }
         }
 
-        // Update user information in UI
-        function updateUserInfo() {
-            if (!currentUser) return;
-            
-            // Set user name and email
-            const userName = getUserName();
-            const userEmail = currentUser.email || 'user@email.com';
-            
-            // Update sidebar
-            document.getElementById('userNameSidebar').textContent = userName;
-            document.getElementById('userEmailSidebar').textContent = userEmail;
-            document.getElementById('userAvatarSidebar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=2E7D32&color=fff`;
-            
-            // Update header
-            document.getElementById('userNameHeader').textContent = userName;
-            document.getElementById('userAvatarHeader').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=2E7D32&color=fff`;
+        // ==================== HELPER FUNCTIONS ====================
+        function normalizeDate(date) {
+            const normalized = new Date(date);
+            normalized.setHours(0, 0, 0, 0);
+            return normalized;
         }
 
-        // Get user name for greeting
-        function getUserName() {
-            try {
-                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                if (currentUser && currentUser.name) {
-                    return currentUser.name;
-                }
-                
-                // Try to get from user profiles
-                const userProfiles = JSON.parse(localStorage.getItem('userProfiles')) || [];
-                if (currentUser && currentUser.email) {
-                    const userProfile = userProfiles.find(profile => profile.email === currentUser.email);
-                    if (userProfile && userProfile.name) {
-                        return userProfile.name;
-                    }
-                }
-                
-                // Try to get from registration data
-                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-                if (currentUser && currentUser.email) {
-                    const registeredUser = registeredUsers.find(user => user.email === currentUser.email);
-                    if (registeredUser && registeredUser.name) {
-                        return registeredUser.name;
-                    }
-                }
-                
-                return 'User';
-                
-            } catch (error) {
-                console.error("Error getting user name:", error);
-                return 'User';
-            }
-        }
-
-        // Update history page
-        function updateHistoryPage() {
-            updateStats();
-            updateFilterTotalCount();
-            renderHistory();
-        }
-
-        // Update statistics
-        function updateStats() {
-            const totalPlants = plants.length;
-            const completedPlants = plants.filter(plant => plant.progress >= 100).length;
-            const activePlants = plants.filter(plant => plant.progress < 100).length;
-            const successRate = totalPlants > 0 ? Math.round((completedPlants / totalPlants) * 100) : 0;
-
-            // Update counters with animation
-            animateCounter('totalPlants', totalPlants);
-            animateCounter('completedPlants', completedPlants);
-            animateCounter('activePlants', activePlants);
-            animateCounter('successRate', successRate);
-        }
-
-        // Update filter total count
-        function updateFilterTotalCount() {
-            let filteredPlants = getFilteredPlants();
-            
-            // Update total count in filter section
-            document.getElementById('filterTotalPlants').textContent = filteredPlants.length;
-        }
-
-        // Get filtered plants based on current filter and search
-        function getFilteredPlants() {
-            let filteredPlants = plants;
-
-            // Apply filter by status
-            switch(currentFilter) {
-                case 'completed':
-                    filteredPlants = plants.filter(plant => plant.progress >= 100);
-                    break;
-                case 'active':
-                    filteredPlants = plants.filter(plant => plant.progress < 100);
-                    break;
-                case 'failed':
-                    filteredPlants = plants.filter(plant => plant.status === 'failed');
-                    break;
-                default:
-                    filteredPlants = plants;
-            }
-
-            // Apply search filter if search query exists
-            if (currentSearchQuery.trim() !== '') {
-                const searchQuery = currentSearchQuery.toLowerCase().trim();
-                filteredPlants = filteredPlants.filter(plant => 
-                    (plant.name && plant.name.toLowerCase().includes(searchQuery)) ||
-                    (plant.type && plant.type.toLowerCase().includes(searchQuery)) ||
-                    (plant.location && plant.location.toLowerCase().includes(searchQuery))
-                );
-            }
-
-            return filteredPlants;
-        }
-
-        // Animate counter value
         function animateCounter(elementId, targetValue) {
             const element = document.getElementById(elementId);
             const currentValue = element.textContent.includes('%') 
@@ -3404,245 +3309,234 @@
             updateCounter();
         }
 
-        // Setup event listeners
-        function setupEventListeners() {
-            // Hamburger menu toggle
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const sidebarOverlay = document.getElementById('sidebarOverlay');
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
-            
-            hamburgerBtn.addEventListener('click', toggleSidebar);
-            sidebarOverlay.addEventListener('click', closeSidebar);
-            
-            // Profile button click
-            const userProfileBtn = document.getElementById('userProfileBtn');
-            const userDropdown = document.getElementById('userDropdown');
-            
-            userProfileBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                userDropdown.classList.toggle('show');
-                userProfileBtn.classList.toggle('active');
-                userDropdownOpen = !userDropdownOpen;
-            });
-            
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-                if (userDropdownOpen && !userProfileBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-                    userDropdown.classList.remove('show');
-                    userProfileBtn.classList.remove('active');
-                    userDropdownOpen = false;
-                }
-            });
-            
-            // Modal close events
-            document.querySelectorAll('.close-modal').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // UNLOCK SCROLL
-                    document.body.classList.remove('body-lock-scroll');
-                    document.documentElement.classList.remove('body-lock-scroll');
-                    this.closest('.modal').style.display = 'none';
-                });
-            });
-            
-            // Close modal when clicking outside
-            window.addEventListener('click', function(e) {
-                if (e.target.classList.contains('modal')) {
-                    // UNLOCK SCROLL
-                    document.body.classList.remove('body-lock-scroll');
-                    document.documentElement.classList.remove('body-lock-scroll');
-                    e.target.style.display = 'none';
-                }
-            });
-            
-            // Close sidebar when clicking on menu item
-            document.querySelectorAll('.sidebar-menu a').forEach(link => {
-                link.addEventListener('click', function() {
-                    closeSidebar();
-                });
-            });
-            
-            // Close sidebar with Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && sidebarOpen) {
-                    closeSidebar();
-                }
-            });
-            
-            // Filter buttons
-            document.querySelectorAll('.category-filter').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    filterHistory(this.dataset.status);
-                });
-            });
-
-            // Search functionality
-            const searchInput = document.getElementById('searchFilterInput');
-            const searchBtn = document.getElementById('searchFilterBtn');
-            const clearSearchBtn = document.getElementById('clearSearchBtn');
-            
-            // Search button click
-            searchBtn.addEventListener('click', function() {
-                searchPlants();
-            });
-            
-            // Clear search button click
-            clearSearchBtn.addEventListener('click', function() {
-                clearSearch();
-            });
-            
-            // Enter key press in search input
-            searchInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    searchPlants();
-                }
-            });
-            
-            // Focus styling for search input
-            searchInput.addEventListener('focus', function() {
-                this.style.borderColor = 'var(--primary-color)';
-                this.style.boxShadow = '0 0 0 4px rgba(46, 125, 50, 0.15)';
-                this.style.color = 'var(--text-color)';
-            });
-            
-            searchInput.addEventListener('blur', function() {
-                this.style.borderColor = 'var(--border-color)';
-                this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)';
-                if (!this.value) {
-                    this.style.color = 'var(--text-light)';
-                } else {
-                    this.style.color = 'var(--text-color)';
-                }
-            });
-
-            // Refresh notifications periodically
-            setInterval(updateNotifications, 30000);
-            
-            // Add smooth click effect to stat cards
-            document.querySelectorAll('.stat-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    this.style.transform = 'translateY(-4px)';
-                    setTimeout(() => {
-                        this.style.transform = 'translateY(-8px)';
-                    }, 100);
-                });
-            });
-            
-            // Responsive behavior check
-            checkResponsiveBehavior();
-            window.addEventListener('resize', checkResponsiveBehavior);
-        }
-
-        // Check responsive behavior
-        function checkResponsiveBehavior() {
-            const isDesktop = window.innerWidth >= 993;
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
-            const sidebarOverlay = document.getElementById('sidebarOverlay');
-            
-            if (isDesktop && sidebarOpen) {
-                // Desktop: sidebar open, content shifts
-                mainContent.classList.add('sidebar-open');
-                sidebarOverlay.classList.remove('active');
-            } else if (!isDesktop && sidebarOpen) {
-                // Mobile: sidebar open, overlay shows
-                mainContent.classList.add('sidebar-open');
-                sidebarOverlay.classList.add('active');
+        function formatDate(dateString) {
+            if (!dateString) return '-';
+            try {
+                const options = { day: 'numeric', month: 'short', year: 'numeric' };
+                return new Date(dateString).toLocaleDateString('id-ID', options);
+            } catch (error) {
+                return dateString;
             }
         }
 
-        // Toggle sidebar
-        function toggleSidebar() {
-            if (sidebarOpen) {
-                closeSidebar();
-            } else {
-                openSidebar();
+        function formatDateTime(dateString) {
+            if (!dateString) return '-';
+            try {
+                const date = new Date(dateString);
+                const options = { 
+                    day: 'numeric', 
+                    month: 'short', 
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                };
+                return date.toLocaleDateString('id-ID', options);
+            } catch (error) {
+                return dateString;
             }
         }
 
-        // Open sidebar
-        function openSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const sidebarOverlay = document.getElementById('sidebarOverlay');
-            const mainContent = document.getElementById('mainContent');
+        function getScheduleText(schedule) {
+            if (!schedule) return 'Belum diatur';
             
-            sidebar.classList.add('open');
-            hamburgerBtn.classList.add('active');
-            mainContent.classList.add('sidebar-open');
-            sidebarOpen = true;
+            if (typeof schedule === 'string' && schedule.startsWith('custom-')) {
+                const days = schedule.split('-')[1];
+                return `${days} Hari Sekali`;
+            }
             
-            // Check if mobile or desktop
-            const isDesktop = window.innerWidth >= 993;
-            if (!isDesktop) {
-                // Mobile: show overlay
-                sidebarOverlay.classList.add('active');
-            } else {
-                // Desktop: content shifts, no overlay
-                sidebarOverlay.classList.remove('active');
+            const scheduleNum = parseInt(schedule);
+            switch(scheduleNum) {
+                case 1: return 'Setiap Hari';
+                case 2: return '2 Hari Sekali';
+                case 3: return '3 Hari Sekali';
+                case 7: return 'Mingguan';
+                case 14: return '2 Minggu Sekali';
+                case 30: return 'Bulanan';
+                default: return `${schedule} Hari Sekali`;
             }
         }
 
-        // Close sidebar
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const sidebarOverlay = document.getElementById('sidebarOverlay');
-            const mainContent = document.getElementById('mainContent');
-            
-            sidebar.classList.remove('open');
-            hamburgerBtn.classList.remove('active');
-            mainContent.classList.remove('sidebar-open');
-            sidebarOverlay.classList.remove('active');
-            sidebarOpen = false;
+        function calculateHarvest(quantity) {
+            // Simple calculation: 0.5kg per plant for demonstration
+            return ((quantity || 1) * 0.5).toFixed(1);
         }
 
-        // Filter history
-        function filterHistory(status) {
-            currentFilter = status;
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = toast.querySelector('i');
             
-            // Update active filter button
-            document.querySelectorAll('.category-filter').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
+            toastMessage.textContent = message;
+            toastIcon.className = 'fas ' + (
+                type === 'success' ? 'fa-check-circle' :
+                type === 'error' ? 'fa-exclamation-circle' :
+                type === 'warning' ? 'fa-exclamation-triangle' :
+                'fa-info-circle'
+            );
+            toast.className = 'toast ' + type;
+            toast.classList.add('show');
             
-            updateFilterTotalCount();
-            renderHistory();
+            setTimeout(() => {
+                hideToast();
+            }, 5000);
         }
 
-        // Search plants by name
-        function searchPlants() {
-            const searchInput = document.getElementById('searchFilterInput');
-            const searchQuery = searchInput.value.trim();
+        function hideToast() {
+            document.getElementById('toast').classList.remove('show');
+        }
+
+        function getUserName() {
+            try {
+                if (currentUser && currentUser.name) {
+                    return currentUser.name;
+                }
+                
+                const userProfiles = JSON.parse(localStorage.getItem('userProfiles')) || [];
+                if (currentUser && currentUser.email) {
+                    const userProfile = userProfiles.find(profile => profile.email === currentUser.email);
+                    if (userProfile && userProfile.name) {
+                        return userProfile.name;
+                    }
+                }
+                
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                if (currentUser && currentUser.email) {
+                    const registeredUser = registeredUsers.find(user => user.email === currentUser.email);
+                    if (registeredUser && registeredUser.name) {
+                        return registeredUser.name;
+                    }
+                }
+                
+                return 'User';
+                
+            } catch (error) {
+                console.error("Error getting user name:", error);
+                return 'User';
+            }
+        }
+
+        // ==================== PROGRESS CALCULATION FUNCTIONS ====================
+        function calculateProgressBasedOnTime(plant) {
+            const startDate = new Date(plant.startDate);
+            const harvestDate = new Date(plant.harvestDate);
+            const today = new Date();
             
-            if (searchQuery === '') {
-                showToast('Masukkan nama tanaman yang ingin dicari', 'warning');
+            startDate.setHours(0, 0, 0, 0);
+            harvestDate.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
+            
+            if (today < startDate) return 0;
+            if (today >= harvestDate) return 100;
+            
+            const totalDays = Math.ceil((harvestDate - startDate) / (1000 * 60 * 60 * 24));
+            const elapsedDays = Math.ceil((today - startDate) / (1000 * 60 * 60 * 24));
+            
+            let progress = Math.round((elapsedDays / totalDays) * 100);
+            progress = Math.min(100, Math.max(0, progress));
+            
+            return progress;
+        }
+
+        // ==================== INITIALIZATION ====================
+        async function initHistoryPage() {
+            currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                showToast('Silakan login terlebih dahulu', 'error');
+                setTimeout(() => window.location.href = 'index.html', 1500);
                 return;
             }
+
+            try {
+                await initDB();
+                plants = await getUserPlants();
+                plantHistory = await getPlantHistoryFromDB();
+                console.log("Plants loaded:", plants);
+                console.log("Plant history loaded:", plantHistory);
+                
+                updateUserInfo();
+                updateHistoryPage();
+                await updateNotifications();
+                setupEventListeners();
+                
+                console.log('History page initialized successfully');
+                
+            } catch (error) {
+                console.error("Error initializing history page:", error);
+                showToast('Gagal memuat halaman riwayat', 'error');
+            }
+        }
+
+        // ==================== UI FUNCTIONS ====================
+        function updateUserInfo() {
+            if (!currentUser) return;
             
-            currentSearchQuery = searchQuery;
-            updateFilterTotalCount();
-            renderHistory();
-            showToast(`Menampilkan hasil pencarian untuk: ${searchQuery}`, 'info');
+            const userName = getUserName();
+            const userEmail = currentUser.email || 'user@email.com';
+            
+            document.getElementById('userNameSidebar').textContent = userName;
+            document.getElementById('userEmailSidebar').textContent = userEmail;
+            document.getElementById('userAvatarSidebar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=2E7D32&color=fff`;
+            
+            document.getElementById('userNameHeader').textContent = userName;
+            document.getElementById('userAvatarHeader').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=2E7D32&color=fff`;
         }
 
-        // Clear search
-        function clearSearch() {
-            currentSearchQuery = '';
-            document.getElementById('searchFilterInput').value = '';
+        function updateHistoryPage() {
+            updateStats();
             updateFilterTotalCount();
             renderHistory();
-            showToast('Pencarian dihapus', 'info');
         }
 
-        // Render history based on filter and search
+        function updateStats() {
+            const totalPlants = plants.length;
+            const completedPlants = plants.filter(plant => plant.progress >= 100).length;
+            const activePlants = plants.filter(plant => plant.progress < 100 && plant.status !== 'failed').length;
+            const failedPlants = plants.filter(plant => plant.status === 'failed').length;
+            const successRate = totalPlants > 0 ? Math.round((completedPlants / totalPlants) * 100) : 0;
+
+            animateCounter('totalPlants', totalPlants);
+            animateCounter('completedPlants', completedPlants);
+            animateCounter('activePlants', activePlants);
+            animateCounter('successRate', successRate);
+        }
+
+        function updateFilterTotalCount() {
+            let filteredPlants = getFilteredPlants();
+            document.getElementById('filterTotalPlants').textContent = filteredPlants.length;
+        }
+
+        function getFilteredPlants() {
+            let filteredPlants = plants;
+
+            switch(currentFilter) {
+                case 'completed':
+                    filteredPlants = plants.filter(plant => plant.progress >= 100);
+                    break;
+                case 'active':
+                    filteredPlants = plants.filter(plant => plant.progress < 100 && plant.status !== 'failed');
+                    break;
+                case 'failed':
+                    filteredPlants = plants.filter(plant => plant.status === 'failed');
+                    break;
+                default:
+                    filteredPlants = plants;
+            }
+
+            if (currentSearchQuery.trim() !== '') {
+                const searchQuery = currentSearchQuery.toLowerCase().trim();
+                filteredPlants = filteredPlants.filter(plant => 
+                    plant.name.toLowerCase().includes(searchQuery) ||
+                    (plant.type && plant.type.toLowerCase().includes(searchQuery)) ||
+                    (plant.location && plant.location.toLowerCase().includes(searchQuery))
+                );
+            }
+
+            return filteredPlants;
+        }
+
         async function renderHistory() {
             const grid = document.getElementById('historyGrid');
             const filteredPlants = getFilteredPlants();
-
-            // Sort by creation date (newest first)
-            filteredPlants.sort((a, b) => new Date(b.createdAt || b.startDate) - new Date(a.createdAt || a.startDate));
 
             if (filteredPlants.length === 0) {
                 let emptyMessage = '';
@@ -3666,7 +3560,7 @@
                 return;
             }
 
-            // Load images for all plants first
+            // Load images for all plants
             const imagePromises = filteredPlants.map(async plant => {
                 let plantImageSrc = 'https://via.placeholder.com/300x200/4CAF50/FFFFFF?text=Tanaman';
                 if (plant.plantImage) {
@@ -3684,6 +3578,13 @@
 
             const imageResults = await Promise.all(imagePromises);
 
+            // Sort by creation date (newest first)
+            filteredPlants.sort((a, b) => {
+                const dateA = new Date(a.createdAt || a.startDate);
+                const dateB = new Date(b.createdAt || b.startDate);
+                return dateB - dateA;
+            });
+
             grid.innerHTML = filteredPlants.map((plant, index) => {
                 const isCompleted = plant.progress >= 100;
                 const isFailed = plant.status === 'failed';
@@ -3692,18 +3593,11 @@
                 let cardClass = '';
                 let statusText = '';
                 let statusClass = '';
-                let harvestDate = '';
-
+                
                 if (isCompleted) {
                     cardClass = 'completed';
                     statusText = 'Berhasil Panen';
                     statusClass = 'completed';
-                    // Calculate harvest date based on start date
-                    const startDate = new Date(plant.startDate);
-                    const harvest = new Date(startDate);
-                    const growthPeriod = plant.growthPeriod || 90; // Default 90 days
-                    harvest.setDate(startDate.getDate() + growthPeriod);
-                    harvestDate = formatDate(harvest);
                 } else if (isFailed) {
                     cardClass = 'failed';
                     statusText = 'Gagal';
@@ -3714,12 +3608,12 @@
                     statusClass = 'ongoing';
                 }
 
-                // Calculate days since planting
                 const startDate = new Date(plant.startDate);
                 const today = new Date();
                 const daysSince = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
-                const growthPeriod = plant.growthPeriod || 90;
-                const daysToHarvest = isActive ? Math.max(0, growthPeriod - daysSince) : 0;
+                const harvestDate = new Date(plant.harvestDate);
+                const daysToHarvest = Math.ceil((harvestDate - today) / (1000 * 60 * 60 * 24));
+                const harvestEstimate = isCompleted ? calculateHarvest(plant.quantity) : '-';
 
                 return `
                     <div class="history-card ${cardClass}">
@@ -3740,7 +3634,7 @@
                             ${isCompleted ? `
                             <div class="history-detail">
                                 <i class="fas fa-seedling"></i>
-                                <span>Panen: ${harvestDate}</span>
+                                <span>Panen: ${formatDate(plant.harvestDate)}</span>
                             </div>
                             ` : ''}
                             <div class="history-detail">
@@ -3783,13 +3677,13 @@
                             ${isActive ? `
                             <div class="status-item" style="margin-top: 8px;">
                                 <span class="status-label">Estimasi Panen:</span>
-                                <span class="status-value">${daysToHarvest} hari lagi</span>
+                                <span class="status-value">${daysToHarvest > 0 ? daysToHarvest + ' hari lagi' : 'Siap panen'}</span>
                             </div>
                             ` : ''}
                             ${isCompleted ? `
                             <div class="status-item" style="margin-top: 8px;">
                                 <span class="status-label">Hasil:</span>
-                                <span class="status-value">${calculateHarvest(plant.quantity || 1)} kg</span>
+                                <span class="status-value">${harvestEstimate} kg</span>
                             </div>
                             ` : ''}
                             ${plant.lastWatered ? `
@@ -3837,68 +3731,219 @@
             }).join('');
         }
 
-        // Format date to readable format - SAMA DENGAN plants.html
-        function formatDate(dateString) {
-            if (!dateString) return '-';
-            try {
-                const options = { day: 'numeric', month: 'short', year: 'numeric' };
-                return new Date(dateString).toLocaleDateString('id-ID', options);
-            } catch (error) {
-                return dateString;
+        // ==================== EVENT LISTENERS ====================
+        function setupEventListeners() {
+            // Hamburger menu toggle
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            
+            hamburgerBtn.addEventListener('click', toggleSidebar);
+            sidebarOverlay.addEventListener('click', closeSidebar);
+            
+            // Profile button click
+            const userProfileBtn = document.getElementById('userProfileBtn');
+            const userDropdown = document.getElementById('userDropdown');
+            
+            userProfileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle('show');
+                userProfileBtn.classList.toggle('active');
+                userDropdownOpen = !userDropdownOpen;
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (userDropdownOpen && !userProfileBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.remove('show');
+                    userProfileBtn.classList.remove('active');
+                    userDropdownOpen = false;
+                }
+            });
+            
+            // Modal close events
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.body.classList.remove('body-lock-scroll');
+                    document.documentElement.classList.remove('body-lock-scroll');
+                    this.closest('.modal').style.display = 'none';
+                });
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal')) {
+                    document.body.classList.remove('body-lock-scroll');
+                    document.documentElement.classList.remove('body-lock-scroll');
+                    e.target.style.display = 'none';
+                }
+            });
+            
+            // Close sidebar when clicking on menu item
+            document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                link.addEventListener('click', function() {
+                    closeSidebar();
+                });
+            });
+            
+            // Close sidebar with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && sidebarOpen) {
+                    closeSidebar();
+                }
+            });
+            
+            // Filter buttons
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterHistory(this.dataset.status);
+                });
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('searchFilterInput');
+            const searchBtn = document.getElementById('searchFilterBtn');
+            const clearSearchBtn = document.getElementById('clearSearchBtn');
+            
+            searchBtn.addEventListener('click', function() {
+                searchPlants();
+            });
+            
+            clearSearchBtn.addEventListener('click', function() {
+                clearSearch();
+            });
+            
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchPlants();
+                }
+            });
+            
+            // Focus styling for search input
+            searchInput.addEventListener('focus', function() {
+                this.style.borderColor = 'var(--primary-color)';
+                this.style.boxShadow = '0 0 0 4px rgba(46, 125, 50, 0.15)';
+                this.style.color = 'var(--text-color)';
+            });
+            
+            searchInput.addEventListener('blur', function() {
+                this.style.borderColor = 'var(--border-color)';
+                this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)';
+                if (!this.value) {
+                    this.style.color = 'var(--text-light)';
+                } else {
+                    this.style.color = 'var(--text-color)';
+                }
+            });
+
+            // Refresh notifications periodically
+            setInterval(updateNotifications, 30000);
+            
+            // Add smooth click effect to stat cards
+            document.querySelectorAll('.stat-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'translateY(-4px)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateY(-8px)';
+                    }, 100);
+                });
+            });
+            
+            // Responsive behavior check
+            checkResponsiveBehavior();
+            window.addEventListener('resize', checkResponsiveBehavior);
+        }
+
+        function checkResponsiveBehavior() {
+            const isDesktop = window.innerWidth >= 993;
+            const mainContent = document.getElementById('mainContent');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            
+            if (isDesktop && sidebarOpen) {
+                mainContent.classList.add('sidebar-open');
+                sidebarOverlay.classList.remove('active');
+            } else if (!isDesktop && sidebarOpen) {
+                mainContent.classList.add('sidebar-open');
+                sidebarOverlay.classList.add('active');
             }
         }
 
-        // Get schedule text (konsisten dengan plants.html)
-        function getScheduleText(schedule) {
-            if (!schedule) return 'Belum diatur';
-            
-            if (typeof schedule === 'string' && schedule.startsWith('custom-')) {
-                const days = schedule.split('-')[1];
-                return `${days} Hari Sekali`;
-            }
-            
-            const scheduleNum = parseInt(schedule);
-            switch(scheduleNum) {
-                case 1: return 'Setiap Hari';
-                case 2: return '2 Hari Sekali';
-                case 3: return '3 Hari Sekali';
-                case 7: return 'Mingguan';
-                case 14: return '2 Minggu Sekali';
-                case 30: return 'Bulanan';
-                default: return `${schedule} Hari Sekali`;
+        function toggleSidebar() {
+            if (sidebarOpen) {
+                closeSidebar();
+            } else {
+                openSidebar();
             }
         }
 
-        // Calculate harvest amount based on plant quantity
-        function calculateHarvest(quantity) {
-            // Simple calculation: 0.5kg per plant for demonstration
-            return ((quantity || 1) * 0.5).toFixed(1);
+        function openSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const mainContent = document.getElementById('mainContent');
+            
+            sidebar.classList.add('open');
+            hamburgerBtn.classList.add('active');
+            mainContent.classList.add('sidebar-open');
+            sidebarOpen = true;
+            
+            const isDesktop = window.innerWidth >= 993;
+            if (!isDesktop) {
+                sidebarOverlay.classList.add('active');
+            } else {
+                sidebarOverlay.classList.remove('active');
+            }
         }
 
-        // Action functions
-        function continuePlanting(plantId) {
-            // Smooth navigation with animation effect
-            const button = event.currentTarget;
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const mainContent = document.getElementById('mainContent');
             
-            // Add smooth click animation
-            button.style.transform = 'translateY(-1px)';
-            button.style.boxShadow = '0 4px 10px rgba(46, 125, 50, 0.2)';
-            
-            // Reset after animation
-            setTimeout(() => {
-                button.style.transform = '';
-                button.style.boxShadow = '';
-                
-                // Navigate after slight delay
-                setTimeout(() => {
-                    window.location.href = `plants.html?plant=${plantId}`;
-                }, 100);
-            }, 150);
+            sidebar.classList.remove('open');
+            hamburgerBtn.classList.remove('active');
+            mainContent.classList.remove('sidebar-open');
+            sidebarOverlay.classList.remove('active');
+            sidebarOpen = false;
         }
 
-        // View details function
+        // ==================== HISTORY FUNCTIONS ====================
+        function filterHistory(status) {
+            currentFilter = status;
+            
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            updateFilterTotalCount();
+            renderHistory();
+        }
+
+        function searchPlants() {
+            const searchInput = document.getElementById('searchFilterInput');
+            const searchQuery = searchInput.value.trim();
+            
+            if (searchQuery === '') {
+                showToast('Masukkan nama tanaman yang ingin dicari', 'warning');
+                return;
+            }
+            
+            currentSearchQuery = searchQuery;
+            updateFilterTotalCount();
+            renderHistory();
+            showToast(`Menampilkan hasil pencarian untuk: ${searchQuery}`, 'info');
+        }
+
+        function clearSearch() {
+            currentSearchQuery = '';
+            document.getElementById('searchFilterInput').value = '';
+            updateFilterTotalCount();
+            renderHistory();
+            showToast('Pencarian dihapus', 'info');
+        }
+
         async function viewDetails(plantId) {
-            // LOCK SCROLL
             document.body.classList.add('body-lock-scroll');
             document.documentElement.classList.add('body-lock-scroll');
             
@@ -3916,12 +3961,9 @@
             const startDate = new Date(plant.startDate);
             const today = new Date();
             const daysSince = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
-            const growthPeriod = plant.growthPeriod || 90;
-            const daysToHarvest = isActive ? Math.max(0, growthPeriod - daysSince) : 0;
-            
-            // Calculate harvest date
-            const harvestDate = new Date(startDate);
-            harvestDate.setDate(startDate.getDate() + growthPeriod);
+            const harvestDate = new Date(plant.harvestDate);
+            const daysToHarvest = Math.ceil((harvestDate - today) / (1000 * 60 * 60 * 24));
+            const harvestEstimate = isCompleted ? calculateHarvest(plant.quantity) : '-';
             
             // Set modal content
             document.getElementById('modalPlantName').textContent = plant.name;
@@ -3951,25 +3993,25 @@
             document.getElementById('modalQuantity').textContent = `${plant.quantity || 1} tanaman`;
             document.getElementById('modalWaterSchedule').textContent = getScheduleText(plant.waterSchedule);
             document.getElementById('modalFertilizerSchedule').textContent = plant.fertilizerSchedule ? getScheduleText(plant.fertilizerSchedule) : 'Tidak ada';
-            document.getElementById('modalHarvestDate').textContent = isCompleted || isActive ? formatDate(harvestDate) : '-';
+            document.getElementById('modalHarvestDate').textContent = isCompleted || isActive ? formatDate(plant.harvestDate) : '-';
             
             // Progress section
             document.getElementById('modalProgressPercentage').textContent = `${plant.progress || 0}%`;
             document.getElementById('modalProgressBar').style.width = `${plant.progress || 0}%`;
             document.getElementById('modalStartDateLabel').textContent = formatDate(plant.startDate);
-            document.getElementById('modalHarvestDateLabel').textContent = isCompleted || isActive ? formatDate(harvestDate) : '-';
+            document.getElementById('modalHarvestDateLabel').textContent = isCompleted || isActive ? formatDate(plant.harvestDate) : '-';
             
             // Stats section
             document.getElementById('modalDaysSince').textContent = daysSince;
-            document.getElementById('modalDaysToHarvest').textContent = daysToHarvest;
-            document.getElementById('modalHarvestEstimate').textContent = isCompleted ? `${calculateHarvest(plant.quantity || 1)} kg` : '-';
+            document.getElementById('modalDaysToHarvest').textContent = daysToHarvest > 0 ? daysToHarvest : 'Siap panen';
+            document.getElementById('modalHarvestEstimate').textContent = harvestEstimate;
             document.getElementById('modalSuccessRate').textContent = isCompleted ? '100%' : (isFailed ? '0%' : `${plant.progress || 0}%`);
             
             // Last activity
             document.getElementById('modalLastWatered').textContent = plant.lastWatered ? formatDate(plant.lastWatered) : 'Belum pernah';
             document.getElementById('modalLastFertilized').textContent = plant.lastFertilized ? formatDate(plant.lastFertilized) : 'Belum pernah';
             
-            // Load images from IndexedDB - FIXED VERSION
+            // Load images from IndexedDB
             await loadPlantImages(plant);
             
             // Set action button based on plant status
@@ -3977,7 +4019,6 @@
             if (isActive) {
                 actionButton.innerHTML = '<i class="fas fa-eye"></i> Pantau Tanaman';
                 actionButton.onclick = function() { 
-                    // UNLOCK SCROLL sebelum navigasi
                     document.body.classList.remove('body-lock-scroll');
                     document.documentElement.classList.remove('body-lock-scroll');
                     document.getElementById('plantDetailModal').style.display = 'none';
@@ -4002,7 +4043,6 @@
 
             // Set close button
             document.getElementById('modalCloseButton').onclick = function() {
-                // UNLOCK SCROLL
                 document.body.classList.remove('body-lock-scroll');
                 document.documentElement.classList.remove('body-lock-scroll');
                 document.getElementById('plantDetailModal').style.display = 'none';
@@ -4012,15 +4052,9 @@
             document.getElementById('plantDetailModal').style.display = 'block';
         }
 
-        // Load plant images from IndexedDB - FIXED VERSION
         async function loadPlantImages(plant) {
             console.log('Loading images for plant:', plant.name);
-            console.log('Plant image IDs:', {
-                plantImage: plant.plantImage,
-                wateringProofId: plant.wateringProofId,
-                fertilizingProofId: plant.fertilizingProofId
-            });
-
+            
             // Main plant image
             const plantImageContainer = document.getElementById('modalPlantImage');
             if (plant.plantImage) {
@@ -4028,7 +4062,6 @@
                     const plantImageData = await getImageFromIndexedDB(plant.plantImage);
                     if (plantImageData) {
                         plantImageContainer.innerHTML = `<img src="${plantImageData}" alt="${plant.name}">`;
-                        console.log('Main plant image loaded successfully');
                     } else {
                         plantImageContainer.innerHTML = `
                             <div class="plant-image-placeholder">
@@ -4036,7 +4069,6 @@
                                 <span>Foto tidak tersedia</span>
                             </div>
                         `;
-                        console.log('Main plant image not found in IndexedDB');
                     }
                 } catch (error) {
                     console.error('Error loading plant image:', error);
@@ -4063,7 +4095,6 @@
                     const plantImageData = await getImageFromIndexedDB(plant.plantImage);
                     if (plantImageData) {
                         plantPhotoContainer.innerHTML = `<img src="${plantImageData}" alt="Foto Tanaman ${plant.name}">`;
-                        console.log('Plant photo loaded successfully');
                     } else {
                         plantPhotoContainer.innerHTML = `
                             <div class="history-image-placeholder">
@@ -4097,7 +4128,6 @@
                     const wateringImageData = await getImageFromIndexedDB(plant.wateringProofId);
                     if (wateringImageData) {
                         wateringProofContainer.innerHTML = `<img src="${wateringImageData}" alt="Bukti Penyiraman ${plant.name}">`;
-                        console.log('Watering proof loaded successfully');
                     } else {
                         wateringProofContainer.innerHTML = `
                             <div class="history-image-placeholder">
@@ -4131,7 +4161,6 @@
                     const fertilizingImageData = await getImageFromIndexedDB(plant.fertilizingProofId);
                     if (fertilizingImageData) {
                         fertilizingProofContainer.innerHTML = `<img src="${fertilizingImageData}" alt="Bukti Pemupukan ${plant.name}">`;
-                        console.log('Fertilizing proof loaded successfully');
                     } else {
                         fertilizingProofContainer.innerHTML = `
                             <div class="history-image-placeholder">
@@ -4159,38 +4188,52 @@
             }
         }
 
-        function plantAgain(plantId) {
+        async function plantAgain(plantId) {
             const plant = plants.find(p => p.id === plantId);
             if (plant && confirm(`Tanam kembali ${plant.name}?`)) {
-                // Create a copy of the plant with new ID and reset progress
                 const newPlant = {
                     ...plant,
-                    id: Date.now().toString(),
+                    id: `plant_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
                     progress: 0,
                     lastWatered: null,
                     lastFertilized: null,
                     startDate: new Intl.DateTimeFormat('en-CA').format(new Date()),
-                    // Calculate new harvest date based on growth period
-                    harvestDate: new Date(Date.now() + (plant.growthPeriod || 90) * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                    // Calculate new harvest date (default 60 days from now)
+                    harvestDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
                     nextWatering: new Intl.DateTimeFormat('en-CA').format(new Date()),
                     nextFertilizing: new Intl.DateTimeFormat('en-CA').format(new Date()),
                     createdAt: new Date().toISOString(),
-                    userId: currentUser.id
+                    userId: currentUser.id,
+                    status: 'active',
+                    wateringProofId: null,
+                    fertilizingProofId: null
                 };
                 
-                // Save to localStorage
-                const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
-                allPlants.push(newPlant);
-                localStorage.setItem('plants', JSON.stringify(allPlants));
-                
-                // Reload plants and update display
-                loadUserPlants();
-                updateHistoryPage();
-                showToast(`Tanaman ${plant.name} berhasil ditanam kembali!`, 'success');
-                // UNLOCK SCROLL
-                document.body.classList.remove('body-lock-scroll');
-                document.documentElement.classList.remove('body-lock-scroll');
-                document.getElementById('plantDetailModal').style.display = 'none';
+                try {
+                    // Import the savePlantToDB function from plants.html
+                    await savePlantToDB(newPlant);
+                    
+                    // Reload plants from DB
+                    plants = await getUserPlants();
+                    
+                    // Update display
+                    updateHistoryPage();
+                    
+                    showToast(`Tanaman ${plant.name} berhasil ditanam kembali!`, 'success');
+                    
+                    document.body.classList.remove('body-lock-scroll');
+                    document.documentElement.classList.remove('body-lock-scroll');
+                    document.getElementById('plantDetailModal').style.display = 'none';
+                    
+                    // Navigate to plants page after a short delay
+                    setTimeout(() => {
+                        window.location.href = 'plants.html';
+                    }, 1500);
+                    
+                } catch (error) {
+                    console.error('Error planting again:', error);
+                    showToast('Gagal menanam kembali tanaman', 'error');
+                }
             }
         }
 
@@ -4202,15 +4245,13 @@
         }
 
         function tryAgain(plantId) {
-            plantAgain(plantId); // Reuse the plantAgain function
+            plantAgain(plantId);
         }
 
         function clearAllFilters() {
-            // Clear search
             currentSearchQuery = '';
             document.getElementById('searchFilterInput').value = '';
             
-            // Clear category filter
             currentFilter = 'all';
             document.querySelectorAll('.category-filter').forEach(btn => {
                 btn.classList.remove('active');
@@ -4222,44 +4263,27 @@
             showToast('Semua filter dihapus', 'info');
         }
 
-        // Show toast notification
-        function showToast(message, type = 'info') {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            const toastIcon = toast.querySelector('i');
+        function continuePlanting(plantId) {
+            const button = event.currentTarget;
             
-            // Set message and icon
-            toastMessage.textContent = message;
+            button.style.transform = 'translateY(-1px)';
+            button.style.boxShadow = '0 4px 10px rgba(46, 125, 50, 0.2)';
             
-            // Set icon based on type
-            toastIcon.className = 'fas ' + (
-                type === 'success' ? 'fa-check-circle' :
-                type === 'error' ? 'fa-exclamation-circle' :
-                type === 'warning' ? 'fa-exclamation-triangle' :
-                'fa-info-circle'
-            );
-            
-            // Set toast class
-            toast.className = 'toast ' + type;
-            
-            // Show toast
-            toast.classList.add('show');
-            
-            // Auto hide after 5 seconds
             setTimeout(() => {
-                hideToast();
-            }, 5000);
+                button.style.transform = '';
+                button.style.boxShadow = '';
+                
+                setTimeout(() => {
+                    window.location.href = `plants.html?plant=${plantId}`;
+                }, 100);
+            }, 150);
         }
 
-        // Hide toast notification
-        function hideToast() {
-            document.getElementById('toast').classList.remove('show');
-        }
-
-        // Logout function
         function logout() {
             if (confirm('Apakah Anda yakin ingin keluar?')) {
                 localStorage.removeItem('currentUser');
+                localStorage.removeItem('userGeolocationDetail');
+                localStorage.removeItem('weatherCache');
                 showToast('Berhasil keluar', 'success');
                 setTimeout(() => {
                     window.location.href = 'index.html';
@@ -4267,7 +4291,70 @@
             }
         }
 
-        // Initialize when DOM is loaded
+        // ==================== DATABASE FUNCTIONS FROM PLANTS.HTML ====================
+        // These functions need to be available for the history page
+        
+        async function savePlantToDB(plant) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject("Database belum diinisialisasi");
+                    return;
+                }
+                
+                const transaction = db.transaction("plants", "readwrite");
+                const store = transaction.objectStore("plants");
+                const request = store.put(plant);
+                
+                request.onsuccess = function() {
+                    console.log("Plant saved to DB:", plant);
+                    resolve(request.result);
+                };
+                
+                request.onerror = function() {
+                    reject("Gagal menyimpan tanaman ke database");
+                };
+            });
+        }
+
+        async function saveImageToIndexedDB(file) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject("Database belum diinisialisasi");
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const data = event.target.result;
+                    const transaction = db.transaction("images", "readwrite");
+                    const store = transaction.objectStore("images");
+                    const request = store.add({ 
+                        imageData: data, 
+                        createdAt: new Date().toISOString(),
+                        fileName: file.name,
+                        fileType: file.type,
+                        size: file.size
+                    });
+
+                    request.onsuccess = function() {
+                        console.log("Image saved with ID:", request.result);
+                        resolve(request.result);
+                    };
+                    
+                    request.onerror = function() {
+                        reject("Gagal menyimpan gambar ke database");
+                    };
+                };
+                
+                reader.onerror = function() {
+                    reject("Gagal membaca file");
+                };
+                
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // ==================== INITIALIZE ====================
         document.addEventListener('DOMContentLoaded', initHistoryPage);
     </script>
 </body>
