@@ -2452,6 +2452,7 @@
         let notificationSound = null;
         let whatsappSchedulerInterval = null;
         let lastWhatsAppCheck = null;
+        let db = null; // Tambahkan untuk IndexedDB
 
         // Sound URLs - SETIAP SUARA BERBEDA!
         const SOUND_URLS = {
@@ -2475,31 +2476,202 @@
             notification: 'Notification'
         };
 
+        // ==================== INDEXEDDB FUNCTIONS ====================
+
+        // Initialize IndexedDB
+        async function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open("SmartTaniDB", 5);
+                
+                request.onupgradeneeded = function(event) {
+                    db = event.target.result;
+                    
+                    // Notifications store
+                    if (!db.objectStoreNames.contains("notifications")) {
+                        const notificationStore = db.createObjectStore("notifications", { keyPath: "id" });
+                        notificationStore.createIndex("userId", "userId", { unique: false });
+                        notificationStore.createIndex("read", "read", { unique: false });
+                        notificationStore.createIndex("type", "type", { unique: false });
+                        notificationStore.createIndex("date", "date", { unique: false });
+                        notificationStore.createIndex("plantId", "plantId", { unique: false });
+                    }
+                    
+                    // Plants store
+                    if (!db.objectStoreNames.contains("plants")) {
+                        const plantStore = db.createObjectStore("plants", { keyPath: "id" });
+                        plantStore.createIndex("userId", "userId", { unique: false });
+                        plantStore.createIndex("nextWatering", "nextWatering", { unique: false });
+                        plantStore.createIndex("nextFertilizing", "nextFertilizing", { unique: false });
+                        plantStore.createIndex("progress", "progress", { unique: false });
+                    }
+                    
+                    // Users store
+                    if (!db.objectStoreNames.contains("users")) {
+                        const userStore = db.createObjectStore("users", { keyPath: "id" });
+                        userStore.createIndex("email", "email", { unique: true });
+                    }
+                    
+                    // Images store
+                    if (!db.objectStoreNames.contains("images")) {
+                        db.createObjectStore("images", { keyPath: "id", autoIncrement: true });
+                    }
+                    
+                    // Plant History store
+                    if (!db.objectStoreNames.contains("plantHistory")) {
+                        const historyStore = db.createObjectStore("plantHistory", { keyPath: "id" });
+                        historyStore.createIndex("plantId", "plantId", { unique: false });
+                        historyStore.createIndex("userId", "userId", { unique: false });
+                        historyStore.createIndex("date", "date", { unique: false });
+                        historyStore.createIndex("type", "type", { unique: false });
+                    }
+                };
+                
+                request.onsuccess = function(event) {
+                    db = event.target.result;
+                    console.log("✅ IndexedDB initialized successfully in profile");
+                    resolve(db);
+                };
+                
+                request.onerror = function(event) {
+                    reject("Database error: " + event.target.errorCode);
+                };
+            });
+        }
+
+        // Get user plants from IndexedDB
+        async function getUserPlantsFromDB() {
+            return new Promise((resolve, reject) => {
+                if (!db || !currentUser) {
+                    resolve([]);
+                    return;
+                }
+                
+                const transaction = db.transaction("plants", "readonly");
+                const store = transaction.objectStore("plants");
+                const index = store.index("userId");
+                const request = index.getAll(currentUser.id);
+                
+                request.onsuccess = function() {
+                    const plants = request.result || [];
+                    // Sort by date created (newest first)
+                    plants.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                    resolve(plants);
+                };
+                
+                request.onerror = function() {
+                    reject("Gagal mengambil tanaman");
+                };
+            });
+        }
+
+        // Get user from IndexedDB
+        async function getUserFromDB(userId) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    resolve(null);
+                    return;
+                }
+                
+                const transaction = db.transaction("users", "readonly");
+                const store = transaction.objectStore("users");
+                const request = store.get(userId);
+                
+                request.onsuccess = function() {
+                    resolve(request.result);
+                };
+                
+                request.onerror = function() {
+                    reject("Gagal mengambil data pengguna");
+                };
+            });
+        }
+
+        // Update user in IndexedDB
+        async function updateUserInDB(userData) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject("Database belum diinisialisasi");
+                    return;
+                }
+                
+                const transaction = db.transaction("users", "readwrite");
+                const store = transaction.objectStore("users");
+                const request = store.put(userData);
+                
+                request.onsuccess = function() {
+                    resolve(true);
+                };
+                
+                request.onerror = function() {
+                    reject("Gagal memperbarui data pengguna");
+                };
+            });
+        }
+
+        // Get user stats from IndexedDB
+        async function getUserStats() {
+            try {
+                const plants = await getUserPlantsFromDB();
+                
+                const totalPlants = plants.length;
+                const activePlants = plants.filter(plant => plant.progress < 100 && plant.status !== 'failed').length;
+                const completedPlants = plants.filter(plant => plant.progress >= 100).length;
+                const failedPlants = plants.filter(plant => plant.status === 'failed').length;
+                
+                return {
+                    totalPlants,
+                    activePlants,
+                    completedPlants,
+                    failedPlants
+                };
+            } catch (error) {
+                console.error("Error getting user stats:", error);
+                return {
+                    totalPlants: 0,
+                    activePlants: 0,
+                    completedPlants: 0,
+                    failedPlants: 0
+                };
+            }
+        }
+
         // Initialize when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             // Pastikan semua modal tersembunyi saat halaman dimuat
             document.querySelectorAll('.modal').forEach(modal => {
                 modal.style.display = 'none';
             });
             
-            loadCurrentUser();
-            loadUserPlants();
-            loadNotificationSettings();
-            setupEventListeners();
-            updateNotifications();
-            loadWhatsAppLogs();
-            
-            // Pastikan tab informasi pribadi yang aktif pertama kali
-            setActiveTab('info');
-            
-            // Initialize notification sound
-            initNotificationSound();
-            
-            // Start WhatsApp scheduler
-            initWhatsAppScheduler();
-            
-            // Check WhatsApp status
-            updateWhatsAppStatus();
+            try {
+                // Initialize database
+                await initDB();
+                
+                // Load user data
+                await loadCurrentUser();
+                await loadUserPlants();
+                loadNotificationSettings();
+                setupEventListeners();
+                updateNotifications();
+                loadWhatsAppLogs();
+                
+                // Pastikan tab informasi pribadi yang aktif pertama kali
+                setActiveTab('info');
+                
+                // Initialize notification sound
+                initNotificationSound();
+                
+                // Start WhatsApp scheduler
+                initWhatsAppScheduler();
+                
+                // Check WhatsApp status
+                updateWhatsAppStatus();
+                
+                console.log('✅ Profile page initialized successfully');
+                
+            } catch (error) {
+                console.error("Error initializing profile page:", error);
+                showToast('Gagal memuat halaman profil', 'error');
+            }
         });
 
         // Initialize notification sound
@@ -2638,7 +2810,7 @@
         }
 
         // Load current user data
-        function loadCurrentUser() {
+        async function loadCurrentUser() {
             const savedUser = localStorage.getItem('currentUser');
             if (!savedUser) {
                 showToast('Silakan login terlebih dahulu', 'error');
@@ -2650,13 +2822,18 @@
 
             currentUser = JSON.parse(savedUser);
             
-            // Load additional user data from registered users
-            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-            let userData = registeredUsers.find(u => u.id === currentUser.id);
+            // Try to get user from IndexedDB first
+            let userData = await getUserFromDB(currentUser.id);
             
-            // Jika tidak ditemukan di registeredUsers, coba cari dengan email
+            // If not found in IndexedDB, try localStorage
             if (!userData) {
-                userData = registeredUsers.find(u => u.email === currentUser.email);
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                userData = registeredUsers.find(u => u.id === currentUser.id);
+                
+                // Jika tidak ditemukan di registeredUsers, coba cari dengan email
+                if (!userData) {
+                    userData = registeredUsers.find(u => u.email === currentUser.email);
+                }
             }
             
             // Jika masih tidak ditemukan, gunakan currentUser sebagai fallback
@@ -2714,15 +2891,11 @@
         }
 
         // Load user plants data
-        function loadUserPlants() {
-            const savedPlants = JSON.parse(localStorage.getItem('plants')) || [];
-            if (currentUser) {
-                userPlants = savedPlants.filter(plant => 
-                    plant.userId === currentUser.id || 
-                    plant.userEmail === currentUser.email ||
-                    !plant.userId
-                );
-            } else {
+        async function loadUserPlants() {
+            try {
+                userPlants = await getUserPlantsFromDB();
+            } catch (error) {
+                console.error("Error loading user plants:", error);
                 userPlants = [];
             }
             
@@ -2730,28 +2903,70 @@
         }
 
         // Update plant statistics
-        function updatePlantStatistics() {
-            const totalPlants = userPlants.length;
-            const activePlants = userPlants.filter(plant => plant.progress < 100 && plant.status !== 'failed').length;
-            const completedPlants = userPlants.filter(plant => plant.progress >= 100).length;
-            const failedPlants = userPlants.filter(plant => plant.status === 'failed').length;
+        async function updatePlantStatistics() {
+            try {
+                const stats = await getUserStats();
+                
+                // Update sidebar stats
+                document.getElementById('totalPlants').textContent = stats.totalPlants;
+                document.getElementById('totalHarvests').textContent = stats.completedPlants;
 
-            // Update sidebar stats
-            document.getElementById('totalPlants').textContent = totalPlants;
-            document.getElementById('totalHarvests').textContent = completedPlants;
+                // Update statistics section
+                document.getElementById('statsTotalPlants').textContent = stats.totalPlants;
+                document.getElementById('statsActivePlants').textContent = stats.activePlants;
+                document.getElementById('statsSuccessHarvest').textContent = stats.completedPlants;
+                document.getElementById('statsFailedHarvest').textContent = stats.failedPlants;
+                
+            } catch (error) {
+                console.error("Error updating plant statistics:", error);
+                
+                // Set default values if error
+                document.getElementById('totalPlants').textContent = '0';
+                document.getElementById('totalHarvests').textContent = '0';
+                document.getElementById('statsTotalPlants').textContent = '0';
+                document.getElementById('statsActivePlants').textContent = '0';
+                document.getElementById('statsSuccessHarvest').textContent = '0';
+                document.getElementById('statsFailedHarvest').textContent = '0';
+            }
+        }
 
-            // Update statistics section
-            document.getElementById('statsTotalPlants').textContent = totalPlants;
-            document.getElementById('statsActivePlants').textContent = activePlants;
-            document.getElementById('statsSuccessHarvest').textContent = completedPlants;
-            document.getElementById('statsFailedHarvest').textContent = failedPlants;
+        // Get user notifications from IndexedDB
+        async function getUserNotifications() {
+            return new Promise((resolve, reject) => {
+                if (!db || !currentUser) {
+                    resolve([]);
+                    return;
+                }
+                
+                const transaction = db.transaction("notifications", "readonly");
+                const store = transaction.objectStore("notifications");
+                const request = store.getAll();
+                
+                request.onsuccess = function() {
+                    const allNotifications = request.result || [];
+                    const userNotifications = allNotifications.filter(notif => 
+                        notif.userId === currentUser.id
+                    );
+                    
+                    // Urutkan berdasarkan timestamp terbaru
+                    userNotifications.sort((a, b) => 
+                        new Date(b.timestamp) - new Date(a.timestamp)
+                    );
+                    
+                    resolve(userNotifications);
+                };
+                
+                request.onerror = function() {
+                    reject("Gagal mengambil notifikasi");
+                };
+            });
         }
 
         // Update notifications
-        function updateNotifications() {
+        async function updateNotifications() {
             try {
-                const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
-                const userNotifications = notifications.filter(notif => notif.userId === currentUser.id && !notif.read);
+                const notifications = await getUserNotifications();
+                const userNotifications = notifications.filter(notif => !notif.read);
                 
                 // Update notification badge di header
                 const notificationBadge = document.getElementById('notificationBadge');
@@ -2873,7 +3088,14 @@
             setupWhatsAppSettings();
             
             // Refresh notifications periodically
-            setInterval(updateNotifications, 30000);
+            setInterval(async () => {
+                await updateNotifications();
+            }, 30000);
+            
+            // Refresh plant stats periodically
+            setInterval(async () => {
+                await updatePlantStatistics();
+            }, 60000);
             
             // Responsive behavior check
             checkResponsiveBehavior();
@@ -2891,7 +3113,7 @@
         function setupProfileTabs() {
             const profileMenuItems = document.querySelectorAll('.profile-menu-item');
             profileMenuItems.forEach(item => {
-                item.addEventListener('click', function(e) {
+                item.addEventListener('click', async function(e) {
                     e.preventDefault();
                     
                     const tabId = this.dataset.tab;
@@ -2900,6 +3122,11 @@
                     // Load logs when notifications tab is opened
                     if (tabId === 'notifications') {
                         loadWhatsAppLogs();
+                    }
+                    
+                    // Refresh stats when info tab is opened
+                    if (tabId === 'info') {
+                        await updatePlantStatistics();
                     }
                 });
             });
@@ -3184,59 +3411,72 @@
             lastWhatsAppCheck = now;
         }
 
-        function sendScheduledWhatsAppNotification() {
+        async function sendScheduledWhatsAppNotification() {
             const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
             const phoneNumber = settings.whatsappNumber;
             
             if (!phoneNumber) return;
             
-            const message = createDailyNotificationMessage();
+            const message = await createDailyNotificationMessage();
             sendWhatsAppMessage(phoneNumber, message);
         }
 
-        function createDailyNotificationMessage() {
+        async function createDailyNotificationMessage() {
             const now = new Date();
-            const plants = JSON.parse(localStorage.getItem('plants')) || [];
-            const userPlants = plants.filter(p => p.userId === currentUser?.id);
             
-            // Filter tanaman yang butuh perhatian hari ini
-            const plantsNeedingWater = userPlants.filter(plant => {
-                if (!plant.lastWatered) return false;
-                const lastWatered = new Date(plant.lastWatered);
-                const daysSinceWater = Math.floor((now - lastWatered) / (1000 * 60 * 60 * 24));
-                return daysSinceWater >= (plant.waterSchedule || 3);
-            });
-            
-            const plantsReadyForHarvest = userPlants.filter(plant => {
-                return plant.harvestDate && new Date(plant.harvestDate) <= now;
-            });
-            
-            // Build message
-            let message = `🌱 *SmartTani - Daily Report* 🌱\n`;
-            message += `\n📅 ${now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}\n`;
-            message += `⏰ ${now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}\n`;
-            
-            if (plantsNeedingWater.length > 0) {
-                message += `\n💧 *Tanaman Perlu Disiram:*\n`;
-                plantsNeedingWater.forEach(plant => {
-                    message += `• ${plant.name} (${plant.type})\n`;
+            try {
+                const plants = await getUserPlantsFromDB();
+                
+                // Filter tanaman yang butuh perhatian hari ini
+                const plantsNeedingWater = plants.filter(plant => {
+                    if (!plant.lastWatered) return false;
+                    const lastWatered = new Date(plant.lastWatered);
+                    const daysSinceWater = Math.floor((now - lastWatered) / (1000 * 60 * 60 * 24));
+                    return daysSinceWater >= (plant.waterSchedule || 3);
                 });
-            }
-            
-            if (plantsReadyForHarvest.length > 0) {
-                message += `\n🎉 *Tanaman Siap Panen:*\n`;
-                plantsReadyForHarvest.forEach(plant => {
-                    message += `• ${plant.name} (${plant.type})\n`;
+                
+                const plantsReadyForHarvest = plants.filter(plant => {
+                    return plant.harvestDate && new Date(plant.harvestDate) <= now;
                 });
+                
+                // Build message
+                let message = `🌱 *SmartTani - Daily Report* 🌱\n`;
+                message += `\n📅 ${now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}\n`;
+                message += `⏰ ${now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}\n`;
+                
+                if (plantsNeedingWater.length > 0) {
+                    message += `\n💧 *Tanaman Perlu Disiram:*\n`;
+                    plantsNeedingWater.forEach(plant => {
+                        message += `• ${plant.name} (${plant.type})\n`;
+                    });
+                }
+                
+                if (plantsReadyForHarvest.length > 0) {
+                    message += `\n🎉 *Tanaman Siap Panen:*\n`;
+                    plantsReadyForHarvest.forEach(plant => {
+                        message += `• ${plant.name} (${plant.type})\n`;
+                    });
+                }
+                
+                if (plantsNeedingWater.length === 0 && plantsReadyForHarvest.length === 0) {
+                    message += `\n✅ Semua tanaman dalam kondisi baik!\n`;
+                }
+                
+                message += `\n_SmartTani - Sistem Pertanian Pintar_`;
+                
+                return encodeURIComponent(message);
+            } catch (error) {
+                console.error("Error creating daily notification message:", error);
+                
+                // Fallback message
+                let message = `🌱 *SmartTani - Daily Report* 🌱\n`;
+                message += `\n📅 ${now.toLocaleDateString('id-ID')}\n`;
+                message += `⏰ ${now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}\n`;
+                message += `\n✅ Sistem sedang berjalan dengan baik!\n`;
+                message += `\n_SmartTani - Sistem Pertanian Pintar_`;
+                
+                return encodeURIComponent(message);
             }
-            
-            if (plantsNeedingWater.length === 0 && plantsReadyForHarvest.length === 0) {
-                message += `\n✅ Semua tanaman dalam kondisi baik!\n`;
-            }
-            
-            message += `\n_SmartTani - Sistem Pertanian Pintar_`;
-            
-            return encodeURIComponent(message);
         }
 
         function sendWhatsAppMessage(phoneNumber, message) {
@@ -3540,61 +3780,67 @@
             // Edit Profile Form
             const editProfileForm = document.getElementById('editProfileForm');
             if (editProfileForm) {
-                editProfileForm.addEventListener('submit', function(e) {
+                editProfileForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     
                     if (!currentUser) return;
                     
                     const updatedData = {
+                        ...currentUser,
                         name: document.getElementById('editName').value,
                         email: document.getElementById('editEmail').value,
                         phone: document.getElementById('editPhone').value,
-                        address: document.getElementById('editAddress').value
+                        address: document.getElementById('editAddress').value,
+                        updatedAt: new Date().toISOString()
                     };
                     
-                    // Update in registered users
-                    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-                    let userIndex = registeredUsers.findIndex(u => u.id === currentUser.id);
-                    
-                    // Jika tidak ditemukan dengan ID, cari dengan email
-                    if (userIndex === -1) {
-                        userIndex = registeredUsers.findIndex(u => u.email === currentUser.email);
-                    }
-                    
-                    if (userIndex !== -1) {
-                        registeredUsers[userIndex] = { ...registeredUsers[userIndex], ...updatedData };
-                        localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-                    }
-                    
-                    // Update current user
-                    currentUser = { ...currentUser, ...updatedData };
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                    
-                    // Update display
-                    updateUserProfile(currentUser);
-                    
-                    // Update WhatsApp number if phone changed
-                    const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
-                    if (settings.whatsapp && updatedData.phone) {
-                        const formattedNumber = formatPhoneForWhatsApp(updatedData.phone);
-                        if (formattedNumber) {
-                            localStorage.setItem('whatsappNumber', formattedNumber);
-                            settings.whatsappNumber = formattedNumber;
-                            localStorage.setItem('notificationSettings', JSON.stringify(settings));
-                            document.getElementById('whatsappNumberValue').textContent = formattedNumber;
-                            updateWhatsAppStatus();
+                    try {
+                        // Update in IndexedDB
+                        await updateUserInDB(updatedData);
+                        
+                        // Update in localStorage (for backward compatibility)
+                        const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                        let userIndex = registeredUsers.findIndex(u => u.id === currentUser.id);
+                        
+                        if (userIndex !== -1) {
+                            registeredUsers[userIndex] = { ...registeredUsers[userIndex], ...updatedData };
+                            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
                         }
+                        
+                        // Update current user
+                        currentUser = updatedData;
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        
+                        // Update display
+                        updateUserProfile(currentUser);
+                        
+                        // Update WhatsApp number if phone changed
+                        const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
+                        if (settings.whatsapp && updatedData.phone) {
+                            const formattedNumber = formatPhoneForWhatsApp(updatedData.phone);
+                            if (formattedNumber) {
+                                localStorage.setItem('whatsappNumber', formattedNumber);
+                                settings.whatsappNumber = formattedNumber;
+                                localStorage.setItem('notificationSettings', JSON.stringify(settings));
+                                document.getElementById('whatsappNumberValue').textContent = formattedNumber;
+                                updateWhatsAppStatus();
+                            }
+                        }
+                        
+                        showToast('Profil berhasil diperbarui!', 'success');
+                        document.getElementById('editProfileModal').style.display = 'none';
+                        
+                    } catch (error) {
+                        console.error("Error updating profile:", error);
+                        showToast('Gagal memperbarui profil', 'error');
                     }
-                    
-                    showToast('Profil berhasil diperbarui!', 'success');
-                    document.getElementById('editProfileModal').style.display = 'none';
                 });
             }
 
             // Change Password Form
             const changePasswordForm = document.getElementById('changePasswordForm');
             if (changePasswordForm) {
-                changePasswordForm.addEventListener('submit', function(e) {
+                changePasswordForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     if (!currentUser) return;
                     
@@ -3602,68 +3848,82 @@
                     const newPassword = document.getElementById('newPassword').value;
                     const confirmPassword = document.getElementById('confirmNewPassword').value;
                     
-                    // Verify current password
-                    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-                    let user = registeredUsers.find(u => u.id === currentUser.id);
-                    
-                    // Jika tidak ditemukan dengan ID, cari dengan email
-                    if (!user) {
-                        user = registeredUsers.find(u => u.email === currentUser.email);
-                    }
-                    
-                    if (!user || user.password !== currentPassword) {
-                        showToast('Password saat ini salah!', 'error');
-                        return;
-                    }
-                    
-                    if (newPassword !== confirmPassword) {
-                        showToast('Password baru tidak cocok!', 'error');
-                        return;
-                    }
-                    
-                    // Validate password requirements
-                    if (!validatePassword(newPassword)) {
-                        showToast('Password tidak memenuhi persyaratan!', 'error');
-                        return;
-                    }
-                    
-                    // Update password
-                    let userIndex = registeredUsers.findIndex(u => u.id === currentUser.id);
-                    if (userIndex === -1) {
-                        userIndex = registeredUsers.findIndex(u => u.email === currentUser.email);
-                    }
-                    
-                    if (userIndex !== -1) {
-                        registeredUsers[userIndex].password = newPassword;
-                        localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+                    try {
+                        // Verify current password
+                        const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                        let user = registeredUsers.find(u => u.id === currentUser.id);
                         
-                        // Save last password change time
-                        const userIdentifier = currentUser.id || currentUser.email;
-                        const now = new Date();
-                        const formattedDate = now.toLocaleDateString('id-ID', {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
+                        // Jika tidak ditemukan dengan ID, cari dengan email
+                        if (!user) {
+                            user = registeredUsers.find(u => u.email === currentUser.email);
+                        }
+                        
+                        if (!user || user.password !== currentPassword) {
+                            showToast('Password saat ini salah!', 'error');
+                            return;
+                        }
+                        
+                        if (newPassword !== confirmPassword) {
+                            showToast('Password baru tidak cocok!', 'error');
+                            return;
+                        }
+                        
+                        // Validate password requirements
+                        if (!validatePassword(newPassword)) {
+                            showToast('Password tidak memenuhi persyaratan!', 'error');
+                            return;
+                        }
+                        
+                        // Update password in IndexedDB
+                        const userInDB = await getUserFromDB(currentUser.id);
+                        if (userInDB) {
+                            userInDB.password = newPassword;
+                            userInDB.updatedAt = new Date().toISOString();
+                            await updateUserInDB(userInDB);
+                        }
+                        
+                        // Update password in localStorage (for backward compatibility)
+                        let userIndex = registeredUsers.findIndex(u => u.id === currentUser.id);
+                        if (userIndex === -1) {
+                            userIndex = registeredUsers.findIndex(u => u.email === currentUser.email);
+                        }
+                        
+                        if (userIndex !== -1) {
+                            registeredUsers[userIndex].password = newPassword;
+                            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+                            
+                            // Save last password change time
+                            const userIdentifier = currentUser.id || currentUser.email;
+                            const now = new Date();
+                            const formattedDate = now.toLocaleDateString('id-ID', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            });
+                            localStorage.setItem('lastPasswordChange_' + userIdentifier, formattedDate);
+                        }
+                        
+                        showToast('Password berhasil diubah!', 'success');
+                        document.getElementById('changePasswordModal').style.display = 'none';
+                        document.getElementById('changePasswordForm').reset();
+                        
+                        // Reset password requirements display
+                        document.querySelectorAll('[data-requirement]').forEach(item => {
+                            item.classList.remove('valid');
                         });
-                        localStorage.setItem('lastPasswordChange_' + userIdentifier, formattedDate);
+                        
+                        // Update last password change display
+                        const userIdentifier = currentUser.id || currentUser.email;
+                        const lastChange = localStorage.getItem('lastPasswordChange_' + userIdentifier);
+                        document.getElementById('lastPasswordChange').textContent = lastChange ? 
+                            `Terakhir diubah ${lastChange}` : 'Belum pernah diubah';
+                        
+                    } catch (error) {
+                        console.error("Error changing password:", error);
+                        showToast('Gagal mengubah password', 'error');
                     }
-                    
-                    showToast('Password berhasil diubah!', 'success');
-                    document.getElementById('changePasswordModal').style.display = 'none';
-                    document.getElementById('changePasswordForm').reset();
-                    
-                    // Reset password requirements display
-                    document.querySelectorAll('[data-requirement]').forEach(item => {
-                        item.classList.remove('valid');
-                    });
-                    
-                    // Update last password change display
-                    const userIdentifier = currentUser.id || currentUser.email;
-                    const lastChange = localStorage.getItem('lastPasswordChange_' + userIdentifier);
-                    document.getElementById('lastPasswordChange').textContent = lastChange ? 
-                        `Terakhir diubah ${lastChange}` : 'Belum pernah diubah';
                 });
             }
         }
