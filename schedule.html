@@ -2,9 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Jadwal - SmartTani</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -22,15 +21,16 @@
         --info: #2196F3;
         --fertilizer: #795548;
         --harvest: #FF5722;
+        --plant-new: #9C27B0;
         --sidebar-width: 310px;
-        --header-height: 80px;
+        --header-height: 70px;
         --sidebar-bg: #ffffff;
         --sidebar-hover: #f5f5f5;
-        --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        --shadow-heavy: 0 8px 24px rgba(0, 0, 0, 0.12);
+        --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        --shadow-heavy: 0 4px 16px rgba(0, 0, 0, 0.12);
         --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        --border-radius: 16px;
-        --card-radius: 14px;
+        --border-radius: 12px;
+        --card-radius: 10px;
     }
 
     * {
@@ -62,72 +62,60 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 30px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        padding: 0 15px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
     }
 
     .header-left {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 10px;
     }
 
     .hamburger-btn {
         background: rgba(255, 255, 255, 0.1);
         border: none;
-        font-size: 20px;
+        font-size: 18px;
         cursor: pointer;
         color: white;
-        padding: 10px;
-        border-radius: 12px;
+        padding: 8px;
+        border-radius: 10px;
         transition: var(--transition);
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 44px;
-        height: 44px;
-        backdrop-filter: blur(10px);
+        width: 40px;
+        height: 40px;
     }
 
     .hamburger-btn:hover {
         background: rgba(255, 255, 255, 0.2);
-        transform: translateY(-2px) scale(1.05);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transform: translateY(-1px);
     }
 
     .hamburger-btn.active {
-        background: rgba(255, 255,255, 0.25);
+        background: rgba(255, 255, 255, 0.25);
     }
 
     .header-title {
-        font-size: 26px;
-        font-weight: 800;
+        font-size: 20px;
+        font-weight: 700;
         color: white;
         display: flex;
         align-items: center;
-        gap: 12px;
-        letter-spacing: 0.5px;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        gap: 8px;
     }
 
     .header-title::before {
         content: '🌱';
-        font-size: 32px;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.1); }
+        font-size: 22px;
     }
 
     .header-right {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 10px;
     }
 
     .notification-wrapper {
@@ -137,44 +125,40 @@
     .notification-btn {
         background: rgba(255, 255, 255, 0.1);
         border: none;
-        font-size: 20px;
+        font-size: 18px;
         cursor: pointer;
         color: white;
-        padding: 10px;
-        border-radius: 12px;
+        padding: 8px;
+        border-radius: 10px;
         transition: var(--transition);
         position: relative;
-        width: 44px;
-        height: 44px;
+        width: 40px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-        backdrop-filter: blur(10px);
     }
 
     .notification-btn:hover {
         background: rgba(255, 255, 255, 0.2);
-        transform: translateY(-2px) scale(1.05);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transform: translateY(-1px);
     }
 
     .notification-badge {
         position: absolute;
-        top: 5px;
-        right: 5px;
+        top: 2px;
+        right: 2px;
         background: linear-gradient(135deg, var(--danger), #d32f2f);
         color: white;
         border-radius: 50%;
-        width: 22px;
-        height: 22px;
+        width: 18px;
+        height: 18px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 12px;
+        font-size: 10px;
         font-weight: 700;
-        animation: pulse 2s infinite;
-        border: 3px solid var(--primary-dark);
-        box-shadow: 0 2px 8px rgba(244, 67, 54, 0.4);
+        border: 2px solid var(--primary-dark);
     }
 
     .user-wrapper {
@@ -184,14 +168,13 @@
     .user-btn {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
         background: rgba(255, 255, 255, 0.1);
         border: none;
-        padding: 8px 16px;
-        border-radius: 16px;
+        padding: 6px 10px;
+        border-radius: 20px;
         cursor: pointer;
         transition: var(--transition);
-        backdrop-filter: blur(10px);
         position: relative;
         z-index: 1002;
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -199,8 +182,7 @@
 
     .user-btn:hover {
         background: rgba(255, 255, 255, 0.2);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transform: translateY(-1px);
         border-color: rgba(255, 255, 255, 0.3);
     }
 
@@ -209,33 +191,32 @@
     }
 
     .user-avatar-header {
-        width: 42px;
-        height: 42px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         object-fit: cover;
         border: 2px solid rgba(255, 255, 255, 0.4);
         transition: var(--transition);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
     .user-btn:hover .user-avatar-header {
-        transform: scale(1.1);
+        transform: scale(1.05);
         border-color: white;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
 
     .user-info {
         text-align: left;
+        display: none;
     }
 
     .user-name {
-        font-weight: 700;
-        font-size: 15px;
+        font-weight: 600;
+        font-size: 14px;
         color: white;
     }
 
     .user-role {
-        font-size: 12px;
+        font-size: 11px;
         color: rgba(255, 255, 255, 0.9);
         font-weight: 500;
     }
@@ -243,24 +224,22 @@
     .user-dropdown {
         display: none;
         position: absolute;
-        top: calc(100% + 10px);
+        top: calc(100% + 5px);
         right: 0;
         background: white;
         box-shadow: var(--shadow-heavy);
         border-radius: var(--border-radius);
         padding: 10px 0;
-        min-width: 200px;
+        min-width: 180px;
         z-index: 1003;
         animation: slideDown 0.3s ease;
         border: 1px solid var(--border-color);
-        backdrop-filter: blur(20px);
-        background: rgba(255, 255, 255, 0.95);
     }
 
     @keyframes slideDown {
         from {
             opacity: 0;
-            transform: translateY(-20px);
+            transform: translateY(-10px);
         }
         to {
             opacity: 1;
@@ -276,7 +255,7 @@
         content: '';
         position: absolute;
         top: -8px;
-        right: 20px;
+        right: 15px;
         width: 16px;
         height: 16px;
         background: white;
@@ -288,28 +267,28 @@
     .user-dropdown a {
         display: flex;
         align-items: center;
-        gap: 12px;
-        padding: 14px 20px;
+        gap: 10px;
+        padding: 12px 15px;
         color: var(--text-color);
         text-decoration: none;
         transition: var(--transition);
-        border-radius: 10px;
+        border-radius: 8px;
         margin: 0 5px;
         font-weight: 500;
+        font-size: 14px;
     }
 
     .user-dropdown a:hover {
         background: var(--primary-extra-light);
         color: var(--primary-color);
-        transform: translateX(5px);
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
+        transform: translateX(3px);
     }
 
     .user-dropdown a i {
         width: 20px;
         text-align: center;
         color: var(--primary-color);
-        font-size: 16px;
+        font-size: 14px;
     }
 
     /* ==================== MAIN LAYOUT ==================== */
@@ -324,8 +303,7 @@
     /* ==================== SIDEBAR ==================== */
     .sidebar {
         width: var(--sidebar-width);
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(10px);
+        background: white;
         box-shadow: var(--shadow-heavy);
         position: fixed;
         top: var(--header-height);
@@ -341,105 +319,73 @@
 
     .sidebar.open {
         left: 0;
-        box-shadow: 20px 0 60px rgba(0, 0, 0, 0.2);
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
     }
 
     .sidebar-user {
-        padding: 30px 25px;
+        padding: 20px 15px;
         text-align: center;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(27, 94, 32, 0.05));
-        position: relative;
-        overflow: hidden;
         flex-shrink: 0;
     }
 
-    .sidebar-user::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px);
-        background-size: 40px 40px;
-        transform: rotate(30deg);
-        opacity: 0.5;
-    }
-
     .user-avatar-sidebar {
-        width: 90px;
-        height: 90px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
         object-fit: cover;
-        border: 4px solid white;
+        border: 3px solid white;
         margin-bottom: 15px;
         transition: var(--transition);
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        position: relative;
-        z-index: 1;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     .user-avatar-sidebar:hover {
         transform: scale(1.05);
         border-color: var(--primary-color);
-        box-shadow: 0 12px 32px rgba(46, 125, 50, 0.3);
     }
 
     .sidebar-user h3 {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 700;
         margin-bottom: 5px;
         color: var(--text-color);
-        position: relative;
-        z-index: 1;
     }
 
     .sidebar-user p {
         color: var(--primary-color);
-        font-size: 14px;
+        font-size: 13px;
         background: rgba(46, 125, 50, 0.1);
-        padding: 8px 20px;
+        padding: 6px 15px;
         border-radius: 20px;
         display: inline-block;
         font-weight: 600;
         border: 1px solid rgba(46, 125, 50, 0.2);
-        position: relative;
-        z-index: 1;
     }
 
     /* ==================== SIDEBAR MENU SCROLLBAR ==================== */
     .sidebar-menu {
         flex: 1;
-        padding: 20px 0;
+        padding: 15px 0;
         overflow-y: auto;
-        max-height: calc(100vh - var(--header-height) - 300px);
+        max-height: calc(100vh - var(--header-height) - 200px);
         position: relative;
+        -webkit-overflow-scrolling: touch;
     }
 
     .sidebar-menu::-webkit-scrollbar {
-        width: 6px;
+        width: 4px;
     }
 
     .sidebar-menu::-webkit-scrollbar-track {
         background: rgba(0, 0, 0, 0.03);
-        border-radius: 3px;
-        margin: 5px 0;
+        border-radius: 2px;
     }
 
     .sidebar-menu::-webkit-scrollbar-thumb {
         background: linear-gradient(135deg, rgba(46, 125, 50, 0.6), rgba(27, 94, 32, 0.6));
-        border-radius: 3px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .sidebar-menu::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, rgba(46, 125, 50, 0.8), rgba(27, 94, 32, 0.8));
-    }
-
-    .sidebar-menu {
-        scrollbar-width: thin;
-        scrollbar-color: rgba(46, 125, 50, 0.6) rgba(0, 0, 0, 0.03);
+        border-radius: 2px;
     }
 
     .sidebar-menu ul {
@@ -455,19 +401,19 @@
     .sidebar-menu a {
         display: flex;
         align-items: center;
-        gap: 18px;
-        padding: 18px 30px;
+        gap: 12px;
+        padding: 14px 20px;
         color: var(--text-light);
         text-decoration: none;
         font-weight: 500;
         transition: var(--transition);
         position: relative;
         overflow: hidden;
-        margin: 8px 20px;
-        border-radius: 14px;
+        margin: 4px 15px;
+        border-radius: 10px;
         border: 1px solid rgba(0, 0, 0, 0.08);
-        background: rgba(255, 255, 255, 0.7);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        background: rgba(255, 255, 255, 0.9);
+        font-size: 14px;
     }
 
     .sidebar-menu a:not(.active) {
@@ -481,15 +427,14 @@
         color: var(--primary-color);
         font-weight: 600;
         border: 1px solid var(--primary-light);
-        box-shadow: 0 4px 16px rgba(46, 125, 50, 0.15);
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.1);
     }
 
     .sidebar-menu a:hover {
         background: var(--primary-extra-light);
         color: var(--primary-color);
-        transform: translateX(5px);
+        transform: translateX(3px);
         border-color: var(--primary-light);
-        box-shadow: 0 4px 16px rgba(46, 125, 50, 0.1);
     }
 
     .sidebar-menu a::before {
@@ -497,12 +442,12 @@
         position: absolute;
         left: 0;
         top: 0;
-        width: 5px;
+        width: 4px;
         height: 100%;
         background: var(--primary-color);
         transform: translateX(-100%);
         transition: var(--transition);
-        border-radius: 0 5px 5px 0;
+        border-radius: 0 2px 2px 0;
     }
 
     .sidebar-menu a:hover::before {
@@ -515,9 +460,9 @@
     }
 
     .sidebar-menu a i {
-        width: 24px;
+        width: 20px;
         text-align: center;
-        font-size: 20px;
+        font-size: 16px;
         transition: var(--transition);
     }
 
@@ -527,79 +472,62 @@
 
     .sidebar-menu a .notification-badge-sidebar {
         margin-left: auto;
-        font-size: 12px;
+        font-size: 11px;
         background: linear-gradient(135deg, var(--danger), #d32f2f);
         color: white;
-        padding: 6px 10px;
+        padding: 4px 8px;
         border-radius: 20px;
-        min-width: 26px;
+        min-width: 22px;
         text-align: center;
         font-weight: 700;
-        animation: pulse 2s infinite;
         transition: var(--transition);
         display: none;
         border: 2px solid white;
     }
 
     .sidebar-menu a:hover .notification-badge-sidebar {
-        transform: scale(1.1);
-        box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+        transform: scale(1.05);
     }
 
     .sidebar-footer {
-        padding: 20px;
+        padding: 15px;
         border-top: 1px solid rgba(0, 0, 0, 0.05);
-        margin-top: auto;
-        background: linear-gradient(135deg, rgba(248, 249, 250, 0.8), rgba(233, 236, 239, 0.6));
-        backdrop-filter: blur(10px);
-        position: relative;
-        overflow: hidden;
+        background: white;
         flex-shrink: 0;
+        position: relative;
+        width: 100%;
+        z-index: 1002;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
     }
 
-    .sidebar-footer::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, var(--border-color), transparent);
-    }
-
-    .sidebar-footer .btn-logout {
+    .btn-logout {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
-        padding: 16px;
+        gap: 10px;
+        padding: 14px;
         width: 100%;
         background: linear-gradient(135deg, var(--danger), #d32f2f);
         color: white;
         border: none;
-        border-radius: 14px;
+        border-radius: 10px;
         font-family: 'Poppins', sans-serif;
-        font-size: 15px;
-        font-weight: 700;
+        font-size: 14px;
+        font-weight: 600;
         cursor: pointer;
         transition: var(--transition);
-        box-shadow: 0 4px 20px rgba(244, 67, 54, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 2px 10px rgba(244, 67, 54, 0.3);
     }
 
     .btn-logout:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 32px rgba(244, 67, 54, 0.4);
-    }
-
-    .btn-logout:active {
-        transform: translateY(-1px);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
     }
 
     /* ==================== MAIN CONTENT ==================== */
     .main {
         flex: 1;
-        padding: 30px;
+        padding: 15px;
         transition: var(--transition);
         min-height: calc(100vh - var(--header-height));
         width: 100%;
@@ -618,7 +546,7 @@
 
     @media (max-width: 992px) {
         .main.sidebar-open {
-            filter: blur(5px);
+            filter: blur(3px);
             pointer-events: none;
             user-select: none;
         }
@@ -630,12 +558,12 @@
         left: 0;
         width: 100%;
         height: calc(100vh - var(--header-height));
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(3px);
+        background: rgba(0, 0, 0, 0.3);
         z-index: 1000;
         opacity: 0;
         visibility: hidden;
         transition: var(--transition);
+        backdrop-filter: blur(3px);
     }
 
     .sidebar-overlay.active {
@@ -645,39 +573,25 @@
 
     /* Page Header */
     .page-header {
-        margin-bottom: 30px;
+        margin-bottom: 15px;
         animation: fadeIn 0.5s ease;
         background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(27, 94, 32, 0.05));
-        padding: 35px 40px;
+        padding: 20px 15px;
         border-radius: var(--border-radius);
         box-shadow: var(--shadow-heavy);
-        border: 3px solid var(--primary-color);
+        border: 2px solid var(--primary-color);
         width: 100%;
-        backdrop-filter: blur(20px);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .page-header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 100%;
-        background: linear-gradient(45deg, transparent 30%, rgba(46, 125, 50, 0.03) 100%);
-        pointer-events: none;
     }
 
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(30px); }
+        from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
     }
 
     .page-header h1 {
-        font-size: 36px;
-        font-weight: 800;
-        margin-bottom: 10px;
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 8px;
         color: var(--text-color);
         position: relative;
         display: inline-block;
@@ -687,145 +601,95 @@
         background-clip: text;
     }
 
-    .page-header h1::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: -12px;
-        width: 100px;
-        height: 5px;
-        background: linear-gradient(90deg, var(--primary-color), transparent);
-        border-radius: 3px;
-    }
-
     .page-header p {
         color: var(--text-color);
-        font-size: 17px;
-        max-width: 600px;
-        margin-top: 20px;
+        font-size: 14px;
         font-weight: 500;
         opacity: 0.9;
+        line-height: 1.5;
     }
 
-    /* Stats Section */
+    /* Stats Section - FIXED FOR RESPONSIVE */
     .stats-section {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 20px;
-        margin: 30px 0;
+        gap: 12px;
+        margin: 15px 0;
         animation: fadeIn 0.6s ease 0.4s both;
         width: 100%;
+    }
+
+    /* Default untuk mobile: 2 kolom */
+    .stats-section {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .stat-card {
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
         border-radius: var(--card-radius);
-        padding: 25px;
+        padding: 12px;
         box-shadow: var(--shadow-heavy);
         display: flex;
         align-items: center;
-        gap: 20px;
-        border: 3px solid var(--primary-light);
+        gap: 12px;
+        border: 2px solid var(--primary-light);
         transition: var(--transition);
         position: relative;
         overflow: hidden;
-        backdrop-filter: blur(20px);
         cursor: pointer;
-        height: 120px;
-    }
-
-    .stat-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
+        min-height: 80px;
         width: 100%;
-        height: 5px;
-        background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.4s ease;
     }
 
     .stat-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         border-color: var(--primary-color);
     }
 
-    .stat-card:hover::before {
-        transform: scaleX(1);
-    }
-
     .stat-icon {
-        width: 60px;
-        height: 60px;
-        border-radius: 16px;
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 24px;
+        font-size: 18px;
         transition: var(--transition);
         flex-shrink: 0;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .stat-icon::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
-        opacity: 0;
-        transition: opacity 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .stat-card:hover .stat-icon {
-        transform: translateY(-5px) scale(1.05);
+        transform: translateY(-3px) scale(1.05);
     }
 
-    .stat-card:hover .stat-icon::before {
-        opacity: 1;
-    }
-
-    .stat-icon.total {
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    }
-
-    .stat-icon.water {
-        background: linear-gradient(135deg, var(--info), #1976D2);
-    }
-
-    .stat-icon.fertilizer {
-        background: linear-gradient(135deg, var(--fertilizer), #5D4037);
-    }
-
-    .stat-icon.harvest {
-        background: linear-gradient(135deg, var(--harvest), #D84315);
-    }
+    .stat-icon.total { background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); }
+    .stat-icon.water { background: linear-gradient(135deg, var(--info), #1976D2); }
+    .stat-icon.fertilizer { background: linear-gradient(135deg, var(--fertilizer), #5D4037); }
+    .stat-icon.harvest { background: linear-gradient(135deg, var(--harvest), #D84315); }
 
     .stat-info {
         flex: 1;
         min-width: 0;
+        overflow: hidden;
     }
 
     .stat-info h3 {
         margin: 0;
-        font-size: 28px;
-        font-weight: 800;
+        font-size: 18px;
+        font-weight: 700;
         color: var(--text-color);
         line-height: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .stat-info p {
-        margin: 8px 0 0 0;
+        margin: 6px 0 0 0;
         color: var(--text-color);
-        font-size: 14px;
+        font-size: 12px;
         font-weight: 600;
         white-space: nowrap;
         overflow: hidden;
@@ -833,462 +697,449 @@
         opacity: 0.9;
     }
 
-    /* ==================== DATE FILTER SECTION ==================== */
+    /* ==================== DATE FILTER SECTION (DIPERBAIKI) ==================== */
     .date-filter-section {
         background: white;
         border-radius: var(--border-radius);
-        padding: 25px;
-        margin-bottom: 30px;
+        padding: 15px;
+        margin-bottom: 15px;
         box-shadow: var(--shadow);
         border: 2px solid var(--primary-light);
         animation: fadeIn 0.6s ease 0.6s both;
         width: 100%;
-        position: relative;
-        overflow: hidden;
-        transition: var(--transition);
-    }
-
-    .date-filter-section:hover {
-        border-color: var(--primary-color);
-        box-shadow: var(--shadow-heavy);
     }
 
     .date-filter-row {
         display: flex;
-        align-items: center;
-        gap: 15px;
-        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
     }
 
     .date-filter-label {
         font-weight: 600;
         color: var(--text-color);
-        font-size: 16px;
-        white-space: nowrap;
+        font-size: 14px;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
     }
 
     .date-filter-label i {
         color: var(--primary-color);
-        font-size: 18px;
+        font-size: 14px;
     }
 
     .date-input-wrapper {
-        flex: 1;
-        min-width: 250px;
+        width: 100%;
         position: relative;
     }
 
     .date-input {
         width: 100%;
-        padding: 14px 20px;
+        padding: 12px 15px;
         border: 2px solid var(--border-color);
-        border-radius: 12px;
+        border-radius: 10px;
         font-family: 'Poppins', sans-serif;
-        font-size: 15px;
-        color: var(--text-color);
+        font-size: 14px;
+        color: var(--text-light);
         transition: var(--transition);
         background: white;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         cursor: pointer;
+        height: 46px;
+        min-width: 0;
     }
 
     .date-input:focus {
         outline: none;
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.15);
+        box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
+        color: var(--text-color);
     }
 
-    /* PERBAIKAN: Tombol filter dengan ukuran tetap */
     .date-filter-actions {
         display: flex;
+        flex-direction: column;
         gap: 10px;
-        flex-shrink: 0;
+        width: 100%;
     }
 
-    .btn-apply-filter {
-        padding: 14px 24px;
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-        color: white;
+    .btn-apply-filter, .btn-clear-filter {
+        width: 100%;
+        padding: 12px 15px;
         border: none;
-        border-radius: 12px;
+        border-radius: 10px;
         font-family: 'Poppins', sans-serif;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s ease;
         display: flex;
         align-items: center;
-        gap: 8px;
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
-        white-space: nowrap;
-        min-width: 140px;
         justify-content: center;
+        gap: 8px;
+        white-space: nowrap;
+        min-height: 46px;
+    }
+
+    .btn-apply-filter {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.2);
     }
 
     .btn-apply-filter:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(46, 125, 50, 0.3);
-    }
-
-    .btn-apply-filter:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.2);
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
     }
 
     .btn-clear-filter {
-        padding: 14px 24px;
         background: linear-gradient(135deg, #f8f9fa, #e9ecef);
         color: var(--text-color);
         border: 2px solid var(--border-color);
-        border-radius: 12px;
-        font-family: 'Poppins', sans-serif;
-        font-size: 15px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        white-space: nowrap;
-        min-width: 140px;
-        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
     .btn-clear-filter:hover {
         background: linear-gradient(135deg, #e9ecef, #dee2e6);
         border-color: #adb5bd;
         transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    .btn-clear-filter:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    /* Filter Section */
-    .filter-section {
+    /* Category Filter Section */
+    .category-filter-section {
         background: white;
         border-radius: var(--border-radius);
-        padding: 35px;
-        margin-bottom: 30px;
+        padding: 20px 15px;
+        margin-bottom: 15px;
         box-shadow: var(--shadow-heavy);
-        border: 3px solid var(--primary-extra-light);
+        border: 2px solid var(--primary-extra-light);
         animation: fadeIn 0.6s ease;
         width: 100%;
-        position: relative;
-        overflow: hidden;
-        transition: var(--transition);
     }
 
-    .filter-section:hover {
-        border-color: var(--primary-light);
-    }
-
-    /* Filter Header - BARU DITAMBAHKAN */
-    .filter-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 25px;
-        padding-bottom: 20px;
+    .category-filter-header {
+        margin-bottom: 15px;
+        padding-bottom: 15px;
         border-bottom: 2px solid var(--primary-extra-light);
     }
 
-    .filter-header h2 {
+    .category-filter-header h2 {
         margin: 0;
         color: var(--text-color);
-        font-size: 24px;
+        font-size: 16px;
         font-weight: 700;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
+        line-height: 1.4;
     }
 
-    .filter-header h2 i {
+    .category-filter-header h2 i {
         color: white;
-        font-size: 20px;
+        font-size: 14px;
         background: var(--primary-color);
-        padding: 10px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
-    }
-
-    .filter-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 20px;
+        padding: 8px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
     }
 
     .category-filters {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        flex: 1;
+        display: grid;
+        gap: 8px;
+        width: 100%;
+    }
+
+    /* Default untuk mobile: 2 kolom */
+    .category-filters {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .category-filter {
-        padding: 14px 24px;
-        border: 3px solid var(--border-color);
-        border-radius: 14px;
+        padding: 12px 10px;
+        border: 2px solid var(--border-color);
+        border-radius: 10px;
         background: white;
         color: var(--text-color);
         font-family: 'Poppins', sans-serif;
-        font-size: 15px;
+        font-size: 12px;
         font-weight: 600;
         cursor: pointer;
         transition: var(--transition);
         display: flex;
         align-items: center;
-        gap: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        min-height: 50px;
+        justify-content: center;
+        gap: 6px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        min-height: 44px;
+        width: 100%;
+        text-align: center;
+        word-break: break-word;
+        line-height: 1.3;
     }
 
     .category-filter:hover {
         border-color: var(--primary-color);
         color: var(--primary-color);
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(46, 125, 50, 0.1);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
     }
 
     .category-filter.active {
         background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
         border-color: var(--primary-color);
         color: white;
-        box-shadow: 0 8px 24px rgba(46, 125, 50, 0.2);
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
     }
 
     .category-filter i {
-        font-size: 16px;
+        font-size: 12px;
+        flex-shrink: 0;
     }
 
     /* Schedule Sections */
     .schedule-section {
         background: white;
         border-radius: var(--border-radius);
-        padding: 35px;
-        margin-bottom: 30px;
+        padding: 20px 15px;
+        margin-bottom: 20px;
         box-shadow: var(--shadow-heavy);
-        border: 3px solid var(--primary-extra-light);
+        border: 2px solid var(--primary-extra-light);
         animation: fadeIn 0.6s ease;
         width: 100%;
-        position: relative;
-        overflow: hidden;
-        transition: var(--transition);
-    }
-
-    .schedule-section:hover {
-        border-color: var(--primary-light);
-    }
-
-    .schedule-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 5px;
-        background: linear-gradient(90deg, var(--primary-color), transparent);
-        opacity: 0.5;
+        margin-top: 0;
     }
 
     .section-header {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 25px;
-        padding-bottom: 20px;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
         border-bottom: 2px solid rgba(0, 0, 0, 0.05);
     }
 
     .section-header h2 {
         margin: 0;
         color: var(--text-color);
-        font-size: 26px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .section-header h2 i {
-        color: white;
-        font-size: 24px;
-        background: var(--primary-color);
-        padding: 12px;
-        border-radius: 14px;
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
-    }
-
-    /* PERBAIKAN UTAMA: Button Lihat Semua yang lebih stabil dan konsisten */
-    .view-all {
-        color: var(--primary-color);
-        text-decoration: none;
+        font-size: 16px;
         font-weight: 700;
         display: flex;
         align-items: center;
         gap: 10px;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        padding: 12px 24px;
-        border-radius: 12px;
+        line-height: 1.4;
+    }
+
+    .section-header h2 i {
+        color: white;
+        font-size: 14px;
+        background: var(--primary-color);
+        padding: 8px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
+    }
+
+    .view-all {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        padding: 10px 15px;
+        border-radius: 10px;
         background: rgba(46, 125, 50, 0.1);
         border: 2px solid rgba(46, 125, 50, 0.2);
-        font-size: 15px;
-        position: relative;
-        overflow: hidden;
-        transform: scale(1);
-        min-height: 48px;
-        min-width: 140px;
-        justify-content: center;
+        font-size: 14px;
+        width: 100%;
         box-sizing: border-box;
+        height: 46px;
     }
 
     .view-all:hover {
-        gap: 12px;
         background: var(--primary-color);
         color: white;
-        transform: scale(1.02);
-        box-shadow: 0 6px 20px rgba(46, 125, 50, 0.25);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.25);
         border-color: var(--primary-color);
     }
 
-    .view-all:active {
-        transform: scale(1);
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
-        transition: transform 0.1s ease;
-    }
-
-    /* Plants Grid */
+    /* Plants Grid - RESPONSIVE */
     .plants-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-        gap: 30px;
+        gap: 15px;
+        width: 100%;
     }
 
-    @media (max-width: 768px) {
-        .plants-grid {
-            grid-template-columns: 1fr;
-        }
+    /* Default untuk mobile: 1 kolom */
+    .plants-grid {
+        grid-template-columns: 1fr;
     }
 
-    /* Plant Card */
+    /* Plant Card - RESPONSIVE */
     .plant-card {
         background: white;
         border-radius: var(--card-radius);
-        padding: 30px;
+        padding: 0;
+        margin-bottom: 0;
         box-shadow: var(--shadow);
-        border: 3px solid var(--primary-extra-light);
+        border: 2px solid var(--primary-extra-light);
         transition: var(--transition);
         position: relative;
         overflow: hidden;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
     }
 
     .plant-card:hover {
-        transform: translateY(-8px);
+        transform: translateY(-3px);
         box-shadow: var(--shadow-heavy);
         border-color: var(--primary-color);
     }
 
-    .plant-card.urgent {
-        border-color: var(--danger);
+    /* Header kartu dengan background hijau */
+    .plant-card-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        padding: 15px;
+        border-radius: var(--card-radius) var(--card-radius) 0 0;
+        color: white;
+        position: relative;
     }
 
-    .plant-card.warning {
-        border-color: var(--warning);
+    .plant-card-body {
+        padding: 15px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
     }
 
-    /* Plant Card - PERBAIKAN: Mengubah warna border untuk panen */
+    /* PERUBAHAN UTAMA: Container untuk plant-details dan progress */
+    .plant-main-content {
+        flex: 1;
+        margin-bottom: 15px;
+    }
+
+    /* Plant Card Types */
     .plant-card.info {
-        border-color: var(--info); /* Ini yang membuat border biru */
-    }
-
-    .plant-card.harvest {
-        border-color: var(--warning); /* Ganti dengan warna orange/kuning */
+        border-color: var(--info);
     }
 
     .plant-card.fertilizer {
         border-color: var(--fertilizer);
     }
 
+    .plant-card.harvest {
+        border-color: var(--warning);
+    }
+
     .plant-card.urgent {
         border-color: var(--danger);
     }
 
-    .plant-card.warning {
-        border-color: var(--warning);
-    }
-
+    /* Header dipindahkan ke dalam plant-card-header */
     .plant-header {
         display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 25px;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
     }
 
+    .plant-name-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+
+    /* Nama tanaman berwarna putih di atas background hijau */
     .plant-name {
-        font-size: 22px;
+        font-size: 16px;
         font-weight: 700;
-        color: var(--text-color);
+        color: white;
         margin: 0;
+        line-height: 1.3;
+        word-break: break-word;
     }
 
+    /* Jenis tanaman dengan background putih di atas background hijau */
     .plant-type {
-        background: linear-gradient(135deg, var(--primary-extra-light), var(--primary-light));
+        background: white;
         color: var(--primary-color);
-        padding: 8px 18px;
-        border-radius: 25px;
-        font-size: 14px;
-        font-weight: 700;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
         white-space: nowrap;
-        border: 2px solid rgba(46, 125, 50, 0.2);
-        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        display: inline-block;
+        align-self: flex-start;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .plant-image-container {
+        text-align: center;
+        margin: 15px 0;
+        width: 100%;
+    }
+
+    .plant-image-container img {
+        max-width: 100%;
+        max-height: 150px;
+        border-radius: 8px;
+        margin: 0 auto;
+        display: block;
+        border: 2px solid var(--primary-light);
+        object-fit: cover;
+        width: 100%;
+        height: auto;
     }
 
     .plant-details {
         display: flex;
         flex-direction: column;
-        gap: 15px;
-        margin-bottom: 25px;
+        gap: 10px;
+        margin-bottom: 15px;
+        width: 100%;
     }
 
     .plant-detail {
         display: flex;
         align-items: center;
-        gap: 15px;
-        font-size: 16px;
+        gap: 10px;
+        font-size: 13px;
         color: var(--text-color);
         opacity: 0.9;
+        line-height: 1.4;
+        flex-wrap: wrap;
     }
 
     .plant-detail i {
-        width: 24px;
+        width: 20px;
         color: var(--primary-color);
-        font-size: 18px;
+        font-size: 14px;
         flex-shrink: 0;
-        background: rgba(46, 125, 50, 0.1);
-        padding: 8px;
-        border-radius: 10px;
+        text-align: center;
     }
 
     .plant-progress {
-        margin: 25px 0;
+        margin: 15px 0;
+        width: 100%;
     }
 
     .progress-info {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 12px;
-        font-size: 15px;
+        margin-bottom: 8px;
+        font-size: 13px;
         color: var(--text-color);
         font-weight: 500;
         opacity: 0.9;
+        flex-wrap: wrap;
     }
 
     .progress-label {
@@ -1302,319 +1153,338 @@
     }
 
     .progress-bar {
-        height: 12px;
+        height: 8px;
         background: rgba(0, 0, 0, 0.05);
-        border-radius: 10px;
+        border-radius: 4px;
         overflow: hidden;
         position: relative;
-        box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        width: 100%;
     }
 
     .progress-fill {
         height: 100%;
         background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
-        border-radius: 10px;
+        border-radius: 4px;
         transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
     }
 
-    .progress-fill::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        background-image: linear-gradient(
-            -45deg,
-            rgba(255, 255, 255, 0.3) 25%,
-            transparent 25%,
-            transparent 50%,
-            rgba(255, 255, 255, 0.3) 50%,
-            rgba(255, 255, 255, 0.3) 75%,
-            transparent 75%,
-            transparent
-        );
-        background-size: 25px 25px;
-        animation: move 1.5s linear infinite;
-    }
-
-    @keyframes move {
-        0% { background-position: 0 0; }
-        100% { background-position: 25px 25px; }
-    }
-
-    /* Plant Actions */
-    .plant-actions {
-        display: flex;
-        gap: 15px;
-        margin-top: 25px;
-    }
-
-    .btn-water, .btn-fertilize, .btn-harvest, .btn-details {
-        padding: 12px 24px;
-        border: none;
-        border-radius: 12px;
-        font-size: 15px;
-        font-weight: 700;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        transition: var(--transition);
-        flex: 1;
-        text-decoration: none;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .btn-water {
-        background: linear-gradient(135deg, var(--info), #1976D2);
-        color: white;
-    }
-
-    .btn-water:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(33, 150, 243, 0.4);
-    }
-
-    .btn-fertilize {
-        background: linear-gradient(135deg, var(--fertilizer), #5D4037);
-        color: white;
-    }
-
-    .btn-fertilize:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(121, 85, 72, 0.4);
-    }
-
-    .btn-harvest {
-        background: linear-gradient(135deg, var(--warning), #e68900);
-        color: white;
-    }
-
-    .btn-harvest:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(255, 152, 0, 0.4);
-    }
-
-    .btn-details {
-        background: transparent;
-        color: var(--primary-color);
-        border: 2px solid var(--primary-color);
-        font-weight: 600;
-    }
-
-    .btn-details:hover {
-        background: var(--primary-color);
-        color: white;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(46, 125, 50, 0.4);
-    }
-
     /* Schedule Priority Indicator */
     .schedule-priority {
         position: absolute;
-        top: 20px;
-        right: 20px;
-        font-size: 12px;
+        top: 15px;
+        right: 15px;
+        font-size: 10px;
         font-weight: 700;
-        padding: 6px 12px;
-        border-radius: 20px;
+        padding: 4px 8px;
+        border-radius: 12px;
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 4px;
         z-index: 2;
     }
 
     .priority-high {
         background: linear-gradient(135deg, var(--danger), #d32f2f);
         color: white;
-        box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+        box-shadow: 0 2px 6px rgba(244, 67, 54, 0.3);
     }
 
     .priority-medium {
         background: linear-gradient(135deg, var(--warning), #e68900);
         color: white;
-        box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+        box-shadow: 0 2px 6px rgba(255, 152, 0, 0.3);
     }
 
     .priority-low {
         background: linear-gradient(135deg, var(--info), #1976D2);
         color: white;
-        box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+        box-shadow: 0 2px 6px rgba(33, 150, 243, 0.3);
     }
 
-    /* Empty State */
+    /* PERUBAHAN UTAMA: Plant Actions - RESPONSIVE - DIPERBAIKI */
+    .plant-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: auto;
+        width: 100%;
+        padding-top: 10px;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    /* PERUBAHAN: Container untuk button dengan margin aman */
+    .button-container {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .btn-water, .btn-fertilize, .btn-harvest, .btn-details {
+        padding: 10px 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        transition: var(--transition);
+        text-decoration: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        font-family: 'Poppins', sans-serif;
+        min-height: 40px;
+        width: 100%;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1;
+        margin: 0;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    /* PERUBAHAN: Pastikan button tidak keluar dari container */
+    .btn-water:active,
+    .btn-fertilize:active,
+    .btn-harvest:active,
+    .btn-details:active {
+        transform: translateY(0) !important;
+    }
+
+    .btn-water {
+        background: linear-gradient(135deg, var(--info), #1976D2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-water:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+    }
+
+    .btn-fertilize {
+        background: linear-gradient(135deg, var(--fertilizer), #5D4037);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-fertilize:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(121, 85, 72, 0.3);
+    }
+
+    .btn-harvest {
+        background: linear-gradient(135deg, var(--warning), #e68900);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-harvest:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+    }
+
+    .btn-details {
+        background: transparent;
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        font-weight: 600;
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .btn-details:hover {
+        background: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(46, 125, 50, 0.3);
+    }
+
+    /* Button Primary untuk modal */
+    .btn-primary {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: var(--transition);
+        text-decoration: none;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        font-family: 'Poppins', sans-serif;
+        min-height: 40px;
+        width: 100%;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    /* PERUBAHAN: Ikon + pada tombol Tambah Tanaman berwarna putih jelas */
+    .btn-primary i {
+        color: white !important;
+        font-size: 14px;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    }
+
+    .btn-secondary {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: var(--transition);
+        text-decoration: none;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        font-family: 'Poppins', sans-serif;
+        min-height: 40px;
+        width: 100%;
+        text-align: center;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        color: var(--text-color);
+        border: 2px solid var(--border-color);
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    .btn-secondary:hover {
+        background: linear-gradient(135deg, #e9ecef, #dee2e6);
+        border-color: #adb5bd;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    /* PERUBAHAN UTAMA: Empty State untuk Laptop - Border menyesuaikan layout */
     .empty-state {
         text-align: center;
-        padding: 60px 20px;
+        padding: 50px 20px;
         color: var(--text-color);
-        grid-column: 1 / -1;
         background: white;
         border-radius: var(--border-radius);
-        border: 3px dashed var(--primary-light);
+        border: 2px dashed var(--primary-light);
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        margin: 0;
+        width: 100%;
+        min-height: 300px;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    /* PERUBAHAN: Border khusus untuk desktop/laptop yang menyesuaikan layout */
+    @media (min-width: 768px) {
+        .empty-state {
+            border: 2px dashed var(--primary-light);
+            box-shadow: var(--shadow);
+            margin: 0 auto;
+        }
+        
+        /* Untuk grid 4 kolom pada desktop */
+        .plants-grid:has(.empty-state) {
+            grid-template-columns: 1fr !important;
+        }
+        
+        .empty-state.full-width {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+    }
+
+    @media (min-width: 993px) {
+        .empty-state {
+            border: 2px dashed var(--primary-color);
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.9), rgba(233, 236, 239, 0.8));
+            min-height: 350px;
+            padding: 60px 40px;
+        }
+        
+        /* Border khusus untuk layout 4 kolom pada desktop */
+        .schedule-section .plants-grid .empty-state {
+            border: 3px dashed rgba(46, 125, 50, 0.3);
+            background: linear-gradient(135deg, rgba(232, 245, 233, 0.6), rgba(200, 230, 201, 0.4));
+            box-shadow: 0 4px 20px rgba(46, 125, 50, 0.1);
+        }
+    }
+
+    /* Desktop large */
+    @media (min-width: 1200px) {
+        .empty-state {
+            min-height: 400px;
+            padding: 80px 50px;
+            border: 3px dashed rgba(46, 125, 50, 0.4);
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.95), rgba(233, 236, 239, 0.85));
+        }
+        
+        .schedule-section .plants-grid .empty-state {
+            border: 3px dashed rgba(46, 125, 50, 0.5);
+            background: linear-gradient(135deg, rgba(232, 245, 233, 0.7), rgba(200, 230, 201, 0.5));
+        }
     }
 
     .empty-state i {
-        font-size: 72px;
-        margin-bottom: 25px;
+        font-size: 64px;
+        margin-bottom: 20px;
         color: var(--primary-color);
-        opacity: 0.7;
+        opacity: 0.5;
     }
 
     .empty-state h3 {
-        margin-bottom: 15px;
-        font-size: 24px;
+        margin-bottom: 12px;
+        font-size: 18px;
         color: var(--text-color);
         font-weight: 700;
+        max-width: 90%;
     }
 
     .empty-state p {
-        margin-bottom: 30px;
-        font-size: 16px;
-        color: var(--text-color);
+        margin-bottom: 25px;
+        font-size: 14px;
+        color: var(--text-light);
         font-weight: 500;
         text-align: center;
         opacity: 0.9;
-        max-width: 500px;
-    }
-
-    /* Button Primary */
-    .btn-primary {
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-        color: white;
-        border: none;
-        border-radius: 14px;
-        padding: 16px 32px;
-        font-family: 'Poppins', sans-serif;
-        font-size: 16px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        text-decoration: none;
-        box-shadow: 0 6px 20px rgba(46, 125, 50, 0.25);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        text-align: center;
-        min-width: 200px;
-        position: relative;
-        overflow: hidden;
-        transform: scale(1);
-    }
-
-    .btn-primary:hover {
-        transform: scale(1.05);
-        box-shadow: 0 12px 30px rgba(46, 125, 50, 0.35);
-        background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
-    }
-
-    .btn-primary:active {
-        transform: scale(1.02);
-        box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
-        transition: all 0.15s ease;
-    }
-
-    .btn-primary::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 5px;
-        height: 5px;
-        background: rgba(255, 255, 255, 0.5);
-        opacity: 0;
-        border-radius: 100%;
-        transform: scale(1, 1) translate(-50%);
-        transform-origin: 50% 50%;
-    }
-
-    .btn-primary:focus:not(:active)::after {
-        animation: ripple 1s ease-out;
-    }
-
-    @keyframes ripple {
-        0% {
-            transform: scale(0, 0);
-            opacity: 0.5;
-        }
-        20% {
-            transform: scale(25, 25);
-            opacity: 0.3;
-        }
-        100% {
-            opacity: 0;
-            transform: scale(40, 40);
-        }
-    }
-
-    .btn-primary i {
-        transition: transform 0.3s ease;
-        color: white;
-    }
-
-    .btn-primary:hover i {
-        transform: translateX(3px) scale(1.05);
+        max-width: 90%;
+        line-height: 1.6;
     }
 
     .empty-state .btn-primary {
-        margin-top: 10px;
-    }
-
-    .btn-primary .ripple {
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        transform: scale(0);
-        animation: ripple-animation 0.6s linear;
-        pointer-events: none;
-    }
-
-    @keyframes ripple-animation {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-
-    .view-all .ripple {
-        background: rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-water .ripple {
-        background: rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-fertilize .ripple {
-        background: rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-harvest .ripple {
-        background: rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-details .ripple {
-        background: rgba(46, 125, 50, 0.2);
+        max-width: 250px;
+        margin: 0 auto;
     }
 
     /* ==================== FOOTER ==================== */
     .footer {
         background: white;
         border-top: 1px solid rgba(0, 0, 0, 0.05);
-        padding: 35px;
+        padding: 20px 15px;
         text-align: center;
         color: var(--text-color);
         width: 100%;
-        margin-top: auto;
-        border: 3px solid var(--primary-extra-light);
+        margin-top: 20px;
+        border: 2px solid var(--primary-extra-light);
         border-radius: var(--border-radius);
         box-shadow: var(--shadow);
     }
@@ -1625,23 +1495,17 @@
     }
 
     .footer p {
-        font-size: 16px;
-        line-height: 1.8;
+        font-size: 14px;
+        line-height: 1.6;
         margin-bottom: 5px;
         opacity: 0.9;
     }
 
-    .footer-text {
-        display: block;
-        font-weight: 600;
-        color: var(--text-color);
-    }
-
     .footer-copyright {
         display: block;
-        font-size: 14px;
+        font-size: 12px;
         opacity: 0.8;
-        margin-top: 10px;
+        margin-top: 8px;
     }
 
     /* ==================== MODAL STYLING ==================== */
@@ -1654,88 +1518,72 @@
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(5px);
         animation: fadeIn 0.3s ease;
         overflow-y: auto;
-        padding: 20px;
+        padding: 15px;
     }
 
     .modal-content {
         background: white;
         border-radius: var(--border-radius);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        box-shadow: var(--shadow-heavy);
         position: relative;
-        width: 95%;
-        max-width: 800px;
-        margin: 40px auto;
-        animation: modalSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 100%;
+        max-width: 500px;
+        margin: 30px auto;
+        animation: modalSlideIn 0.3s ease;
         overflow: hidden;
-        max-height: 90vh;
-        display: flex;
-        flex-direction: column;
-        border: 3px solid var(--primary-color);
+        border: 2px solid var(--primary-color);
     }
 
     @keyframes modalSlideIn {
         from {
             opacity: 0;
-            transform: translateY(-80px) scale(0.9);
+            transform: translateY(-20px);
         }
         to {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
         }
     }
 
     .modal-header {
-        padding: 30px 40px;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+        padding: 20px 15px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         display: flex;
         justify-content: space-between;
         align-items: center;
         background: linear-gradient(135deg, rgba(248, 249, 250, 0.9), rgba(233, 236, 239, 0.8));
-        flex-shrink: 0;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .modal-header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 5px;
-        background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
     }
 
     .modal-header h3 {
         margin: 0;
         color: var(--text-color);
-        font-size: 28px;
-        font-weight: 800;
+        font-size: 18px;
+        font-weight: 700;
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 10px;
     }
 
     .modal-header h3 i {
         color: white;
         background: var(--primary-color);
-        padding: 12px;
-        border-radius: 14px;
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+        padding: 8px;
+        border-radius: 10px;
+        font-size: 14px;
     }
 
     .close-modal {
         background: none;
         border: none;
-        font-size: 32px;
+        font-size: 24px;
         cursor: pointer;
         color: var(--text-light);
         padding: 0;
-        width: 44px;
-        height: 44px;
+        width: 32px;
+        height: 32px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1747,98 +1595,64 @@
     .close-modal:hover {
         color: var(--text-color);
         background: rgba(46, 125, 50, 0.1);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     .modal-body {
-        padding: 40px;
-        flex: 1;
+        padding: 20px 15px;
+        max-height: calc(100vh - 200px);
         overflow-y: auto;
-        max-height: calc(90vh - 170px);
-        position: relative;
-    }
-
-    .modal-body::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    .modal-body::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.03);
-        border-radius: 3px;
-        margin: 5px 0;
-    }
-
-    .modal-body::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, rgba(46, 125, 50, 0.6), rgba(27, 94, 32, 0.6));
-        border-radius: 3px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .modal-body::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, rgba(46, 125, 50, 0.8), rgba(27, 94, 32, 0.8));
-    }
-
-    .modal-body {
-        scrollbar-width: thin;
-        scrollbar-color: rgba(46, 125, 50, 0.6) rgba(0, 0, 0, 0.03);
     }
 
     .modal-body p {
-        margin-bottom: 25px;
+        margin-bottom: 15px;
         color: var(--text-light);
-        font-size: 18px;
-        line-height: 1.7;
-        font-weight: 500;
+        font-size: 14px;
+        line-height: 1.6;
     }
 
-    /* ==================== FORM IMPROVEMENTS ==================== */
+    /* Form Improvements */
     .form-group {
-        margin-bottom: 25px;
+        margin-bottom: 20px;
     }
 
     .form-group label {
         display: block;
-        margin-bottom: 12px;
-        font-weight: 700;
+        margin-bottom: 8px;
+        font-weight: 600;
         color: var(--text-color);
-        font-size: 17px;
+        font-size: 14px;
     }
 
     .camera-options {
         display: flex;
-        gap: 20px;
-        margin-bottom: 25px;
-    }
-
-    @media (max-width: 768px) {
-        .camera-options {
-            flex-direction: column;
-        }
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 15px;
     }
 
     .camera-btn {
-        flex: 1;
-        padding: 18px;
+        padding: 12px 15px;
         border: 2px solid var(--border-color);
-        border-radius: 14px;
+        border-radius: 8px;
         background: white;
         color: var(--text-color);
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 600;
         cursor: pointer;
         transition: var(--transition);
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        gap: 10px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        width: 100%;
     }
 
     .camera-btn:hover {
         border-color: var(--primary-color);
         color: var(--primary-color);
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(46, 125, 50, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
     }
 
     .camera-btn.secondary {
@@ -1854,46 +1668,37 @@
     }
 
     .file-upload {
-        border: 3px dashed var(--border-color);
+        border: 2px dashed var(--border-color);
         border-radius: var(--border-radius);
-        padding: 30px;
+        padding: 20px 15px;
         text-align: center;
         cursor: pointer;
         transition: var(--transition);
-        margin-bottom: 25px;
+        margin-bottom: 15px;
         background: linear-gradient(135deg, var(--primary-extra-light), rgba(255,255,255,0.8));
-        position: relative;
-        overflow: hidden;
     }
 
     .file-upload:hover {
         border-color: var(--primary-color);
         background: linear-gradient(135deg, var(--primary-light), var(--primary-extra-light));
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(46, 125, 50, 0.15);
     }
 
     .file-upload i {
-        font-size: 48px;
-        margin-bottom: 15px;
+        font-size: 36px;
+        margin-bottom: 10px;
         color: var(--primary-color);
-        transition: var(--transition);
-    }
-
-    .file-upload:hover i {
-        transform: scale(1.1) translateY(-5px);
     }
 
     .file-upload p {
-        margin: 8px 0;
+        margin: 5px 0;
         color: var(--text-light);
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .file-upload .file-info {
-        font-size: 14px;
+        font-size: 12px;
         color: var(--text-light);
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
     .file-input {
@@ -1901,116 +1706,85 @@
     }
 
     .file-preview {
-        margin-top: 20px;
+        margin-top: 15px;
         text-align: center;
     }
 
     .file-preview img {
         max-width: 100%;
-        max-height: 250px;
-        border-radius: 16px;
-        box-shadow: var(--shadow-heavy);
+        max-height: 200px;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
         display: none;
-        margin: 0 auto 15px;
+        margin: 0 auto 10px;
         border: 1px solid var(--border-color);
         object-fit: contain;
         background: white;
-        padding: 10px;
+        padding: 5px;
     }
 
     .file-name {
-        font-size: 15px;
+        font-size: 13px;
         color: var(--text-color);
-        padding: 12px;
+        padding: 8px;
         background: rgba(248, 249, 250, 0.8);
-        border-radius: 12px;
+        border-radius: 8px;
         word-break: break-all;
         border: 1px solid var(--border-color);
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         font-weight: 500;
     }
 
     textarea {
         width: 100%;
-        padding: 18px;
+        padding: 12px;
         border: 2px solid var(--border-color);
-        border-radius: 14px;
+        border-radius: 8px;
         font-family: 'Poppins', sans-serif;
-        font-size: 15px;
+        font-size: 14px;
         resize: vertical;
-        min-height: 100px;
+        min-height: 80px;
         transition: var(--transition);
         background: white;
-        line-height: 1.6;
+        line-height: 1.5;
         margin-bottom: 10px;
     }
 
     textarea:focus {
         outline: none;
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.15);
-        transform: translateY(-2px);
+        box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
     }
 
     .form-actions {
         display: flex;
-        gap: 20px;
-        margin-top: 30px;
-        padding-top: 25px;
-        border-top: 2px solid rgba(0, 0, 0, 0.05);
-        flex-shrink: 0;
-    }
-
-    @media (max-width: 768px) {
-        .form-actions {
-            flex-direction: column;
-        }
-    }
-
-    .btn-secondary {
-        flex: 1;
-        padding: 16px 24px;
-        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-        color: var(--text-color);
-        border: 2px solid var(--border-color);
-        border-radius: 14px;
-        font-size: 16px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: var(--transition);
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        flex-direction: column;
         gap: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-
-    .btn-secondary:hover {
-        background: linear-gradient(135deg, #e9ecef, #dee2e6);
-        border-color: #adb5bd;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     /* Toast Notification */
     .toast {
         position: fixed;
-        bottom: 40px;
-        right: 40px;
+        bottom: 15px;
+        right: 15px;
+        left: 15px;
         background: white;
         color: var(--text-color);
-        padding: 20px 30px;
+        padding: 15px;
         border-radius: var(--border-radius);
         box-shadow: var(--shadow-heavy);
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 12px;
         z-index: 3000;
         transform: translateY(100px);
         opacity: 0;
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        max-width: 450px;
-        border-left: 5px solid var(--primary-color);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        max-width: 100%;
+        border-left: 4px solid var(--primary-color);
         border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
@@ -2020,24 +1794,13 @@
     }
 
     .toast i {
-        font-size: 28px;
+        font-size: 20px;
     }
 
-    .toast.success i {
-        color: var(--success);
-    }
-
-    .toast.error i {
-        color: var(--danger);
-    }
-
-    .toast.warning i {
-        color: var(--warning);
-    }
-
-    .toast.info i {
-        color: var(--info);
-    }
+    .toast.success i { color: var(--success); }
+    .toast.error i { color: var(--danger); }
+    .toast.warning i { color: var(--warning); }
+    .toast.info i { color: var(--info); }
 
     .toast-content {
         flex: 1;
@@ -2046,18 +1809,18 @@
     .toast-content p {
         margin: 0;
         font-weight: 600;
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .toast-close {
         background: none;
         border: none;
         color: var(--text-light);
-        font-size: 24px;
+        font-size: 20px;
         cursor: pointer;
         padding: 0;
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -2074,9 +1837,9 @@
     /* Loading Animation */
     .loading {
         display: inline-block;
-        width: 24px;
-        height: 24px;
-        border: 3px solid rgba(255,255,255,.3);
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255,255,255,.3);
         border-radius: 50%;
         border-top-color: white;
         animation: spin 1s ease-in-out infinite;
@@ -2086,49 +1849,225 @@
         to { transform: rotate(360deg); }
     }
 
-    /* ==================== MAIN CONTENT SCROLLBAR ==================== */
-    .main::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .main::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.05);
-        border-radius: 4px;
-    }
-
-    .main::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-        border-radius: 4px;
-    }
-
-    .main::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
-    }
-
-    .main {
-        scrollbar-width: thin;
-        scrollbar-color: var(--primary-color) rgba(0, 0, 0, 0.05);
-    }
-
     /* ==================== RESPONSIVE DESIGN ==================== */
-    /* PERBAIKAN RESPONSIVITAS: Disinkronkan dengan notification.html */
+    /* Tablet */
+    @media (min-width: 768px) {
+        .header {
+            padding: 0 20px;
+        }
+        
+        .header-left {
+            gap: 15px;
+        }
+        
+        .hamburger-btn {
+            width: 44px;
+            height: 44px;
+            font-size: 20px;
+        }
+        
+        .notification-btn {
+            width: 44px;
+            height: 44px;
+            font-size: 20px;
+        }
+        
+        .user-info {
+            display: block;
+        }
+        
+        .user-btn {
+            padding: 8px 15px;
+        }
+        
+        .user-avatar-header {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .header-title {
+            font-size: 22px;
+        }
+        
+        .main {
+            padding: 20px;
+        }
+        
+        .page-header {
+            padding: 25px 20px;
+        }
+        
+        .page-header h1 {
+            font-size: 24px;
+        }
+        
+        .page-header p {
+            font-size: 16px;
+        }
+        
+        /* Tablet: 4 kolom untuk stats */
+        .stats-section {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        .stat-card {
+            padding: 15px;
+            min-height: 90px;
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+        }
+        
+        .stat-info h3 {
+            font-size: 22px;
+        }
+        
+        .stat-info p {
+            font-size: 13px;
+        }
+        
+        /* PERBAIKAN UTAMA: Date filter layout untuk tablet */
+        .date-filter-row {
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .date-filter-label {
+            flex-shrink: 0;
+        }
+        
+        .date-input-wrapper {
+            flex: 1;
+            min-width: 200px;
+            max-width: 250px;
+        }
+        
+        .date-filter-actions {
+            flex-direction: row;
+            width: auto;
+            flex-shrink: 0;
+            gap: 10px;
+        }
+        
+        .btn-apply-filter, .btn-clear-filter {
+            width: auto;
+            min-width: 140px;
+        }
+        
+        /* Tablet: 4 kolom untuk category filters */
+        .category-filters {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        
+        .category-filter {
+            font-size: 13px;
+            padding: 12px 15px;
+        }
+        
+        .section-header {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .view-all {
+            width: auto;
+        }
+        
+        /* Plants Grid untuk tablet: 2 kolom */
+        .plants-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        /* PERUBAHAN: Layout button untuk tablet */
+        .plant-actions {
+            flex-direction: row;
+            gap: 10px;
+        }
+        
+        .button-container {
+            flex-direction: row;
+            gap: 10px;
+        }
+        
+        .btn-water, .btn-fertilize, .btn-harvest, .btn-details {
+            width: auto;
+            flex: 1;
+            font-size: 14px;
+            padding: 10px 12px;
+            min-height: 42px;
+        }
+        
+        /* Empty State untuk tablet */
+        .empty-state {
+            padding: 60px 30px;
+            min-height: 350px;
+        }
+        
+        .empty-state i {
+            font-size: 72px;
+        }
+        
+        .empty-state h3 {
+            font-size: 20px;
+        }
+        
+        .empty-state p {
+            font-size: 15px;
+            max-width: 80%;
+        }
+        
+        /* Modal untuk tablet */
+        .modal-content {
+            width: 90%;
+            max-width: 600px;
+            margin: 40px auto;
+        }
+        
+        .modal-body {
+            padding: 25px;
+        }
+        
+        .modal-header {
+            padding: 25px;
+        }
+        
+        .camera-options {
+            flex-direction: row;
+        }
+        
+        .form-actions {
+            flex-direction: row;
+        }
+        
+        .toast {
+            right: 25px;
+            left: auto;
+            max-width: 400px;
+        }
+    }
+
+    /* Desktop */
     @media (min-width: 993px) {
         .sidebar {
             position: fixed;
             height: calc(100vh - var(--header-height));
             left: -310px;
-            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .sidebar.open {
             left: 0;
-            box-shadow: 20px 0 60px rgba(0, 0, 0, 0.2);
         }
         
         .main {
             margin-left: 0;
-            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 100%;
         }
         
         .main.sidebar-open {
@@ -2140,309 +2079,655 @@
             display: none;
         }
 
+        /* Desktop: 4 kolom untuk stats */
         .stats-section {
             grid-template-columns: repeat(4, 1fr);
         }
-    }
-
-    @media (max-width: 1200px) {
-        .stats-section {
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        
+        .page-header {
+            padding: 30px 25px;
         }
         
-        .date-filter-row {
-            flex-direction: column;
-            align-items: stretch;
+        .page-header h1 {
+            font-size: 28px;
         }
         
-        .date-input-wrapper {
-            min-width: 100%;
+        .schedule-section {
+            padding: 25px 20px;
         }
         
-        .date-filter-actions {
-            width: 100%;
-            justify-content: center;
+        .date-filter-section, .category-filter-section {
+            padding: 20px;
         }
         
-        .plants-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 992px) {
-        .stats-section {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        
-        .plants-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        
-        .main {
-            padding: 25px;
-        }
-        
-        .page-header,
-        .filter-section,
-        .schedule-section,
-        .date-filter-section {
-            padding: 25px;
-        }
-        
-        .modal-content {
-            width: 95%;
-            margin: 30px auto;
-        }
-        
-        .sidebar {
-            width: 320px;
-            left: -320px;
-        }
-        
-        .main.sidebar-open {
-            margin-left: 0;
-        }
-
+        /* Desktop: 4 kolom untuk category filters */
         .category-filters {
-            justify-content: flex-start;
+            grid-template-columns: repeat(4, 1fr);
         }
-
-        .filter-row {
+        
+        .category-filter {
+            font-size: 14px;
+            padding: 12px 15px;
+        }
+        
+        /* PERUBAHAN UTAMA: Plants Grid untuk desktop: 4 kolom */
+        .plants-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        /* PERUBAHAN: Layout plant card untuk desktop */
+        .plant-card {
+            display: flex;
             flex-direction: column;
-            align-items: stretch;
+            height: 100%;
         }
         
-        .date-filter-actions {
-            width: 100%;
-            justify-content: center;
-        }
-        
-        .btn-apply-filter,
-        .btn-clear-filter {
+        .plant-card-body {
             flex: 1;
-            justify-content: center;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .plant-main-content {
+            flex: 1;
+        }
+        
+        /* PERUBAHAN UTAMA: Layout button untuk desktop - DIPERBAIKI */
+        .plant-actions {
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .button-container {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+        
+        .btn-water, .btn-fertilize, .btn-harvest, .btn-details {
+            width: auto;
+            flex: 1;
+            font-size: 13px;
+            padding: 10px 8px;
+            min-height: 40px;
+            border: 1px solid transparent;
+        }
+        
+        .btn-details {
+            border: 1px solid var(--primary-color);
+        }
+        
+        /* Pastikan button tidak keluar dari kartu */
+        .btn-water:hover,
+        .btn-fertilize:hover,
+        .btn-harvest:hover,
+        .btn-details:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-water:active,
+        .btn-fertilize:active,
+        .btn-harvest:active,
+        .btn-details:active {
+            transform: translateY(0);
+        }
+        
+        /* Empty State untuk desktop - PERUBAHAN UTAMA */
+        .empty-state {
+            padding: 80px 40px;
+            min-height: 400px;
+            border: 3px dashed rgba(46, 125, 50, 0.4);
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.95), rgba(233, 236, 239, 0.85));
+            width: 100%;
+            max-width: 100%;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state i {
+            font-size: 80px;
+        }
+        
+        .empty-state h3 {
+            font-size: 22px;
+        }
+        
+        .empty-state p {
+            font-size: 16px;
+            max-width: 70%;
+        }
+        
+        /* Desktop button sizes */
+        .btn-primary, .btn-secondary, .btn-water, .btn-fertilize, .btn-harvest, .btn-details {
             min-width: 120px;
         }
     }
 
-    @media (max-width: 768px) {
+    /* Large Desktop */
+    @media (min-width: 1200px) {
+        /* Plants Grid untuk large desktop tetap 4 kolom */
+        .plants-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        /* PERUBAHAN: Layout button untuk large desktop */
+        .button-container {
+            gap: 10px;
+        }
+        
+        .btn-water, .btn-fertilize, .btn-harvest, .btn-details {
+            font-size: 14px;
+            padding: 11px 12px;
+            min-height: 42px;
+        }
+        
+        .empty-state {
+            padding: 100px 50px;
+            min-height: 450px;
+            border: 4px dashed rgba(46, 125, 50, 0.5);
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.98), rgba(233, 236, 239, 0.9));
+        }
+        
+        .empty-state i {
+            font-size: 90px;
+        }
+        
+        .empty-state h3 {
+            font-size: 24px;
+        }
+    }
+
+    /* Mobile kecil (361px - 480px) */
+    @media (max-width: 480px) and (min-width: 361px) {
+        .header {
+            padding: 0 10px;
+        }
+        
+        .header-title {
+            font-size: 18px;
+        }
+        
+        .main {
+            padding: 10px;
+        }
+        
+        .page-header, .date-filter-section, .category-filter-section, .schedule-section {
+            padding: 15px 12px;
+        }
+        
+        /* Mobile medium: 2 kolom untuk stats */
         .stats-section {
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            gap: 10px;
+        }
+        
+        .stat-card {
+            padding: 10px;
+            min-height: 75px;
+        }
+        
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+        }
+        
+        .stat-info h3 {
+            font-size: 18px;
+        }
+        
+        .stat-info p {
+            font-size: 11px;
+        }
+        
+        /* Mobile medium: 2 kolom untuk category filters */
+        .category-filters {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .category-filter {
+            font-size: 11px;
+            padding: 10px 8px;
+            min-height: 44px;
+        }
+        
+        /* PERBAIKAN UTAMA: Date filter layout untuk mobile medium */
+        .date-filter-row {
+            gap: 10px;
+        }
+        
+        .date-filter-actions {
+            flex-direction: row;
+            gap: 8px;
+        }
+        
+        .btn-apply-filter, .btn-clear-filter {
+            flex: 1;
+            padding: 10px 12px;
+            font-size: 13px;
+            min-height: 42px;
+        }
+        
+        .plant-name {
+            font-size: 15px;
+        }
+        
+        .plant-type {
+            font-size: 11px;
+            padding: 4px 10px;
+        }
+        
+        .plant-detail {
+            font-size: 12px;
+        }
+        
+        /* PERUBAHAN: Layout button untuk mobile medium */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .btn-water, .btn-fertilize, .btn-harvest, .btn-details {
+            font-size: 12px;
+            padding: 8px 12px;
+            min-height: 38px;
+            width: 100%;
+        }
+        
+        /* Empty State untuk mobile medium */
+        .empty-state {
+            padding: 40px 15px;
+            min-height: 250px;
+        }
+        
+        .empty-state i {
+            font-size: 56px;
+        }
+        
+        .empty-state h3 {
+            font-size: 16px;
+        }
+        
+        .empty-state p {
+            font-size: 13px;
+        }
+        
+        .footer {
+            padding: 15px 12px;
+        }
+        
+        .toast {
+            bottom: 10px;
+            right: 10px;
+            left: 10px;
+            padding: 12px;
+        }
+    }
+
+    /* Mobile sangat kecil (<= 360px) */
+    @media (max-width: 360px) {
+        .header {
+            padding: 0 8px;
+        }
+        
+        .header-title {
+            font-size: 16px;
+        }
+        
+        .hamburger-btn, .notification-btn {
+            width: 36px;
+            height: 36px;
+            font-size: 16px;
+            padding: 6px;
+        }
+        
+        .user-avatar-header {
+            width: 32px;
+            height: 32px;
+        }
+        
+        .main {
+            padding: 8px;
+        }
+        
+        .page-header, .date-filter-section, .category-filter-section, .schedule-section {
+            padding: 12px 10px;
+        }
+        
+        /* Mobile small: 2 kolom untuk stats */
+        .stats-section {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .stat-card {
+            padding: 8px;
+            min-height: 70px;
+            gap: 8px;
+        }
+        
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            font-size: 14px;
+        }
+        
+        .stat-info h3 {
+            font-size: 16px;
+        }
+        
+        .stat-info p {
+            font-size: 10px;
+        }
+        
+        /* Mobile small: 2 kolom untuk category filters */
+        .category-filters {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+        }
+        
+        .category-filter {
+            font-size: 10px;
+            padding: 8px 6px;
+            min-height: 40px;
+        }
+        
+        /* PERBAIKAN UTAMA: Date filter layout untuk mobile small */
+        .date-filter-row {
+            gap: 8px;
+        }
+        
+        .date-filter-actions {
+            gap: 6px;
+        }
+        
+        .btn-apply-filter, .btn-clear-filter {
+            padding: 8px 10px;
+            font-size: 12px;
+            min-height: 40px;
+        }
+        
+        .plant-name {
+            font-size: 14px;
+        }
+        
+        .plant-type {
+            font-size: 10px;
+            padding: 3px 8px;
+        }
+        
+        .plant-detail {
+            font-size: 11px;
+        }
+        
+        /* PERUBAHAN: Layout button untuk mobile small */
+        .button-container {
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .btn-water, .btn-fertilize, .btn-harvest, .btn-details {
+            font-size: 11px;
+            padding: 6px 10px;
+            min-height: 36px;
+            width: 100%;
+        }
+        
+        /* Empty State untuk mobile small */
+        .empty-state {
+            padding: 30px 12px;
+            min-height: 200px;
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+        }
+        
+        .empty-state h3 {
+            font-size: 15px;
+        }
+        
+        .empty-state p {
+            font-size: 12px;
+        }
+        
+        .footer {
+            padding: 12px 10px;
+        }
+        
+        .toast {
+            bottom: 8px;
+            right: 8px;
+            left: 8px;
+            padding: 10px;
+        }
+    }
+
+    /* Mobile extra kecil (<= 320px) */
+    @media (max-width: 320px) {
+        .header-title {
+            font-size: 15px;
+        }
+        
+        .hamburger-btn, .notification-btn {
+            width: 34px;
+            height: 34px;
+            font-size: 14px;
+        }
+        
+        .user-btn {
+            padding: 4px;
+        }
+        
+        .user-avatar-header {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .main {
+            padding: 6px;
+        }
+        
+        .page-header, .date-filter-section, .category-filter-section, .schedule-section {
+            padding: 10px 8px;
+        }
+        
+        /* Mobile extra small: 1 kolom untuk stats */
+        .stats-section {
+            grid-template-columns: 1fr;
+        }
+        
+        .stat-card {
+            padding: 8px;
+            min-height: 65px;
+        }
+        
+        .stat-icon {
+            width: 34px;
+            height: 34px;
+            font-size: 13px;
+        }
+        
+        .stat-info h3 {
+            font-size: 15px;
+        }
+        
+        .stat-info p {
+            font-size: 9px;
+        }
+        
+        /* Mobile extra small: 1 kolom untuk category filters */
+        .category-filters {
+            grid-template-columns: 1fr;
+        }
+        
+        .category-filter {
+            font-size: 11px;
+            padding: 8px 6px;
+            min-height: 38px;
+        }
+        
+        /* PERBAIKAN UTAMA: Date filter layout untuk mobile extra small */
+        .date-filter-row {
+            gap: 6px;
+        }
+        
+        .date-filter-actions {
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .btn-apply-filter, .btn-clear-filter {
+            width: 100%;
         }
         
         .plants-grid {
             grid-template-columns: 1fr;
         }
         
-        .section-header {
-            flex-direction: column;
-            gap: 20px;
-            align-items: flex-start;
+        .plant-name {
+            font-size: 13px;
         }
         
+        .plant-type {
+            font-size: 9px;
+            padding: 2px 6px;
+        }
+        
+        /* PERUBAHAN: Layout button untuk mobile extra small */
         .plant-actions {
             flex-direction: column;
         }
         
-        .btn-details {
-            grid-column: span 1;
-        }
-        
-        .main {
-            padding: 20px;
-        }
-        
-        .page-header,
-        .filter-section,
-        .schedule-section,
-        .date-filter-section {
-            padding: 20px;
-        }
-        
-        .modal-content {
-            width: 95%;
-            margin: 20px auto;
-        }
-        
-        .modal-body {
-            padding: 25px;
-        }
-        
-        .modal-header {
-            padding: 25px;
-        }
-        
-        .form-actions {
+        .button-container {
             flex-direction: column;
+            gap: 6px;
         }
         
-        .btn-primary,
-        .btn-secondary {
+        .btn-water, .btn-fertilize, .btn-harvest, .btn-details {
             width: 100%;
-        }
-
-        .category-filters {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .category-filter {
-            width: 100%;
-            justify-content: center;
+            font-size: 10px;
+            padding: 5px 8px;
+            min-height: 34px;
         }
         
-        .date-filter-actions {
-            flex-direction: column;
+        /* Empty State untuk mobile extra small */
+        .empty-state {
+            padding: 25px 10px;
+            min-height: 180px;
         }
         
-        .btn-apply-filter,
-        .btn-clear-filter {
-            min-width: 100%;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .stats-section {
-            grid-template-columns: 1fr;
+        .empty-state i {
+            font-size: 40px;
         }
         
-        .header {
-            padding: 0 15px;
+        .empty-state h3 {
+            font-size: 14px;
         }
         
-        .header-title {
-            font-size: 22px;
-        }
-        
-        .page-header h1 {
-            font-size: 30px;
-        }
-        
-        .stat-card {
-            padding: 20px;
-            height: 100px;
-        }
-        
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
-        }
-        
-        .stat-info h3 {
-            font-size: 24px;
-        }
-        
-        .modal-body {
-            padding: 20px;
-        }
-        
-        .modal-header {
-            padding: 20px;
-        }
-        
-        .sidebar {
-            width: 280px;
-            left: -280px;
+        .empty-state p {
+            font-size: 11px;
         }
         
         .footer {
-            padding: 25px 20px;
-        }
-
-        .category-filters {
-            grid-template-columns: 1fr;
-        }
-
-        .category-filter {
-            justify-content: flex-start;
-        }
-        
-        /* PERBAIKAN: Responsif untuk mobile kecil */
-        .date-filter-row {
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .date-input-wrapper {
-            min-width: 100%;
-            max-width: 100%;
-        }
-        
-        .date-filter-actions {
-            width: 100%;
-            flex-direction: column;
-        }
-        
-        .btn-apply-filter,
-        .btn-clear-filter {
-            width: 100%;
-            justify-content: center;
-        }
-    }
-
-    @media (max-width: 360px) {
-        .header {
-            padding: 0 10px;
-        }
-        
-        .main {
-            padding: 15px;
-        }
-        
-        .page-header,
-        .filter-section,
-        .schedule-section,
-        .date-filter-section {
-            padding: 15px;
-        }
-        
-        .stat-card {
-            padding: 15px;
-            height: 90px;
-        }
-        
-        .stat-icon {
-            width: 45px;
-            height: 45px;
-            font-size: 18px;
-        }
-        
-        .stat-info h3 {
-            font-size: 22px;
-        }
-        
-        .footer {
-            padding: 20px 15px;
-        }
-        
-        .modal-content {
-            width: 98%;
-            margin: 10px auto;
-        }
-        
-        .modal-body {
-            max-height: calc(100vh - 150px);
+            padding: 10px 8px;
         }
         
         .toast {
-            bottom: 20px;
-            right: 20px;
-            left: 20px;
-            max-width: none;
-        }
-        
-        .plant-actions {
-            flex-direction: column;
-        }
-        
-        .btn-water,
-        .btn-fertilize,
-        .btn-harvest,
-        .btn-details {
-            width: 100%;
+            bottom: 5px;
+            right: 5px;
+            left: 5px;
+            padding: 8px;
         }
     }
+
+    /* Perbaikan khusus untuk sidebar di mobile */
+    @media (max-width: 992px) {
+        .sidebar-footer {
+            position: relative;
+            bottom: auto;
+            left: auto;
+            right: auto;
+            background: white;
+            border-top: 1px solid var(--border-color);
+            z-index: 1002;
+        }
+        
+        .sidebar.open .sidebar-footer {
+            left: 0;
+            width: 100%;
+        }
+        
+        .sidebar-menu {
+            max-height: calc(100vh - var(--header-height) - 160px);
+        }
+    }
+
+    /* Utility Classes */
+    .text-truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .text-wrap {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .flex-column {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .flex-row {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .flex-wrap {
+        flex-wrap: wrap;
+    }
+    
+    .flex-nowrap {
+        flex-wrap: nowrap;
+    }
+    
+    .grid {
+        display: grid;
+    }
+    
+    .gap-1 { gap: 0.25rem; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 1rem; }
+    .gap-4 { gap: 1.5rem; }
+    .gap-5 { gap: 2rem; }
+    
+    .text-center { text-align: center; }
+    .text-left { text-align: left; }
+    .text-right { text-align: right; }
+    
+    .m-0 { margin: 0; }
+    .p-0 { padding: 0; }
+    
+    .w-100 { width: 100%; }
+    .h-100 { height: 100%; }
+    
+    .d-block { display: block; }
+    .d-flex { display: flex; }
+    .d-none { display: none; }
+    
+    .overflow-hidden { overflow: hidden; }
+    .overflow-auto { overflow: auto; }
+    .overflow-scroll { overflow: scroll; }
+    
+    .position-relative { position: relative; }
+    .position-absolute { position: absolute; }
+    .position-fixed { position: fixed; }
+    .position-sticky { position: sticky; }
     </style>
 </head>
 <body>
@@ -2476,6 +2761,10 @@
                     <a href="profile.html">
                         <i class="fas fa-user"></i>
                         <span>Profil</span>
+                    </a>
+                    <a href="#" onclick="logoutFromDropdown(event)">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Keluar</span>
                     </a>
                 </div>
             </div>
@@ -2527,7 +2816,7 @@
                             <span>Profil</span>
                         </a>
                     </li>
-                     <li>
+                    <li>
                         <a href="notification.html">
                             <i class="fas fa-bell"></i>
                             <span>Notifikasi</span>
@@ -2547,7 +2836,7 @@
 
         <!-- Main Content -->
         <main class="main" id="mainContent">
-            <!-- Page Header - JUDUL TETAP "JADWAL" -->
+            <!-- Page Header -->
             <div class="page-header">
                 <h1 id="titleHeader">Jadwal</h1>
                 <p id="messageHeader">Kelola dan pantau jadwal tanaman Anda dengan mudah</p>
@@ -2593,7 +2882,7 @@
                 </div>
             </div>
 
-            <!-- Date Filter Section - FITUR BARU -->
+            <!-- Date Filter Section -->
             <div class="date-filter-section">
                 <div class="date-filter-row">
                     <div class="date-filter-label">
@@ -2616,28 +2905,25 @@
                 </div>
             </div>
 
-            <!-- Filter Section - DENGAN HEADER BARU -->
-            <div class="filter-section" id="filterSection">
-                <!-- HEADER BARU DITAMBAHKAN DI SINI -->
-                <div class="filter-header">
+            <!-- Filter Section -->
+            <div class="category-filter-section" id="filterSection">
+                <div class="category-filter-header">
                     <h2><i class="fas fa-filter"></i> Filter Kategori Jadwal Tanaman</h2>
                 </div>
                 
-                <div class="filter-row">
-                    <div class="category-filters">
-                        <button class="category-filter active" data-category="all">
-                            <i class="fas fa-layer-group"></i> Semua Jadwal
-                        </button>
-                        <button class="category-filter" data-category="watering">
-                            <i class="fas fa-tint"></i> Penyiraman
-                        </button>
-                        <button class="category-filter" data-category="fertilizing">
-                            <i class="fas fa-seedling"></i> Pemupukan
-                        </button>
-                        <button class="category-filter" data-category="harvest">
-                            <i class="fas fa-hourglass-half"></i> Panen
-                        </button>
-                    </div>
+                <div class="category-filters">
+                    <button class="category-filter active" data-category="all">
+                        <i class="fas fa-layer-group"></i> Semua Jadwal
+                    </button>
+                    <button class="category-filter" data-category="watering">
+                        <i class="fas fa-tint"></i> Penyiraman
+                    </button>
+                    <button class="category-filter" data-category="fertilizing">
+                        <i class="fas fa-seedling"></i> Pemupukan
+                    </button>
+                    <button class="category-filter" data-category="harvest">
+                        <i class="fas fa-hourglass-half"></i> Panen
+                    </button>
                 </div>
             </div>
 
@@ -2716,7 +3002,7 @@
                     <div class="form-group">
                         <label>Pilih Metode Unggah Foto</label>
                         <div class="camera-options">
-                            <button type="button" class="camera-btn" onclick="openCamera('wateringProof')">
+                            <button type="button" class="camera-btn" onclick="capturePhotoDirect('wateringProof')">
                                 <i class="fas fa-camera"></i> Ambil Foto Langsung
                             </button>
                             <button type="button" class="camera-btn secondary" onclick="document.getElementById('wateringProof').click()">
@@ -2765,7 +3051,7 @@
                     <div class="form-group">
                         <label>Pilih Metode Unggah Foto</label>
                         <div class="camera-options">
-                            <button type="button" class="camera-btn" onclick="openCamera('fertilizingProof')">
+                            <button type="button" class="camera-btn" onclick="capturePhotoDirect('fertilizingProof')">
                                 <i class="fas fa-camera"></i> Ambil Foto Langsung
                             </button>
                             <button type="button" class="camera-btn secondary" onclick="document.getElementById('fertilizingProof').click()">
@@ -2792,7 +3078,7 @@
                         <button type="button" class="btn-secondary" onclick="closeFertilizingModal()">
                             <i class="fas fa-times"></i> Batal
                         </button>
-                        <button type="submit" class="btn-primary" id="confirmFertilizingBtn" style="background: linear-gradient(135deg, var(--fertilizer), #5D4037);">
+                        <button type="submit" class="btn-primary" id="confirmFertilizingBtn">
                             <i class="fas fa-seedling"></i> Konfirmasi Pemupukan
                         </button>
                     </div>
@@ -2801,8 +3087,89 @@
         </div>
     </div>
 
+    <!-- Harvest Modal -->
+    <div id="harvestModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-hourglass-half"></i> Konfirmasi Panen</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Silakan unggah bukti foto panen tanaman untuk melacak hasil pertanian Anda.</p>
+                <form id="harvestForm" class="plant-form">
+                    <div class="form-group">
+                        <label>Pilih Metode Unggah Foto</label>
+                        <div class="camera-options">
+                            <button type="button" class="camera-btn" onclick="capturePhotoDirect('harvestProof')">
+                                <i class="fas fa-camera"></i> Ambil Foto Langsung
+                            </button>
+                            <button type="button" class="camera-btn secondary" onclick="document.getElementById('harvestProof').click()">
+                                <i class="fas fa-images"></i> Pilih dari Galeri
+                            </button>
+                        </div>
+                        <div class="file-upload" onclick="document.getElementById('harvestProof').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p><strong>Klik untuk mengunggah foto</strong></p>
+                            <p>Seret dan lepas file ke sini atau klik untuk memilih</p>
+                            <p class="file-info">Format: JPG, PNG (Maks. 5MB)</p>
+                            <input type="file" id="harvestProof" class="file-input" accept="image/*" onchange="previewImage(this, 'imagePreviewHarvestProof', 'fileNameHarvestProof')">
+                        </div>
+                        <div class="file-preview">
+                            <img id="imagePreviewHarvestProof" src="" alt="Preview Foto Panen">
+                            <div class="file-name" id="fileNameHarvestProof"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="harvestQuantity">Jumlah Hasil Panen</label>
+                        <input type="number" id="harvestQuantity" class="date-input" placeholder="Contoh: 10" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="harvestNotes">Catatan Panen (Opsional)</label>
+                        <textarea id="harvestNotes" placeholder="Tambahkan catatan tentang kondisi panen, kualitas hasil, atau hal penting lainnya..." rows="4"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeHarvestModal()">
+                            <i class="fas fa-times"></i> Batal
+                        </button>
+                        <button type="submit" class="btn-primary" id="confirmHarvestBtn">
+                            <i class="fas fa-check-circle"></i> Konfirmasi Panen
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // ==================== DATABASE MANAGEMENT ====================
+        // ==================== KONFIGURASI SUARA NOTIFIKASI ====================
+        const NOTIFICATION_SOUNDS = {
+            bell: {
+                name: 'Bell',
+                frequency: 800,
+                duration: 0.5,
+                type: 'sine'
+            },
+            chime: {
+                name: 'Chime',
+                frequency: 523.25,
+                duration: 0.8,
+                type: 'sine'
+            },
+            ding: {
+                name: 'Ding',
+                frequency: 1000,
+                duration: 0.3,
+                type: 'triangle'
+            },
+            alert: {
+                name: 'Alert',
+                frequency: 880,
+                duration: 1.0,
+                type: 'square'
+            }
+        };
+
+        // ==================== STATE MANAGEMENT ====================
         let db = null;
         let currentUser = null;
         let plants = [];
@@ -2811,8 +3178,159 @@
         let sidebarOpen = false;
         let currentFilter = 'all';
         let currentDateFilter = null;
-        
-        // ==================== DATABASE FUNCTIONS (SINKRON DENGAN DASHBOARD.HTML) ====================
+        let audioContext = null;
+
+        // ==================== FUNGSI UTAMA ====================
+
+        // Initialize notification page
+        async function initSchedulePage() {
+            console.log("📅 Initializing schedule page...");
+            
+            // Check authentication
+            currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                showToast('Silakan login terlebih dahulu', 'error');
+                setTimeout(() => window.location.href = 'index.html', 1500);
+                return;
+            }
+
+            try {
+                // Initialize database
+                await initDB();
+                
+                // Initialize audio context
+                initAudioContext();
+                
+                const urlParams = new URLSearchParams(window.location.search);
+                const type = urlParams.get('type');
+
+                updateUserInfo();
+                await loadPlants();
+                updateSchedulePage(type);
+                await updateNotifications();
+                setupEventListeners();
+                
+                if (type) {
+                    currentFilter = type;
+                    updateActiveFilterButton();
+                    filterPlants(type);
+                } else {
+                    showViewAllButtons();
+                }
+
+                console.log('✅ Schedule page initialized successfully');
+                
+            } catch (error) {
+                console.error("Error initializing schedule page:", error);
+                showToast('Gagal memuat halaman jadwal', 'error');
+            }
+        }
+
+        // Initialize audio context
+        function initAudioContext() {
+            try {
+                if (window.AudioContext || window.webkitAudioContext) {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    audioContext = new AudioContextClass();
+                    
+                    if (audioContext.state === 'suspended') {
+                        document.addEventListener('click', function resumeAudio() {
+                            if (audioContext.state === 'suspended') {
+                                audioContext.resume().then(() => {
+                                    console.log("🎵 Audio context resumed");
+                                });
+                            }
+                            document.removeEventListener('click', resumeAudio);
+                        }, { once: true });
+                    }
+                    console.log("🎵 Audio context initialized");
+                }
+            } catch (error) {
+                console.error("Error initializing audio context:", error);
+            }
+        }
+
+        // Mainkan suara notifikasi
+        function playNotificationSound(soundType = null) {
+            console.log(`🔊 Playing notification sound: ${soundType}`);
+            
+            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {
+                sound: true,
+                soundType: 'bell'
+            };
+            
+            if (!settings.sound) {
+                console.log("🔇 Sound notifications are disabled");
+                return false;
+            }
+            
+            const soundToPlay = soundType || settings.soundType || 'bell';
+            
+            if (!audioContext) {
+                initAudioContext();
+            }
+            
+            try {
+                if (audioContext && audioContext.state === 'suspended') {
+                    audioContext.resume();
+                }
+                
+                if (audioContext) {
+                    const sound = NOTIFICATION_SOUNDS[soundToPlay] || NOTIFICATION_SOUNDS.bell;
+                    
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.value = sound.frequency;
+                    oscillator.type = sound.type;
+                    
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + sound.duration);
+                    
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + sound.duration);
+                    
+                    console.log(`✅ Sound ${soundToPlay} playing successfully`);
+                    return true;
+                }
+            } catch (error) {
+                console.error("Error playing sound:", error);
+            }
+            
+            return false;
+        }
+
+        // Cek apakah suara notifikasi diaktifkan
+        function isSoundNotificationEnabled() {
+            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {
+                sound: true,
+                soundType: 'bell'
+            };
+            return settings.sound !== false;
+        }
+
+        // Dapatkan tipe suara dari pengaturan
+        function getNotificationSoundType() {
+            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {
+                sound: true,
+                soundType: 'bell'
+            };
+            return settings.soundType || 'bell';
+        }
+
+        // Mainkan suara notifikasi jika diaktifkan
+        function playNotificationIfEnabled() {
+            if (isSoundNotificationEnabled()) {
+                const soundType = getNotificationSoundType();
+                console.log(`🔔 Playing notification sound: ${soundType}`);
+                playNotificationSound(soundType);
+            }
+        }
+
+        // ==================== DATABASE FUNCTIONS ====================
         async function initDB() {
             return new Promise((resolve, reject) => {
                 const request = indexedDB.open("SmartTaniDB", 5);
@@ -2858,12 +3376,6 @@
                         historyStore.createIndex("userId", "userId", { unique: false });
                         historyStore.createIndex("date", "date", { unique: false });
                         historyStore.createIndex("type", "type", { unique: false });
-                    }
-                    
-                    // Weather store
-                    if (!db.objectStoreNames.contains("weather")) {
-                        const weatherStore = db.createObjectStore("weather", { keyPath: "id" });
-                        weatherStore.createIndex("userId", "userId", { unique: false });
                     }
                 };
                 
@@ -2959,29 +3471,6 @@
                 request.onerror = function() {
                     reject("Gagal menyimpan tanaman ke database");
                 };
-            });
-        }
-
-        async function updatePlantInDB(plantId, updates) {
-            return new Promise(async (resolve, reject) => {
-                if (!db) {
-                    reject("Database belum diinisialisasi");
-                    return;
-                }
-                
-                try {
-                    const plant = await getPlantFromDB(plantId);
-                    if (!plant) {
-                        reject("Tanaman tidak ditemukan");
-                        return;
-                    }
-                    
-                    const updatedPlant = { ...plant, ...updates };
-                    await savePlantToDB(updatedPlant);
-                    resolve(updatedPlant);
-                } catch (error) {
-                    reject("Gagal memperbarui tanaman: " + error);
-                }
             });
         }
 
@@ -3182,7 +3671,7 @@
             }
         }
 
-        // ==================== PROGRESS CALCULATION FUNCTIONS (SINKRON DENGAN DASHBOARD.HTML) ====================
+        // ==================== PROGRESS CALCULATION FUNCTIONS ====================
         function calculateProgressBasedOnTime(plant) {
             const startDate = new Date(plant.startDate);
             const harvestDate = new Date(plant.harvestDate);
@@ -3206,11 +3695,6 @@
             
             // Pastikan progress antara 0-100%
             progress = Math.min(100, Math.max(0, progress));
-            
-            console.log(`Progress calculation for ${plant.name}:`);
-            console.log(`- Start: ${plant.startDate}, Harvest: ${plant.harvestDate}`);
-            console.log(`- Total days: ${totalDays}, Elapsed days: ${elapsedDays}`);
-            console.log(`- Progress: ${progress}%`);
             
             return progress;
         }
@@ -3261,31 +3745,63 @@
         }
 
         // ==================== HELPER FUNCTIONS ====================
+        // PERBAIKAN UTAMA: Fungsi normalizeDate yang lebih akurat untuk timezone
         function normalizeDate(date) {
-            const normalized = new Date(date);
-            normalized.setHours(0, 0, 0, 0);
-            return normalized;
+            if (!date) return null;
+            
+            let d;
+            if (date instanceof Date) {
+                d = new Date(date);
+            } else if (typeof date === 'string') {
+                // Tangani berbagai format string
+                if (date.includes('T')) {
+                    d = new Date(date);
+                } else {
+                    // Format YYYY-MM-DD, asumsikan waktu local midnight
+                    d = new Date(date + 'T00:00:00');
+                }
+            } else {
+                d = new Date(date);
+            }
+            
+            // Reset ke local midnight (00:00:00) di timezone user
+            return new Date(d.getFullYear(), d.getMonth(), d.getDate());
         }
         
-        function getDateString(date) {
-            return date.toISOString().split('T')[0];
-        }
-        
+        // PERBAIKAN UTAMA: Fungsi getDaysUntil yang lebih akurat
         function getDaysUntil(targetDate) {
+            if (!targetDate) return null;
+            
             const today = normalizeDate(new Date());
             const target = normalizeDate(new Date(targetDate));
+            
+            // Debug log untuk troubleshooting
+            console.log('DEBUG getDaysUntil:', {
+                input: targetDate,
+                today: today.toISOString(),
+                target: target.toISOString(),
+                todayLocal: today.toLocaleDateString('id-ID'),
+                targetLocal: target.toLocaleDateString('id-ID')
+            });
+            
             const diffTime = target - today;
-            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            return days;
         }
         
+        // PERBAIKAN UTAMA: Fungsi getPriority yang lebih sederhana
         function getPriority(daysUntil) {
+            if (daysUntil === null) return 'low';
             if (daysUntil <= 0) return 'high';
             if (daysUntil <= 2) return 'high';
             if (daysUntil <= 5) return 'medium';
             return 'low';
         }
         
+        // PERBAIKAN UTAMA: Fungsi getPriorityText yang lebih akurat
         function getPriorityText(daysUntil) {
+            if (daysUntil === null) return 'Belum Diatur';
             if (daysUntil < 0) return `${Math.abs(daysUntil)} Hari Lalu`;
             if (daysUntil === 0) return 'Hari Ini';
             if (daysUntil === 1) return 'Besok';
@@ -3294,14 +3810,32 @@
             return `${daysUntil} Hari Lagi`;
         }
 
+        // PERBAIKAN UTAMA: Fungsi formatDate dengan timezone Indonesia
         function formatDate(dateString) {
             if (!dateString) return '-';
             try {
-                const options = { day: 'numeric', month: 'short', year: 'numeric' };
-                return new Date(dateString).toLocaleDateString('id-ID', options);
+                const date = new Date(dateString);
+                // Format dengan timezone Indonesia
+                const options = { 
+                    day: 'numeric', 
+                    month: 'short', 
+                    year: 'numeric',
+                    timeZone: 'Asia/Jakarta'
+                };
+                return date.toLocaleDateString('id-ID', options);
             } catch (error) {
+                console.error('Error formatting date:', error);
                 return dateString;
             }
+        }
+
+        // Fungsi formatDateToYYYYMMDD untuk konsistensi dengan plants.html
+        function formatDateToYYYYMMDD(date) {
+            const d = new Date(date);
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
         }
 
         function getUserName() {
@@ -3334,11 +3868,25 @@
             }
         }
 
+        function updateUserInfo() {
+            if (!currentUser) return;
+            
+            const userName = getUserName();
+            const userEmail = currentUser.email || 'user@email.com';
+            
+            document.getElementById('userNameSidebar').textContent = userName;
+            document.getElementById('userEmailSidebar').textContent = userEmail;
+            document.getElementById('userAvatarSidebar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=2E7D32&color=fff`;
+            
+            document.getElementById('userNameHeader').textContent = userName;
+            document.getElementById('userAvatarHeader').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=2E7D32&color=fff`;
+        }
+
         function animateCounter(elementId, targetValue) {
             const element = document.getElementById(elementId);
             const currentValue = parseInt(element.textContent) || 0;
-            const duration = 600;
-            const steps = 40;
+            const duration = 500;
+            const steps = 30;
             const increment = (targetValue - currentValue) / steps;
             let step = 0;
             
@@ -3377,6 +3925,13 @@
             
             // Show toast
             toast.classList.add('show');
+            
+            // Play notification sound untuk notifikasi sukses atau info jika diaktifkan
+            if ((type === 'success' || type === 'info') && isSoundNotificationEnabled()) {
+                setTimeout(() => {
+                    playNotificationIfEnabled();
+                }, 300);
+            }
             
             // Auto hide after 5 seconds
             setTimeout(() => {
@@ -3439,7 +3994,7 @@
                     preview.style.display = 'block';
                     preview.style.margin = '0 auto';
                     preview.style.maxWidth = '100%';
-                    preview.style.maxHeight = '250px';
+                    preview.style.maxHeight = '200px';
                     preview.style.objectFit = 'contain';
                     fileName.textContent = file.name;
                 }
@@ -3475,43 +4030,7 @@
             }
         }
 
-        // ==================== INITIALIZATION ====================
-        async function initSchedulePage() {
-            currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (!currentUser) {
-                showToast('Silakan login terlebih dahulu', 'error');
-                setTimeout(() => window.location.href = 'index.html', 1500);
-                return;
-            }
-
-            try {
-                await initDB();
-                
-                const urlParams = new URLSearchParams(window.location.search);
-                const type = urlParams.get('type');
-
-                updateUserInfo();
-                await loadPlants();
-                updateSchedulePage(type);
-                await updateNotifications();
-                setupEventListeners();
-                
-                if (type) {
-                    currentFilter = type;
-                    updateActiveFilterButton();
-                    filterPlants(type);
-                } else {
-                    showViewAllButtons();
-                }
-
-                console.log('✅ Schedule page initialized successfully');
-                
-            } catch (error) {
-                console.error("Error initializing schedule page:", error);
-                showToast('Gagal memuat halaman jadwal', 'error');
-            }
-        }
-
+        // ==================== LOAD FUNCTIONS ====================
         async function loadPlants() {
             try {
                 plants = await getUserPlants();
@@ -3520,28 +4039,30 @@
                     plants = allPlants.filter(plant => plant.userId == currentUser.id);
                     
                     for (const plant of plants) {
+                        // PERBAIKAN: Pastikan jadwal hari ini untuk tanaman baru
+                        if (!plant.nextWatering) {
+                            plant.nextWatering = formatDateToYYYYMMDD(new Date());
+                        }
+                        if (!plant.nextFertilizing) {
+                            plant.nextFertilizing = formatDateToYYYYMMDD(new Date());
+                        }
                         await savePlantToDB(plant);
                     }
                 }
+                
+                // Debug: Tampilkan informasi jadwal
+                console.log('DEBUG Schedule Plants Loaded:', plants.map(p => ({
+                    name: p.name,
+                    nextWatering: p.nextWatering,
+                    nextFertilizing: p.nextFertilizing,
+                    startDate: p.startDate
+                })));
+                
             } catch (error) {
                 console.error("Error loading plants:", error);
                 const allPlants = JSON.parse(localStorage.getItem('plants')) || [];
                 plants = allPlants.filter(plant => plant.userId == currentUser.id);
             }
-        }
-
-        function updateUserInfo() {
-            if (!currentUser) return;
-            
-            const userName = getUserName();
-            const userEmail = currentUser.email || 'user@email.com';
-            
-            document.getElementById('userNameSidebar').textContent = userName;
-            document.getElementById('userEmailSidebar').textContent = userEmail;
-            document.getElementById('userAvatarSidebar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=2E7D32&color=fff`;
-            
-            document.getElementById('userNameHeader').textContent = userName;
-            document.getElementById('userAvatarHeader').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=2E7D32&color=fff`;
         }
 
         // ==================== SCHEDULE PAGE FUNCTIONS ====================
@@ -3587,6 +4108,15 @@
                 .sort((a, b) => {
                     const dateA = new Date(a[dateField]);
                     const dateB = new Date(b[dateField]);
+                    const today = new Date();
+                    
+                    // PERBAIKAN: Jadwal hari ini diutamakan
+                    const aIsToday = normalizeDate(dateA).getTime() === normalizeDate(today).getTime();
+                    const bIsToday = normalizeDate(dateB).getTime() === normalizeDate(today).getTime();
+                    
+                    if (aIsToday && !bIsToday) return -1;
+                    if (!aIsToday && bIsToday) return 1;
+                    
                     return dateA - dateB;
                 });
         }
@@ -3606,18 +4136,18 @@
             });
             
             wateringPlants = sortPlantsByDate(wateringPlants, 'nextWatering');
-            const displayPlants = currentDateFilter ? wateringPlants : wateringPlants.slice(0, 3);
+            const displayPlants = currentDateFilter ? wateringPlants : wateringPlants.slice(0, 4);
             
             const grid = document.getElementById('wateringScheduleGrid');
             
             if (displayPlants.length === 0) {
                 grid.innerHTML = `
-                    <div class="empty-state">
+                    <div class="empty-state full-width">
                         <i class="fas fa-tint"></i>
                         <h3>${currentDateFilter ? 'Tidak ada jadwal menyiram pada tanggal ini' : 'Tidak ada jadwal menyiram'}</h3>
                         <p>${currentDateFilter ? 'Tidak ada jadwal penyiraman pada tanggal yang dipilih' : 'Tidak ada jadwal penyiraman yang akan datang'}</p>
                         <button class="btn-primary" onclick="window.location.href='plants.html'">
-                            <i class="fas fa-plus"></i> Tambah Tanaman
+                            <i class="fas fa-plus" style="color: white !important;"></i> Tambah Tanaman
                         </button>
                     </div>
                 `;
@@ -3642,62 +4172,80 @@
                 const priorityText = getPriorityText(daysUntil);
                 const imageSrc = imageResults[index];
 
-                // Check if plant has schedule today
+                // Check if plant has schedule today - PERBAIKAN AKURAT
                 const today = normalizeDate(new Date());
                 const waterDate = normalizeDate(new Date(plant.nextWatering));
                 const isToday = waterDate.getTime() === today.getTime();
 
+                console.log('DEBUG renderWatering:', {
+                    name: plant.name,
+                    nextWatering: plant.nextWatering,
+                    waterDate: waterDate.toISOString(),
+                    today: today.toISOString(),
+                    daysUntil: daysUntil,
+                    isToday: isToday
+                });
+
                 return `
                     <div class="plant-card info ${isToday ? 'today' : ''}">
-                        <div class="schedule-priority ${'priority-' + priority}">
-                            <i class="fas fa-clock"></i>
-                            <span>${priorityText}</span>
-                        </div>
-                        <div class="plant-header">
-                            <h3 class="plant-name">${plant.name}</h3>
-                            <span class="plant-type">${plant.type}</span>
-                        </div>
-                        
-                        ${imageSrc ? `
-                        <div class="plant-image-container" style="text-align: center; margin: 15px 0;">
-                            <img src="${imageSrc}" alt="${plant.name}" style="max-width: 100%; max-height: 150px; border-radius: 10px; margin: 0 auto; display: block; border: 2px solid var(--primary-light);">
-                        </div>
-                        ` : ''}
-                        
-                        <div class="plant-details">
-                            <div class="plant-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>${plant.location}</span>
-                            </div>
-                            <div class="plant-detail">
-                                <i class="fas fa-calendar"></i>
-                                <span>${formatDate(plant.nextWatering)}</span>
-                            </div>
-                            <div class="plant-detail">
+                        <div class="plant-card-header">
+                            <div class="schedule-priority ${'priority-' + priority}">
                                 <i class="fas fa-clock"></i>
-                                <span>${plant.waterTime || '08:00'} • ${priorityText}</span>
+                                <span>${priorityText}</span>
+                            </div>
+                            <div class="plant-header">
+                                <div class="plant-name-wrapper">
+                                    <h3 class="plant-name">${plant.name}</h3>
+                                    <span class="plant-type">${plant.type}</span>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="plant-progress">
-                            <div class="progress-info">
-                                <span class="progress-label">Progress</span>
-                                <span class="progress-value">${plant.progress}%</span>
+                        <div class="plant-card-body">
+                            <div class="plant-main-content">
+                                ${imageSrc ? `
+                                <div class="plant-image-container">
+                                    <img src="${imageSrc}" alt="${plant.name}">
+                                </div>
+                                ` : ''}
+                                
+                                <div class="plant-details">
+                                    <div class="plant-detail">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>${plant.location}</span>
+                                    </div>
+                                    <div class="plant-detail">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>${formatDate(plant.nextWatering)}</span>
+                                    </div>
+                                    <div class="plant-detail">
+                                        <i class="fas fa-clock"></i>
+                                        <span>${plant.waterTime || '08:00'} • ${priorityText}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="plant-progress">
+                                    <div class="progress-info">
+                                        <span class="progress-label">Progress</span>
+                                        <span class="progress-value">${plant.progress}%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${plant.progress}%"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${plant.progress}%"></div>
+                            
+                            <div class="plant-actions">
+                                <div class="button-container">
+                                    ${isToday ? `
+                                    <button class="btn-water" onclick="openWateringModal('${plant.id}')" ${plant.progress >= 100 ? 'disabled' : ''}>
+                                        <i class="fas fa-tint"></i> Konfirmasi
+                                    </button>
+                                    ` : ''}
+                                    <button class="btn-details" onclick="viewPlantDetails('${plant.id}')">
+                                        <i class="fas fa-info-circle"></i> Detail
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="plant-actions ${isToday ? 'double-button' : 'double-button'}">
-                            ${isToday ? `
-                            <button class="btn-water" onclick="openWateringModal('${plant.id}')" ${plant.progress >= 100 ? 'disabled' : ''}>
-                                <i class="fas fa-tint"></i> Konfirmasi
-                            </button>
-                            ` : ''}
-                            <button class="btn-details" onclick="viewPlantDetails('${plant.id}')">
-                                <i class="fas fa-info-circle"></i> Detail
-                            </button>
                         </div>
                     </div>
                 `;
@@ -3718,18 +4266,18 @@
             });
             
             fertilizingPlants = sortPlantsByDate(fertilizingPlants, 'nextFertilizing');
-            const displayPlants = currentDateFilter ? fertilizingPlants : fertilizingPlants.slice(0, 3);
+            const displayPlants = currentDateFilter ? fertilizingPlants : fertilizingPlants.slice(0, 4);
             
             const grid = document.getElementById('fertilizingScheduleGrid');
             
             if (displayPlants.length === 0) {
                 grid.innerHTML = `
-                    <div class="empty-state">
+                    <div class="empty-state full-width">
                         <i class="fas fa-seedling"></i>
                         <h3>${currentDateFilter ? 'Tidak ada jadwal pemupukan pada tanggal ini' : 'Tidak ada jadwal pemupukan'}</h3>
                         <p>${currentDateFilter ? 'Tidak ada jadwal pemupukan pada tanggal yang dipilih' : 'Tidak ada jadwal pemupukan yang akan datang'}</p>
                         <button class="btn-primary" onclick="window.location.href='plants.html'">
-                            <i class="fas fa-plus"></i> Tambah Tanaman
+                            <i class="fas fa-plus" style="color: white !important;"></i> Tambah Tanaman
                         </button>
                     </div>
                 `;
@@ -3759,57 +4307,75 @@
                 const fertilizeDate = normalizeDate(new Date(plant.nextFertilizing));
                 const isToday = fertilizeDate.getTime() === today.getTime();
 
+                console.log('DEBUG renderFertilizing:', {
+                    name: plant.name,
+                    nextFertilizing: plant.nextFertilizing,
+                    fertilizeDate: fertilizeDate.toISOString(),
+                    today: today.toISOString(),
+                    daysUntil: daysUntil,
+                    isToday: isToday
+                });
+
                 return `
                     <div class="plant-card fertilizer ${isToday ? 'today' : ''}">
-                        <div class="schedule-priority ${'priority-' + priority}">
-                            <i class="fas fa-clock"></i>
-                            <span>${priorityText}</span>
-                        </div>
-                        <div class="plant-header">
-                            <h3 class="plant-name">${plant.name}</h3>
-                            <span class="plant-type">${plant.type}</span>
-                        </div>
-                        
-                        ${imageSrc ? `
-                        <div class="plant-image-container" style="text-align: center; margin: 15px 0;">
-                            <img src="${imageSrc}" alt="${plant.name}" style="max-width: 100%; max-height: 150px; border-radius: 10px; margin: 0 auto; display: block; border: 2px solid var(--primary-light);">
-                        </div>
-                        ` : ''}
-                        
-                        <div class="plant-details">
-                            <div class="plant-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>${plant.location}</span>
-                            </div>
-                            <div class="plant-detail">
-                                <i class="fas fa-calendar"></i>
-                                <span>${formatDate(plant.nextFertilizing)}</span>
-                            </div>
-                            <div class="plant-detail">
+                        <div class="plant-card-header">
+                            <div class="schedule-priority ${'priority-' + priority}">
                                 <i class="fas fa-clock"></i>
-                                <span>${plant.fertilizerTime || '09:00'} • ${priorityText}</span>
+                                <span>${priorityText}</span>
+                            </div>
+                            <div class="plant-header">
+                                <div class="plant-name-wrapper">
+                                    <h3 class="plant-name">${plant.name}</h3>
+                                    <span class="plant-type">${plant.type}</span>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="plant-progress">
-                            <div class="progress-info">
-                                <span class="progress-label">Progress</span>
-                                <span class="progress-value">${plant.progress}%</span>
+                        <div class="plant-card-body">
+                            <div class="plant-main-content">
+                                ${imageSrc ? `
+                                <div class="plant-image-container">
+                                    <img src="${imageSrc}" alt="${plant.name}">
+                                </div>
+                                ` : ''}
+                                
+                                <div class="plant-details">
+                                    <div class="plant-detail">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>${plant.location}</span>
+                                    </div>
+                                    <div class="plant-detail">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>${formatDate(plant.nextFertilizing)}</span>
+                                    </div>
+                                    <div class="plant-detail">
+                                        <i class="fas fa-clock"></i>
+                                        <span>${plant.fertilizerTime || '09:00'} • ${priorityText}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="plant-progress">
+                                    <div class="progress-info">
+                                        <span class="progress-label">Progress</span>
+                                        <span class="progress-value">${plant.progress}%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${plant.progress}%"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${plant.progress}%"></div>
+                            
+                            <div class="plant-actions">
+                                <div class="button-container">
+                                    ${isToday ? `
+                                    <button class="btn-fertilize" onclick="openFertilizingModal('${plant.id}')" ${plant.progress >= 100 ? 'disabled' : ''}>
+                                        <i class="fas fa-seedling"></i> Konfirmasi
+                                    </button>
+                                    ` : ''}
+                                    <button class="btn-details" onclick="viewPlantDetails('${plant.id}')">
+                                        <i class="fas fa-info-circle"></i> Detail
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="plant-actions ${isToday ? 'double-button' : 'double-button'}">
-                            ${isToday ? `
-                            <button class="btn-fertilize" onclick="openFertilizingModal('${plant.id}')" ${plant.progress >= 100 ? 'disabled' : ''}>
-                                <i class="fas fa-seedling"></i> Konfirmasi
-                            </button>
-                            ` : ''}
-                            <button class="btn-details" onclick="viewPlantDetails('${plant.id}')">
-                                <i class="fas fa-info-circle"></i> Detail
-                            </button>
                         </div>
                     </div>
                 `;
@@ -3830,18 +4396,18 @@
             });
             
             harvestPlants = sortPlantsByDate(harvestPlants, 'harvestDate');
-            const displayPlants = currentDateFilter ? harvestPlants : harvestPlants.slice(0, 3);
+            const displayPlants = currentDateFilter ? harvestPlants : harvestPlants.slice(0, 4);
             
             const grid = document.getElementById('harvestScheduleGrid');
             
             if (displayPlants.length === 0) {
                 grid.innerHTML = `
-                    <div class="empty-state">
+                    <div class="empty-state full-width">
                         <i class="fas fa-hourglass-half"></i>
                         <h3>${currentDateFilter ? 'Tidak ada jadwal panen pada tanggal ini' : 'Tidak ada jadwal panen'}</h3>
                         <p>${currentDateFilter ? 'Tidak ada jadwal panen pada tanggal yang dipilih' : 'Tidak ada jadwal panen yang akan datang'}</p>
                         <button class="btn-primary" onclick="window.location.href='plants.html'">
-                            <i class="fas fa-plus"></i> Tambah Tanaman
+                            <i class="fas fa-plus" style="color: white !important;"></i> Tambah Tanaman
                         </button>
                     </div>
                 `;
@@ -3875,57 +4441,75 @@
                 let cardClass = priority === 'high' ? 'urgent' : (priority === 'medium' ? 'warning' : 'harvest');
                 if (isToday) cardClass = 'today';
 
+                console.log('DEBUG renderHarvest:', {
+                    name: plant.name,
+                    harvestDate: plant.harvestDate,
+                    harvestDateNorm: harvestDate.toISOString(),
+                    today: today.toISOString(),
+                    daysUntil: daysUntil,
+                    isToday: isToday
+                });
+
                 return `
                     <div class="plant-card ${cardClass}">
-                        <div class="schedule-priority ${'priority-' + priority}">
-                            <i class="fas fa-clock"></i>
-                            <span>${priorityText}</span>
-                        </div>
-                        <div class="plant-header">
-                            <h3 class="plant-name">${plant.name}</h3>
-                            <span class="plant-type">${plant.type}</span>
-                        </div>
-                        
-                        ${imageSrc ? `
-                        <div class="plant-image-container" style="text-align: center; margin: 15px 0;">
-                            <img src="${imageSrc}" alt="${plant.name}" style="max-width: 100%; max-height: 150px; border-radius: 10px; margin: 0 auto; display: block; border: 2px solid var(--primary-light);">
-                        </div>
-                        ` : ''}
-                        
-                        <div class="plant-details">
-                            <div class="plant-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>${plant.location}</span>
-                            </div>
-                            <div class="plant-detail">
-                                <i class="fas fa-calendar"></i>
-                                <span>${formatDate(plant.harvestDate)}</span>
-                            </div>
-                            <div class="plant-detail">
-                                <i class="fas fa-hourglass-half"></i>
+                        <div class="plant-card-header">
+                            <div class="schedule-priority ${'priority-' + priority}">
+                                <i class="fas fa-clock"></i>
                                 <span>${priorityText}</span>
                             </div>
-                        </div>
-                        
-                        <div class="plant-progress">
-                            <div class="progress-info">
-                                <span class="progress-label">Progress</span>
-                                <span class="progress-value">${plant.progress}%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${plant.progress}%"></div>
+                            <div class="plant-header">
+                                <div class="plant-name-wrapper">
+                                    <h3 class="plant-name">${plant.name}</h3>
+                                    <span class="plant-type">${plant.type}</span>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="plant-actions ${isToday ? 'double-button' : 'single-button'}">
-                            ${isToday ? `
-                            <button class="btn-harvest" onclick="openHarvestModal('${plant.id}')" style="flex: 1;">
-                                <i class="fas fa-check-circle"></i> Konfirmasi Panen
-                            </button>
-                            ` : ''}
-                            <button class="btn-details" onclick="viewPlantDetails('${plant.id}')">
-                                <i class="fas fa-info-circle"></i> Detail
-                            </button>
+                        <div class="plant-card-body">
+                            <div class="plant-main-content">
+                                ${imageSrc ? `
+                                <div class="plant-image-container">
+                                    <img src="${imageSrc}" alt="${plant.name}">
+                                </div>
+                                ` : ''}
+                                
+                                <div class="plant-details">
+                                    <div class="plant-detail">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>${plant.location}</span>
+                                    </div>
+                                    <div class="plant-detail">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>${formatDate(plant.harvestDate)}</span>
+                                    </div>
+                                    <div class="plant-detail">
+                                        <i class="fas fa-hourglass-half"></i>
+                                        <span>${priorityText}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="plant-progress">
+                                    <div class="progress-info">
+                                        <span class="progress-label">Progress</span>
+                                        <span class="progress-value">${plant.progress}%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${plant.progress}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="plant-actions">
+                                <div class="button-container">
+                                    ${isToday ? `
+                                    <button class="btn-harvest" onclick="openHarvestModal('${plant.id}')">
+                                        <i class="fas fa-check-circle"></i> Konfirmasi Panen
+                                    </button>
+                                    ` : ''}
+                                    <button class="btn-details" onclick="viewPlantDetails('${plant.id}')">
+                                        <i class="fas fa-info-circle"></i> Detail
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -4021,7 +4605,7 @@
             updateSchedulePage();
         }
 
-        // ==================== FORM HANDLERS (SINKRON DENGAN DASHBOARD.HTML) ====================
+        // ==================== FORM HANDLERS ====================
         async function handleWateringSubmit(e) {
             e.preventDefault();
             const plantId = currentEditingPlantId;
@@ -4069,16 +4653,17 @@
                 
                 const nextWatering = new Date();
                 nextWatering.setDate(nextWatering.getDate() + waterScheduleDays);
+                const nextWateringStr = formatDateToYYYYMMDD(nextWatering);
                 
                 // Update plant data
                 const updatedPlant = {
                     ...plant,
-                    nextWatering: new Intl.DateTimeFormat('en-CA').format(nextWatering),
-                    lastWatered: new Intl.DateTimeFormat('en-CA').format(new Date()),
+                    nextWatering: nextWateringStr,
+                    lastWatered: formatDateToYYYYMMDD(new Date()),
                     progress: newProgress,
                     wateringProofId: imageId,
                     status: newProgress >= 100 ? 'completed' : 'active',
-                    lastProgressUpdate: new Intl.DateTimeFormat('en-CA').format(new Date())
+                    lastProgressUpdate: formatDateToYYYYMMDD(new Date())
                 };
                 
                 // Save updated plant to DB
@@ -4090,7 +4675,7 @@
                     plantId: plantId,
                     plantName: plant.name,
                     type: 'watering',
-                    date: new Intl.DateTimeFormat('en-CA').format(new Date()),
+                    date: formatDateToYYYYMMDD(new Date()),
                     time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
                     imageId: imageId,
                     notes: notes,
@@ -4127,6 +4712,9 @@
                 
                 showToast(`Penyiraman berhasil! Progress: ${newProgress}% (+${activityBonus}% bonus)`, 'success');
                 closeWateringModal();
+                
+                // Mainkan suara notifikasi
+                playNotificationIfEnabled();
                 
             } catch (error) {
                 console.error('Error:', error);
@@ -4185,16 +4773,17 @@
                 
                 const nextFertilizing = new Date();
                 nextFertilizing.setDate(nextFertilizing.getDate() + fertilizerScheduleDays);
+                const nextFertilizingStr = formatDateToYYYYMMDD(nextFertilizing);
                 
                 // Update plant data
                 const updatedPlant = {
                     ...plant,
-                    nextFertilizing: new Intl.DateTimeFormat('en-CA').format(nextFertilizing),
-                    lastFertilized: new Intl.DateTimeFormat('en-CA').format(new Date()),
+                    nextFertilizing: nextFertilizingStr,
+                    lastFertilized: formatDateToYYYYMMDD(new Date()),
                     progress: newProgress,
                     fertilizingProofId: imageId,
                     status: newProgress >= 100 ? 'completed' : 'active',
-                    lastProgressUpdate: new Intl.DateTimeFormat('en-CA').format(new Date())
+                    lastProgressUpdate: formatDateToYYYYMMDD(new Date())
                 };
                 
                 // Save updated plant to DB
@@ -4206,7 +4795,7 @@
                     plantId: plantId,
                     plantName: plant.name,
                     type: 'fertilizing',
-                    date: new Intl.DateTimeFormat('en-CA').format(new Date()),
+                    date: formatDateToYYYYMMDD(new Date()),
                     time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
                     imageId: imageId,
                     notes: notes,
@@ -4243,6 +4832,9 @@
                 
                 showToast(`Pemupukan berhasil! Progress: ${newProgress}% (+${activityBonus}% bonus)`, 'success');
                 closeFertilizingModal();
+                
+                // Mainkan suara notifikasi
+                playNotificationIfEnabled();
                 
             } catch (error) {
                 console.error('Error:', error);
@@ -4293,10 +4885,10 @@
                     ...plant,
                     status: 'completed',
                     progress: 100,
-                    harvestedDate: new Intl.DateTimeFormat('en-CA').format(new Date()),
+                    harvestedDate: formatDateToYYYYMMDD(new Date()),
                     harvestProofId: imageId,
                     harvestQuantity: quantity,
-                    lastProgressUpdate: new Intl.DateTimeFormat('en-CA').format(new Date())
+                    lastProgressUpdate: formatDateToYYYYMMDD(new Date())
                 };
                 
                 // Save updated plant to DB
@@ -4308,7 +4900,7 @@
                     plantId: plantId,
                     plantName: plant.name,
                     type: 'harvest',
-                    date: new Intl.DateTimeFormat('en-CA').format(new Date()),
+                    date: formatDateToYYYYMMDD(new Date()),
                     time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
                     imageId: imageId,
                     notes: notes,
@@ -4336,6 +4928,9 @@
                 
                 showToast(`Panen berhasil dikonfirmasi! Hasil: ${quantity}`, 'success');
                 closeHarvestModal();
+                
+                // Mainkan suara notifikasi
+                playNotificationIfEnabled();
                 
             } catch (error) {
                 console.error('Error:', error);
@@ -4375,9 +4970,6 @@
         function openHarvestModal(plantId) {
             currentEditingPlantId = plantId;
             const modal = document.getElementById('harvestModal');
-            if (!modal) {
-                createHarvestModal();
-            }
             modal.style.display = 'block';
             resetForm('harvestForm', 'imagePreviewHarvestProof', 'fileNameHarvestProof', 'harvestProof');
         }
@@ -4388,10 +4980,6 @@
                 modal.style.display = 'none';
                 resetForm('harvestForm', 'imagePreviewHarvestProof', 'fileNameHarvestProof', 'harvestProof');
             }
-        }
-
-        function createHarvestModal() {
-            // Harvest modal sudah ada dalam HTML
         }
 
         // ==================== UTILITY FUNCTIONS ====================
@@ -4409,6 +4997,11 @@
                     window.location.href = 'index.html';
                 }, 1500);
             }
+        }
+
+        function logoutFromDropdown(event) {
+            event.preventDefault();
+            logout();
         }
 
         // ==================== EVENT LISTENERS ====================
@@ -4501,20 +5094,6 @@
             // Refresh notifications periodically
             setInterval(updateNotifications, 30000);
             
-            // Add click effect to stat cards
-            document.querySelectorAll('.stat-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    this.style.transform = 'translateY(-4px)';
-                    setTimeout(() => {
-                        this.style.transform = 'translateY(-8px)';
-                    }, 100);
-                });
-            });
-            
-            // Responsive behavior check
-            checkResponsiveBehavior();
-            window.addEventListener('resize', checkResponsiveBehavior);
-            
             // Filter buttons
             document.querySelectorAll('.category-filter').forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -4540,30 +5119,6 @@
                     applyDateFilter();
                 }
             });
-            
-            // Update camera button functions
-            document.querySelectorAll('.camera-btn').forEach(btn => {
-                if (btn.textContent.includes('Ambil Foto Langsung')) {
-                    const inputId = btn.closest('.form-group').querySelector('.file-input').id;
-                    btn.addEventListener('click', function() {
-                        capturePhotoDirect(inputId);
-                    });
-                }
-            });
-        }
-
-        function checkResponsiveBehavior() {
-            const isDesktop = window.innerWidth >= 993;
-            const mainContent = document.getElementById('mainContent');
-            const sidebarOverlay = document.getElementById('sidebarOverlay');
-            
-            if (isDesktop && sidebarOpen && mainContent) {
-                mainContent.classList.add('sidebar-open');
-                if (sidebarOverlay) sidebarOverlay.classList.remove('active');
-            } else if (!isDesktop && sidebarOpen && mainContent) {
-                mainContent.classList.add('sidebar-open');
-                if (sidebarOverlay) sidebarOverlay.classList.add('active');
-            }
         }
 
         function toggleSidebar() {
@@ -4616,7 +5171,11 @@
         window.openHarvestModal = openHarvestModal;
         window.viewPlantDetails = viewPlantDetails;
         window.logout = logout;
+        window.logoutFromDropdown = logoutFromDropdown;
         window.hideToast = hideToast;
+        window.applyDateFilter = applyDateFilter;
+        window.clearDateFilter = clearDateFilter;
+        window.filterPlants = filterPlants;
     </script>
 </body>
 </html>

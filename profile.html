@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Profil - SmartTani</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -23,14 +23,14 @@
         --fertilizer: #795548;
         --harvest: #FF5722;
         --sidebar-width: 310px;
-        --header-height: 80px;
+        --header-height: 70px;
         --sidebar-bg: #ffffff;
         --sidebar-hover: #f5f5f5;
-        --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        --shadow-heavy: 0 8px 24px rgba(0, 0, 0, 0.12);
+        --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        --shadow-heavy: 0 4px 16px rgba(0, 0, 0, 0.12);
         --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        --border-radius: 16px;
-        --card-radius: 14px;
+        --border-radius: 12px;
+        --card-radius: 10px;
     }
 
     * {
@@ -62,72 +62,60 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 30px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        padding: 0 15px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
     }
 
     .header-left {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 10px;
     }
 
     .hamburger-btn {
         background: rgba(255, 255, 255, 0.1);
         border: none;
-        font-size: 20px;
+        font-size: 18px;
         cursor: pointer;
         color: white;
-        padding: 10px;
-        border-radius: 12px;
+        padding: 8px;
+        border-radius: 10px;
         transition: var(--transition);
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 44px;
-        height: 44px;
-        backdrop-filter: blur(10px);
+        width: 40px;
+        height: 40px;
     }
 
     .hamburger-btn:hover {
         background: rgba(255, 255, 255, 0.2);
-        transform: translateY(-2px) scale(1.05);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transform: translateY(-1px);
     }
 
     .hamburger-btn.active {
-        background: rgba(255, 255,255, 0.25);
+        background: rgba(255, 255, 255, 0.25);
     }
 
     .header-title {
-        font-size: 26px;
-        font-weight: 800;
+        font-size: 20px;
+        font-weight: 700;
         color: white;
         display: flex;
         align-items: center;
-        gap: 12px;
-        letter-spacing: 0.5px;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        gap: 8px;
     }
 
     .header-title::before {
         content: '🌱';
-        font-size: 32px;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.1); }
+        font-size: 22px;
     }
 
     .header-right {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 10px;
     }
 
     .notification-wrapper {
@@ -137,44 +125,40 @@
     .notification-btn {
         background: rgba(255, 255, 255, 0.1);
         border: none;
-        font-size: 20px;
+        font-size: 18px;
         cursor: pointer;
         color: white;
-        padding: 10px;
-        border-radius: 12px;
+        padding: 8px;
+        border-radius: 10px;
         transition: var(--transition);
         position: relative;
-        width: 44px;
-        height: 44px;
+        width: 40px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-        backdrop-filter: blur(10px);
     }
 
     .notification-btn:hover {
         background: rgba(255, 255, 255, 0.2);
-        transform: translateY(-2px) scale(1.05);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transform: translateY(-1px);
     }
 
     .notification-badge {
         position: absolute;
-        top: 5px;
-        right: 5px;
+        top: 2px;
+        right: 2px;
         background: linear-gradient(135deg, var(--danger), #d32f2f);
         color: white;
         border-radius: 50%;
-        width: 22px;
-        height: 22px;
+        width: 18px;
+        height: 18px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 12px;
+        font-size: 10px;
         font-weight: 700;
-        animation: pulse 2s infinite;
-        border: 3px solid var(--primary-dark);
-        box-shadow: 0 2px 8px rgba(244, 67, 54, 0.4);
+        border: 2px solid var(--primary-dark);
     }
 
     .user-wrapper {
@@ -184,14 +168,13 @@
     .user-btn {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
         background: rgba(255, 255, 255, 0.1);
         border: none;
-        padding: 8px 16px;
-        border-radius: 16px;
+        padding: 6px 10px;
+        border-radius: 20px;
         cursor: pointer;
         transition: var(--transition);
-        backdrop-filter: blur(10px);
         position: relative;
         z-index: 1002;
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -199,8 +182,7 @@
 
     .user-btn:hover {
         background: rgba(255, 255, 255, 0.2);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transform: translateY(-1px);
         border-color: rgba(255, 255, 255, 0.3);
     }
 
@@ -209,33 +191,32 @@
     }
 
     .user-avatar-header {
-        width: 42px;
-        height: 42px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         object-fit: cover;
         border: 2px solid rgba(255, 255, 255, 0.4);
         transition: var(--transition);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
     .user-btn:hover .user-avatar-header {
-        transform: scale(1.1);
+        transform: scale(1.05);
         border-color: white;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
 
     .user-info {
         text-align: left;
+        display: none;
     }
 
     .user-name {
-        font-weight: 700;
-        font-size: 15px;
+        font-weight: 600;
+        font-size: 14px;
         color: white;
     }
 
     .user-role {
-        font-size: 12px;
+        font-size: 11px;
         color: rgba(255, 255, 255, 0.9);
         font-weight: 500;
     }
@@ -243,24 +224,22 @@
     .user-dropdown {
         display: none;
         position: absolute;
-        top: calc(100% + 10px);
+        top: calc(100% + 5px);
         right: 0;
         background: white;
         box-shadow: var(--shadow-heavy);
         border-radius: var(--border-radius);
         padding: 10px 0;
-        min-width: 200px;
+        min-width: 180px;
         z-index: 1003;
         animation: slideDown 0.3s ease;
         border: 1px solid var(--border-color);
-        backdrop-filter: blur(20px);
-        background: rgba(255, 255, 255, 0.95);
     }
 
     @keyframes slideDown {
         from {
             opacity: 0;
-            transform: translateY(-20px);
+            transform: translateY(-10px);
         }
         to {
             opacity: 1;
@@ -276,7 +255,7 @@
         content: '';
         position: absolute;
         top: -8px;
-        right: 20px;
+        right: 15px;
         width: 16px;
         height: 16px;
         background: white;
@@ -288,28 +267,28 @@
     .user-dropdown a {
         display: flex;
         align-items: center;
-        gap: 12px;
-        padding: 14px 20px;
+        gap: 10px;
+        padding: 12px 15px;
         color: var(--text-color);
         text-decoration: none;
         transition: var(--transition);
-        border-radius: 10px;
+        border-radius: 8px;
         margin: 0 5px;
         font-weight: 500;
+        font-size: 14px;
     }
 
     .user-dropdown a:hover {
         background: var(--primary-extra-light);
         color: var(--primary-color);
-        transform: translateX(5px);
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
+        transform: translateX(3px);
     }
 
     .user-dropdown a i {
         width: 20px;
         text-align: center;
         color: var(--primary-color);
-        font-size: 16px;
+        font-size: 14px;
     }
 
     /* ==================== MAIN LAYOUT ==================== */
@@ -324,8 +303,7 @@
     /* ==================== SIDEBAR ==================== */
     .sidebar {
         width: var(--sidebar-width);
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(10px);
+        background: white;
         box-shadow: var(--shadow-heavy);
         position: fixed;
         top: var(--header-height);
@@ -341,105 +319,72 @@
 
     .sidebar.open {
         left: 0;
-        box-shadow: 20px 0 60px rgba(0, 0, 0, 0.2);
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
     }
 
     .sidebar-user {
-        padding: 30px 25px;
+        padding: 20px 15px;
         text-align: center;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(27, 94, 32, 0.05));
-        position: relative;
-        overflow: hidden;
         flex-shrink: 0;
     }
 
-    .sidebar-user::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px);
-        background-size: 40px 40px;
-        transform: rotate(30deg);
-        opacity: 0.5;
-    }
-
     .user-avatar-sidebar {
-        width: 90px;
-        height: 90px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
         object-fit: cover;
-        border: 4px solid white;
+        border: 3px solid white;
         margin-bottom: 15px;
         transition: var(--transition);
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        position: relative;
-        z-index: 1;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     .user-avatar-sidebar:hover {
         transform: scale(1.05);
         border-color: var(--primary-color);
-        box-shadow: 0 12px 32px rgba(46, 125, 50, 0.3);
     }
 
     .sidebar-user h3 {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 700;
         margin-bottom: 5px;
         color: var(--text-color);
-        position: relative;
-        z-index: 1;
     }
 
     .sidebar-user p {
         color: var(--primary-color);
-        font-size: 14px;
+        font-size: 13px;
         background: rgba(46, 125, 50, 0.1);
-        padding: 8px 20px;
+        padding: 6px 15px;
         border-radius: 20px;
         display: inline-block;
         font-weight: 600;
         border: 1px solid rgba(46, 125, 50, 0.2);
-        position: relative;
-        z-index: 1;
     }
 
     /* ==================== SIDEBAR MENU SCROLLBAR ==================== */
     .sidebar-menu {
         flex: 1;
-        padding: 20px 0;
+        padding: 15px 0;
         overflow-y: auto;
-        max-height: calc(100vh - var(--header-height) - 300px);
+        max-height: calc(100vh - var(--header-height) - 160px);
         position: relative;
     }
 
     .sidebar-menu::-webkit-scrollbar {
-        width: 6px;
+        width: 4px;
     }
 
     .sidebar-menu::-webkit-scrollbar-track {
         background: rgba(0, 0, 0, 0.03);
-        border-radius: 3px;
-        margin: 5px 0;
+        border-radius: 2px;
     }
 
     .sidebar-menu::-webkit-scrollbar-thumb {
         background: linear-gradient(135deg, rgba(46, 125, 50, 0.6), rgba(27, 94, 32, 0.6));
-        border-radius: 3px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .sidebar-menu::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, rgba(46, 125, 50, 0.8), rgba(27, 94, 32, 0.8));
-    }
-
-    .sidebar-menu {
-        scrollbar-width: thin;
-        scrollbar-color: rgba(46, 125, 50, 0.6) rgba(0, 0, 0, 0.03);
+        border-radius: 2px;
     }
 
     .sidebar-menu ul {
@@ -455,19 +400,19 @@
     .sidebar-menu a {
         display: flex;
         align-items: center;
-        gap: 18px;
-        padding: 18px 30px;
+        gap: 12px;
+        padding: 14px 20px;
         color: var(--text-light);
         text-decoration: none;
         font-weight: 500;
         transition: var(--transition);
         position: relative;
         overflow: hidden;
-        margin: 8px 20px;
-        border-radius: 14px;
+        margin: 4px 15px;
+        border-radius: 10px;
         border: 1px solid rgba(0, 0, 0, 0.08);
-        background: rgba(255, 255, 255, 0.7);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        background: rgba(255, 255, 255, 0.9);
+        font-size: 14px;
     }
 
     .sidebar-menu a:not(.active) {
@@ -481,15 +426,14 @@
         color: var(--primary-color);
         font-weight: 600;
         border: 1px solid var(--primary-light);
-        box-shadow: 0 4px 16px rgba(46, 125, 50, 0.15);
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.1);
     }
 
     .sidebar-menu a:hover {
         background: var(--primary-extra-light);
         color: var(--primary-color);
-        transform: translateX(5px);
+        transform: translateX(3px);
         border-color: var(--primary-light);
-        box-shadow: 0 4px 16px rgba(46, 125, 50, 0.1);
     }
 
     .sidebar-menu a::before {
@@ -497,12 +441,12 @@
         position: absolute;
         left: 0;
         top: 0;
-        width: 5px;
+        width: 4px;
         height: 100%;
         background: var(--primary-color);
         transform: translateX(-100%);
         transition: var(--transition);
-        border-radius: 0 5px 5px 0;
+        border-radius: 0 2px 2px 0;
     }
 
     .sidebar-menu a:hover::before {
@@ -515,9 +459,9 @@
     }
 
     .sidebar-menu a i {
-        width: 24px;
+        width: 20px;
         text-align: center;
-        font-size: 20px;
+        font-size: 16px;
         transition: var(--transition);
     }
 
@@ -527,79 +471,64 @@
 
     .sidebar-menu a .notification-badge-sidebar {
         margin-left: auto;
-        font-size: 12px;
+        font-size: 11px;
         background: linear-gradient(135deg, var(--danger), #d32f2f);
         color: white;
-        padding: 6px 10px;
+        padding: 4px 8px;
         border-radius: 20px;
-        min-width: 26px;
+        min-width: 22px;
         text-align: center;
         font-weight: 700;
-        animation: pulse 2s infinite;
         transition: var(--transition);
         display: none;
         border: 2px solid white;
     }
 
     .sidebar-menu a:hover .notification-badge-sidebar {
-        transform: scale(1.1);
-        box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+        transform: scale(1.05);
     }
 
+    /* ==================== SIDEBAR FOOTER ==================== */
     .sidebar-footer {
-        padding: 20px;
+        padding: 15px;
         border-top: 1px solid rgba(0, 0, 0, 0.05);
-        margin-top: auto;
-        background: linear-gradient(135deg, rgba(248, 249, 250, 0.8), rgba(233, 236, 239, 0.6));
-        backdrop-filter: blur(10px);
-        position: relative;
-        overflow: hidden;
+        background: white;
         flex-shrink: 0;
+        width: 100%;
+        z-index: 1002;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        position: relative;
+        margin-top: auto;
     }
 
-    .sidebar-footer::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, var(--border-color), transparent);
-    }
-
-    .sidebar-footer .btn-logout {
+    .btn-logout {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
-        padding: 16px;
+        gap: 10px;
+        padding: 14px;
         width: 100%;
         background: linear-gradient(135deg, var(--danger), #d32f2f);
         color: white;
         border: none;
-        border-radius: 14px;
+        border-radius: 10px;
         font-family: 'Poppins', sans-serif;
-        font-size: 15px;
-        font-weight: 700;
+        font-size: 14px;
+        font-weight: 600;
         cursor: pointer;
         transition: var(--transition);
-        box-shadow: 0 4px 20px rgba(244, 67, 54, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 2px 10px rgba(244, 67, 54, 0.3);
     }
 
     .btn-logout:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 32px rgba(244, 67, 54, 0.4);
-    }
-
-    .btn-logout:active {
-        transform: translateY(-1px);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
     }
 
     /* ==================== MAIN CONTENT ==================== */
     .main {
         flex: 1;
-        padding: 30px;
+        padding: 15px;
         transition: var(--transition);
         min-height: calc(100vh - var(--header-height));
         width: 100%;
@@ -618,7 +547,7 @@
 
     @media (max-width: 992px) {
         .main.sidebar-open {
-            filter: blur(5px);
+            filter: blur(3px);
             pointer-events: none;
             user-select: none;
         }
@@ -630,12 +559,12 @@
         left: 0;
         width: 100%;
         height: calc(100vh - var(--header-height));
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(3px);
+        background: rgba(0, 0, 0, 0.3);
         z-index: 1000;
         opacity: 0;
         visibility: hidden;
         transition: var(--transition);
+        backdrop-filter: blur(3px);
     }
 
     .sidebar-overlay.active {
@@ -643,41 +572,27 @@
         visibility: visible;
     }
 
-    /* Page Header - KONSISTEN dengan history.html */
+    /* Page Header */
     .page-header {
-        margin-bottom: 30px;
+        margin-bottom: 15px;
         animation: fadeIn 0.5s ease;
         background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(27, 94, 32, 0.05));
-        padding: 35px 40px;
+        padding: 20px 15px;
         border-radius: var(--border-radius);
         box-shadow: var(--shadow-heavy);
-        border: 3px solid var(--primary-color);
+        border: 2px solid var(--primary-color);
         width: 100%;
-        backdrop-filter: blur(20px);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .page-header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 100%;
-        background: linear-gradient(45deg, transparent 30%, rgba(46, 125, 50, 0.03) 100%);
-        pointer-events: none;
     }
 
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(30px); }
+        from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
     }
 
     .page-header h1 {
-        font-size: 36px;
-        font-weight: 800;
-        margin-bottom: 10px;
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 8px;
         color: var(--text-color);
         position: relative;
         display: inline-block;
@@ -687,89 +602,73 @@
         background-clip: text;
     }
 
-    .page-header h1::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: -12px;
-        width: 100px;
-        height: 5px;
-        background: linear-gradient(90deg, var(--primary-color), transparent);
-        border-radius: 3px;
-    }
-
     .page-header p {
         color: var(--text-color);
-        font-size: 17px;
-        max-width: 600px;
-        margin-top: 20px;
+        font-size: 14px;
         font-weight: 500;
         opacity: 0.9;
+        line-height: 1.5;
     }
 
     /* Profile Layout */
     .profile-container {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
         animation: fadeIn 0.6s ease 0.2s both;
         width: 100%;
     }
 
-    @media (max-width: 992px) {
-        .profile-container {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    /* Profile Sidebar - KONSISTEN dengan history.html stat cards */
+    /* Profile Sidebar */
     .profile-sidebar {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 15px;
+        width: 100%;
     }
 
     .profile-card {
         background: white;
         border-radius: var(--card-radius);
-        padding: 30px;
+        padding: 20px 15px;
         box-shadow: var(--shadow-heavy);
-        border: 3px solid var(--primary-light);
+        border: 2px solid var(--primary-light);
         transition: var(--transition);
         text-align: center;
         position: relative;
         overflow: hidden;
+        width: 100%;
     }
 
     .profile-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         border-color: var(--primary-color);
     }
 
     .profile-avatar {
-        width: 120px;
-        height: 120px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
         background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-        margin: 0 auto 20px;
+        margin: 0 auto 15px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 48px;
+        font-size: 32px;
         transition: var(--transition);
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        border: 4px solid white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border: 3px solid white;
     }
 
     .profile-avatar:hover {
         transform: scale(1.05);
-        box-shadow: 0 12px 32px rgba(46, 125, 50, 0.3);
+        box-shadow: 0 6px 20px rgba(46, 125, 50, 0.2);
     }
 
     .profile-card h3 {
-        font-size: 24px;
+        font-size: 18px;
         font-weight: 700;
         margin-bottom: 5px;
         color: var(--text-color);
@@ -777,54 +676,57 @@
 
     .profile-card p {
         color: var(--primary-color);
-        font-size: 14px;
+        font-size: 13px;
         background: rgba(46, 125, 50, 0.1);
-        padding: 8px 20px;
+        padding: 6px 15px;
         border-radius: 20px;
         display: inline-block;
         font-weight: 600;
         border: 1px solid rgba(46, 125, 50, 0.2);
+        margin-bottom: 15px;
     }
 
     .profile-stats {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-        margin: 25px 0;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin: 15px 0;
+        width: 100%;
     }
 
     .stat-item {
         text-align: center;
-        padding: 15px;
+        padding: 12px;
         background: var(--primary-extra-light);
-        border-radius: 12px;
+        border-radius: 10px;
         border: 1px solid var(--primary-light);
         transition: var(--transition);
+        width: 100%;
     }
 
     .stat-item:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
+        transform: translateY(-2px);
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.1);
     }
 
     .stat-item div:first-child {
-        font-size: 24px;
-        font-weight: 800;
+        font-size: 18px;
+        font-weight: 700;
         color: var(--primary-color);
         margin-bottom: 5px;
     }
 
     .stat-item div:last-child {
-        font-size: 14px;
+        font-size: 13px;
         color: var(--text-light);
         font-weight: 500;
     }
 
-    /* Edit Profile Button - DI TENGAH */
+    /* Edit Profile Button */
     .profile-actions {
         display: flex;
         justify-content: center;
-        margin-top: 25px;
+        margin-top: 15px;
         width: 100%;
     }
 
@@ -834,25 +736,29 @@
         justify-content: center;
     }
 
-    /* Profile Menu - KONSISTEN dengan sidebar menu */
+    /* Profile Menu */
     .profile-menu {
         background: white;
         border-radius: var(--card-radius);
         overflow: hidden;
         box-shadow: var(--shadow-heavy);
-        border: 3px solid var(--primary-extra-light);
+        border: 2px solid var(--primary-extra-light);
+        width: 100%;
     }
 
     .profile-menu-item {
         display: flex;
         align-items: center;
-        gap: 12px;
-        padding: 18px 25px;
+        gap: 10px;
+        padding: 15px 20px;
         color: var(--text-color);
         text-decoration: none;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         transition: var(--transition);
         background: rgba(255, 255, 255, 0.9);
+        font-size: 14px;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .profile-menu-item:last-child {
@@ -863,184 +769,169 @@
     .profile-menu-item.active {
         background: linear-gradient(135deg, var(--primary-light), var(--primary-extra-light));
         color: var(--primary-color);
-        transform: translateX(5px);
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
+        transform: translateX(3px);
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.1);
     }
 
     .profile-menu-item i {
-        width: 24px;
+        width: 20px;
         text-align: center;
-        font-size: 18px;
+        font-size: 16px;
     }
 
     /* Profile Content */
     .profile-content {
         display: flex;
         flex-direction: column;
-        gap: 30px;
+        gap: 15px;
+        width: 100%;
     }
 
     .profile-tab {
         display: none;
         animation: fadeIn 0.5s ease;
+        width: 100%;
     }
 
     .profile-tab.active {
         display: block;
     }
 
-    /* Section Header - KONSISTEN dengan history.html */
+    /* Section Header */
     .section-header {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        padding: 20px;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 15px;
+        padding: 15px;
         background: linear-gradient(135deg, rgba(46, 125, 50, 0.05), rgba(27, 94, 32, 0.03));
         border-radius: var(--border-radius);
-        border: 2px solid var(--primary-extra-light);
+        border: 1px solid var(--primary-extra-light);
+        width: 100%;
     }
 
     .section-header h2 {
         margin: 0;
         color: var(--text-color);
-        font-size: 22px;
+        font-size: 16px;
         font-weight: 700;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
+        line-height: 1.4;
     }
 
     .section-header h2 i {
-        color: var(--primary-color);
-        background: var(--primary-light);
-        padding: 10px;
-        border-radius: 10px;
+        color: white;
+        background: var(--primary-color);
+        padding: 8px;
+        border-radius: 8px;
+        font-size: 14px;
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
     }
 
-    /* Cards - KONSISTEN dengan history.html */
+    /* Cards */
     .info-card, .security-card, .preferences-card, .notifications-card {
         background: white;
         border-radius: var(--card-radius);
-        padding: 30px;
+        padding: 20px 15px;
         box-shadow: var(--shadow-heavy);
-        border: 3px solid var(--primary-extra-light);
+        border: 2px solid var(--primary-extra-light);
         transition: var(--transition);
         position: relative;
         overflow: hidden;
+        width: 100%;
     }
 
     .info-card:hover, .security-card:hover, .preferences-card:hover, .notifications-card:hover {
         border-color: var(--primary-light);
-        transform: translateY(-3px);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     }
 
-    /* Informasi Pribadi Grid - DIPERBAIKI */
+    /* Informasi Pribadi Grid */
     .info-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-
-    @media (max-width: 768px) {
-        .info-grid {
-            grid-template-columns: 1fr;
-        }
+        grid-template-columns: 1fr;
+        gap: 12px;
+        width: 100%;
     }
 
     .info-item {
-        padding: 20px;
-        border-radius: 12px;
+        padding: 15px;
+        border-radius: 10px;
         background: var(--primary-extra-light);
         border: 1px solid var(--primary-light);
         transition: var(--transition);
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
+        width: 100%;
     }
 
     .info-item:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
+        transform: translateY(-2px);
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.1);
     }
 
     .info-item label {
         display: block;
         color: var(--text-light);
-        font-size: 14px;
+        font-size: 12px;
         font-weight: 500;
     }
 
     .info-item div {
         color: var(--text-color);
         font-weight: 600;
-        font-size: 16px;
+        font-size: 14px;
         word-break: break-word;
     }
 
-    /* Stats Section - KONSISTEN dengan history.html */
+    /* Stats Section */
     .stats-section {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 20px;
-        margin: 20px 0;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin: 15px 0;
+        width: 100%;
     }
 
     .stat-card {
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
         border-radius: var(--card-radius);
-        padding: 25px;
+        padding: 15px;
         box-shadow: var(--shadow-heavy);
         display: flex;
         align-items: center;
-        gap: 20px;
-        border: 3px solid var(--primary-light);
+        gap: 12px;
+        border: 2px solid var(--primary-light);
         transition: var(--transition);
         position: relative;
         overflow: hidden;
-        backdrop-filter: blur(20px);
         cursor: pointer;
-        height: 120px;
-    }
-
-    .stat-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
+        min-height: 80px;
         width: 100%;
-        height: 5px;
-        background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.4s ease;
     }
 
     .stat-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         border-color: var(--primary-color);
     }
 
-    .stat-card:hover::before {
-        transform: scaleX(1);
-    }
-
     .stat-icon {
-        width: 60px;
-        height: 60px;
-        border-radius: 16px;
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 24px;
+        font-size: 18px;
         transition: var(--transition);
         flex-shrink: 0;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        position: relative;
-        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .stat-icon.total { background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); }
@@ -1049,34 +940,35 @@
     .stat-icon.failed { background: linear-gradient(135deg, var(--danger), #d32f2f); }
 
     .stat-card:hover .stat-icon {
-        transform: translateY(-5px) scale(1.05);
+        transform: translateY(-3px) scale(1.05);
     }
 
     .stat-info h3 {
         margin: 0;
-        font-size: 28px;
-        font-weight: 800;
+        font-size: 20px;
+        font-weight: 700;
         color: var(--text-color);
         line-height: 1;
     }
 
     .stat-info p {
-        margin: 8px 0 0 0;
+        margin: 6px 0 0 0;
         color: var(--text-color);
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 600;
         opacity: 0.9;
     }
 
-    /* Security Items - DIPERBAIKI BUTTON UKURAN SAMA DAN SEJAJAR */
+    /* Security Items */
     .security-item, .preference-item, .notification-item {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         transition: var(--transition);
-        border-radius: 10px;
+        border-radius: 8px;
+        width: 100%;
     }
 
     .security-item:hover, .preference-item:hover, .notification-item:hover {
@@ -1087,20 +979,35 @@
         border-bottom: none;
     }
 
-    .security-item .btn-secondary {
-        min-width: 160px;
-        max-width: 160px;
-        justify-content: center;
-        padding: 12px 20px;
+    .security-item h4, .preference-item h4, .notification-item h4 {
         font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 3px;
+        color: var(--text-color);
     }
 
-    /* Switch Toggle - Diperbarui agar lebih konsisten */
+    .security-item p, .preference-item p, .notification-item p {
+        font-size: 12px;
+        color: var(--text-light);
+        margin: 0;
+        line-height: 1.4;
+    }
+
+    .security-item .btn-secondary {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 15px;
+        font-size: 14px;
+        min-height: 44px;
+    }
+
+    /* Switch Toggle */
     .switch {
         position: relative;
         display: inline-block;
-        width: 50px;
-        height: 24px;
+        width: 46px;
+        height: 22px;
+        flex-shrink: 0;
     }
 
     .switch input {
@@ -1118,7 +1025,7 @@
         bottom: 0;
         background-color: #ccc;
         transition: .4s;
-        border-radius: 24px;
+        border-radius: 22px;
     }
 
     .slider:before {
@@ -1126,8 +1033,8 @@
         content: "";
         height: 16px;
         width: 16px;
-        left: 4px;
-        bottom: 4px;
+        left: 3px;
+        bottom: 3px;
         background-color: white;
         transition: .4s;
         border-radius: 50%;
@@ -1138,93 +1045,108 @@
     }
 
     input:checked + .slider:before {
-        transform: translateX(26px);
+        transform: translateX(24px);
     }
 
     /* Form Elements */
     .form-group {
-        margin-bottom: 25px;
+        margin-bottom: 15px;
+        width: 100%;
     }
 
     .form-group label {
         display: block;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         font-weight: 600;
         color: var(--text-color);
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .input-with-icon {
         position: relative;
         display: flex;
         align-items: center;
+        width: 100%;
     }
 
     .input-with-icon i {
         position: absolute;
-        left: 15px;
+        left: 12px;
         color: var(--text-light);
         z-index: 2;
+        font-size: 14px;
     }
 
     .input-with-icon input,
     .input-with-icon textarea,
     .input-with-icon select {
         width: 100%;
-        padding: 14px 15px 14px 45px;
-        border: 2px solid var(--border-color);
-        border-radius: 12px;
-        font-size: 14px;
+        padding: 12px 12px 12px 40px;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        font-size: 13px;
         transition: var(--transition);
         background: white;
         font-family: 'Poppins', sans-serif;
+        min-height: 46px;
     }
 
     .input-with-icon input:focus,
     .input-with-icon textarea:focus,
     .input-with-icon select:focus {
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.1);
         outline: none;
     }
 
     .input-with-icon textarea {
         resize: vertical;
-        min-height: 80px;
+        min-height: 70px;
     }
 
     .password-container {
         position: relative;
+        width: 100%;
     }
 
     .toggle-password {
         position: absolute;
-        right: 15px;
+        right: 12px;
         background: none;
         border: none;
         color: var(--text-light);
         cursor: pointer;
         z-index: 2;
         transition: var(--transition);
+        font-size: 14px;
+        padding: 5px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
     }
 
     .toggle-password:hover {
         color: var(--primary-color);
+        background: rgba(46, 125, 50, 0.1);
     }
 
     /* Password Requirements */
     .password-requirements {
-        margin: 20px 0;
-        padding: 20px;
+        margin: 15px 0;
+        padding: 15px;
         background: rgba(46, 125, 50, 0.05);
-        border-radius: 12px;
+        border-radius: 10px;
         border: 1px solid rgba(46, 125, 50, 0.2);
+        width: 100%;
     }
 
     .password-requirements h4 {
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         color: var(--text-color);
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 600;
     }
 
@@ -1235,18 +1157,18 @@
     }
 
     .password-requirements li {
-        font-size: 13px;
+        font-size: 12px;
         color: var(--text-light);
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
         transition: var(--transition);
     }
 
     .password-requirements li:before {
         content: '●';
-        font-size: 8px;
+        font-size: 7px;
         color: var(--text-light);
     }
 
@@ -1258,27 +1180,29 @@
     .password-requirements li.valid:before {
         content: '✓';
         color: var(--success);
-        font-size: 12px;
+        font-size: 11px;
     }
 
-    /* Buttons - KONSISTEN dengan history.html */
+    /* Buttons */
     .btn-primary, .btn-secondary {
-        padding: 14px 24px;
+        padding: 12px 20px;
         border: none;
-        border-radius: 12px;
-        font-size: 15px;
-        font-weight: 700;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 8px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         position: relative;
         overflow: hidden;
         text-decoration: none;
         white-space: nowrap;
+        width: 100%;
+        min-height: 46px;
     }
 
     .btn-primary {
@@ -1287,49 +1211,45 @@
     }
 
     .btn-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
     }
 
     .btn-primary:active {
-        transform: translateY(-1px) scale(0.98);
-        transition: transform 0.1s ease, box-shadow 0.1s ease;
+        transform: translateY(0);
     }
 
     .btn-secondary {
         background: transparent;
         color: var(--primary-color);
-        border: 2px solid var(--primary-color);
+        border: 1px solid var(--primary-color);
     }
 
     .btn-secondary:hover {
         background: var(--primary-color);
         color: white;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
-    }
-
-    .btn-secondary:active {
-        transform: translateY(-1px) scale(0.98);
-        transition: transform 0.1s ease, box-shadow 0.1s ease;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
     }
 
     .form-actions {
         display: flex;
-        gap: 15px;
-        margin-top: 30px;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+        width: 100%;
     }
 
     /* ==================== FOOTER ==================== */
     .footer {
         background: white;
         border-top: 1px solid rgba(0, 0, 0, 0.05);
-        padding: 35px;
+        padding: 20px 15px;
         text-align: center;
         color: var(--text-color);
         width: 100%;
-        margin-top: auto;
-        border: 3px solid var(--primary-extra-light);
+        margin-top: 20px;
+        border: 2px solid var(--primary-extra-light);
         border-radius: var(--border-radius);
         box-shadow: var(--shadow);
     }
@@ -1340,23 +1260,17 @@
     }
 
     .footer p {
-        font-size: 16px;
-        line-height: 1.8;
+        font-size: 14px;
+        line-height: 1.6;
         margin-bottom: 5px;
         opacity: 0.9;
     }
 
-    .footer-text {
-        display: block;
-        font-weight: 600;
-        color: var(--text-color);
-    }
-
     .footer-copyright {
         display: block;
-        font-size: 14px;
+        font-size: 12px;
         opacity: 0.8;
-        margin-top: 10px;
+        margin-top: 8px;
     }
 
     /* ==================== MODAL STYLING ==================== */
@@ -1368,11 +1282,10 @@
         top: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(10px);
+        background-color: rgba(0, 0, 0, 0.5);
         animation: fadeIn 0.3s ease;
         overflow-y: auto;
-        padding: 40px 20px;
+        padding: 15px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1381,23 +1294,23 @@
     .modal-content {
         background: white;
         border-radius: var(--border-radius);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         position: relative;
         width: 95%;
-        max-width: 700px;
+        max-width: 500px;
         margin: auto;
-        animation: modalSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
         max-height: 85vh;
         display: flex;
         flex-direction: column;
-        border: 3px solid var(--primary-color);
+        border: 2px solid var(--primary-color);
     }
 
     @keyframes modalSlideIn {
         from {
             opacity: 0;
-            transform: translateY(-50px) scale(0.95);
+            transform: translateY(-30px) scale(0.95);
         }
         to {
             opacity: 1;
@@ -1406,8 +1319,8 @@
     }
 
     .modal-header {
-        padding: 30px 40px;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+        padding: 20px 15px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -1423,37 +1336,38 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 5px;
+        height: 3px;
         background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
     }
 
     .modal-header h3 {
         margin: 0;
         color: var(--text-color);
-        font-size: 28px;
-        font-weight: 800;
+        font-size: 18px;
+        font-weight: 700;
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 10px;
     }
 
     .modal-header h3 i {
         color: white;
         background: var(--primary-color);
-        padding: 12px;
-        border-radius: 14px;
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+        padding: 8px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.2);
+        font-size: 14px;
     }
 
     .close-modal {
         background: none;
         border: none;
-        font-size: 32px;
+        font-size: 24px;
         cursor: pointer;
         color: var(--text-light);
         padding: 0;
-        width: 44px;
-        height: 44px;
+        width: 36px;
+        height: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1465,41 +1379,15 @@
     .close-modal:hover {
         color: var(--text-color);
         background: rgba(46, 125, 50, 0.1);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     .modal-body {
-        padding: 40px;
+        padding: 20px 15px;
         flex: 1;
         overflow-y: auto;
-        max-height: calc(85vh - 170px);
+        max-height: calc(85vh - 120px);
         position: relative;
-    }
-
-    /* Scrollbar untuk Modal Body */
-    .modal-body::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .modal-body::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.03);
-        border-radius: 4px;
-        margin: 5px 0;
-    }
-
-    .modal-body::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, rgba(46, 125, 50, 0.6), rgba(27, 94, 32, 0.6));
-        border-radius: 4px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .modal-body::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, rgba(46, 125, 50, 0.8), rgba(27, 94, 32, 0.8));
-    }
-
-    .modal-body {
-        scrollbar-width: thin;
-        scrollbar-color: rgba(46, 125, 50, 0.6) rgba(0, 0, 0, 0.03);
+        width: 100%;
     }
 
     /* Session Item */
@@ -1507,39 +1395,41 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 20px;
-        border: 2px solid var(--border-color);
-        border-radius: 12px;
-        margin-bottom: 15px;
+        padding: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        margin-bottom: 10px;
         background: white;
         transition: var(--transition);
+        width: 100%;
     }
 
     .session-item:hover {
         border-color: var(--primary-color);
-        transform: translateY(-3px);
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
+        transform: translateY(-2px);
+        box-shadow: 0 2px 8px rgba(46, 125, 50, 0.1);
     }
 
-    /* Toast Notification - KONSISTEN dengan history.html */
+    /* Toast Notification */
     .toast {
         position: fixed;
-        bottom: 40px;
-        right: 40px;
+        bottom: 15px;
+        right: 15px;
+        left: 15px;
         background: white;
         color: var(--text-color);
-        padding: 20px 30px;
+        padding: 15px;
         border-radius: var(--border-radius);
         box-shadow: var(--shadow-heavy);
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 12px;
         z-index: 3000;
         transform: translateY(100px);
         opacity: 0;
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        max-width: 450px;
-        border-left: 5px solid var(--primary-color);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        max-width: 100%;
+        border-left: 4px solid var(--primary-color);
         border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
@@ -1549,7 +1439,7 @@
     }
 
     .toast i {
-        font-size: 28px;
+        font-size: 20px;
     }
 
     .toast.success i { color: var(--success); }
@@ -1564,18 +1454,18 @@
     .toast-content p {
         margin: 0;
         font-weight: 600;
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .toast-close {
         background: none;
         border: none;
         color: var(--text-light);
-        font-size: 24px;
+        font-size: 20px;
         cursor: pointer;
         padding: 0;
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1589,42 +1479,201 @@
         background: rgba(46, 125, 50, 0.1);
     }
 
-    /* WhatsApp Indicator */
-    .whatsapp-status {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        padding: 4px 8px;
-        background: rgba(37, 211, 102, 0.1);
-        color: #25D366;
-        border-radius: 12px;
-        font-size: 11px;
-        font-weight: 600;
-        margin-left: 10px;
+    /* Test Button Loading Animation */
+    .btn-loading {
+        position: relative;
+        color: transparent !important;
     }
 
-    .whatsapp-status i {
-        font-size: 10px;
+    .btn-loading::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 -10px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    .btn-secondary.btn-loading::after {
+        border: 2px solid rgba(46, 125, 50, 0.3);
+        border-top-color: var(--primary-color);
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
     }
 
     /* ==================== RESPONSIVE DESIGN ==================== */
+    /* Responsive Font Sizes for Inputs */
+    @media (max-width: 768px) {
+        .input-with-icon input,
+        .input-with-icon textarea,
+        .input-with-icon select {
+            font-size: 12px !important;
+            padding: 10px 10px 10px 35px !important;
+        }
+        
+        .input-with-icon i {
+            font-size: 12px !important;
+            left: 10px !important;
+        }
+        
+        .form-group label {
+            font-size: 12px !important;
+        }
+        
+        .btn-primary, .btn-secondary {
+            font-size: 13px !important;
+            padding: 10px 16px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .input-with-icon input,
+        .input-with-icon textarea,
+        .input-with-icon select {
+            font-size: 11px !important;
+            padding: 8px 8px 8px 32px !important;
+        }
+        
+        .input-with-icon i {
+            font-size: 11px !important;
+            left: 8px !important;
+        }
+        
+        .form-group label {
+            font-size: 11px !important;
+        }
+        
+        .btn-primary, .btn-secondary {
+            font-size: 12px !important;
+            padding: 8px 12px !important;
+        }
+    }
+
+    /* Tablet dan Desktop */
+    @media (min-width: 768px) {
+        .header {
+            padding: 0 20px;
+        }
+        
+        .header-left {
+            gap: 15px;
+        }
+        
+        .hamburger-btn {
+            width: 44px;
+            height: 44px;
+            font-size: 20px;
+        }
+        
+        .notification-btn {
+            width: 44px;
+            height: 44px;
+            font-size: 20px;
+        }
+        
+        .user-info {
+            display: block;
+        }
+        
+        .user-btn {
+            padding: 8px 15px;
+        }
+        
+        .user-avatar-header {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .header-title {
+            font-size: 22px;
+        }
+        
+        .main {
+            padding: 20px;
+        }
+        
+        .page-header {
+            padding: 25px 20px;
+        }
+        
+        .page-header h1 {
+            font-size: 24px;
+        }
+        
+        .page-header p {
+            font-size: 16px;
+        }
+        
+        .profile-container {
+            flex-direction: row;
+            gap: 25px;
+        }
+        
+        .profile-sidebar {
+            width: 280px;
+            flex-shrink: 0;
+        }
+        
+        .profile-content {
+            flex: 1;
+        }
+        
+        .info-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .stats-section {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .section-header {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .security-item, .preference-item, .notification-item {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .security-item .btn-secondary {
+            width: auto;
+            min-width: 140px;
+        }
+        
+        .form-actions {
+            flex-direction: row;
+        }
+        
+        .btn-primary, .btn-secondary {
+            width: auto;
+        }
+    }
+
+    /* Desktop Large */
     @media (min-width: 993px) {
         .sidebar {
             position: fixed;
             height: calc(100vh - var(--header-height));
             left: -310px;
-            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .sidebar.open {
             left: 0;
-            box-shadow: 20px 0 60px rgba(0, 0, 0, 0.2);
         }
         
         .main {
             margin-left: 0;
-            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 100%;
         }
         
         .main.sidebar-open {
@@ -1639,179 +1688,305 @@
         .stats-section {
             grid-template-columns: repeat(4, 1fr);
         }
-    }
-
-    @media (max-width: 1200px) {
-        .profile-container {
-            grid-template-columns: 1fr 1.5fr;
-        }
         
-        .stats-section {
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        }
-    }
-
-    @media (max-width: 992px) {
-        .profile-container {
-            grid-template-columns: 1fr;
-        }
-        
-        .stats-section {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        
-        .main {
-            padding: 25px;
-        }
-        
-        .page-header,
-        .profile-card {
-            padding: 25px;
-        }
-        
-        .info-card, .security-card, .preferences-card, .notifications-card {
-            padding: 25px;
-        }
-        
-        .sidebar {
-            width: 320px;
-            left: -320px;
-        }
-        
-        .main.sidebar-open {
-            margin-left: 0;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .stats-section {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-        
-        .main {
-            padding: 20px;
-        }
-        
-        .page-header,
-        .profile-card {
-            padding: 20px;
-        }
-        
-        .info-card, .security-card, .preferences-card, .notifications-card {
-            padding: 20px;
-        }
-        
-        .modal-content {
-            width: 95%;
-            margin: 20px auto;
-        }
-        
-        .modal-body {
-            padding: 25px;
-        }
-        
-        .modal-header {
-            padding: 25px;
-        }
-        
-        .security-item, .preference-item, .notification-item {
-            flex-direction: column;
-            gap: 15px;
-            align-items: flex-start;
-        }
-        
-        .security-item .btn-secondary {
-            width: 100%;
-            max-width: none;
-        }
-        
-        .form-actions {
-            flex-direction: column;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .stats-section {
-            grid-template-columns: 1fr;
-        }
-        
-        .header {
-            padding: 0 15px;
-        }
-        
-        .header-title {
-            font-size: 22px;
+        .page-header {
+            padding: 30px 25px;
         }
         
         .page-header h1 {
-            font-size: 30px;
+            font-size: 28px;
         }
         
-        .profile-stats {
-            grid-template-columns: 1fr;
-        }
-        
-        .info-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .modal-body {
-            padding: 20px;
-        }
-        
-        .modal-header {
-            padding: 20px;
-        }
-        
-        .sidebar {
-            width: 280px;
-            left: -280px;
-        }
-        
-        .footer {
+        .profile-card, .info-card, .security-card, .preferences-card, .notifications-card {
             padding: 25px 20px;
+        }
+        
+        .profile-sidebar {
+            width: 300px;
+        }
+        
+        .toast {
+            right: 25px;
+            left: auto;
+            max-width: 400px;
+        }
+        
+        /* Perbaikan untuk sidebar footer di desktop */
+        .sidebar-footer {
+            position: sticky;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-top: 1px solid var(--border-color);
+            z-index: 1002;
         }
     }
 
-    @media (max-width: 360px) {
+    /* Mobile kecil (361px - 480px) */
+    @media (max-width: 480px) and (min-width: 361px) {
         .header {
             padding: 0 10px;
         }
         
+        .header-title {
+            font-size: 18px;
+        }
+        
         .main {
-            padding: 15px;
+            padding: 10px;
         }
         
-        .page-header,
-        .profile-card {
-            padding: 15px;
+        .page-header, .profile-card, .info-card, .security-card, .preferences-card, .notifications-card {
+            padding: 15px 12px;
         }
         
-        .info-card, .security-card, .preferences-card, .notifications-card {
-            padding: 15px;
+        .profile-avatar {
+            width: 70px;
+            height: 70px;
+            font-size: 28px;
+        }
+        
+        .profile-card h3 {
+            font-size: 16px;
+        }
+        
+        .stat-item div:first-child {
+            font-size: 16px;
+        }
+        
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+        }
+        
+        .stat-info h3 {
+            font-size: 18px;
+        }
+        
+        .btn-primary, .btn-secondary {
+            font-size: 13px;
+            padding: 10px 15px;
         }
         
         .footer {
-            padding: 20px 15px;
+            padding: 15px 12px;
+        }
+        
+        .toast {
+            bottom: 10px;
+            right: 10px;
+            left: 10px;
+            padding: 12px;
         }
         
         .modal-content {
             width: 98%;
-            margin: 10px auto;
+        }
+    }
+
+    /* Mobile sangat kecil (≤ 360px) */
+    @media (max-width: 360px) {
+        .header {
+            padding: 0 8px;
         }
         
-        .modal-body {
-            max-height: calc(100vh - 150px);
+        .header-title {
+            font-size: 16px;
+        }
+        
+        .hamburger-btn, .notification-btn {
+            width: 36px;
+            height: 36px;
+            font-size: 16px;
+            padding: 6px;
+        }
+        
+        .user-avatar-header {
+            width: 32px;
+            height: 32px;
+        }
+        
+        .main {
+            padding: 8px;
+        }
+        
+        .page-header, .profile-card, .info-card, .security-card, .preferences-card, .notifications-card {
+            padding: 12px 10px;
+        }
+        
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+        }
+        
+        .profile-card h3 {
+            font-size: 15px;
+        }
+        
+        .stat-item div:first-child {
+            font-size: 15px;
+        }
+        
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            font-size: 14px;
+        }
+        
+        .stat-info h3 {
+            font-size: 16px;
+        }
+        
+        .profile-menu-item {
+            padding: 12px 15px;
+            font-size: 13px;
+        }
+        
+        .section-header h2 {
+            font-size: 15px;
+        }
+        
+        .btn-primary, .btn-secondary {
+            font-size: 12px;
+            padding: 8px 12px;
+            min-height: 40px;
+        }
+        
+        .footer {
+            padding: 12px 10px;
         }
         
         .toast {
-            bottom: 20px;
-            right: 20px;
-            left: 20px;
-            max-width: none;
+            bottom: 8px;
+            right: 8px;
+            left: 8px;
+            padding: 10px;
+        }
+        
+        .modal-content {
+            width: 100%;
+            margin: 5px auto;
         }
     }
+
+    /* Mobile extra kecil (≤ 320px) */
+    @media (max-width: 320px) {
+        .header-title {
+            font-size: 15px;
+        }
+        
+        .hamburger-btn, .notification-btn {
+            width: 34px;
+            height: 34px;
+            font-size: 14px;
+        }
+        
+        .user-btn {
+            padding: 4px;
+        }
+        
+        .user-avatar-header {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .main {
+            padding: 6px;
+        }
+        
+        .page-header, .profile-card, .info-card, .security-card, .preferences-card, .notifications-card {
+            padding: 10px 8px;
+        }
+        
+        .profile-avatar {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+        }
+        
+        .profile-card h3 {
+            font-size: 14px;
+        }
+        
+        .stat-item div:first-child {
+            font-size: 14px;
+        }
+        
+        .profile-menu-item {
+            padding: 10px 12px;
+            font-size: 12px;
+        }
+        
+        .footer {
+            padding: 10px 8px;
+        }
+        
+        .toast {
+            bottom: 5px;
+            right: 5px;
+            left: 5px;
+            padding: 8px;
+        }
+    }
+
+    /* Perbaikan untuk sidebar di mobile */
+    @media (max-width: 992px) {
+        .sidebar-footer {
+            position: relative;
+            bottom: auto;
+            left: auto;
+            right: auto;
+            background: white;
+            border-top: 1px solid var(--border-color);
+            z-index: 1002;
+        }
+        
+        .sidebar.open .sidebar-footer {
+            left: 0;
+            width: 100%;
+        }
+        
+        .sidebar-menu {
+            max-height: calc(100vh - var(--header-height) - 160px);
+        }
+    }
+
+    /* Animasi untuk tombol loading */
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+
+    .btn-error {
+        animation: shake 0.5s ease-in-out;
+        background-color: var(--danger) !important;
+    }
+
+    .btn-success {
+        animation: none;
+        background: linear-gradient(135deg, var(--success), #2E7D32) !important;
+    }
+
+    /* Utility Classes */
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .d-flex { display: flex; }
+    .d-block { display: block; }
+    .d-none { display: none; }
+    .flex-column { flex-direction: column; }
+    .flex-row { flex-direction: row; }
+    .flex-wrap { flex-wrap: wrap; }
+    .align-items-center { align-items: center; }
+    .justify-content-between { justify-content: space-between; }
+    .gap-1 { gap: 0.25rem; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 1rem; }
+    .m-0 { margin: 0; }
+    .p-0 { padding: 0; }
     </style>
 </head>
 <body>
@@ -1846,6 +2021,10 @@
                         <i class="fas fa-user"></i>
                         <span>Profil</span>
                     </a>
+                    <a href="#" onclick="logoutFromDropdown(event)">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Keluar</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1859,7 +2038,7 @@
         <!-- Sidebar Menu -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-user">
-                <img id="userAvatarSidebar" src="https://ui-avatars.com/api/?name=Usern&background=2E7D32&color=fff" alt="User" class="user-avatar-sidebar">
+                <img id="userAvatarSidebar" src="https://ui-avatars.com/api/?name=User&background=2E7D32&color=fff" alt="User" class="user-avatar-sidebar">
                 <h3 id="userNameSidebar">User</h3>
                 <p id="userEmailSidebar">Petani</p>
             </div>
@@ -1944,7 +2123,7 @@
                         </div>
                         
                         <div class="profile-actions">
-                            <button class="btn-secondary" onclick="openEditProfileModal()">
+                            <button class="btn-secondary" id="editProfileBtn">
                                 <i class="fas fa-edit"></i> Edit Profil
                             </button>
                         </div>
@@ -2007,7 +2186,7 @@
                         </div>
 
                         <!-- Statistik Tanaman -->
-                        <div class="section-header" style="margin-top: 30px;">
+                        <div class="section-header" style="margin-top: 20px;">
                             <h2><i class="fas fa-chart-bar"></i> Statistik Tanaman</h2>
                         </div>
                         
@@ -2063,7 +2242,7 @@
                                     <h4>Password</h4>
                                     <p id="lastPasswordChange">Belum pernah diubah</p>
                                 </div>
-                                <button class="btn-secondary" onclick="openChangePasswordModal()">
+                                <button class="btn-secondary" id="changePasswordBtn">
                                     <i class="fas fa-key"></i> Ubah Password
                                 </button>
                             </div>
@@ -2073,14 +2252,14 @@
                                     <h4>Sesi Aktif</h4>
                                     <p>1 perangkat aktif</p>
                                 </div>
-                                <button class="btn-secondary" onclick="manageSessions()">
+                                <button class="btn-secondary" id="manageSessionsBtn">
                                     <i class="fas fa-desktop"></i> Kelola Sesi
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Tab Notifikasi - YANG SUDAH DIPERBAIKI -->
+                    <!-- Tab Notifikasi -->
                     <div class="profile-tab" id="notifications-tab">
                         <div class="section-header">
                             <h2><i class="fas fa-bell"></i> Pengaturan Notifikasi</h2>
@@ -2122,28 +2301,8 @@
                             
                             <div class="notification-item">
                                 <div>
-                                    <h4>Notifikasi WhatsApp</h4>
-                                    <p>Kirim notifikasi ke WhatsApp</p>
-                                    <small style="color: var(--text-light); font-size: 12px;" id="whatsappNumberDisplay">
-                                        Nomor: <span id="whatsappNumberValue">-</span>
-                                        <span id="whatsappStatus" class="whatsapp-status" style="display: none;">
-                                            <i class="fas fa-circle"></i> Terhubung
-                                        </span>
-                                    </small>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" id="notifWhatsApp">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-
-                            <div class="notification-item">
-                                <div>
                                     <h4>Notifikasi Suara</h4>
                                     <p>Putar suara saat notifikasi muncul</p>
-                                    <small style="color: var(--text-light); font-size: 12px;">
-                                        Akan berbunyi di browser
-                                    </small>
                                 </div>
                                 <label class="switch">
                                     <input type="checkbox" id="soundNotification" checked>
@@ -2153,7 +2312,7 @@
                         </div>
 
                         <!-- Pengaturan Waktu Notifikasi -->
-                        <div class="section-header" style="margin-top: 30px;">
+                        <div class="section-header" style="margin-top: 20px;">
                             <h2><i class="fas fa-clock"></i> Waktu Notifikasi</h2>
                         </div>
 
@@ -2162,7 +2321,7 @@
                                 <label for="notificationTime">Waktu Default Notifikasi</label>
                                 <div class="input-with-icon">
                                     <i class="fas fa-clock"></i>
-                                    <input type="time" id="notificationTime">
+                                    <input type="time" id="notificationTime" value="08:00">
                                 </div>
                                 <span style="font-size: 12px; color: var(--text-light);">
                                     Notifikasi harian akan dikirim pada waktu ini
@@ -2174,7 +2333,7 @@
                                 <div class="input-with-icon">
                                     <i class="fas fa-music"></i>
                                     <select id="notificationSound">
-                                        <option value="default">Default (Bell)</option>
+                                        <option value="bell">Bell</option>
                                         <option value="chime">Chime</option>
                                         <option value="ding">Ding</option>
                                         <option value="alert">Alert</option>
@@ -2187,37 +2346,22 @@
                             
                             <div class="form-group">
                                 <label>Uji Notifikasi</label>
-                                <div style="display: flex; gap: 10px; margin-top: 10px;">
-                                    <button class="btn-secondary" onclick="testNotificationSound()">
+                                <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                                    <button class="btn-secondary" id="testSoundBtn">
                                         <i class="fas fa-volume-up"></i> Uji Suara
                                     </button>
-                                    <button class="btn-secondary" onclick="testNotificationPopup()">
+                                    <button class="btn-secondary" id="testPopupBtn">
                                         <i class="fas fa-bell"></i> Uji Popup
-                                    </button>
-                                    <button class="btn-secondary" onclick="testWhatsAppNotification()">
-                                        <i class="fab fa-whatsapp"></i> Uji WhatsApp
                                     </button>
                                 </div>
                                 <small style="color: var(--text-light); font-size: 12px;">
-                                    Uji semua fitur notifikasi
+                                    Uji fitur notifikasi sebelum menyimpan
                                 </small>
                             </div>
                             
-                            <button class="btn-primary" id="saveNotificationBtn" onclick="saveNotificationSettings()">
-                                <i class="fas fa-save"></i> Simpan Pengaturan Notifikasi
+                            <button class="btn-primary" id="saveNotificationBtn">
+                                <i class="fas fa-save"></i> Simpan Pengaturan
                             </button>
-                        </div>
-
-                        <!-- WhatsApp Logs Section -->
-                        <div class="section-header" style="margin-top: 30px;">
-                            <h2><i class="fas fa-history"></i> Riwayat WhatsApp</h2>
-                            <button class="btn-secondary" onclick="clearWhatsAppLogs()">
-                                <i class="fas fa-trash"></i> Hapus Riwayat
-                            </button>
-                        </div>
-
-                        <div class="preferences-card" id="whatsappLogsContainer">
-                            <!-- Logs akan dimuat di sini -->
                         </div>
                     </div>
                 </div>
@@ -2244,7 +2388,7 @@
     </div>
 
     <!-- Edit Profile Modal -->
-    <div id="editProfileModal" class="modal">
+    <div id="editProfileModal" class="modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>
@@ -2288,7 +2432,7 @@
                     </div>
                     
                     <div class="form-actions">
-                        <button type="button" class="btn-secondary" onclick="document.getElementById('editProfileModal').style.display='none'">Batal</button>
+                        <button type="button" class="btn-secondary" id="cancelEditBtn">Batal</button>
                         <button type="submit" class="btn-primary">Simpan Perubahan</button>
                     </div>
                 </form>
@@ -2297,7 +2441,7 @@
     </div>
 
     <!-- Change Password Modal -->
-    <div id="changePasswordModal" class="modal">
+    <div id="changePasswordModal" class="modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>
@@ -2353,7 +2497,7 @@
                     </div>
                     
                     <div class="form-actions">
-                        <button type="button" class="btn-secondary" onclick="document.getElementById('changePasswordModal').style.display='none'">Batal</button>
+                        <button type="button" class="btn-secondary" id="cancelPasswordBtn">Batal</button>
                         <button type="submit" class="btn-primary">Ubah Password</button>
                     </div>
                 </form>
@@ -2362,7 +2506,7 @@
     </div>
 
     <!-- Sessions Modal -->
-    <div id="sessionsModal" class="modal">
+    <div id="sessionsModal" class="modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>
@@ -2384,61 +2528,9 @@
                 </div>
                 
                 <div class="form-actions" style="margin-top: 20px;">
-                    <button type="button" class="btn-secondary" onclick="document.getElementById('sessionsModal').style.display='none'">Tutup</button>
-                    <button type="button" class="btn-primary" onclick="logoutAllSessions()">Logout Semua Sesi</button>
+                    <button type="button" class="btn-secondary" id="closeSessionsBtn">Tutup</button>
+                    <button type="button" class="btn-primary" id="logoutAllSessionsBtn">Logout Semua Sesi</button>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- WhatsApp Settings Modal -->
-    <div id="whatsappModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>
-                    <i class="fab fa-whatsapp"></i>
-                    Pengaturan WhatsApp
-                </h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="whatsappSettingsForm">
-                    <div class="form-group">
-                        <label for="whatsappNumber">Nomor WhatsApp</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-phone"></i>
-                            <input type="tel" id="whatsappNumber" 
-                                   placeholder="Contoh: 6281234567890" 
-                                   required
-                                   pattern="[0-9]{10,15}"
-                                   title="Masukkan nomor WhatsApp dengan kode negara (contoh: 6281234567890)">
-                        </div>
-                        <small style="color: var(--text-light); font-size: 12px;">
-                            Format: 62XXXXXXXXXXX (kode negara + nomor, tanpa spasi atau karakter khusus)
-                        </small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Uji WhatsApp</label>
-                        <div style="margin-top: 10px;">
-                            <button type="button" class="btn-secondary" onclick="sendTestWhatsAppMessage()">
-                                <i class="fab fa-whatsapp"></i> Uji Kirim Pesan
-                            </button>
-                            <small style="display: block; margin-top: 8px; color: var(--text-light); font-size: 12px;">
-                                Akan membuka WhatsApp dengan pesan percobaan
-                            </small>
-                        </div>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn-secondary" onclick="closeWhatsAppModal()">
-                            Batal
-                        </button>
-                        <button type="submit" class="btn-primary">
-                            Simpan Pengaturan
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
@@ -2449,34 +2541,233 @@
         let userPlants = [];
         let sidebarOpen = false;
         let userDropdownOpen = false;
-        let notificationSound = null;
-        let whatsappSchedulerInterval = null;
-        let lastWhatsAppCheck = null;
-        let db = null; // Tambahkan untuk IndexedDB
+        let db = null;
+        let audioContext = null;
+        let testSoundPlaying = false;
+        let currentNotification = null;
 
-        // Sound URLs - SETIAP SUARA BERBEDA!
-        const SOUND_URLS = {
-            bell: 'https://assets.mixkit.co/sfx/preview/mixkit-bell-notification-933.mp3',
-            chime: 'https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3',
-            ding: 'https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3',
-            alert: 'https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3',
-            positive: 'https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3',
-            message: 'https://assets.mixkit.co/sfx/preview/mixkit-message-pop-alert-2354.mp3',
-            notification: 'https://assets.mixkit.co/sfx/preview/mixkit-retro-game-emergency-alarm-1000.mp3'
+        // Sound configuration
+        const SOUNDS = {
+            bell: {
+                name: 'Bell',
+                frequency: 800,
+                duration: 0.5,
+                type: 'sine'
+            },
+            chime: {
+                name: 'Chime',
+                frequency: 523.25,
+                duration: 0.8,
+                type: 'sine'
+            },
+            ding: {
+                name: 'Ding',
+                frequency: 1000,
+                duration: 0.3,
+                type: 'triangle'
+            },
+            alert: {
+                name: 'Alert',
+                frequency: 880,
+                duration: 1.0,
+                type: 'square'
+            }
         };
 
-        // Sound names for display
-        const SOUND_NAMES = {
-            bell: 'Bell',
-            chime: 'Chime',
-            ding: 'Ding',
-            alert: 'Alert',
-            positive: 'Positive',
-            message: 'Message',
-            notification: 'Notification'
+        // Default notification settings
+        const DEFAULT_NOTIFICATION_SETTINGS = {
+            watering: true,
+            fertilizing: true,
+            harvest: true,
+            sound: true,
+            time: '08:00',
+            soundType: 'bell'
         };
 
-        // ==================== INDEXEDDB FUNCTIONS ====================
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log("📱 Profile page loading...");
+            
+            try {
+                // Initialize database
+                await initDB();
+                
+                // Load user data
+                await loadCurrentUser();
+                await loadUserPlants();
+                loadNotificationSettings();
+                setupEventListeners();
+                updateNotifications();
+                
+                // Set initial active tab
+                setActiveTab('info');
+                
+                // Initialize audio context
+                initAudioContext();
+                
+                // Request notification permission secara sederhana
+                requestNotificationPermission();
+                
+                console.log('✅ Profile page initialized successfully');
+                
+            } catch (error) {
+                console.error("Error initializing profile page:", error);
+                showToast('Gagal memuat halaman profil', 'error');
+            }
+        });
+
+        // Request notification permission dengan cara yang lebih baik
+        function requestNotificationPermission() {
+            if ('Notification' in window) {
+                if (Notification.permission === 'default') {
+                    // Hanya log, tidak meminta otomatis
+                    console.log('🔔 Notification permission is default');
+                } else if (Notification.permission === 'granted') {
+                    console.log('🔔 Notification permission already granted');
+                }
+            }
+        }
+
+        // Initialize audio context
+        function initAudioContext() {
+            try {
+                if (window.AudioContext || window.webkitAudioContext) {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    audioContext = new AudioContextClass();
+                    
+                    if (audioContext.state === 'suspended') {
+                        document.addEventListener('click', function resumeAudio() {
+                            if (audioContext.state === 'suspended') {
+                                audioContext.resume().then(() => {
+                                    console.log("🎵 Audio context resumed");
+                                });
+                            }
+                            document.removeEventListener('click', resumeAudio);
+                        }, { once: true });
+                    }
+                    console.log("🎵 Audio context initialized");
+                }
+            } catch (error) {
+                console.error("Error initializing audio context:", error);
+            }
+        }
+
+        // Play notification sound
+        function playNotificationSound(soundType = 'bell') {
+            console.log(`🔊 Playing sound: ${soundType}`);
+            
+            const soundEnabled = isSoundNotificationEnabled();
+            if (!soundEnabled) {
+                console.log("🔇 Sound notifications are disabled");
+                return false;
+            }
+            
+            if (testSoundPlaying) {
+                console.log("⚠️ Sound is already playing");
+                return false;
+            }
+            
+            testSoundPlaying = true;
+            
+            try {
+                if (!audioContext) {
+                    initAudioContext();
+                }
+                
+                if (audioContext && audioContext.state === 'suspended') {
+                    audioContext.resume();
+                }
+                
+                if (audioContext) {
+                    const sound = SOUNDS[soundType] || SOUNDS.bell;
+                    
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.value = sound.frequency;
+                    oscillator.type = sound.type;
+                    
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + sound.duration);
+                    
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + sound.duration);
+                    
+                    oscillator.onended = function() {
+                        testSoundPlaying = false;
+                        console.log(`✅ Sound ${soundType} finished playing`);
+                    };
+                    
+                    console.log(`✅ Sound ${soundType} playing successfully`);
+                    return true;
+                } else {
+                    console.log("⚠️ Using fallback sound method");
+                    playFallbackSound(soundType);
+                    testSoundPlaying = false;
+                    return true;
+                }
+            } catch (error) {
+                console.error("Exception playing sound:", error);
+                testSoundPlaying = false;
+                return false;
+            }
+        }
+
+        // Fallback sound method
+        function playFallbackSound(soundType) {
+            try {
+                const audio = new Audio();
+                if (audioContext) {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.value = 800;
+                    oscillator.type = 'sine';
+                    gainNode.gain.value = 0.1;
+                    
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + 0.5);
+                } else {
+                    console.log("🔊 Playing simple beep sound");
+                }
+            } catch (e) {
+                console.log("🔊 Could not play fallback sound");
+            }
+        }
+
+        // Check if sound notifications are enabled
+        function isSoundNotificationEnabled() {
+            const soundToggle = document.getElementById('soundNotification');
+            return soundToggle ? soundToggle.checked : true;
+        }
+
+        // Get notification sound type
+        function getNotificationSoundType() {
+            const soundSelect = document.getElementById('notificationSound');
+            return soundSelect ? soundSelect.value : 'bell';
+        }
+
+        // Set active tab
+        function setActiveTab(tabId) {
+            document.querySelectorAll('.profile-menu-item').forEach(i => i.classList.remove('active'));
+            document.querySelectorAll('.profile-tab').forEach(tab => tab.classList.remove('active'));
+            
+            const menuItem = document.querySelector(`[data-tab="${tabId}"]`);
+            if (menuItem) {
+                menuItem.classList.add('active');
+            }
+            
+            const tabElement = document.getElementById(`${tabId}-tab`);
+            if (tabElement) {
+                tabElement.classList.add('active');
+            }
+        }
 
         // Initialize IndexedDB
         async function initDB() {
@@ -2486,43 +2777,20 @@
                 request.onupgradeneeded = function(event) {
                     db = event.target.result;
                     
-                    // Notifications store
                     if (!db.objectStoreNames.contains("notifications")) {
                         const notificationStore = db.createObjectStore("notifications", { keyPath: "id" });
                         notificationStore.createIndex("userId", "userId", { unique: false });
                         notificationStore.createIndex("read", "read", { unique: false });
-                        notificationStore.createIndex("type", "type", { unique: false });
-                        notificationStore.createIndex("date", "date", { unique: false });
-                        notificationStore.createIndex("plantId", "plantId", { unique: false });
                     }
                     
-                    // Plants store
                     if (!db.objectStoreNames.contains("plants")) {
                         const plantStore = db.createObjectStore("plants", { keyPath: "id" });
                         plantStore.createIndex("userId", "userId", { unique: false });
-                        plantStore.createIndex("nextWatering", "nextWatering", { unique: false });
-                        plantStore.createIndex("nextFertilizing", "nextFertilizing", { unique: false });
-                        plantStore.createIndex("progress", "progress", { unique: false });
                     }
                     
-                    // Users store
                     if (!db.objectStoreNames.contains("users")) {
                         const userStore = db.createObjectStore("users", { keyPath: "id" });
                         userStore.createIndex("email", "email", { unique: true });
-                    }
-                    
-                    // Images store
-                    if (!db.objectStoreNames.contains("images")) {
-                        db.createObjectStore("images", { keyPath: "id", autoIncrement: true });
-                    }
-                    
-                    // Plant History store
-                    if (!db.objectStoreNames.contains("plantHistory")) {
-                        const historyStore = db.createObjectStore("plantHistory", { keyPath: "id" });
-                        historyStore.createIndex("plantId", "plantId", { unique: false });
-                        historyStore.createIndex("userId", "userId", { unique: false });
-                        historyStore.createIndex("date", "date", { unique: false });
-                        historyStore.createIndex("type", "type", { unique: false });
                     }
                 };
                 
@@ -2538,30 +2806,35 @@
             });
         }
 
-        // Get user plants from IndexedDB
-        async function getUserPlantsFromDB() {
-            return new Promise((resolve, reject) => {
-                if (!db || !currentUser) {
-                    resolve([]);
-                    return;
+        // Load current user data
+        async function loadCurrentUser() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (!savedUser) {
+                showToast('Silakan login terlebih dahulu', 'error');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+                return;
+            }
+
+            currentUser = JSON.parse(savedUser);
+            
+            let userData = await getUserFromDB(currentUser.id);
+            
+            if (!userData) {
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                userData = registeredUsers.find(u => u.id === currentUser.id);
+                
+                if (!userData) {
+                    userData = registeredUsers.find(u => u.email === currentUser.email);
                 }
-                
-                const transaction = db.transaction("plants", "readonly");
-                const store = transaction.objectStore("plants");
-                const index = store.index("userId");
-                const request = index.getAll(currentUser.id);
-                
-                request.onsuccess = function() {
-                    const plants = request.result || [];
-                    // Sort by date created (newest first)
-                    plants.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-                    resolve(plants);
-                };
-                
-                request.onerror = function() {
-                    reject("Gagal mengambil tanaman");
-                };
-            });
+            }
+            
+            if (!userData) {
+                userData = currentUser;
+            }
+
+            updateUserProfile(userData);
         }
 
         // Get user from IndexedDB
@@ -2586,276 +2859,14 @@
             });
         }
 
-        // Update user in IndexedDB
-        async function updateUserInDB(userData) {
-            return new Promise((resolve, reject) => {
-                if (!db) {
-                    reject("Database belum diinisialisasi");
-                    return;
-                }
-                
-                const transaction = db.transaction("users", "readwrite");
-                const store = transaction.objectStore("users");
-                const request = store.put(userData);
-                
-                request.onsuccess = function() {
-                    resolve(true);
-                };
-                
-                request.onerror = function() {
-                    reject("Gagal memperbarui data pengguna");
-                };
-            });
-        }
-
-        // Get user stats from IndexedDB
-        async function getUserStats() {
-            try {
-                const plants = await getUserPlantsFromDB();
-                
-                const totalPlants = plants.length;
-                const activePlants = plants.filter(plant => plant.progress < 100 && plant.status !== 'failed').length;
-                const completedPlants = plants.filter(plant => plant.progress >= 100).length;
-                const failedPlants = plants.filter(plant => plant.status === 'failed').length;
-                
-                return {
-                    totalPlants,
-                    activePlants,
-                    completedPlants,
-                    failedPlants
-                };
-            } catch (error) {
-                console.error("Error getting user stats:", error);
-                return {
-                    totalPlants: 0,
-                    activePlants: 0,
-                    completedPlants: 0,
-                    failedPlants: 0
-                };
-            }
-        }
-
-        // Initialize when DOM is loaded
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Pastikan semua modal tersembunyi saat halaman dimuat
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.style.display = 'none';
-            });
-            
-            try {
-                // Initialize database
-                await initDB();
-                
-                // Load user data
-                await loadCurrentUser();
-                await loadUserPlants();
-                loadNotificationSettings();
-                setupEventListeners();
-                updateNotifications();
-                loadWhatsAppLogs();
-                
-                // Pastikan tab informasi pribadi yang aktif pertama kali
-                setActiveTab('info');
-                
-                // Initialize notification sound
-                initNotificationSound();
-                
-                // Start WhatsApp scheduler
-                initWhatsAppScheduler();
-                
-                // Check WhatsApp status
-                updateWhatsAppStatus();
-                
-                console.log('✅ Profile page initialized successfully');
-                
-            } catch (error) {
-                console.error("Error initializing profile page:", error);
-                showToast('Gagal memuat halaman profil', 'error');
-            }
-        });
-
-        // Initialize notification sound
-        function initNotificationSound() {
-            try {
-                // Create audio context for better sound control
-                notificationSound = new Audio();
-                notificationSound.volume = 0.7;
-                notificationSound.preload = 'auto';
-            } catch (error) {
-                console.error("Error initializing notification sound:", error);
-            }
-        }
-
-        // Play notification sound with specific sound type
-        function playNotificationSound(soundType = 'bell') {
-            if (!notificationSound) {
-                console.error("Notification sound not initialized");
-                return;
-            }
-            
-            // Get the sound type from dropdown if not provided
-            if (!soundType || soundType === 'default') {
-                soundType = document.getElementById('notificationSound').value || 'bell';
-            }
-            
-            try {
-                // Stop any currently playing sound
-                notificationSound.pause();
-                notificationSound.currentTime = 0;
-                
-                // Get the correct sound URL
-                const soundUrl = SOUND_URLS[soundType] || SOUND_URLS.bell;
-                
-                if (!soundUrl) {
-                    console.error("No sound URL found for type:", soundType);
-                    playFallbackSound(soundType);
-                    return;
-                }
-                
-                console.log('Playing sound:', soundType, 'name:', SOUND_NAMES[soundType], 'from:', soundUrl);
-                
-                // Play sound
-                notificationSound.src = soundUrl;
-                const playPromise = notificationSound.play();
-                
-                if (playPromise !== undefined) {
-                    playPromise.catch(e => {
-                        console.error("Error playing notification sound:", e);
-                        playFallbackSound(soundType);
-                    });
-                }
-                
-            } catch (error) {
-                console.error("Error with notification sound:", error);
-                playFallbackSound(soundType);
-            }
-        }
-
-        function playFallbackSound(type = 'bell') {
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                // Different frequencies for different sound types
-                let frequency = 800;
-                let duration = 0.5;
-                
-                switch(type) {
-                    case 'chime':
-                        frequency = 600;
-                        duration = 0.8;
-                        break;
-                    case 'ding':
-                        frequency = 1000;
-                        duration = 0.3;
-                        break;
-                    case 'alert':
-                        frequency = 400;
-                        duration = 1.0;
-                        break;
-                    case 'positive':
-                        frequency = 700;
-                        duration = 0.6;
-                        break;
-                    case 'message':
-                        frequency = 900;
-                        duration = 0.4;
-                        break;
-                    case 'notification':
-                        frequency = 300;
-                        duration = 1.2;
-                        break;
-                    default: // bell
-                        frequency = 800;
-                        duration = 0.5;
-                }
-                
-                oscillator.frequency.value = frequency;
-                oscillator.type = 'sine';
-                
-                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
-                
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + duration);
-                
-                console.log('Playing fallback sound for type:', type, 'frequency:', frequency);
-                
-            } catch (error) {
-                console.error("Error with fallback sound:", error);
-            }
-        }
-
-        // Set active tab
-        function setActiveTab(tabId) {
-            // Remove active class from all items
-            document.querySelectorAll('.profile-menu-item').forEach(i => i.classList.remove('active'));
-            document.querySelectorAll('.profile-tab').forEach(tab => tab.classList.remove('active'));
-            
-            // Add active class to clicked item
-            const menuItem = document.querySelector(`[data-tab="${tabId}"]`);
-            if (menuItem) {
-                menuItem.classList.add('active');
-            }
-            
-            // Show corresponding tab
-            const tabElement = document.getElementById(`${tabId}-tab`);
-            if (tabElement) {
-                tabElement.classList.add('active');
-            }
-        }
-
-        // Load current user data
-        async function loadCurrentUser() {
-            const savedUser = localStorage.getItem('currentUser');
-            if (!savedUser) {
-                showToast('Silakan login terlebih dahulu', 'error');
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 2000);
-                return;
-            }
-
-            currentUser = JSON.parse(savedUser);
-            
-            // Try to get user from IndexedDB first
-            let userData = await getUserFromDB(currentUser.id);
-            
-            // If not found in IndexedDB, try localStorage
-            if (!userData) {
-                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-                userData = registeredUsers.find(u => u.id === currentUser.id);
-                
-                // Jika tidak ditemukan di registeredUsers, coba cari dengan email
-                if (!userData) {
-                    userData = registeredUsers.find(u => u.email === currentUser.email);
-                }
-            }
-            
-            // Jika masih tidak ditemukan, gunakan currentUser sebagai fallback
-            if (!userData) {
-                userData = currentUser;
-            }
-
-            // Update UI with user data
-            updateUserProfile(userData);
-        }
-
         // Update user profile in UI
         function updateUserProfile(userData) {
-            // Update header
             document.getElementById('userNameHeader').textContent = userData.name || 'User';
             document.getElementById('userAvatarHeader').src = userData.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name || 'User')}&background=2E7D32&color=fff`;
             
-            // Update sidebar
             document.getElementById('userNameSidebar').textContent = userData.name || 'User';
             document.getElementById('userAvatarSidebar').src = userData.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name || 'User')}&background=2E7D32&color=fff`;
             
-            // Update profile sidebar
             document.getElementById('profileName').textContent = userData.name || 'User';
             const profileAvatar = document.getElementById('profileAvatar');
             if (userData.avatar) {
@@ -2864,13 +2875,11 @@
                 profileAvatar.innerHTML = `<i class="fas fa-user"></i>`;
             }
             
-            // Update info tab
             document.getElementById('displayName').textContent = userData.name || '-';
             document.getElementById('displayEmail').textContent = userData.email || '-';
             document.getElementById('displayPhone').textContent = userData.phone || '-';
             document.getElementById('displayAddress').textContent = userData.address || '-';
             
-            // Format join date
             const joinDate = userData.createdAt ? new Date(userData.createdAt) : new Date();
             document.getElementById('displayJoinDate').textContent = joinDate.toLocaleDateString('id-ID', { 
                 year: 'numeric', 
@@ -2878,16 +2887,39 @@
                 day: 'numeric' 
             });
             
-            // Update edit form
             document.getElementById('editName').value = userData.name || '';
             document.getElementById('editEmail').value = userData.email || '';
             document.getElementById('editPhone').value = userData.phone || '';
             document.getElementById('editAddress').value = userData.address || '';
 
-            // Update last password change
             const lastPasswordChange = localStorage.getItem('lastPasswordChange_' + (userData.id || userData.email));
             document.getElementById('lastPasswordChange').textContent = lastPasswordChange ? 
                 `Terakhir diubah ${lastPasswordChange}` : 'Belum pernah diubah';
+        }
+
+        // Get user plants from IndexedDB
+        async function getUserPlantsFromDB() {
+            return new Promise((resolve, reject) => {
+                if (!db || !currentUser) {
+                    resolve([]);
+                    return;
+                }
+                
+                const transaction = db.transaction("plants", "readonly");
+                const store = transaction.objectStore("plants");
+                const index = store.index("userId");
+                const request = index.getAll(currentUser.id);
+                
+                request.onsuccess = function() {
+                    const plants = request.result || [];
+                    plants.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                    resolve(plants);
+                };
+                
+                request.onerror = function() {
+                    reject("Gagal mengambil tanaman");
+                };
+            });
         }
 
         // Load user plants data
@@ -2905,22 +2937,24 @@
         // Update plant statistics
         async function updatePlantStatistics() {
             try {
-                const stats = await getUserStats();
+                const plants = await getUserPlantsFromDB();
                 
-                // Update sidebar stats
-                document.getElementById('totalPlants').textContent = stats.totalPlants;
-                document.getElementById('totalHarvests').textContent = stats.completedPlants;
+                const totalPlants = plants.length;
+                const activePlants = plants.filter(plant => plant.progress < 100 && plant.status !== 'failed').length;
+                const completedPlants = plants.filter(plant => plant.progress >= 100).length;
+                const failedPlants = plants.filter(plant => plant.status === 'failed').length;
+                
+                document.getElementById('totalPlants').textContent = totalPlants;
+                document.getElementById('totalHarvests').textContent = completedPlants;
 
-                // Update statistics section
-                document.getElementById('statsTotalPlants').textContent = stats.totalPlants;
-                document.getElementById('statsActivePlants').textContent = stats.activePlants;
-                document.getElementById('statsSuccessHarvest').textContent = stats.completedPlants;
-                document.getElementById('statsFailedHarvest').textContent = stats.failedPlants;
+                document.getElementById('statsTotalPlants').textContent = totalPlants;
+                document.getElementById('statsActivePlants').textContent = activePlants;
+                document.getElementById('statsSuccessHarvest').textContent = completedPlants;
+                document.getElementById('statsFailedHarvest').textContent = failedPlants;
                 
             } catch (error) {
                 console.error("Error updating plant statistics:", error);
                 
-                // Set default values if error
                 document.getElementById('totalPlants').textContent = '0';
                 document.getElementById('totalHarvests').textContent = '0';
                 document.getElementById('statsTotalPlants').textContent = '0';
@@ -2948,7 +2982,6 @@
                         notif.userId === currentUser.id
                     );
                     
-                    // Urutkan berdasarkan timestamp terbaru
                     userNotifications.sort((a, b) => 
                         new Date(b.timestamp) - new Date(a.timestamp)
                     );
@@ -2968,7 +3001,6 @@
                 const notifications = await getUserNotifications();
                 const userNotifications = notifications.filter(notif => !notif.read);
                 
-                // Update notification badge di header
                 const notificationBadge = document.getElementById('notificationBadge');
                 if (notificationBadge) {
                     notificationBadge.textContent = userNotifications.length;
@@ -2980,7 +3012,6 @@
                     }
                 }
                 
-                // Update notification badge di sidebar
                 const sidebarNotificationBadge = document.getElementById('sidebarNotificationBadge');
                 if (sidebarNotificationBadge) {
                     sidebarNotificationBadge.textContent = userNotifications.length;
@@ -3004,16 +3035,12 @@
 
         // Setup event listeners
         function setupEventListeners() {
-            // Hamburger menu toggle
             const hamburgerBtn = document.getElementById('hamburgerBtn');
             const sidebarOverlay = document.getElementById('sidebarOverlay');
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
             
             hamburgerBtn.addEventListener('click', toggleSidebar);
             sidebarOverlay.addEventListener('click', closeSidebar);
             
-            // Profile button click
             const userProfileBtn = document.getElementById('userProfileBtn');
             const userDropdown = document.getElementById('userDropdown');
             
@@ -3024,7 +3051,6 @@
                 userDropdownOpen = !userDropdownOpen;
             });
             
-            // Close dropdown when clicking outside
             document.addEventListener('click', function(e) {
                 if (userDropdownOpen && !userProfileBtn.contains(e.target) && !userDropdown.contains(e.target)) {
                     userDropdown.classList.remove('show');
@@ -3033,7 +3059,6 @@
                 }
             });
             
-            // Modal close events
             document.querySelectorAll('.close-modal').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const modal = this.closest('.modal');
@@ -3043,73 +3068,51 @@
                 });
             });
             
-            // Close modal when clicking outside
             window.addEventListener('click', function(e) {
                 if (e.target.classList.contains('modal')) {
                     e.target.style.display = 'none';
                 }
             });
             
-            // Close sidebar when clicking on menu item
             document.querySelectorAll('.sidebar-menu a').forEach(link => {
                 link.addEventListener('click', function() {
                     closeSidebar();
                 });
             });
             
-            // Close sidebar with Escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && sidebarOpen) {
                     closeSidebar();
                 }
                 if (e.key === 'Escape') {
-                    // Close any open modal
                     document.querySelectorAll('.modal').forEach(modal => {
                         modal.style.display = 'none';
                     });
                 }
             });
             
-            // Profile tab functionality
             setupProfileTabs();
             setupNotificationToggles();
             setupFormSubmissions();
-            
-            // Setup password toggle visibility
             setupPasswordToggle();
-            
-            // Setup password requirements validation
             setupPasswordValidation();
+            setupButtonEvents();
+            setupNotificationSettingsEvents();
+            setupTestButtons();
             
-            // Setup smooth button click for save notification button
-            setupSmoothButtonClick();
-            
-            // Setup WhatsApp settings
-            setupWhatsAppSettings();
-            
-            // Refresh notifications periodically
             setInterval(async () => {
                 await updateNotifications();
             }, 30000);
             
-            // Refresh plant stats periodically
             setInterval(async () => {
                 await updatePlantStatistics();
             }, 60000);
             
-            // Responsive behavior check
             checkResponsiveBehavior();
             window.addEventListener('resize', checkResponsiveBehavior);
-            
-            // Setup page visibility change for WhatsApp scheduler
-            document.addEventListener('visibilitychange', function() {
-                if (!document.hidden) {
-                    checkScheduledWhatsApp();
-                }
-            });
         }
 
-        // Profile Tab Functionality
+        // Setup profile tabs
         function setupProfileTabs() {
             const profileMenuItems = document.querySelectorAll('.profile-menu-item');
             profileMenuItems.forEach(item => {
@@ -3119,12 +3122,6 @@
                     const tabId = this.dataset.tab;
                     setActiveTab(tabId);
                     
-                    // Load logs when notifications tab is opened
-                    if (tabId === 'notifications') {
-                        loadWhatsAppLogs();
-                    }
-                    
-                    // Refresh stats when info tab is opened
                     if (tabId === 'info') {
                         await updatePlantStatistics();
                     }
@@ -3132,625 +3129,253 @@
             });
         }
 
-        // Setup smooth button click effect
-        function setupSmoothButtonClick() {
-            const saveNotificationBtn = document.getElementById('saveNotificationBtn');
-            if (saveNotificationBtn) {
-                saveNotificationBtn.addEventListener('click', function(e) {
-                    // Prevent default jika ini adalah submit form
-                    if (e.preventDefault) e.preventDefault();
-                    
-                    // Add smooth click animation
-                    this.style.transform = 'translateY(-1px) scale(0.98)';
-                    this.style.boxShadow = '0 4px 10px rgba(46, 125, 50, 0.2)';
-                    
-                    // Reset after animation
-                    setTimeout(() => {
-                        this.style.transform = '';
-                        this.style.boxShadow = '';
-                        
-                        // Execute the save function
-                        saveNotificationSettings();
-                    }, 150);
-                });
-            }
-            
-            // Setup smooth effect for edit profile button
-            const editProfileBtn = document.querySelector('.profile-actions .btn-secondary');
-            if (editProfileBtn) {
-                editProfileBtn.addEventListener('click', function(e) {
-                    // Prevent default
-                    e.preventDefault();
-                    
-                    // Add smooth click animation
-                    this.style.transform = 'translateY(-1px) scale(0.98)';
-                    this.style.boxShadow = '0 4px 10px rgba(46, 125, 50, 0.2)';
-                    
-                    // Reset after animation
-                    setTimeout(() => {
-                        this.style.transform = '';
-                        this.style.boxShadow = '';
-                        
-                        // Execute the function
-                        openEditProfileModal();
-                    }, 150);
-                });
-            }
-        }
-
-        // Notification Settings Functions
+        // Setup notification toggles
         function setupNotificationToggles() {
-            const notificationToggles = ['notifWatering', 'notifFertilizing', 'notifHarvest', 'notifWhatsApp', 'soundNotification'];
+            const notificationToggles = ['notifWatering', 'notifFertilizing', 'notifHarvest', 'soundNotification'];
             notificationToggles.forEach(toggleId => {
                 const toggle = document.getElementById(toggleId);
                 if (toggle) {
                     toggle.addEventListener('change', function() {
-                        // Special handling for WhatsApp
-                        if (toggleId === 'notifWhatsApp' && this.checked) {
-                            showWhatsAppSettingsModal();
-                        }
+                        console.log(`Toggle ${toggleId} changed to: ${this.checked}`);
                         
-                        // Add smooth feedback
                         this.parentElement.style.transform = 'scale(1.05)';
                         setTimeout(() => {
                             this.parentElement.style.transform = '';
                         }, 200);
                         
-                        // Save settings
-                        saveNotificationSettings();
-                        
-                        // Update WhatsApp status
-                        if (toggleId === 'notifWhatsApp') {
-                            updateWhatsAppStatus();
+                        if (toggleId === 'soundNotification' && this.checked) {
+                            setTimeout(() => {
+                                const soundType = getNotificationSoundType();
+                                const soundName = SOUNDS[soundType]?.name || soundType;
+                                showToast(`Notifikasi suara "${soundName}" diaktifkan`, 'success');
+                                playNotificationSound(soundType);
+                            }, 300);
                         }
                     });
                 }
             });
         }
 
+        // Setup notification settings events
+        function setupNotificationSettingsEvents() {
+            const notificationSoundSelect = document.getElementById('notificationSound');
+            if (notificationSoundSelect) {
+                notificationSoundSelect.addEventListener('change', function() {
+                    console.log(`Sound changed to: ${this.value}`);
+                    const soundName = SOUNDS[this.value]?.name || this.value;
+                    
+                    if (isSoundNotificationEnabled() && !testSoundPlaying) {
+                        setTimeout(() => {
+                            showToast(`Suara notifikasi diubah ke "${soundName}"`, 'success');
+                            playNotificationSound(this.value);
+                        }, 500);
+                    }
+                });
+            }
+            
+            const notificationTimeInput = document.getElementById('notificationTime');
+            if (notificationTimeInput) {
+                notificationTimeInput.addEventListener('change', function() {
+                    console.log(`Notification time changed to: ${this.value}`);
+                });
+            }
+        }
+
+        // Setup test buttons - DIPERBAIKI: Fokus pada popup yang benar-benar muncul
+        function setupTestButtons() {
+            const testSoundBtn = document.getElementById('testSoundBtn');
+            if (testSoundBtn) {
+                testSoundBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log("🎵 Test sound button clicked");
+                    
+                    const originalText = this.innerHTML;
+                    
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memutar...';
+                    this.disabled = true;
+                    
+                    const soundType = getNotificationSoundType();
+                    const soundName = SOUNDS[soundType]?.name || soundType;
+                    
+                    const success = playNotificationSound(soundType);
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                        
+                        if (success) {
+                            showToast(`Suara "${soundName}" berhasil diuji`, 'success');
+                            this.classList.add('btn-success');
+                            setTimeout(() => {
+                                this.classList.remove('btn-success');
+                            }, 2000);
+                        } else {
+                            showToast('Gagal memainkan suara', 'error');
+                            this.classList.add('btn-error');
+                            setTimeout(() => {
+                                this.classList.remove('btn-error');
+                            }, 2000);
+                        }
+                    }, 1500);
+                });
+            }
+            
+            const testPopupBtn = document.getElementById('testPopupBtn');
+            if (testPopupBtn) {
+                testPopupBtn.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log("🔔 Test popup button clicked");
+                    
+                    const originalText = this.innerHTML;
+                    
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menguji...';
+                    this.disabled = true;
+                    
+                    try {
+                        const soundType = getNotificationSoundType();
+                        const soundName = SOUNDS[soundType]?.name || soundType;
+                        
+                        // Selalu mainkan suara terlebih dahulu
+                        playNotificationSound(soundType);
+                        
+                        // Coba buat notifikasi browser
+                        if ('Notification' in window) {
+                            if (Notification.permission === 'granted') {
+                                // Buat notifikasi
+                                const notification = new Notification('🌱 SmartTani - Uji Notifikasi', {
+                                    body: `Notifikasi "${soundName}" berfungsi dengan baik!\nKlik notifikasi ini untuk menutup.`,
+                                    icon: 'https://ui-avatars.com/api/?name=ST&background=2E7D32&color=fff&bold=true',
+                                    requireInteraction: true,
+                                    silent: false
+                                });
+                                
+                                notification.onclick = function() {
+                                    window.focus();
+                                    this.close();
+                                    showToast('Notifikasi berhasil diklik', 'success');
+                                };
+                                
+                                // Auto close setelah 10 detik
+                                setTimeout(() => {
+                                    notification.close();
+                                }, 10000);
+                                
+                                showToast(`Notifikasi popup "${soundName}" berhasil ditampilkan!`, 'success');
+                                
+                            } else if (Notification.permission === 'default') {
+                                // Minta izin dengan cara yang sederhana
+                                const userConfirmed = confirm(
+                                    'SmartTani ingin menampilkan notifikasi popup untuk pengujian.\n\n' +
+                                    'Izinkan notifikasi untuk melihat contoh popup?'
+                                );
+                                
+                                if (userConfirmed) {
+                                    Notification.requestPermission().then(permission => {
+                                        if (permission === 'granted') {
+                                            // Buat notifikasi setelah permission diberikan
+                                            setTimeout(() => {
+                                                const notification = new Notification('🌱 SmartTani - Uji Notifikasi', {
+                                                    body: `Notifikasi "${soundName}" berfungsi dengan baik!`,
+                                                    icon: 'https://ui-avatars.com/api/?name=ST&background=2E7D32&color=fff&bold=true'
+                                                });
+                                                
+                                                showToast(`Notifikasi popup "${soundName}" berhasil ditampilkan!`, 'success');
+                                            }, 500);
+                                        } else {
+                                            showToast(`Suara "${soundName}" berhasil diuji (popup ditolak)`, 'info');
+                                        }
+                                    });
+                                } else {
+                                    showToast(`Suara "${soundName}" berhasil diuji (popup dibatalkan)`, 'info');
+                                }
+                            } else {
+                                showToast(`Suara "${soundName}" berhasil diuji (popup tidak diizinkan)`, 'info');
+                            }
+                        } else {
+                            showToast(`Suara "${soundName}" berhasil diuji (browser tidak mendukung popup)`, 'info');
+                        }
+                        
+                    } catch (error) {
+                        console.error("Error in test popup:", error);
+                        const soundType = getNotificationSoundType();
+                        const soundName = SOUNDS[soundType]?.name || soundType;
+                        showToast(`Suara "${soundName}" berhasil diuji`, 'info');
+                    } finally {
+                        setTimeout(() => {
+                            testPopupBtn.innerHTML = originalText;
+                            testPopupBtn.disabled = false;
+                            testPopupBtn.classList.add('btn-success');
+                            setTimeout(() => {
+                                testPopupBtn.classList.remove('btn-success');
+                            }, 2000);
+                        }, 1000);
+                    }
+                });
+            }
+            
+            const saveNotificationBtn = document.getElementById('saveNotificationBtn');
+            if (saveNotificationBtn) {
+                saveNotificationBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    saveNotificationSettings();
+                });
+            }
+        }
+
+        // Save notification settings
         function saveNotificationSettings() {
             const settings = {
                 watering: document.getElementById('notifWatering').checked,
                 fertilizing: document.getElementById('notifFertilizing').checked,
                 harvest: document.getElementById('notifHarvest').checked,
-                whatsapp: document.getElementById('notifWhatsApp').checked,
                 sound: document.getElementById('soundNotification').checked,
                 time: document.getElementById('notificationTime').value,
-                soundType: document.getElementById('notificationSound').value,
-                whatsappNumber: localStorage.getItem('whatsappNumber') || ''
+                soundType: document.getElementById('notificationSound').value
             };
             
             localStorage.setItem('notificationSettings', JSON.stringify(settings));
-            showToast('Pengaturan notifikasi berhasil disimpan', 'success');
             
-            // Restart WhatsApp scheduler
-            startWhatsAppScheduler();
+            console.log('🔔 Notification settings saved to localStorage:', settings);
             
-            // Update WhatsApp number display
-            if (settings.whatsappNumber) {
-                document.getElementById('whatsappNumberValue').textContent = settings.whatsappNumber;
+            const soundName = SOUNDS[settings.soundType]?.name || settings.soundType;
+            let message = 'Pengaturan notifikasi berhasil disimpan';
+            
+            if (settings.sound) {
+                message += ` dengan suara "${soundName}"`;
             }
             
-            // Update WhatsApp status
-            updateWhatsAppStatus();
+            showToast(message, 'success');
+            
+            if (settings.sound) {
+                setTimeout(() => {
+                    playNotificationSound(settings.soundType);
+                }, 500);
+            }
         }
 
+        // Load notification settings
         function loadNotificationSettings() {
-            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {
-                watering: true,
-                fertilizing: true,
-                harvest: true,
-                whatsapp: false,
-                sound: true,
-                time: '08:00',
-                soundType: 'bell',
-                whatsappNumber: ''
-            };
+            let settings = JSON.parse(localStorage.getItem('notificationSettings'));
+            
+            if (!settings) {
+                settings = DEFAULT_NOTIFICATION_SETTINGS;
+                localStorage.setItem('notificationSettings', JSON.stringify(settings));
+            }
+            
+            console.log('🔔 Loading notification settings from localStorage:', settings);
             
             document.getElementById('notifWatering').checked = settings.watering;
             document.getElementById('notifFertilizing').checked = settings.fertilizing;
             document.getElementById('notifHarvest').checked = settings.harvest;
-            document.getElementById('notifWhatsApp').checked = settings.whatsapp;
             document.getElementById('soundNotification').checked = settings.sound;
             document.getElementById('notificationTime').value = settings.time;
             document.getElementById('notificationSound').value = settings.soundType || 'bell';
-            
-            // Update WhatsApp number display
-            const whatsappNumberDisplay = document.getElementById('whatsappNumberValue');
-            if (whatsappNumberDisplay) {
-                whatsappNumberDisplay.textContent = settings.whatsappNumber || '-';
-            }
-            
-            // Load WhatsApp number from localStorage if not in settings
-            if (!settings.whatsappNumber) {
-                const savedWhatsApp = localStorage.getItem('whatsappNumber');
-                if (savedWhatsApp) {
-                    settings.whatsappNumber = savedWhatsApp;
-                    whatsappNumberDisplay.textContent = savedWhatsApp;
-                }
-            }
-            
-            // Update WhatsApp status
-            updateWhatsAppStatus();
         }
 
-        // WhatsApp Functions
-        function setupWhatsAppSettings() {
-            const whatsappForm = document.getElementById('whatsappSettingsForm');
-            if (whatsappForm) {
-                whatsappForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const whatsappNumber = document.getElementById('whatsappNumber').value;
-                    
-                    if (!whatsappNumber || !isValidWhatsAppNumber(whatsappNumber)) {
-                        showToast('Nomor WhatsApp tidak valid. Harus 10-15 digit angka.', 'error');
-                        return;
-                    }
-                    
-                    // Save WhatsApp number
-                    localStorage.setItem('whatsappNumber', whatsappNumber);
-                    
-                    // Update notification settings
-                    const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
-                    settings.whatsappNumber = whatsappNumber;
-                    settings.whatsapp = true; // Auto enable WhatsApp notifications
-                    localStorage.setItem('notificationSettings', JSON.stringify(settings));
-                    
-                    // Update UI
-                    document.getElementById('notifWhatsApp').checked = true;
-                    document.getElementById('whatsappNumberValue').textContent = whatsappNumber;
-                    
-                    showToast('Nomor WhatsApp berhasil disimpan', 'success');
-                    closeWhatsAppModal();
-                    
-                    // Restart scheduler
-                    startWhatsAppScheduler();
-                    
-                    // Update WhatsApp status
-                    updateWhatsAppStatus();
-                });
-            }
-        }
-
-        function showWhatsAppSettingsModal() {
-            const savedNumber = localStorage.getItem('whatsappNumber') || currentUser?.phone || '';
-            const formattedNumber = formatPhoneForWhatsApp(savedNumber);
-            
-            document.getElementById('whatsappNumber').value = formattedNumber || '';
-            document.getElementById('whatsappModal').style.display = 'block';
-        }
-
-        function closeWhatsAppModal() {
-            document.getElementById('whatsappModal').style.display = 'none';
-        }
-
-        function formatPhoneForWhatsApp(phoneNumber) {
-            if (!phoneNumber) return '';
-            
-            // Remove all non-digit characters
-            let cleanNumber = phoneNumber.replace(/\D/g, '');
-            
-            // If number starts with 0, replace with 62 (Indonesia country code)
-            if (cleanNumber.startsWith('0')) {
-                cleanNumber = '62' + cleanNumber.substring(1);
-            }
-            
-            // If number doesn't start with country code, add 62
-            if (!cleanNumber.startsWith('62')) {
-                cleanNumber = '62' + cleanNumber;
-            }
-            
-            return cleanNumber;
-        }
-
-        function isValidWhatsAppNumber(number) {
-            const cleanNumber = number.replace(/\D/g, '');
-            return cleanNumber.length >= 10 && cleanNumber.length <= 15;
-        }
-
-        // WhatsApp Scheduler System
-        function initWhatsAppScheduler() {
-            // Request notification permission
-            if ('Notification' in window && Notification.permission === 'default') {
-                Notification.requestPermission();
-            }
-            
-            // Start scheduler
-            startWhatsAppScheduler();
-            
-            // Check immediately on load
-            checkScheduledWhatsApp();
-            
-            // Check every minute
-            setInterval(checkScheduledWhatsApp, 60000);
-        }
-
-        function startWhatsAppScheduler() {
-            // Clear existing interval
-            if (whatsappSchedulerInterval) {
-                clearInterval(whatsappSchedulerInterval);
-            }
-            
-            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
-            
-            // Only start if WhatsApp notifications are enabled
-            if (settings.whatsapp && settings.whatsappNumber && settings.time) {
-                console.log('WhatsApp scheduler started for:', settings.time);
-            }
-        }
-
-        function checkScheduledWhatsApp() {
-            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
-            
-            // Check if WhatsApp notifications are enabled
-            if (!settings.whatsapp || !settings.whatsappNumber || !settings.time) {
-                return;
-            }
-            
-            const now = new Date();
-            const [scheduledHour, scheduledMinute] = settings.time.split(':').map(Number);
-            
-            // Get current hour and minute
-            const currentHour = now.getHours();
-            const currentMinute = now.getMinutes();
-            
-            // Check if it's time to send notification
-            if (currentHour === scheduledHour && currentMinute === scheduledMinute) {
-                // Check if we already sent today
-                const lastSentDate = localStorage.getItem('whatsappLastSentDate');
-                const today = now.toDateString();
-                
-                if (lastSentDate !== today) {
-                    sendScheduledWhatsAppNotification();
-                    localStorage.setItem('whatsappLastSentDate', today);
-                    console.log('Scheduled WhatsApp notification sent at', settings.time);
-                }
-            }
-            
-            lastWhatsAppCheck = now;
-        }
-
-        async function sendScheduledWhatsAppNotification() {
-            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
-            const phoneNumber = settings.whatsappNumber;
-            
-            if (!phoneNumber) return;
-            
-            const message = await createDailyNotificationMessage();
-            sendWhatsAppMessage(phoneNumber, message);
-        }
-
-        async function createDailyNotificationMessage() {
-            const now = new Date();
-            
-            try {
-                const plants = await getUserPlantsFromDB();
-                
-                // Filter tanaman yang butuh perhatian hari ini
-                const plantsNeedingWater = plants.filter(plant => {
-                    if (!plant.lastWatered) return false;
-                    const lastWatered = new Date(plant.lastWatered);
-                    const daysSinceWater = Math.floor((now - lastWatered) / (1000 * 60 * 60 * 24));
-                    return daysSinceWater >= (plant.waterSchedule || 3);
-                });
-                
-                const plantsReadyForHarvest = plants.filter(plant => {
-                    return plant.harvestDate && new Date(plant.harvestDate) <= now;
-                });
-                
-                // Build message
-                let message = `🌱 *SmartTani - Daily Report* 🌱\n`;
-                message += `\n📅 ${now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}\n`;
-                message += `⏰ ${now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}\n`;
-                
-                if (plantsNeedingWater.length > 0) {
-                    message += `\n💧 *Tanaman Perlu Disiram:*\n`;
-                    plantsNeedingWater.forEach(plant => {
-                        message += `• ${plant.name} (${plant.type})\n`;
-                    });
-                }
-                
-                if (plantsReadyForHarvest.length > 0) {
-                    message += `\n🎉 *Tanaman Siap Panen:*\n`;
-                    plantsReadyForHarvest.forEach(plant => {
-                        message += `• ${plant.name} (${plant.type})\n`;
-                    });
-                }
-                
-                if (plantsNeedingWater.length === 0 && plantsReadyForHarvest.length === 0) {
-                    message += `\n✅ Semua tanaman dalam kondisi baik!\n`;
-                }
-                
-                message += `\n_SmartTani - Sistem Pertanian Pintar_`;
-                
-                return encodeURIComponent(message);
-            } catch (error) {
-                console.error("Error creating daily notification message:", error);
-                
-                // Fallback message
-                let message = `🌱 *SmartTani - Daily Report* 🌱\n`;
-                message += `\n📅 ${now.toLocaleDateString('id-ID')}\n`;
-                message += `⏰ ${now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}\n`;
-                message += `\n✅ Sistem sedang berjalan dengan baik!\n`;
-                message += `\n_SmartTani - Sistem Pertanian Pintar_`;
-                
-                return encodeURIComponent(message);
-            }
-        }
-
-        function sendWhatsAppMessage(phoneNumber, message) {
-            const cleanNumber = phoneNumber.replace(/\D/g, '');
-            
-            // Coba buka WhatsApp Web
-            const whatsappUrl = `https://web.whatsapp.com/send?phone=${cleanNumber}&text=${message}`;
-            
-            // Buka di new tab
-            window.open(whatsappUrl, '_blank');
-            
-            // Simpan log
-            const log = {
-                timestamp: new Date().toISOString(),
-                number: cleanNumber,
-                message: decodeURIComponent(message),
-                status: 'opened',
-                type: 'scheduled'
-            };
-            
-            const logs = JSON.parse(localStorage.getItem('whatsappLogs') || '[]');
-            logs.push(log);
-            localStorage.setItem('whatsappLogs', JSON.stringify(logs.slice(-50))); // Simpan 50 log terakhir
-            
-            // Show browser notification
-            if ('Notification' in window && Notification.permission === 'granted') {
-                new Notification('SmartTani - WhatsApp Notification', {
-                    body: 'WhatsApp Web dibuka untuk mengirim notifikasi harian',
-                    icon: 'https://cdn-icons-png.flaticon.com/512/220/220236.png'
-                });
-            }
-            
-            // Play sound if enabled - DIUBAH: ambil dari dropdown langsung
-            const soundEnabled = document.getElementById('soundNotification').checked;
-            if (soundEnabled && notificationSound) {
-                const soundType = document.getElementById('notificationSound').value || 'bell';
-                playNotificationSound(soundType);
-            }
-            
-            // Update logs display if on notifications tab
-            if (document.getElementById('notifications-tab').classList.contains('active')) {
-                loadWhatsAppLogs();
-            }
-            
-            showToast('WhatsApp dibuka untuk mengirim notifikasi harian', 'info');
-        }
-
-        function sendTestWhatsAppMessage() {
-            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
-            const phoneNumber = settings.whatsappNumber;
-            
-            if (!phoneNumber) {
-                showToast('Atur nomor WhatsApp terlebih dahulu', 'warning');
-                return;
-            }
-            
-            const now = new Date();
-            const message = encodeURIComponent(
-                `🔔 *SmartTani - Notifikasi Percobaan*\n\n` +
-                `Halo! Ini adalah pesan percobaan dari SmartTani.\n` +
-                `Notifikasi jadwal tanaman Anda akan dikirim melalui WhatsApp.\n\n` +
-                `*Tanggal:* ${now.toLocaleDateString('id-ID')}\n` +
-                `*Waktu:* ${now.toLocaleTimeString('id-ID')}\n\n` +
-                `Terima kasih telah menggunakan SmartTani! 🌱`
-            );
-            
-            const cleanNumber = phoneNumber.replace(/\D/g, '');
-            const whatsappUrl = `https://web.whatsapp.com/send?phone=${cleanNumber}&text=${message}`;
-            
-            // Buka di new tab
-            window.open(whatsappUrl, '_blank');
-            
-            // Simpan log
-            const log = {
-                timestamp: now.toISOString(),
-                number: cleanNumber,
-                message: decodeURIComponent(message),
-                status: 'test_sent',
-                type: 'test'
-            };
-            
-            const logs = JSON.parse(localStorage.getItem('whatsappLogs') || '[]');
-            logs.push(log);
-            localStorage.setItem('whatsappLogs', JSON.stringify(logs.slice(-50)));
-            
-            showToast('Membuka WhatsApp untuk mengirim pesan percobaan', 'info');
-        }
-
-        function updateWhatsAppStatus() {
-            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
-            const whatsappStatus = document.getElementById('whatsappStatus');
-            
-            if (settings.whatsapp && settings.whatsappNumber) {
-                whatsappStatus.style.display = 'inline-flex';
-            } else {
-                whatsappStatus.style.display = 'none';
-            }
-        }
-
-        // PERBAIKAN BESAR: Fungsi testNotificationPopup() yang benar
-        function testNotificationSound() {
-            // Ambil langsung dari dropdown
-            const soundType = document.getElementById('notificationSound').value;
-            const soundName = SOUND_NAMES[soundType] || soundType;
-            console.log('Testing notification sound:', soundType, '(', soundName, ')');
-            
-            // Mainkan suara
-            playNotificationSound(soundType);
-            
-            // Tampilkan toast
-            showToast(`Menguji suara: ${soundName}`, 'info');
-        }
-
-        function testNotificationPopup() {
-            console.log('Testing notification popup...');
-            
-            // 1. Ambil SETTING SAAT INI dari UI (BUKAN dari localStorage)
-            const soundEnabled = document.getElementById('soundNotification').checked;
-            const soundType = document.getElementById('notificationSound').value;
-            const soundName = SOUND_NAMES[soundType] || soundType;
-            
-            console.log('Current settings from UI - Sound enabled:', soundEnabled, 'Type:', soundType, 'Name:', soundName);
-            
-            // 2. Buat notifikasi
-            const notificationTitle = '🔔 SmartTani - Notifikasi Percobaan';
-            let notificationMessage = 'Ini adalah notifikasi percobaan dari SmartTani.';
-            
-            if (soundEnabled) {
-                notificationMessage += `\nSuara: ${soundName}`;
-            }
-            
-            // 3. Tampilkan browser notification
-            if ('Notification' in window && Notification.permission === 'granted') {
-                new Notification(notificationTitle, {
-                    body: notificationMessage,
-                    icon: 'https://ui-avatars.com/api/?name=SmartTani&background=2E7D32&color=fff'
-                });
-            } else if ('Notification' in window && Notification.permission === 'default') {
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        new Notification(notificationTitle, {
-                            body: notificationMessage,
-                            icon: 'https://ui-avatars.com/api/?name=SmartTani&background=2E7D32&color=fff'
-                        });
-                    }
-                });
-            }
-            
-            // 4. Mainkan suara JIKA diaktifkan
-            if (soundEnabled && notificationSound) {
-                console.log('Playing sound for popup:', soundType, '(', soundName, ')');
-                // Mainkan suara dengan delay kecil agar sinkron dengan popup
-                setTimeout(() => {
-                    playNotificationSound(soundType);
-                }, 300);
-            } else {
-                console.log('Sound disabled or notificationSound not available');
-            }
-            
-            // 5. Tampilkan toast
-            const toastMessage = soundEnabled 
-                ? `Notifikasi popup ditampilkan dengan suara ${soundName}`
-                : 'Notifikasi popup ditampilkan tanpa suara';
-            
-            showToast(toastMessage, 'success');
-        }
-
-        function testWhatsAppNotification() {
-            const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
-            
-            if (!settings.whatsapp || !settings.whatsappNumber) {
-                showToast('Aktifkan dan atur WhatsApp terlebih dahulu', 'warning');
-                return;
-            }
-            
-            sendTestWhatsAppMessage();
-        }
-
-        // WhatsApp Logs Functions
-        function loadWhatsAppLogs() {
-            const logs = JSON.parse(localStorage.getItem('whatsappLogs') || '[]');
-            const container = document.getElementById('whatsappLogsContainer');
-            
-            if (logs.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align: center; padding: 40px; color: var(--text-light);">
-                        <i class="fas fa-history" style="font-size: 48px; margin-bottom: 20px;"></i>
-                        <h3 style="margin-bottom: 10px;">Belum ada riwayat WhatsApp</h3>
-                        <p>Riwayat pengiriman WhatsApp akan muncul di sini</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            let html = `
-                <div style="max-height: 300px; overflow-y: auto;">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                            <tr style="background: var(--primary-extra-light);">
-                                <th style="padding: 12px; text-align: left;">Waktu</th>
-                                <th style="padding: 12px; text-align: left;">Tipe</th>
-                                <th style="padding: 12px; text-align: left;">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-            
-            logs.reverse().forEach(log => {
-                const date = new Date(log.timestamp);
-                const timeStr = date.toLocaleTimeString('id-ID', { 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
-                });
-                const dateStr = date.toLocaleDateString('id-ID');
-                
-                // Determine status color
-                let statusColor = 'var(--primary-color)';
-                let statusBg = 'var(--primary-light)';
-                
-                if (log.status === 'test_sent') {
-                    statusColor = 'var(--info)';
-                    statusBg = 'rgba(33, 150, 243, 0.1)';
-                } else if (log.status === 'opened') {
-                    statusColor = 'var(--success)';
-                    statusBg = 'rgba(76, 175, 80, 0.1)';
-                }
-                
-                // Determine type text
-                let typeText = log.type === 'test' ? 'Percobaan' : 'Terjadwal';
-                let typeColor = log.type === 'test' ? 'var(--warning)' : 'var(--primary-color)';
-                
-                html += `
-                    <tr style="border-bottom: 1px solid var(--border-color);">
-                        <td style="padding: 12px;">
-                            <div style="font-weight: 600;">${dateStr}</div>
-                            <div style="font-size: 12px; color: var(--text-light);">${timeStr}</div>
-                        </td>
-                        <td style="padding: 12px;">
-                            <span style="padding: 4px 8px; background: ${typeColor === 'var(--warning)' ? 'rgba(255, 152, 0, 0.1)' : 'var(--primary-light)'}; 
-                                color: ${typeColor}; border-radius: 4px; font-size: 12px; font-weight: 600;">
-                                ${typeText}
-                            </span>
-                        </td>
-                        <td style="padding: 12px;">
-                            <span style="padding: 4px 8px; background: ${statusBg}; 
-                                color: ${statusColor}; border-radius: 4px; font-size: 12px; font-weight: 600;">
-                                ${log.status === 'test_sent' ? 'Percobaan' : 'Terkirim'}
-                            </span>
-                        </td>
-                    </tr>
-                `;
-            });
-            
-            html += `
-                        </tbody>
-                    </table>
-                </div>
-                <div style="margin-top: 15px; text-align: center; color: var(--text-light); font-size: 12px;">
-                    Menampilkan ${logs.length} riwayat terakhir
-                </div>
-            `;
-            
-            container.innerHTML = html;
-        }
-
-        function clearWhatsAppLogs() {
-            if (confirm('Hapus semua riwayat WhatsApp?')) {
-                localStorage.removeItem('whatsappLogs');
-                loadWhatsAppLogs();
-                showToast('Riwayat WhatsApp dihapus', 'success');
-            }
-        }
-
-        // Security Functions
+        // Security functions
         function manageSessions() {
             document.getElementById('currentSessionTime').textContent = `Login: ${new Date().toLocaleString('id-ID')}`;
             document.getElementById('sessionsModal').style.display = 'block';
@@ -3766,6 +3391,12 @@
             }
         }
 
+        // Logout from dropdown
+        function logoutFromDropdown(event) {
+            event.preventDefault();
+            logout();
+        }
+
         // Modal functions
         function openEditProfileModal() {
             document.getElementById('editProfileModal').style.display = 'block';
@@ -3777,7 +3408,6 @@
 
         // Setup form submissions
         function setupFormSubmissions() {
-            // Edit Profile Form
             const editProfileForm = document.getElementById('editProfileForm');
             if (editProfileForm) {
                 editProfileForm.addEventListener('submit', async function(e) {
@@ -3795,10 +3425,8 @@
                     };
                     
                     try {
-                        // Update in IndexedDB
                         await updateUserInDB(updatedData);
                         
-                        // Update in localStorage (for backward compatibility)
                         const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
                         let userIndex = registeredUsers.findIndex(u => u.id === currentUser.id);
                         
@@ -3807,25 +3435,10 @@
                             localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
                         }
                         
-                        // Update current user
                         currentUser = updatedData;
                         localStorage.setItem('currentUser', JSON.stringify(currentUser));
                         
-                        // Update display
                         updateUserProfile(currentUser);
-                        
-                        // Update WhatsApp number if phone changed
-                        const settings = JSON.parse(localStorage.getItem('notificationSettings')) || {};
-                        if (settings.whatsapp && updatedData.phone) {
-                            const formattedNumber = formatPhoneForWhatsApp(updatedData.phone);
-                            if (formattedNumber) {
-                                localStorage.setItem('whatsappNumber', formattedNumber);
-                                settings.whatsappNumber = formattedNumber;
-                                localStorage.setItem('notificationSettings', JSON.stringify(settings));
-                                document.getElementById('whatsappNumberValue').textContent = formattedNumber;
-                                updateWhatsAppStatus();
-                            }
-                        }
                         
                         showToast('Profil berhasil diperbarui!', 'success');
                         document.getElementById('editProfileModal').style.display = 'none';
@@ -3837,7 +3450,6 @@
                 });
             }
 
-            // Change Password Form
             const changePasswordForm = document.getElementById('changePasswordForm');
             if (changePasswordForm) {
                 changePasswordForm.addEventListener('submit', async function(e) {
@@ -3849,11 +3461,9 @@
                     const confirmPassword = document.getElementById('confirmNewPassword').value;
                     
                     try {
-                        // Verify current password
                         const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
                         let user = registeredUsers.find(u => u.id === currentUser.id);
                         
-                        // Jika tidak ditemukan dengan ID, cari dengan email
                         if (!user) {
                             user = registeredUsers.find(u => u.email === currentUser.email);
                         }
@@ -3868,13 +3478,11 @@
                             return;
                         }
                         
-                        // Validate password requirements
                         if (!validatePassword(newPassword)) {
                             showToast('Password tidak memenuhi persyaratan!', 'error');
                             return;
                         }
                         
-                        // Update password in IndexedDB
                         const userInDB = await getUserFromDB(currentUser.id);
                         if (userInDB) {
                             userInDB.password = newPassword;
@@ -3882,7 +3490,6 @@
                             await updateUserInDB(userInDB);
                         }
                         
-                        // Update password in localStorage (for backward compatibility)
                         let userIndex = registeredUsers.findIndex(u => u.id === currentUser.id);
                         if (userIndex === -1) {
                             userIndex = registeredUsers.findIndex(u => u.email === currentUser.email);
@@ -3892,7 +3499,6 @@
                             registeredUsers[userIndex].password = newPassword;
                             localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
                             
-                            // Save last password change time
                             const userIdentifier = currentUser.id || currentUser.email;
                             const now = new Date();
                             const formattedDate = now.toLocaleDateString('id-ID', {
@@ -3909,12 +3515,10 @@
                         document.getElementById('changePasswordModal').style.display = 'none';
                         document.getElementById('changePasswordForm').reset();
                         
-                        // Reset password requirements display
                         document.querySelectorAll('[data-requirement]').forEach(item => {
                             item.classList.remove('valid');
                         });
                         
-                        // Update last password change display
                         const userIdentifier = currentUser.id || currentUser.email;
                         const lastChange = localStorage.getItem('lastPasswordChange_' + userIdentifier);
                         document.getElementById('lastPasswordChange').textContent = lastChange ? 
@@ -3926,6 +3530,28 @@
                     }
                 });
             }
+        }
+
+        // Update user in IndexedDB
+        async function updateUserInDB(userData) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject("Database belum diinisialisasi");
+                    return;
+                }
+                
+                const transaction = db.transaction("users", "readwrite");
+                const store = transaction.objectStore("users");
+                const request = store.put(userData);
+                
+                request.onsuccess = function() {
+                    resolve(true);
+                };
+                
+                request.onerror = function() {
+                    reject("Gagal memperbarui data pengguna");
+                };
+            });
         }
 
         // Setup password toggle visibility
@@ -3990,16 +3616,13 @@
         // Check responsive behavior
         function checkResponsiveBehavior() {
             const isDesktop = window.innerWidth >= 993;
-            const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('mainContent');
             const sidebarOverlay = document.getElementById('sidebarOverlay');
             
             if (isDesktop && sidebarOpen) {
-                // Desktop: sidebar open, content shifts
                 mainContent.classList.add('sidebar-open');
                 sidebarOverlay.classList.remove('active');
             } else if (!isDesktop && sidebarOpen) {
-                // Mobile: sidebar open, overlay shows
                 mainContent.classList.add('sidebar-open');
                 sidebarOverlay.classList.add('active');
             }
@@ -4026,13 +3649,10 @@
             mainContent.classList.add('sidebar-open');
             sidebarOpen = true;
             
-            // Check if mobile or desktop
             const isDesktop = window.innerWidth >= 993;
             if (!isDesktop) {
-                // Mobile: show overlay
                 sidebarOverlay.classList.add('active');
             } else {
-                // Desktop: content shifts, no overlay
                 sidebarOverlay.classList.remove('active');
             }
         }
@@ -4057,10 +3677,8 @@
             const toastMessage = document.getElementById('toastMessage');
             const toastIcon = toast.querySelector('i');
             
-            // Set message and icon
             toastMessage.textContent = message;
             
-            // Set icon based on type
             toastIcon.className = 'fas ' + (
                 type === 'success' ? 'fa-check-circle' :
                 type === 'error' ? 'fa-exclamation-circle' :
@@ -4068,13 +3686,16 @@
                 'fa-info-circle'
             );
             
-            // Set toast class
             toast.className = 'toast ' + type;
             
-            // Show toast
             toast.classList.add('show');
             
-            // Auto hide after 5 seconds
+            if (type === 'success' && isSoundNotificationEnabled()) {
+                setTimeout(() => {
+                    playNotificationSound(getNotificationSoundType());
+                }, 300);
+            }
+            
             setTimeout(() => {
                 hideToast();
             }, 5000);
@@ -4095,6 +3716,70 @@
                 }, 1500);
             }
         }
+
+        // Setup button events
+        function setupButtonEvents() {
+            const editProfileBtn = document.getElementById('editProfileBtn');
+            if (editProfileBtn) {
+                editProfileBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openEditProfileModal();
+                });
+            }
+            
+            const changePasswordBtn = document.getElementById('changePasswordBtn');
+            if (changePasswordBtn) {
+                changePasswordBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openChangePasswordModal();
+                });
+            }
+            
+            const manageSessionsBtn = document.getElementById('manageSessionsBtn');
+            if (manageSessionsBtn) {
+                manageSessionsBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    manageSessions();
+                });
+            }
+            
+            const cancelEditBtn = document.getElementById('cancelEditBtn');
+            if (cancelEditBtn) {
+                cancelEditBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.getElementById('editProfileModal').style.display = 'none';
+                });
+            }
+            
+            const cancelPasswordBtn = document.getElementById('cancelPasswordBtn');
+            if (cancelPasswordBtn) {
+                cancelPasswordBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.getElementById('changePasswordModal').style.display = 'none';
+                });
+            }
+            
+            const closeSessionsBtn = document.getElementById('closeSessionsBtn');
+            if (closeSessionsBtn) {
+                closeSessionsBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.getElementById('sessionsModal').style.display = 'none';
+                });
+            }
+            
+            const logoutAllSessionsBtn = document.getElementById('logoutAllSessionsBtn');
+            if (logoutAllSessionsBtn) {
+                logoutAllSessionsBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    logoutAllSessions();
+                });
+            }
+        }
+
+        // Export functions to window object
+        window.logoutFromDropdown = logoutFromDropdown;
+        window.logout = logout;
+        window.hideToast = hideToast;
     </script>
 </body>
 </html>
