@@ -4748,6 +4748,32 @@
             return normalized;
         }
 
+        // FUNGSI BARU: Cek apakah tanggal adalah hari ini
+        function isToday(dateString) {
+            if (!dateString) return false;
+            
+            const today = normalizeDate(new Date());
+            const dateToCheck = normalizeDate(new Date(dateString));
+            
+            return today.getTime() === dateToCheck.getTime();
+        }
+
+        // FUNGSI BARU: Format tanggal untuk tampilan dengan "Hari Ini"
+        function formatDateWithToday(dateString) {
+            if (!dateString) return '-';
+            
+            if (isToday(dateString)) {
+                return '<span style="color: var(--danger); font-weight: bold;">Hari Ini</span>';
+            }
+            
+            try {
+                const options = { day: 'numeric', month: 'short', year: 'numeric' };
+                return new Date(dateString).toLocaleDateString('id-ID', options);
+            } catch (error) {
+                return dateString;
+            }
+        }
+
         function animateCounter(elementId, targetValue) {
             const element = document.getElementById(elementId);
             const currentValue = parseInt(element.textContent) || 0;
@@ -4770,7 +4796,7 @@
             updateCounter();
         }
 
-        // TARUH FUNGSI INI DI SINI ↓↓↓
+        // FUNGSI BARU: Update total tanaman di filter
         function updateFilterTotalCount() {
             let filteredPlants = getFilteredPlants();
             const totalElement = document.getElementById('filterTotalPlants');
@@ -4778,7 +4804,6 @@
                 totalElement.textContent = filteredPlants.length;
             }
         }
-        // ↑↑↑ DI SINI ↑↑↑
 
         function formatDate(dateString) {
             if (!dateString) return '-';
@@ -5069,10 +5094,8 @@
             const grid = document.getElementById('plantsGrid');
             let filteredPlants = getFilteredPlants();
 
-            // TAMBAHKAN INI DI AWAL FUNGSI ↓↓↓
             // Update total tanaman di filter
             updateFilterTotalCount();
-            // ↑↑↑ DI SINI ↑↑↑
 
             if (filteredPlants.length === 0) {
                 let emptyMessage = '';
@@ -5477,6 +5500,19 @@
                     return;
                 }
 
+                // PERBAIKAN: Atur tanggal jadwal berikutnya agar jika hari ini, tetap hari ini
+                const today = normalizeDate(new Date());
+                const startDateObj = normalizeDate(new Date(startDate));
+                
+                let nextWatering = startDate;
+                let nextFertilizing = startDate;
+                
+                // Jika tanggal mulai adalah hari ini, atur jadwal berikutnya ke hari ini juga
+                if (startDateObj.getTime() === today.getTime()) {
+                    nextWatering = startDate;
+                    nextFertilizing = startDate;
+                }
+
                 // Buat objek tanaman baru
                 const currentUserId = currentUser ? currentUser.id.toString() : '0';
                 const plantId = `plant_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -5495,9 +5531,9 @@
                     quantity: quantity,
                     progress: 0,
                     lastWatered: null,
-                    nextWatering: startDate,
+                    nextWatering: nextWatering,
                     lastFertilized: null,
-                    nextFertilizing: startDate,
+                    nextFertilizing: nextFertilizing,
                     status: 'active',
                     plantImage: imageId,
                     userId: currentUserId,
@@ -5731,7 +5767,7 @@
             }
             
             // Update total tanaman yang terfilter
-        updateFilterTotalCount();
+            updateFilterTotalCount();
             renderPlants();
         }
 
@@ -5991,7 +6027,7 @@
                                     <i class="fas fa-calendar-check"></i> Siram Berikutnya
                                 </div>
                                 <div class="progress-info-value ${plant.progress >= 100 ? 'success' : needsWaterToday ? 'urgent' : ''}">
-                                    ${plant.progress >= 100 ? 'Selesai' : (plant.nextWatering ? formatDate(plant.nextWatering) : '-')}
+                                    ${plant.progress >= 100 ? 'Selesai' : formatDateWithToday(plant.nextWatering)}
                                 </div>
                             </div>
                         </div>
@@ -6008,7 +6044,7 @@
                                     <i class="fas fa-calendar-check"></i> Pupuk Berikutnya
                                 </div>
                                 <div class="progress-info-value ${plant.progress >= 100 ? 'success' : needsFertilizerToday ? 'urgent' : ''}">
-                                    ${plant.progress >= 100 ? 'Selesai' : (plant.nextFertilizing ? formatDate(plant.nextFertilizing) : '-')}
+                                    ${plant.progress >= 100 ? 'Selesai' : formatDateWithToday(plant.nextFertilizing)}
                                 </div>
                             </div>
                         </div>
