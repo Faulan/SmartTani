@@ -3346,6 +3346,8 @@
         let userCoordinates = null;
         const WEATHER_API_KEY = '6e7e8c91f7e646aa91e194852250112';
         let audioContext = null;
+        let isLocationRequested = false;
+        let locationPermissionState = 'prompt'; // 'granted', 'denied', 'prompt'
 
         // ==================== FUNGSI UTAMA ====================
 
@@ -3382,9 +3384,11 @@
                 updateStats();
                 await renderTodaysSchedule();
                 
-                // Get weather data
-                await getUserLocation();
-                await updateWeatherDisplay(true);
+                // Cek status permission lokasi
+                await checkLocationPermissionState();
+                
+                // Handle lokasi secara bertahap
+                handleLocationGradually();
                 
                 console.log('✅ Dashboard initialized successfully');
                 
@@ -3392,6 +3396,582 @@
                 console.error("Error initializing dashboard:", error);
                 showToast('Gagal memuat dashboard', 'error');
             }
+        }
+
+        // Cek status permission menggunakan Permissions API jika tersedia
+        async function checkLocationPermissionState() {
+            if ('permissions' in navigator && 'query' in navigator.permissions) {
+                try {
+                    const permissionStatus = await navigator.permissions.query({ 
+                        name: 'geolocation' 
+                    });
+                    
+                    console.log('📍 Permission state:', permissionStatus.state);
+                    locationPermissionState = permissionStatus.state;
+                    
+                    // Listen for permission changes
+                    permissionStatus.onchange = function() {
+                        console.log('📍 Permission changed to:', this.state);
+                        locationPermissionState = this.state;
+                        
+                        if (this.state === 'granted') {
+                            // Otomatis ambil lokasi jika permission diberikan
+                            getUserLocation().then(updateWeatherDisplay);
+                        } else if (this.state === 'denied') {
+                            showToast('Izin lokasi ditolak', 'warning');
+                            useDefaultLocation();
+                        }
+                    };
+                    
+                } catch (error) {
+                    console.log('Permissions API not fully supported:', error);
+                    locationPermissionState = 'prompt';
+                }
+            } else {
+                console.log('Permissions API not supported');
+                locationPermissionState = 'prompt';
+            }
+        }
+
+        // Handle lokasi secara bertahap dengan user experience yang lebih baik
+        function handleLocationGradually() {
+            const savedLocation = localStorage.getItem('userGeolocationDetail');
+            
+            // Tampilkan loading lokasi
+            document.getElementById('weatherLocation').textContent = 'Mendeteksi lokasi...';
+            
+            // Cek apakah sudah ada data lokasi yang valid
+            if (savedLocation) {
+                try {
+                    const locationData = JSON.parse(savedLocation);
+                    const now = Date.now();
+                    
+                    // Jika data kurang dari 6 jam, gunakan cache
+                    if (locationData && locationData.timestamp && 
+                        (now - locationData.timestamp) < 21600000) { // 6 jam
+                        
+                        console.log("📍 Using cached location data");
+                        userCoordinates = locationData.coordinates;
+                        updateWeatherDisplay();
+                        
+                        // Update UI untuk menunjukkan data cached
+                        setTimeout(() => {
+                            document.getElementById('weatherLocation').innerHTML = 
+                                `<span style="opacity:0.8">${locationData.detailedName}</span> <small style="font-size:10px;opacity:0.6">(cached)</small>`;
+                        }, 500);
+                        
+                        return;
+                    }
+                } catch (e) {
+                    console.log("Failed to parse cached location");
+                }
+            }
+            
+            // Tunggu 2 detik sebelum minta permission untuk UX yang lebih baik
+            setTimeout(() => {
+                showLocationPermissionPrompt();
+            }, 2000);
+        }
+
+        // Function to request location permission
+        function showLocationPermissionPrompt() {
+            if (isLocationRequested) return;
+            
+            // Jika permission sudah granted, langsung ambil lokasi
+            if (locationPermissionState === 'granted') {
+                getUserLocation().then(updateWeatherDisplay);
+                return;
+            }
+            
+            // Jika permission denied, gunakan default
+            if (locationPermissionState === 'denied') {
+                useDefaultLocation();
+                return;
+            }
+            
+            // Cek apakah di mobile device
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            // Untuk mobile, minta permission lebih agresif
+            if (isMobile) {
+                requestMobileLocation();
+                return;
+            }
+            
+            // Untuk desktop, tampilkan modal yang user-friendly
+            createLocationModal();
+        }
+
+        // Request location untuk mobile (lebih langsung)
+        function requestMobileLocation() {
+            isLocationRequested = true;
+            
+            // Tampilkan toast info
+            showToast('Mengakses lokasi Anda...', 'info');
+            
+            // Coba langsung request location
+            getUserLocation()
+                .then(() => {
+                    updateWeatherDisplay();
+                    showToast('Lokasi berhasil didapatkan', 'success');
+                })
+                .catch(error => {
+                    console.error('Mobile location error:', error);
+                    
+                    // Jika gagal, tampilkan modal fallback
+                    setTimeout(() => {
+                        createLocationModal();
+                    }, 1000);
+                });
+        }
+
+        // Buat modal untuk permintaan lokasi
+        function createLocationModal() {
+            // Cek apakah modal sudah ada
+            if (document.getElementById('locationPermissionModal')) {
+                return;
+            }
+            
+            isLocationRequested = true;
+            
+            const locationModal = document.createElement('div');
+            locationModal.id = 'locationPermissionModal';
+            locationModal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.7);
+                backdrop-filter: blur(5px);
+                z-index: 3000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: fadeIn 0.3s ease;
+                padding: 20px;
+            `;
+
+            locationModal.innerHTML = `
+                <div style="
+                    background: white;
+                    border-radius: 20px;
+                    padding: 30px;
+                    max-width: 500px;
+                    width: 100%;
+                    text-align: center;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+                    border: 3px solid #2E7D32;
+                    animation: modalSlideIn 0.3s ease;
+                    position: relative;
+                ">
+                    <button onclick="closeLocationModal()" style="
+                        position: absolute;
+                        top: 15px;
+                        right: 15px;
+                        background: none;
+                        border: none;
+                        font-size: 20px;
+                        color: #666;
+                        cursor: pointer;
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: all 0.3s ease;
+                    ">
+                        &times;
+                    </button>
+                    
+                    <div style="font-size: 48px; color: #2E7D32; margin-bottom: 20px;">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    
+                    <h2 style="color: #333; margin-bottom: 15px; font-weight: 700; font-size: 22px;">
+                        Izinkan Akses Lokasi
+                    </h2>
+                    
+                    <p style="color: #666; margin-bottom: 20px; line-height: 1.6; font-size: 15px;">
+                        <strong>SmartTani</strong> membutuhkan akses lokasi Anda untuk:
+                    </p>
+                    
+                    <div style="text-align: left; margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 10px;">
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <i class="fas fa-sun" style="color: #FF9800; margin-right: 10px; width: 20px;"></i>
+                            <span>Menampilkan informasi cuaca yang akurat</span>
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <i class="fas fa-leaf" style="color: #2E7D32; margin-right: 10px; width: 20px;"></i>
+                            <span>Memberikan rekomendasi perawatan tanaman</span>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <i class="fas fa-calendar-alt" style="color: #2196F3; margin-right: 10px; width: 20px;"></i>
+                            <span>Menyesuaikan jadwal dengan kondisi lokal</span>
+                        </div>
+                    </div>
+                    
+                    <p style="color: #666; margin-bottom: 25px; line-height: 1.6; font-size: 13px; opacity: 0.8;">
+                        <i class="fas fa-info-circle" style="color: #2196F3; margin-right: 5px;"></i>
+                        Lokasi Anda tidak akan dibagikan ke pihak lain dan hanya digunakan untuk aplikasi ini.
+                    </p>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 25px;">
+                        <button onclick="grantLocationPermission(true)" style="
+                            background: linear-gradient(135deg, #2E7D32, #1B5E20);
+                            color: white;
+                            border: none;
+                            padding: 16px 30px;
+                            border-radius: 12px;
+                            font-size: 16px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 10px;
+                            transition: all 0.3s ease;
+                        ">
+                            <i class="fas fa-check-circle"></i> Izinkan Lokasi
+                        </button>
+                        
+                        <button onclick="useManualLocation()" style="
+                            background: linear-gradient(135deg, #2196F3, #1976D2);
+                            color: white;
+                            border: none;
+                            padding: 16px 30px;
+                            border-radius: 12px;
+                            font-size: 16px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 10px;
+                            transition: all 0.3s ease;
+                        ">
+                            <i class="fas fa-map-pin"></i> Pilih Lokasi Manual
+                        </button>
+                        
+                        <button onclick="useDefaultLocation()" style="
+                            background: transparent;
+                            color: #666;
+                            border: 2px solid #ddd;
+                            padding: 14px 30px;
+                            border-radius: 12px;
+                            font-size: 14px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 10px;
+                            transition: all 0.3s ease;
+                        ">
+                            <i class="fas fa-clock"></i> Nanti Saja
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(locationModal);
+            
+            // Auto close setelah 30 detik
+            setTimeout(() => {
+                closeLocationModal();
+                if (!userCoordinates) {
+                    useDefaultLocation();
+                    showToast('Menggunakan lokasi default', 'info');
+                }
+            }, 30000);
+        }
+
+        // Tutup modal lokasi
+        function closeLocationModal() {
+            const modal = document.getElementById('locationPermissionModal');
+            if (modal) {
+                modal.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
+            }
+            isLocationRequested = false;
+        }
+
+        // Grant location permission
+        async function grantLocationPermission(fromModal = false) {
+            try {
+                if (fromModal) {
+                    closeLocationModal();
+                    showToast('Mengakses lokasi Anda...', 'info');
+                }
+                
+                // Coba dapatkan lokasi dengan timeout
+                const locationPromise = getUserLocation();
+                const timeoutPromise = new Promise((_, reject) => 
+                    setTimeout(() => reject(new Error('Timeout')), 10000)
+                );
+                
+                await Promise.race([locationPromise, timeoutPromise]);
+                
+                updateWeatherDisplay();
+                showToast('Lokasi berhasil didapatkan', 'success');
+                
+            } catch (error) {
+                console.error("Error getting location:", error);
+                
+                if (error.message === 'Timeout') {
+                    showToast('Waktu permintaan lokasi habis', 'warning');
+                } else if (error.code === error.PERMISSION_DENIED) {
+                    showToast('Izin lokasi ditolak', 'warning');
+                    
+                    // Update permission state
+                    locationPermissionState = 'denied';
+                    
+                    // Simpan di localStorage bahwa user menolak
+                    localStorage.setItem('locationPermissionDenied', 'true');
+                } else {
+                    showToast('Tidak dapat mendapatkan lokasi', 'warning');
+                }
+                
+                // Fallback ke manual location
+                if (fromModal) {
+                    setTimeout(() => {
+                        useManualLocation();
+                    }, 1000);
+                } else {
+                    useDefaultLocation();
+                }
+            }
+        }
+
+        // Pilih lokasi manual
+        function useManualLocation() {
+            closeLocationModal();
+            
+            // Tampilkan modal untuk pilih lokasi manual
+            const manualModal = document.createElement('div');
+            manualModal.id = 'manualLocationModal';
+            manualModal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.7);
+                backdrop-filter: blur(5px);
+                z-index: 3001;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: fadeIn 0.3s ease;
+                padding: 20px;
+            `;
+            
+            manualModal.innerHTML = `
+                <div style="
+                    background: white;
+                    border-radius: 20px;
+                    padding: 30px;
+                    max-width: 500px;
+                    width: 100%;
+                    text-align: center;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+                    border: 3px solid #2196F3;
+                    animation: modalSlideIn 0.3s ease;
+                    position: relative;
+                ">
+                    <button onclick="closeManualLocationModal()" style="
+                        position: absolute;
+                        top: 15px;
+                        right: 15px;
+                        background: none;
+                        border: none;
+                        font-size: 20px;
+                        color: #666;
+                        cursor: pointer;
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: all 0.3s ease;
+                    ">
+                        &times;
+                    </button>
+                    
+                    <div style="font-size: 48px; color: #2196F3; margin-bottom: 20px;">
+                        <i class="fas fa-map-pin"></i>
+                    </div>
+                    
+                    <h2 style="color: #333; margin-bottom: 15px; font-weight: 700; font-size: 22px;">
+                        Pilih Lokasi Manual
+                    </h2>
+                    
+                    <p style="color: #666; margin-bottom: 25px; line-height: 1.6; font-size: 15px;">
+                        Pilih kota terdekat untuk informasi cuaca:
+                    </p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 25px;">
+                        <button onclick="selectManualLocation('Jakarta', -6.2088, 106.8456)" style="
+                            background: #f8f9fa;
+                            border: 2px solid #ddd;
+                            border-radius: 10px;
+                            padding: 15px;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            font-weight: 600;
+                            color: #333;
+                        ">
+                            Jakarta
+                        </button>
+                        <button onclick="selectManualLocation('Bandung', -6.9175, 107.6191)" style="
+                            background: #f8f9fa;
+                            border: 2px solid #ddd;
+                            border-radius: 10px;
+                            padding: 15px;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            font-weight: 600;
+                            color: #333;
+                        ">
+                            Bandung
+                        </button>
+                        <button onclick="selectManualLocation('Surabaya', -7.2575, 112.7521)" style="
+                            background: #f8f9fa;
+                            border: 2px solid #ddd;
+                            border-radius: 10px;
+                            padding: 15px;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            font-weight: 600;
+                            color: #333;
+                        ">
+                            Surabaya
+                        </button>
+                        <button onclick="selectManualLocation('Cirebon', -6.7320, 108.5523)" style="
+                            background: #f8f9fa;
+                            border: 2px solid #ddd;
+                            border-radius: 10px;
+                            padding: 15px;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            font-weight: 600;
+                            color: #333;
+                        ">
+                            Cirebon
+                        </button>
+                        <button onclick="selectManualLocation('Makassar', -5.1477, 119.4327)" style="
+                            background: #f8f9fa;
+                            border: 2px solid #ddd;
+                            border-radius: 10px;
+                            padding: 15px;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            font-weight: 600;
+                            color: #333;
+                        ">
+                            Makassar
+                        </button>
+                        <button onclick="selectManualLocation('Denpasar', -8.6705, 115.2126)" style="
+                            background: #f8f9fa;
+                            border: 2px solid #ddd;
+                            border-radius: 10px;
+                            padding: 15px;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            font-weight: 600;
+                            color: #333;
+                        ">
+                            Denpasar
+                        </button>
+                    </div>
+                    
+                    <button onclick="closeManualLocationModal(); useDefaultLocation();" style="
+                        background: transparent;
+                        color: #666;
+                        border: 2px solid #ddd;
+                        padding: 14px 30px;
+                        border-radius: 12px;
+                        font-size: 14px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 10px;
+                        transition: all 0.3s ease;
+                        width: 100%;
+                    ">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(manualModal);
+        }
+
+        // Pilih lokasi manual
+        function selectManualLocation(cityName, lat, lon) {
+            const locationData = {
+                coordinates: {
+                    lat: lat,
+                    lon: lon,
+                    accuracy: 50000
+                },
+                detailedName: `${cityName}, Indonesia`,
+                timestamp: Date.now(),
+                accuracy: 50000,
+                source: 'manual'
+            };
+            
+            localStorage.setItem('userGeolocationDetail', JSON.stringify(locationData));
+            userCoordinates = locationData.coordinates;
+            
+            closeManualLocationModal();
+            updateWeatherDisplay();
+            
+            showToast(`Menggunakan lokasi ${cityName}`, 'success');
+        }
+
+        // Tutup modal lokasi manual
+        function closeManualLocationModal() {
+            const modal = document.getElementById('manualLocationModal');
+            if (modal) {
+                modal.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
+            }
+        }
+
+        // Use default location
+        function useDefaultLocation() {
+            closeLocationModal();
+            
+            // Gunakan lokasi default (Jakarta)
+            const defaultLocation = {
+                coordinates: {
+                    lat: -6.2088,
+                    lon: 106.8456,
+                    accuracy: 50000
+                },
+                detailedName: 'Jakarta, Indonesia',
+                timestamp: Date.now(),
+                accuracy: 50000,
+                source: 'default'
+            };
+            
+            localStorage.setItem('userGeolocationDetail', JSON.stringify(defaultLocation));
+            localStorage.setItem('locationPermissionDenied', 'true');
+            userCoordinates = defaultLocation.coordinates;
+            
+            // Update weather display dengan lokasi default
+            updateWeatherDisplay();
+            
+            showToast('Menggunakan lokasi default Jakarta', 'info');
         }
 
         // Initialize audio context
@@ -4450,128 +5030,271 @@
             }
         }
 
-        // ==================== WEATHER FUNCTIONS ====================
+        // ==================== LOCATION FUNCTIONS ====================
         async function getUserLocation() {
             return new Promise((resolve, reject) => {
-                const savedLocation = localStorage.getItem('userGeolocationDetail');
-                if (savedLocation) {
-                    const locationData = JSON.parse(savedLocation);
-                    if (locationData && (locationData.coordinates || locationData.detailedName)) {
-                        userCoordinates = locationData.coordinates;
-                        resolve(locationData);
-                        return;
-                    }
-                }
-
-                if (navigator.geolocation) {
-                    const options = {
-                        enableHighAccuracy: true,
-                        timeout: 20000,
-                        maximumAge: 0
-                    };
-                    
-                    navigator.geolocation.getCurrentPosition(
-                        async (position) => {
-                            const coordinates = {
-                                lat: position.coords.latitude,
-                                lon: position.coords.longitude,
-                                accuracy: position.coords.accuracy
-                            };
-                            userCoordinates = coordinates;
-                            
-                            const locationData = {
-                                coordinates: coordinates,
-                                detailedName: 'Lokasi Anda',
-                                timestamp: Date.now(),
-                                accuracy: position.coords.accuracy
-                            };
-                            
-                            localStorage.setItem('userGeolocationDetail', JSON.stringify(locationData));
-                            resolve(locationData);
-                        },
-                        (error) => {
-                            console.warn("Geolocation error:", error);
-                            const locationData = {
-                                coordinates: null,
-                                detailedName: 'Lokasi tidak terdeteksi',
-                                timestamp: Date.now(),
-                                accuracy: null
-                            };
-                            localStorage.setItem('userGeolocationDetail', JSON.stringify(locationData));
-                            resolve(locationData);
-                        },
-                        options
-                    );
-                } else {
+                // Cek jika geolocation tidak didukung
+                if (!navigator.geolocation) {
+                    console.log("Geolocation not supported");
                     const locationData = {
                         coordinates: null,
                         detailedName: 'Geolocation tidak didukung',
                         timestamp: Date.now(),
                         accuracy: null
                     };
-                    localStorage.setItem('userGeolocationDetail', JSON.stringify(locationData));
                     resolve(locationData);
+                    return;
                 }
+
+                // Options untuk geolocation
+                const options = {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                };
+
+                // Permintaan lokasi
+                navigator.geolocation.getCurrentPosition(
+                    async (position) => {
+                        console.log("📍 Geolocation success:", position);
+                        
+                        const coordinates = {
+                            lat: position.coords.latitude,
+                            lon: position.coords.longitude,
+                            accuracy: position.coords.accuracy
+                        };
+                        userCoordinates = coordinates;
+                        
+                        // Coba dapatkan nama lokasi
+                        let detailedName = 'Lokasi Anda';
+                        try {
+                            // Fallback jika API OpenStreetMap gagal
+                            detailedName = await getLocationName(coordinates.lat, coordinates.lon);
+                        } catch (error) {
+                            console.log("Could not get location name:", error);
+                        }
+                        
+                        // Simpan ke localStorage
+                        const locationData = {
+                            coordinates: coordinates,
+                            detailedName: detailedName,
+                            timestamp: Date.now(),
+                            accuracy: position.coords.accuracy,
+                            source: 'gps'
+                        };
+                        
+                        localStorage.setItem('userGeolocationDetail', JSON.stringify(locationData));
+                        localStorage.removeItem('locationPermissionDenied');
+                        resolve(locationData);
+                    },
+                    (error) => {
+                        console.warn("Geolocation error:", error);
+                        
+                        let errorMessage = 'Tidak dapat mendapatkan lokasi';
+                        let errorCode = error.code;
+                        
+                        switch(error.code) {
+                            case 1: // PERMISSION_DENIED
+                                errorMessage = 'Izin lokasi ditolak';
+                                locationPermissionState = 'denied';
+                                localStorage.setItem('locationPermissionDenied', 'true');
+                                break;
+                            case 2: // POSITION_UNAVAILABLE
+                                errorMessage = 'Informasi lokasi tidak tersedia';
+                                break;
+                            case 3: // TIMEOUT
+                                errorMessage = 'Permintaan lokasi timeout';
+                                break;
+                        }
+                        
+                        const locationData = {
+                            coordinates: null,
+                            detailedName: errorMessage,
+                            timestamp: Date.now(),
+                            accuracy: null,
+                            errorCode: errorCode,
+                            source: 'error'
+                        };
+                        
+                        localStorage.setItem('userGeolocationDetail', JSON.stringify(locationData));
+                        reject(error);
+                    },
+                    options
+                );
             });
         }
 
-        async function updateWeatherDisplay(forceUpdate = false) {
+        // Dapatkan nama lokasi dari koordinat
+        async function getLocationName(lat, lon) {
+            try {
+                // Coba OpenStreetMap Nominatim API
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`,
+                    {
+                        headers: {
+                            'User-Agent': 'SmartTani-App/1.0',
+                            'Accept': 'application/json'
+                        }
+                    }
+                );
+                
+                if (!response.ok) throw new Error('API error');
+                
+                const data = await response.json();
+                if (data && data.address) {
+                    const addr = data.address;
+                    // Ambil nama yang paling spesifik
+                    return addr.village || addr.town || 
+                           addr.city || addr.municipality || 
+                           addr.county || addr.state || 
+                           'Lokasi Anda';
+                }
+            } catch (error) {
+                console.log("OpenStreetMap failed, trying alternative...");
+                
+                // Fallback ke reverse geocoding alternatif
+                try {
+                    const fallbackResponse = await fetch(
+                        `https://geocode.maps.co/reverse?lat=${lat}&lon=${lon}&format=json`
+                    );
+                    
+                    if (fallbackResponse.ok) {
+                        const fallbackData = await fallbackResponse.json();
+                        if (fallbackData && fallbackData.display_name) {
+                            return fallbackData.display_name.split(',')[0] || 'Lokasi Anda';
+                        }
+                    }
+                } catch (fallbackError) {
+                    console.log("All reverse geocoding failed");
+                }
+            }
+            
+            return 'Lokasi Anda';
+        }
+
+        // ==================== WEATHER FUNCTIONS ====================
+        async function updateWeatherDisplay() {
             try {
                 // Tampilkan loading state
                 document.getElementById('weatherTemp').textContent = '--°C';
                 document.getElementById('weatherDesc').textContent = 'Memuat cuaca...';
-                document.getElementById('weatherLocation').textContent = 'Mendeteksi lokasi...';
                 
-                const userLocation = await getUserLocation();
+                // Cek data lokasi
+                const savedLocation = localStorage.getItem('userGeolocationDetail');
+                let locationName = 'Menunggu lokasi...';
+                let coordinates = null;
                 
-                if (userLocation && userLocation.detailedName) {
-                    document.getElementById('weatherLocation').textContent = userLocation.detailedName;
+                if (savedLocation) {
+                    try {
+                        const locationData = JSON.parse(savedLocation);
+                        if (locationData && locationData.detailedName) {
+                            locationName = locationData.detailedName;
+                            coordinates = locationData.coordinates;
+                            
+                            document.getElementById('weatherLocation').textContent = locationName;
+                            
+                            // Tampilkan source lokasi
+                            if (locationData.source) {
+                                const locationElement = document.getElementById('weatherLocation');
+                                if (locationData.source === 'gps') {
+                                    locationElement.innerHTML += ' <i class="fas fa-satellite" style="font-size:10px;opacity:0.6"></i>';
+                                } else if (locationData.source === 'manual') {
+                                    locationElement.innerHTML += ' <i class="fas fa-map-pin" style="font-size:10px;opacity:0.6"></i>';
+                                } else if (locationData.source === 'default') {
+                                    locationElement.innerHTML += ' <i class="fas fa-home" style="font-size:10px;opacity:0.6"></i>';
+                                }
+                            }
+                        }
+                    } catch (e) {
+                        console.log("Failed to parse saved location");
+                    }
                 }
                 
-                // Simulasi data cuaca
+                // Jika ada koordinat, coba dapatkan cuaca
+                if (coordinates && coordinates.lat && coordinates.lon) {
+                    try {
+                        // Gunakan OpenWeatherMap API
+                        const response = await fetch(
+                            `https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${WEATHER_API_KEY}&units=metric&lang=id`
+                        );
+                        
+                        if (response.ok) {
+                            const weatherData = await response.json();
+                            
+                            document.getElementById('weatherTemp').textContent = `${Math.round(weatherData.main.temp)}°C`;
+                            document.getElementById('weatherDesc').textContent = weatherData.weather[0].description;
+                            
+                            // Set icon berdasarkan kondisi cuaca
+                            const weatherIcon = document.getElementById('weatherIcon');
+                            const weatherMain = weatherData.weather[0].main.toLowerCase();
+                            
+                            let iconClass = 'fa-cloud';
+                            if (weatherMain.includes('clear')) iconClass = 'fa-sun';
+                            else if (weatherMain.includes('rain')) iconClass = 'fa-cloud-rain';
+                            else if (weatherMain.includes('thunderstorm')) iconClass = 'fa-bolt';
+                            else if (weatherMain.includes('snow')) iconClass = 'fa-snowflake';
+                            else if (weatherMain.includes('mist') || weatherMain.includes('fog')) iconClass = 'fa-smog';
+                            else if (weatherMain.includes('cloud')) iconClass = 'fa-cloud';
+                            
+                            weatherIcon.innerHTML = `<i class="fas ${iconClass}"></i>`;
+                            
+                            return;
+                        }
+                    } catch (error) {
+                        console.log("Weather API error, using simulated data:", error);
+                    }
+                }
+                
+                // Fallback ke data simulasi berdasarkan waktu
                 const hour = new Date().getHours();
                 const isDay = hour >= 6 && hour < 18;
-                let temp = 28;
-                
-                if (hour >= 0 && hour < 6) temp = 23;
-                else if (hour >= 6 && hour < 12) temp = 26;
-                else if (hour >= 12 && hour < 15) temp = 32;
-                else if (hour >= 15 && hour < 18) temp = 30;
-                else temp = 25;
+                let temp = getSimulatedTemperature(hour);
                 
                 document.getElementById('weatherTemp').textContent = `${temp}°C`;
-                document.getElementById('weatherDesc').textContent = isDay ? 'Cerah Berawan' : 'Malam Cerah';
+                document.getElementById('weatherDesc').textContent = getSimulatedWeather(hour);
+                document.getElementById('weatherLocation').textContent = locationName;
                 
                 const weatherIcon = document.getElementById('weatherIcon');
-                weatherIcon.innerHTML = `<i class="fas ${isDay ? 'fa-sun' : 'fa-moon'}"></i>`;
-                
-                weatherData = {
-                    temp: temp,
-                    description: isDay ? 'Cerah Berawan' : 'Malam Cerah',
-                    icon: isDay ? 'fa-sun' : 'fa-moon'
-                };
+                weatherIcon.innerHTML = `<i class="fas ${getSimulatedWeatherIcon(hour)}"></i>`;
                 
             } catch (error) {
                 console.error("Error updating weather display:", error);
                 
-                // Fallback ke data lokal
-                const hour = new Date().getHours();
-                const isDay = hour >= 6 && hour < 18;
-                let temp = 28;
-                
-                if (hour >= 0 && hour < 6) temp = 23;
-                else if (hour >= 6 && hour < 12) temp = 26;
-                else if (hour >= 12 && hour < 15) temp = 32;
-                else if (hour >= 15 && hour < 18) temp = 30;
-                else temp = 25;
-                
-                document.getElementById('weatherTemp').textContent = `${temp}°C`;
-                document.getElementById('weatherDesc').textContent = isDay ? 'Cerah Berawan' : 'Malam Cerah';
-                document.getElementById('weatherLocation').textContent = 'Data lokal';
+                // Ultimate fallback
+                document.getElementById('weatherTemp').textContent = '28°C';
+                document.getElementById('weatherDesc').textContent = 'Cerah';
+                document.getElementById('weatherLocation').textContent = 'Lokasi tidak tersedia';
                 
                 const weatherIcon = document.getElementById('weatherIcon');
-                weatherIcon.innerHTML = `<i class="fas ${isDay ? 'fa-sun' : 'fa-moon'}"></i>`;
+                weatherIcon.innerHTML = `<i class="fas fa-sun"></i>`;
             }
+        }
+
+        // Helper functions untuk simulasi cuaca
+        function getSimulatedTemperature(hour) {
+            if (hour >= 0 && hour < 6) return 23;
+            else if (hour >= 6 && hour < 12) return 26;
+            else if (hour >= 12 && hour < 15) return 32;
+            else if (hour >= 15 && hour < 18) return 30;
+            else return 25;
+        }
+
+        function getSimulatedWeather(hour) {
+            const isDay = hour >= 6 && hour < 18;
+            if (hour >= 0 && hour < 6) return 'Malam Cerah';
+            else if (hour >= 6 && hour < 12) return 'Cerah Berawan';
+            else if (hour >= 12 && hour < 15) return 'Cerah';
+            else if (hour >= 15 && hour < 18) return 'Berawan';
+            else return 'Malam Berawan';
+        }
+
+        function getSimulatedWeatherIcon(hour) {
+            const isDay = hour >= 6 && hour < 18;
+            if (hour >= 0 && hour < 6) return 'fa-moon';
+            else if (hour >= 6 && hour < 12) return 'fa-sun';
+            else if (hour >= 12 && hour < 15) return 'fa-sun';
+            else if (hour >= 15 && hour < 18) return 'fa-cloud-sun';
+            else return 'fa-cloud-moon';
         }
 
         // ==================== DATE TIME ====================
@@ -5090,6 +5813,72 @@
                     }, 100);
                 });
             });
+            
+            // Add refresh button for location/weather
+            const weatherBox = document.getElementById('weatherBox');
+            if (weatherBox) {
+                // Single click untuk refresh weather
+                weatherBox.addEventListener('click', function(e) {
+                    if (e.detail === 1) { // Single click
+                        updateWeatherDisplay();
+                        showToast('Memperbarui cuaca...', 'info');
+                    }
+                });
+                
+                // Double click untuk refresh lokasi
+                let clickCount = 0;
+                weatherBox.addEventListener('dblclick', function() {
+                    showLocationPermissionPrompt();
+                });
+                
+                // Tambahkan tooltip
+                weatherBox.title = "Click: Refresh cuaca | Double click: Ubah lokasi";
+            }
+            
+            // Tombol untuk buka modal lokasi manual
+            const locationChangeBtn = document.createElement('button');
+            locationChangeBtn.innerHTML = '<i class="fas fa-map-marker-alt"></i>';
+            locationChangeBtn.style.cssText = `
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: rgba(255, 255, 255, 0.9);
+                border: none;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-size: 14px;
+                color: #2E7D32;
+                z-index: 10;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                transition: all 0.3s ease;
+            `;
+            
+            locationChangeBtn.addEventListener('mouseover', function() {
+                this.style.transform = 'scale(1.1)';
+                this.style.background = '#2E7D32';
+                this.style.color = 'white';
+            });
+            
+            locationChangeBtn.addEventListener('mouseout', function() {
+                this.style.transform = 'scale(1)';
+                this.style.background = 'rgba(255, 255, 255, 0.9)';
+                this.style.color = '#2E7D32';
+            });
+            
+            locationChangeBtn.addEventListener('click', function() {
+                showLocationPermissionPrompt();
+            });
+            
+            // Tambahkan tombol ke weather box jika ada
+            if (weatherBox) {
+                weatherBox.style.position = 'relative';
+                weatherBox.appendChild(locationChangeBtn);
+            }
         }
 
         function toggleSidebar() {
@@ -5147,6 +5936,7 @@
                 localStorage.removeItem('currentUser');
                 localStorage.removeItem('userGeolocationDetail');
                 localStorage.removeItem('weatherCache');
+                localStorage.removeItem('locationPermissionDenied');
                 showToast('Berhasil keluar', 'success');
                 setTimeout(() => {
                     window.location.href = 'index.html';
@@ -5157,6 +5947,16 @@
         // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', initDashboard);
 
+        // Tambahkan CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
         // Export fungsi ke window object
         window.capturePhotoDirect = capturePhotoDirect;
         window.openWateringModal = openWateringModal;
@@ -5166,6 +5966,13 @@
         window.logout = logout;
         window.logoutFromDropdown = logoutFromDropdown;
         window.hideToast = hideToast;
+        window.grantLocationPermission = grantLocationPermission;
+        window.useDefaultLocation = useDefaultLocation;
+        window.useManualLocation = useManualLocation;
+        window.selectManualLocation = selectManualLocation;
+        window.closeLocationModal = closeLocationModal;
+        window.closeManualLocationModal = closeManualLocationModal;
+        window.showLocationPermissionPrompt = showLocationPermissionPrompt;
     </script>
 </body>
 </html>
