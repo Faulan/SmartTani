@@ -400,14 +400,13 @@ function setupFormSubmissions() {
 }
 
 // Authentication Handlers
-function handleLogin(e) {
+async function handleLogin(e) {
     e.preventDefault();
     
     const phone = document.getElementById('loginPhone').value;
     const password = document.getElementById('loginPassword').value;
     const rememberMe = document.getElementById('rememberMe').checked;
     
-    // Validasi
     if (!phone || !password) {
         showNotification('Harap isi semua field', 'error');
         return;
@@ -418,62 +417,87 @@ function handleLogin(e) {
         return;
     }
     
-    // Cek apakah pengguna terdaftar
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-    const user = registeredUsers.find(u => u.phone === phone);
+    showNotification('Memproses login...', 'info');
     
-    if (!user) {
-        showNotification('Maaf, nomor telepon yang Anda masukkan belum terdaftar', 'error');
-        return;
-    }
+    // Gunakan phone sebagai email jika tidak ada @ (Supabase Auth butuh email)
+    const email = phone.includes('@') ? phone : `${phone}@smarttani.com`;
     
-    // Verifikasi password
-    if (user.password !== password) {
-        showNotification('Maaf, password yang Anda masukkan salah', 'error');
-        return;
-    }
-    
-    // Login berhasil
-    const currentUser = {
-        id: user.id,
-        name: user.name,
-        phone: user.phone,
-        email: user.email,
-        avatar: user.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name) + '&background=4CAF50&color=fff'
-    };
-    
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    
-    // Simpan ke akun tersimpan jika remember me dicentang
-    if (rememberMe) {
-        const savedAccounts = JSON.parse(localStorage.getItem('savedAccounts')) || [];
-        if (!savedAccounts.find(acc => acc.phone === user.phone)) {
-            savedAccounts.push({
-                name: user.name,
-                phone: user.phone,
-                avatar: currentUser.avatar
-            });
-            localStorage.setItem('savedAccounts', JSON.stringify(savedAccounts));
+    try {
+        const { data, error } = await window.supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+        
+        if (error) throw error;
+        
+        // Ambil data profil dari tabel users jika ada
+        let userName = email.split('@')[0];
+        let userAvatar = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(userName) + '&background=4CAF50&color=fff';
+        
+        try {
+            const { data: userData } = await window.supabaseClient
+                .from('users')
+                .select('*')
+                .eq('id', data.user.id)
+                .maybeSingle();
+                
+            if (userData && userData.fullname) {
+                userName = userData.fullname;
+                userAvatar = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(userName) + '&background=4CAF50&color=fff';
+            }
+        } catch (err) {
+            console.warn("Could not fetch extra user info", err);
+        }
+        
+        const currentUser = {
+            id: data.user.id,
+            name: userName,
+            phone: phone,
+            email: email,
+            avatar: userAvatar
+        };
+        
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        
+        if (rememberMe) {
+            const savedAccounts = JSON.parse(localStorage.getItem('savedAccounts')) || [];
+            if (!savedAccounts.find(acc => acc.phone === phone)) {
+                savedAccounts.push({
+                    name: userName,
+                    phone: phone,
+                    avatar: userAvatar
+                });
+                localStorage.setItem('savedAccounts', JSON.stringify(savedAccounts));
+            }
+        }
+        
+        showNotification('Login berhasil!', 'success');
+        setTimeout(() => {
+            window.location.href = 'dashboard.html';
+        }, 1000);
+        
+    } catch (error) {
+        console.error("Login error:", error);
+        if (error.message.includes('Invalid login credentials')) {
+            showNotification('Maaf, nomor telepon atau password salah', 'error');
+        } else {
+            showNotification('Gagal login: ' + error.message, 'error');
         }
     }
-    
-    showNotification('Login berhasil!', 'success');
-    
-    setTimeout(() => {
-        window.location.href = 'dashboard.html';
-    }, 1000);
 }
 
-function handleRegister(e) {
+async function handleRegister(e) {
     e.preventDefault();
     
     const name = document.getElementById('registerName').value;
+    const emailInput = document.getElementById('registerEmail');
     const phone = document.getElementById('registerPhone').value;
     const password = document.getElementById('registerPassword').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
     const agreeTerms = document.getElementById('agreeTerms').checked;
     
-    // Validasi
+    const email = (emailInput && emailInput.value) ? emailInput.value : `${phone}@smarttani.com`;
+
     if (!name || !phone || !password || !confirmPassword) {
         showNotification('Harap isi semua field', 'error');
         return;
@@ -489,36 +513,45 @@ function handleRegister(e) {
         return;
     }
 
-    // Cek apakah nomor telepon sudah terdaftar
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-    if (registeredUsers.find(u => u.phone === phone)) {
-        showNotification('Nomor telepon sudah terdaftar', 'error');
-        return;
+    showNotification('Memproses pendaftaran ke server...', 'info');
+    
+    try {
+        const { data, error } = await window.supabaseClient.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: {
+                    full_name: name,
+                    phone: phone
+                }
+            }
+        });
+        
+        if (error) throw error;
+        
+        // Jika berhasil, masukkan juga ke tabel public.users jika dibutuhkan
+        try {
+            await window.supabaseClient.from('users').insert([{
+                id: data.user.id,
+                fullname: name,
+                email: email,
+                phone: phone,
+                role: 'petani'
+            }]);
+        } catch (err) {
+            console.warn("User registered in auth, but could not insert to public.users", err);
+        }
+        
+        showNotification('Pendaftaran berhasil! Mengarahkan ke halaman login...', 'success');
+        
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 2000);
+        
+    } catch (error) {
+        console.error("Register error:", error);
+        showNotification('Pendaftaran gagal: ' + error.message, 'error');
     }
-    
-    // Simpan pengguna baru
-    const newUser = {
-        id: Date.now(),
-        name: name,
-        phone: phone,
-        password: password,
-        email: '',
-        avatar: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name) + '&background=4CAF50&color=fff',
-        createdAt: new Date().toISOString()
-    };
-    
-    registeredUsers.push(newUser);
-    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-    
-    showNotification('Pendaftaran berhasil! Mengirim kode verifikasi...', 'success');
-    
-    // Simulasi kirim kode verifikasi ke WhatsApp
-    sendVerificationCode(phone);
-    
-    // Redirect ke halaman verifikasi
-    setTimeout(() => {
-        window.location.href = 'verification.html?phone=' + encodeURIComponent(phone);
-    }, 2000);
 }
 
 function handleForgotPassword(e) {

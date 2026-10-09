@@ -1280,35 +1280,33 @@
                     return;
                 }
 
-                // Cek apakah email sudah terdaftar
-                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-                if (registeredUsers.find(u => u.email === email)) {
-                    showNotification('Email sudah terdaftar', 'error');
-                    return;
+                // Cek ke Supabase apakah email/phone sudah terdaftar
+                showNotification('Memproses pendaftaran...', 'info');
+                const { data: existingUser, error: checkError } = await supabase
+                    .from('users')
+                    .select('email, phone')
+                    .or(`email.eq.${email},phone.eq.${phone}`)
+                    .maybeSingle();
+                
+                if (existingUser) {
+                    if (existingUser.email === email) {
+                        showNotification('Email sudah terdaftar', 'error');
+                        return;
+                    }
+                    if (existingUser.phone === phone) {
+                        showNotification('Nomor telepon sudah terdaftar', 'error');
+                        return;
+                    }
                 }
 
-                // Cek apakah nomor telepon sudah terdaftar
-                if (registeredUsers.find(u => u.phone === phone)) {
-                    showNotification('Nomor telepon sudah terdaftar', 'error');
-                    return;
-                }
-
-                // Simpan data pengguna baru - FORMAT SAMA dengan index.html
-                const newUser = {
-                    id: 'user_' + Date.now(),
-                    name: name,
+                // Data yang akan disimpan ke Supabase (gunakan huruf kecil semua untuk nama kolom karena Postgres/Supabase otomatis mengubahnya)
+                const supabaseUser = {
+                    fullname: name,
                     email: email,
                     phone: phone,
+                    password: password, 
                     address: address,
-                    password: password,
-                    avatar: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name) + '&background=4CAF50&color=fff',
-                    createdAt: new Date().toISOString(),
-                    status: 'active',
-                    role: 'petani',
-                    // Tambahkan fields untuk sinkronisasi dengan profile
-                    updatedAt: new Date().toISOString(),
-                    lastLogin: null,
-                    notificationSettings: {
+                    notificationsettings: {
                         watering: true,
                         fertilizing: true,
                         harvest: true,
@@ -1317,7 +1315,7 @@
                         time: '08:00',
                         soundType: 'bell'
                     },
-                    plantStats: {
+                    plantstats: {
                         total: 0,
                         active: 0,
                         completed: 0,
@@ -1325,25 +1323,40 @@
                     }
                 };
 
-                // **SINKRONISASI KE SEMUA TEMPAT**
-                
-                // 1. Simpan ke localStorage registeredUsers (UTAMA)
-                registeredUsers.push(newUser);
-                localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+                // Insert ke Supabase
+                const { data: insertedUser, error: insertError } = await supabase
+                    .from('users')
+                    .insert([supabaseUser])
+                    .select()
+                    .single();
 
-                // 2. Simpan user individual untuk akses mudah
-                localStorage.setItem('user_' + newUser.id, JSON.stringify(newUser));
-
-                // 3. Simpan ke IndexedDB (untuk sinkronisasi dengan profile)
-                try {
-                    await saveUserToIndexedDB(newUser);
-                    console.log("✅ User saved to IndexedDB for sync");
-                } catch (error) {
-                    console.warn("⚠️ IndexedDB save failed, but localStorage saved:", error);
+                if (insertError) {
+                    console.error("Supabase Error:", insertError);
+                    showNotification('Gagal mendaftar: ' + insertError.message, 'error');
+                    return;
                 }
 
-                // 4. Set default notification settings (untuk sinkronisasi)
-                localStorage.setItem('notificationSettings', JSON.stringify(newUser.notificationSettings));
+                // Tetap simpan ke localStorage sementara agar tidak merusak logika app yang sudah ada
+                // (Beberapa fungsi mungkin masih mengandalkan ID ini)
+                const localUser = {
+                    id: insertedUser.id,
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    password: password,
+                    address: address,
+                    avatar: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name) + '&background=4CAF50&color=fff',
+                    createdAt: new Date().toISOString(),
+                    status: 'active',
+                    role: 'petani',
+                    notificationSettings: supabaseUser.notificationsettings,
+                    plantStats: supabaseUser.plantstats
+                };
+                
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                registeredUsers.push(localUser);
+                localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+                localStorage.setItem('user_' + localUser.id, JSON.stringify(localUser));
 
                 showNotification('Pendaftaran berhasil! Silakan login.', 'success');
 
@@ -1452,5 +1465,8 @@
         window.closeTermsModal = closeTermsModal;
         window.showNotification = showNotification;
     </script>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
 </body>
 </html>

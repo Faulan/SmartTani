@@ -2250,7 +2250,7 @@
                             <div class="security-item">
                                 <div>
                                     <h4>Sesi Aktif</h4>
-                                    <p>1 perangkat aktif</p>
+                                    <p>Sesi aktif di perangkat ini</p>
                                 </div>
                                 <button class="btn-secondary" id="manageSessionsBtn">
                                     <i class="fas fa-desktop"></i> Kelola Sesi
@@ -2818,6 +2818,7 @@
             }
 
             currentUser = JSON.parse(savedUser);
+            window.currentUser = currentUser;
             
             let userData = await getUserFromDB(currentUser.id);
             
@@ -2837,8 +2838,30 @@
             updateUserProfile(userData);
         }
 
-        // Get user from IndexedDB
+        // Get user from IndexedDB and Supabase
         async function getUserFromDB(userId) {
+            try {
+                if (window.supabaseClient) {
+                    const { data, error } = await window.supabaseClient
+                        .from('users')
+                        .select('*')
+                        .eq('id', userId)
+                        .single();
+                    if (!error && data) {
+                        return {
+                            id: data.id,
+                            name: data.fullname,
+                            email: data.email,
+                            phone: data.phone,
+                            address: data.address || '',
+                            role: 'petani'
+                        };
+                    }
+                }
+            } catch (err) {
+                console.warn('⚠️ Supabase fetch failed, falling back to local DB:', err);
+            }
+
             return new Promise((resolve, reject) => {
                 if (!db) {
                     resolve(null);
@@ -2899,6 +2922,24 @@
 
         // Get user plants from IndexedDB
         async function getUserPlantsFromDB() {
+            if (window.supabase && currentUser) {
+                try {
+                    const { data, error } = await supabase.from('plants').select('*').eq('user_id', currentUser.id);
+                    if (!error && data) {
+                        const mappedPlants = data.map(p => ({
+                            ...p.details,
+                            id: p.id,
+                            userId: p.user_id,
+                            name: p.name,
+                            type: p.type,
+                            status: p.status
+                        }));
+                        mappedPlants.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                        return mappedPlants;
+                    }
+                } catch(e) {}
+            }
+
             return new Promise((resolve, reject) => {
                 if (!db || !currentUser) {
                     resolve([]);
@@ -2966,6 +3007,28 @@
 
         // Get user notifications from IndexedDB
         async function getUserNotifications() {
+            try {
+                if (window.supabaseClient && currentUser) {
+                    const { data, error } = await window.supabaseClient
+                        .from('notifications')
+                        .select('*')
+                        .eq('user_id', currentUser.id);
+                    
+                    if (error) {
+                        console.warn('⚠️ Gagal mengambil notifikasi dari Supabase, mencoba lokal:', error);
+                    } else if (data) {
+                        const notifications = data.map(row => row.details);
+                        // Urutkan berdasarkan timestamp terbaru
+                        notifications.sort((a, b) => 
+                            new Date(b.timestamp) - new Date(a.timestamp)
+                        );
+                        return notifications;
+                    }
+                }
+            } catch (err) {
+                console.error("Supabase error fetching notifications:", err);
+            }
+
             return new Promise((resolve, reject) => {
                 if (!db || !currentUser) {
                     resolve([]);
@@ -3461,14 +3524,33 @@
                     const confirmPassword = document.getElementById('confirmNewPassword').value;
                     
                     try {
-                        const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-                        let user = registeredUsers.find(u => u.id === currentUser.id);
+                        let isPasswordCorrect = false;
+                        let supaUserId = null;
                         
-                        if (!user) {
-                            user = registeredUsers.find(u => u.email === currentUser.email);
+                        // Verify with Supabase users table
+                        if (window.supabaseClient) {
+                            const { data: supaUser } = await window.supabaseClient
+                                .from('users')
+                                .select('*')
+                                .eq('email', currentUser.email)
+                                .maybeSingle();
+                                
+                            if (supaUser && supaUser.password === currentPassword) {
+                                isPasswordCorrect = true;
+                                supaUserId = supaUser.id;
+                            }
                         }
                         
-                        if (!user || user.password !== currentPassword) {
+                        // Fallback to localStorage
+                        if (!isPasswordCorrect) {
+                            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                            let localUser = registeredUsers.find(u => u.id === currentUser.id || u.email === currentUser.email);
+                            if (localUser && localUser.password === currentPassword) {
+                                isPasswordCorrect = true;
+                            }
+                        }
+                        
+                        if (!isPasswordCorrect) {
                             showToast('Password saat ini salah!', 'error');
                             return;
                         }
@@ -3483,6 +3565,14 @@
                             return;
                         }
                         
+                        // Update password in Supabase users table
+                        if (window.supabaseClient && supaUserId) {
+                            await window.supabaseClient
+                                .from('users')
+                                .update({ password: newPassword })
+                                .eq('id', supaUserId);
+                        }
+                        
                         const userInDB = await getUserFromDB(currentUser.id);
                         if (userInDB) {
                             userInDB.password = newPassword;
@@ -3490,26 +3580,24 @@
                             await updateUserInDB(userInDB);
                         }
                         
-                        let userIndex = registeredUsers.findIndex(u => u.id === currentUser.id);
-                        if (userIndex === -1) {
-                            userIndex = registeredUsers.findIndex(u => u.email === currentUser.email);
-                        }
+                        const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                        let userIndex = registeredUsers.findIndex(u => u.id === currentUser.id || u.email === currentUser.email);
                         
                         if (userIndex !== -1) {
                             registeredUsers[userIndex].password = newPassword;
                             localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-                            
-                            const userIdentifier = currentUser.id || currentUser.email;
-                            const now = new Date();
-                            const formattedDate = now.toLocaleDateString('id-ID', {
-                                day: 'numeric',
-                                month: 'long',
-                                year: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit'
-                            });
-                            localStorage.setItem('lastPasswordChange_' + userIdentifier, formattedDate);
                         }
+                        
+                        const userIdentifier = currentUser.id || currentUser.email;
+                        const now = new Date();
+                        const formattedDate = now.toLocaleDateString('id-ID', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                        localStorage.setItem('lastPasswordChange_' + userIdentifier, formattedDate);
                         
                         showToast('Password berhasil diubah!', 'success');
                         document.getElementById('changePasswordModal').style.display = 'none';
@@ -3519,7 +3607,6 @@
                             item.classList.remove('valid');
                         });
                         
-                        const userIdentifier = currentUser.id || currentUser.email;
                         const lastChange = localStorage.getItem('lastPasswordChange_' + userIdentifier);
                         document.getElementById('lastPasswordChange').textContent = lastChange ? 
                             `Terakhir diubah ${lastChange}` : 'Belum pernah diubah';
@@ -3532,8 +3619,29 @@
             }
         }
 
-        // Update user in IndexedDB
+        // Update user in IndexedDB and Supabase
         async function updateUserInDB(userData) {
+            try {
+                if (window.supabaseClient) {
+                    const updatePayload = {
+                        fullname: userData.name,
+                        email: userData.email,
+                        phone: userData.phone,
+                        address: userData.address || ''
+                    };
+                    
+                    const { error } = await window.supabaseClient
+                        .from('users')
+                        .update(updatePayload)
+                        .eq('id', userData.id);
+                        
+                    if (error) throw error;
+                    console.log('✅ User profile updated in Supabase users table');
+                }
+            } catch (err) {
+                console.warn('⚠️ Supabase profile update failed:', err);
+            }
+
             return new Promise((resolve, reject) => {
                 if (!db) {
                     reject("Database belum diinisialisasi");
@@ -3781,5 +3889,8 @@
         window.logout = logout;
         window.hideToast = hideToast;
     </script>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
 </body>
 </html>

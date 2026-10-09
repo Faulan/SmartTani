@@ -3188,6 +3188,7 @@
             
             // Check authentication
             currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            window.currentUser = currentUser;
             if (!currentUser) {
                 showToast('Silakan login terlebih dahulu', 'error');
                 setTimeout(() => window.location.href = 'index.html', 1500);
@@ -3392,6 +3393,24 @@
         }
 
         async function getAllPlantsFromDB() {
+            // Coba ambil dari Supabase dulu
+            if (window.supabase) {
+                try {
+                    const { data, error } = await supabase.from('plants').select('*');
+                    if (!error && data) {
+                        const mappedPlants = data.map(p => ({
+                            ...p.details,
+                            id: p.id,
+                            userId: p.user_id,
+                            name: p.name,
+                            type: p.type,
+                            status: p.status
+                        }));
+                        return mappedPlants;
+                    }
+                } catch (e) {}
+            }
+
             return new Promise((resolve, reject) => {
                 if (!db) {
                     resolve([]);
@@ -3432,6 +3451,16 @@
         }
 
         async function getPlantFromDB(plantId) {
+            // Ambil dari Supabase
+            if (window.supabase) {
+                try {
+                    const { data } = await supabase.from('plants').select('*').eq('id', plantId).maybeSingle();
+                    if (data) {
+                        return { ...data.details, id: data.id, userId: data.user_id };
+                    }
+                } catch(e) {}
+            }
+
             return new Promise((resolve, reject) => {
                 if (!db) {
                     resolve(null);
@@ -3453,6 +3482,21 @@
         }
 
         async function savePlantToDB(plant) {
+            // SINKRONISASI KE SUPABASE
+            if (window.supabase) {
+                try {
+                    const supabasePlant = {
+                        id: plant.id,
+                        user_id: plant.userId,
+                        name: plant.name,
+                        type: plant.type,
+                        status: plant.status,
+                        details: plant
+                    };
+                    await supabase.from('plants').upsert([supabasePlant]);
+                } catch(e) {}
+            }
+
             return new Promise((resolve, reject) => {
                 if (!db) {
                     reject("Database belum diinisialisasi");
@@ -3464,7 +3508,6 @@
                 const request = store.put(plant);
                 
                 request.onsuccess = function() {
-                    console.log("Plant saved to DB:", plant);
                     resolve(request.result);
                 };
                 
@@ -3476,32 +3519,13 @@
 
         async function saveImageToIndexedDB(file) {
             return new Promise((resolve, reject) => {
-                if (!db) {
-                    reject("Database belum diinisialisasi");
-                    return;
-                }
-                
                 const reader = new FileReader();
                 reader.onload = function(event) {
-                    const data = event.target.result;
-                    const transaction = db.transaction("images", "readwrite");
-                    const store = transaction.objectStore("images");
-                    const request = store.add({ 
-                        imageData: data, 
-                        createdAt: new Date().toISOString(),
-                        fileName: file.name,
-                        fileType: file.type,
-                        size: file.size
-                    });
-
-                    request.onsuccess = function() {
-                        console.log("Image saved with ID:", request.result);
-                        resolve(request.result);
-                    };
+                    const data = event.target.result; // Base64 Data URL
                     
-                    request.onerror = function() {
-                        reject("Gagal menyimpan gambar ke database");
-                    };
+                    // Kembalikan base64 string secara langsung 
+                    // agar bisa disimpan dalam JSON dan disinkronisasikan ke Supabase!
+                    resolve(data);
                 };
                 
                 reader.onerror = function() {
@@ -3516,6 +3540,12 @@
             return new Promise((resolve, reject) => {
                 if (!imageId) {
                     resolve(null);
+                    return;
+                }
+                
+                // Jika imageId sudah merupakan Base64 Data URL dari Supabase, langsung kembalikan
+                if (typeof imageId === 'string' && imageId.startsWith('data:image')) {
+                    resolve(imageId);
                     return;
                 }
                 
@@ -3593,6 +3623,24 @@
         }
 
         async function saveNotificationToDB(notification) {
+            try {
+                if (window.supabaseClient) {
+                    const { error } = await window.supabaseClient
+                        .from('notifications')
+                        .upsert([
+                            { 
+                                id: notification.id, 
+                                user_id: notification.userId, 
+                                details: notification 
+                            }
+                        ]);
+                    if (error) throw error;
+                    console.log('✅ Notification saved to Supabase');
+                }
+            } catch (err) {
+                console.warn('⚠️ Supabase sync failed, falling back to local DB:', err);
+            }
+
             return new Promise((resolve, reject) => {
                 if (!db) {
                     reject("Database belum diinisialisasi");
@@ -3615,6 +3663,28 @@
         }
 
         async function getUserNotifications() {
+            try {
+                if (window.supabaseClient && currentUser) {
+                    const { data, error } = await window.supabaseClient
+                        .from('notifications')
+                        .select('*')
+                        .eq('user_id', currentUser.id);
+                    
+                    if (error) {
+                        console.warn('⚠️ Gagal mengambil notifikasi dari Supabase, mencoba lokal:', error);
+                    } else if (data) {
+                        const notifications = data.map(row => row.details);
+                        // Urutkan berdasarkan timestamp terbaru
+                        notifications.sort((a, b) => 
+                            new Date(b.timestamp) - new Date(a.timestamp)
+                        );
+                        return notifications;
+                    }
+                }
+            } catch (err) {
+                console.error("Supabase error fetching notifications:", err);
+            }
+
             return new Promise((resolve, reject) => {
                 if (!db) {
                     resolve([]);
@@ -5177,5 +5247,8 @@
         window.clearDateFilter = clearDateFilter;
         window.filterPlants = filterPlants;
     </script>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
 </body>
 </html>

@@ -2793,6 +2793,7 @@
             
             // Check authentication
             currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            window.currentUser = currentUser;
             if (!currentUser) {
                 showToast('Silakan login terlebih dahulu', 'error');
                 setTimeout(() => window.location.href = 'index.html', 1500);
@@ -2994,6 +2995,28 @@
 
         // Get user notifications from IndexedDB
         async function getUserNotifications() {
+            try {
+                if (window.supabaseClient && currentUser) {
+                    const { data, error } = await window.supabaseClient
+                        .from('notifications')
+                        .select('*')
+                        .eq('user_id', currentUser.id);
+                    
+                    if (error) {
+                        console.warn('⚠️ Gagal mengambil notifikasi dari Supabase, mencoba lokal:', error);
+                    } else if (data) {
+                        const notifications = data.map(row => row.details);
+                        // Urutkan berdasarkan timestamp terbaru
+                        notifications.sort((a, b) => 
+                            new Date(b.timestamp) - new Date(a.timestamp)
+                        );
+                        return notifications;
+                    }
+                }
+            } catch (err) {
+                console.error("Supabase error fetching notifications:", err);
+            }
+
             return new Promise((resolve, reject) => {
                 if (!db || !currentUser) {
                     resolve([]);
@@ -3026,6 +3049,21 @@
 
         // Get plant from IndexedDB
         async function getPlantFromDB(plantId) {
+            try {
+                if (window.supabaseClient) {
+                    const { data, error } = await window.supabaseClient
+                        .from('plants')
+                        .select('details')
+                        .eq('id', plantId)
+                        .single();
+                    if (!error && data) {
+                        return data.details;
+                    }
+                }
+            } catch (err) {
+                console.warn('⚠️ Supabase fetch failed, falling back to local DB:', err);
+            }
+
             return new Promise((resolve, reject) => {
                 if (!db) {
                     resolve(null);
@@ -3048,6 +3086,23 @@
 
         // Update notification in IndexedDB
         async function updateNotificationInDB(notification) {
+            try {
+                if (window.supabaseClient) {
+                    const { error } = await window.supabaseClient
+                        .from('notifications')
+                        .upsert([
+                            { 
+                                id: notification.id, 
+                                user_id: notification.userId, 
+                                details: notification 
+                            }
+                        ]);
+                    if (error) throw error;
+                }
+            } catch (err) {
+                console.warn('⚠️ Supabase update failed:', err);
+            }
+
             return new Promise((resolve, reject) => {
                 if (!db) {
                     reject("Database belum diinisialisasi");
@@ -3070,6 +3125,18 @@
 
         // Delete notification from IndexedDB
         async function deleteNotificationFromDB(notificationId) {
+            try {
+                if (window.supabaseClient) {
+                    const { error } = await window.supabaseClient
+                        .from('notifications')
+                        .delete()
+                        .eq('id', notificationId);
+                    if (error) throw error;
+                }
+            } catch (err) {
+                console.warn('⚠️ Supabase delete failed:', err);
+            }
+
             return new Promise((resolve, reject) => {
                 if (!db) {
                     reject("Database belum diinisialisasi");
@@ -3092,6 +3159,33 @@
 
         // Mark notification as read in IndexedDB
         async function markNotificationAsReadInDB(notificationId) {
+            try {
+                if (window.supabaseClient) {
+                    const { data: notifData, error: fetchError } = await window.supabaseClient
+                        .from('notifications')
+                        .select('details')
+                        .eq('id', notificationId)
+                        .single();
+                        
+                    if (!fetchError && notifData) {
+                        const notification = notifData.details;
+                        notification.read = true;
+                        
+                        await window.supabaseClient
+                            .from('notifications')
+                            .upsert([
+                                { 
+                                    id: notification.id, 
+                                    user_id: notification.userId, 
+                                    details: notification 
+                                }
+                            ]);
+                    }
+                }
+            } catch (err) {
+                console.warn('⚠️ Supabase update failed:', err);
+            }
+
             return new Promise(async (resolve, reject) => {
                 if (!db) {
                     reject("Database belum diinisialisasi");
@@ -4314,5 +4408,8 @@
         window.logout = logout;
         window.logoutFromDropdown = logoutFromDropdown;
     </script>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
 </body>
 </html>

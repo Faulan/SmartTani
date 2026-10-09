@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Supabase</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+</head>
+<body>
+    <h1>Testing Supabase Insert</h1>
+    <script>
+        async function testSupabase() {
+            try {
+                if (!window.supabaseClient) {
+                    console.log("No supabase client");
+                    return;
+                }
+                const testNotif = {
+                    id: 'test_123',
+                    title: 'Test',
+                    message: 'Message',
+                    timestamp: new Date().toISOString()
+                };
+                console.log("Attempting insert...");
+                const { data, error } = await window.supabaseClient
+                    .from('notifications')
+                    .upsert([
+                        { 
+                            id: testNotif.id, 
+                            user_id: 'test_user', 
+                            details: testNotif 
+                        }
+                    ]);
+                
+                if (error) {
+                    console.error("Supabase error:", error);
+                    document.body.innerHTML += `<p style="color:red">Error: ${JSON.stringify(error)}</p>`;
+                } else {
+                    console.log("Success!");
+                    document.body.innerHTML += `<p style="color:green">Success!</p>`;
+                }
+
+                console.log("Attempting read...");
+                const { data: readData, error: readError } = await window.supabaseClient
+                    .from('notifications')
+                    .select('*')
+                    .eq('user_id', 'test_user');
+                
+                if (readError) {
+                    console.error("Read error:", readError);
+                    document.body.innerHTML += `<p style="color:red">Read Error: ${JSON.stringify(readError)}</p>`;
+                } else {
+                    console.log("Read success:", readData);
+                    document.body.innerHTML += `<p style="color:green">Read Success! Found: ${readData.length}</p>`;
+                }
+
+            } catch (e) {
+                console.error("Caught exception:", e);
+                document.body.innerHTML += `<p style="color:red">Exception: ${e.message}</p>`;
+            }
+        }
+        testSupabase();
+    </script>
+</body>
+</html>

@@ -1256,57 +1256,35 @@
           let user = null;
           let userSource = "";
 
-          // **PENCARIAN USER DARI MULTI SUMBER**
-
-          // 1. Coba dari IndexedDB pertama
+          // **PENCARIAN USER DI SUPABASE**
+          showNotification("Memeriksa kredensial...", "info");
           try {
-            console.log("Checking IndexedDB for user...");
-            const indexedDBUser = await getUserFromIndexedDB(phone, "phone");
-            if (indexedDBUser) {
-              console.log("Found in IndexedDB:", indexedDBUser.email);
-              user = indexedDBUser;
-              userSource = "IndexedDB";
-            } else {
-              console.log("Not found in IndexedDB by phone, trying email...");
-              // Coba dengan email sebagai phone
-              const indexedDBUserByEmail = await getUserFromIndexedDB(
-                phone,
-                "email",
-              );
-              if (indexedDBUserByEmail) {
-                user = indexedDBUserByEmail;
-                userSource = "IndexedDB (email)";
-              }
+            const { data: supaUser, error } = await supabase
+              .from('users')
+              .select('*')
+              .or(`phone.eq.${phone},email.eq.${phone}`)
+              .maybeSingle();
+              
+            if (supaUser) {
+              user = {
+                id: supaUser.id,
+                name: supaUser.fullname,
+                email: supaUser.email,
+                phone: supaUser.phone,
+                password: supaUser.password,
+                role: 'petani',
+                createdAt: supaUser.createdat
+              };
+              userSource = "Supabase";
+              console.log("Found in Supabase:", user.email);
             }
-          } catch (error) {
-            console.log("IndexedDB search error:", error);
-          }
-
-          // 2. Jika tidak ditemukan di IndexedDB, cek localStorage registeredUsers
-          if (!user) {
-            console.log("Checking localStorage registeredUsers...");
-            const registeredUsers =
-              JSON.parse(localStorage.getItem("registeredUsers")) || [];
-
-            // Cari dengan phone
-            user = registeredUsers.find((u) => u.phone === phone);
-            if (user) {
-              userSource = "localStorage (phone)";
-              console.log("Found in localStorage by phone:", user.email);
-            } else {
-              // Cari dengan email sebagai fallback
-              console.log("Not found by phone, trying email...");
-              user = registeredUsers.find((u) => u.email === phone);
-              if (user) {
-                userSource = "localStorage (email)";
-                console.log("Found in localStorage by email:", user.email);
-              }
-            }
+          } catch (err) {
+            console.error("Supabase Error:", err);
           }
 
           if (!user) {
             console.log("User not found anywhere");
-            showNotification("Nomor telepon belum terdaftar", "error");
+            showNotification("Nomor telepon/email belum terdaftar", "error");
             return;
           }
 
@@ -1448,16 +1426,46 @@
 
           // **CARI USER DARI MULTI SUMBER**
 
+          // 0. Cari di Supabase
+          if (window.supabaseClient) {
+              try {
+                  const { data: supaUser } = await window.supabaseClient
+                      .from('users')
+                      .select('*')
+                      .or(`phone.eq.${phone},email.eq.${phone}`)
+                      .maybeSingle();
+                      
+                  if (supaUser) {
+                      user = {
+                          id: supaUser.id,
+                          name: supaUser.fullname,
+                          email: supaUser.email,
+                          phone: supaUser.phone,
+                          password: supaUser.password,
+                          address: supaUser.address || '',
+                          role: 'petani',
+                          createdAt: supaUser.createdat
+                      };
+                      userSource = "Supabase";
+                      console.log("Found user in Supabase");
+                  }
+              } catch (error) {
+                  console.warn("Supabase search error:", error);
+              }
+          }
+
           // 1. Cari di IndexedDB
-          try {
-            const indexedDBUser = await getUserFromIndexedDB(phone, "phone");
-            if (indexedDBUser) {
-              user = indexedDBUser;
-              userSource = "IndexedDB";
-              console.log("Found user in IndexedDB");
-            }
-          } catch (error) {
-            console.log("IndexedDB search error:", error);
+          if (!user) {
+              try {
+                const indexedDBUser = await getUserFromIndexedDB(phone, "phone");
+                if (indexedDBUser) {
+                  user = indexedDBUser;
+                  userSource = "IndexedDB";
+                  console.log("Found user in IndexedDB");
+                }
+              } catch (error) {
+                console.log("IndexedDB search error:", error);
+              }
           }
 
           // 2. Cari di localStorage
@@ -1485,6 +1493,19 @@
           // Update data user
           user.password = newPassword;
           user.updatedAt = new Date().toISOString();
+
+          // 0. Update di Supabase (JIKA TERSEDIA)
+          if (window.supabaseClient && user.id) {
+              try {
+                  await window.supabaseClient
+                      .from('users')
+                      .update({ password: newPassword })
+                      .eq('id', user.id);
+                  console.log("Password updated in Supabase users table");
+              } catch (error) {
+                  console.warn("Failed to update Supabase users table:", error);
+              }
+          }
 
           // 1. Update di IndexedDB
           try {
@@ -1758,5 +1779,8 @@
       window.openForgotPasswordModal = openForgotPasswordModal;
       window.showNotification = showNotification;
     </script>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
   </body>
 </html>
